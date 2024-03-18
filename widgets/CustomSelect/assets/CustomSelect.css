@@ -1,0 +1,74 @@
+.c-select {
+    width: 100%;
+}
+
+.c-select .dropdown .dropdown-toggle,
+.c-select .dropdown .selected-items {
+    font-family: 'SintonyRegular', sans-serif;
+}
+
+.c-select .dropdown .dropdown-menu {
+    border-color: var(--bs-gray-500);
+}
+.c-select .dropdown .dropdown-menu .c-list {
+    overflow-y: auto;
+    max-height: calc(7 * (var(--dd-font-size-calc) + 7px) * 2);
+    background-color: var(--bs-dropdown-bg);
+}
+.c-select .dropdown .dropdown-menu .c-list .c-list-item {
+    font-size: var(--dd-font-size);
+}
+
+.c-select .dropdown .dropdown-menu .dropdown-item {
+    cursor: pointer;
+    background-color: inherit;
+    line-height: 2;
+}
+
+.c-select .dropdown .dropdown-menu .dropdown-item:hover {
+    background-color: var(--bs-blue);
+    color: var(--bs-white);
+}
+
+.c-select .dropdown .dropdown-menu .hidden {
+    display: none;
+}
+
+.c-select .dropdown .dropdown-menu .dropdown-item,
+.c-select .dropdown .dropdown-menu .form-control::placeholder {
+    font-family: 'SintonyRegular', sans-serif;
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+.c-select .dropdown .dropdown-menu .form-control:focus {
+    border-color: var(--input-border-color);
+}
+
+.c-select .dropdown .dropdown-menu > input::placeholder {
+    font-weight: 400;
+    font-size: 0.875rem;
+}
+
+.c-select .selected-items {
+    min-height: 2.125em;
+    padding: 2px 0;
+}
+
+.c-select .selected-items > div {
+    letter-spacing: 1px;
+    background-color: var(--bs-cyan);
+    padding-top: 3px;
+}
+.c-select .selected-items > div  button.close {
+    width: 20px;
+    background: none;
+}
+.c-select .selected-items > div  button.close svg {
+    opacity: 0.6;
+    margin-bottom: 3px;
+}
+
+.c-select .selected-items > div  button.close svg:hover {
+    opacity: 1;
+}

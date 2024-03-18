@@ -1,0 +1,23 @@
+@import "../../../node_modules/bootstrap/scss/functions.scss";
+@import "../../../node_modules/bootstrap/scss/variables.scss";
+@import "vars";
+@import "mixins";
+
+.tr-route {
+    &-block {
+        background-color: #0b5ed7;
+    }
+    
+    .tr-info-block ul li,
+    .tr-info-block-mid {
+        font-size: 0.875rem;
+    }
+    
+    .tr-info-block {
+        background-color: #664d03;
+        
+        li {
+            list-style: none;
+        }
+    }
+}

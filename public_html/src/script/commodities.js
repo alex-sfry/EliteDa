@@ -1,0 +1,15 @@
+export const commoditiesForm = (loader, removeLoader) => {
+    const form = document.querySelector('#c-form');
+    const table = document.querySelector('.c-table');
+    removeLoader(table);
+
+    const handleSubmit = (e) => {
+        const form = document.querySelector('#c-form');
+
+        if (!form.checkValidity()) {
+            e.preventDefault();
+        } else loader(form, table);
+    };
+
+    form.addEventListener('submit', (e) => handleSubmit(e));
+};

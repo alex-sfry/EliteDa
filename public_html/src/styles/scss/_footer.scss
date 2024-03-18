@@ -1,0 +1,12 @@
+@import 'vars';
+
+.footer {
+    background-color: $header-color;
+    height: auto;
+
+    p {
+        color: $custom-light-orange;
+        font-family: 'SintonyRegular', sans-serif;
+        font-size: 0.75rem;
+    }
+}

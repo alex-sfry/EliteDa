@@ -1,0 +1,180 @@
+<?php
+
+/**
+ * @var string $error
+ * @var string $selected
+ * @var string $placeholder
+ * @var string $label_main
+ * @var string $container
+ * @var string $search
+ * @var string $to_submit
+ * @var string $endpoint
+ * @var string $toggle_btn_text
+ * @var bool $ajax
+ * @var string $name_main
+ * @var bool $radio_switch
+ * @var string $label_switch1
+ * @var string $label_switch2
+ * @var string $name_radio
+ * @var string $endpoint1
+ * @var string $endpoint2
+ * @var bool $validation
+ */
+
+use yii\helpers\Html;
+
+Yii::$app->view->registerJs(
+    '
+    if (typeof config === "undefined") {
+        let configDd1911 = {
+            container: "' . $container . '",
+            search: "' . $search . '",
+            toSubmit: "' . $to_submit . '" ,
+            ajax: "' . $ajax . '",
+            endpoint: "' . $endpoint . '",
+            endpoint1: "' . $endpoint1 . '",
+            endpoint2: "' . $endpoint2 . '",
+            switchValue: "' . $selected . '",
+            switchName1: "' . $label_switch1 . '",
+            switchName2: "' . $label_switch2 . '",
+            validation : "' . $validation . '"
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            new InputDropdown(configDd1911);
+        });
+    } else {
+        configDd1911 = {
+            container: "' . $container . '",
+            search: "' . $search . '",
+            toSubmit: "' . $to_submit . '" ,
+            ajax: "' . $ajax . '",
+            endpoint: "' . $endpoint . '",
+            endpoint1: "' . $endpoint1 . '",
+            endpoint2: "' . $endpoint2 . '",
+            switchValue: "' . $selected . '",
+            switchName1: "' . $label_switch1 . '",
+            switchName2: "' . $label_switch2 . '",
+            validation : "' . $validation . '"
+        };
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            new InputDropdown(configDd1911);
+        });
+    }
+    ',
+    yii\web\View::POS_END
+);
+
+$classes = [
+    'w-100',
+    'p-1',
+    'border',
+    'rounded-2',
+    'shadow-none',
+    'bg-transparent',
+    'fw-normal',
+    'sys-search',
+    'mb-1',
+];
+
+$classes_radio = [
+    'target-sys-station-input',
+    'form-check-input',
+    'me-3',
+    'ms-1',
+];
+
+if (isset($error) && $error === 'is-invalid') {
+    HTML::addCssClass($classes, 'is-invalid border-2 border-danger');
+} else {
+    HTML::addCssClass($classes, 'border-dark');
+}
+?>
+
+<div id="<?= $container ?>" class="position-relative">
+    <?php if ($radio_switch) : ?>
+        <div>
+            <label for="target-idd-search">
+                <?= $label_main ?>
+            </label>
+            <div class="d-flex">
+                <label
+                    class="target-sys-station min-lett-spacing fw-bold" for="target_<?= $label_switch1 ?>">
+                    <?= $label_switch1 ?>
+                </label>
+                <?= HTML::radio(
+                    $name_radio/*'targetSysStation'*/,
+                    $selected,
+                    [
+                        'class' => $classes_radio,
+                        'id' => "target_$label_switch1",
+                        'value' => $label_switch1,
+                    ]
+                ); ?>
+                <label class="target-sys-station min-lett-spacing fw-bold" for="target_<?= $label_switch2 ?>">
+                    <?= $label_switch2 ?>
+                </label>
+                <?= HTML::radio(
+                    $name_radio,
+                    $selected,
+                    [
+                        'class' => $classes_radio,
+                        'id' => "target_$label_switch2",
+                        'value' => $label_switch2,
+                    ]
+                ); ?>
+            </div>
+        </div>
+    <?php else : ?>
+        <label class="min-lett-spacing fw-bold
+        <?= $error === 'is-invalid' ? 'text-danger is-invalid' : '' ?>"
+               for="<?= $search ?>">
+            <?= $label_main ?>
+        </label>
+    <?php endif; ?>
+    <div class="input-dd-selected-items d-flex">
+        <div class="search-selected px-1 py-1 lh-1 rounded-2
+             <?= $selected === '' ? 'd-none' : '' ?>"
+             id="idd-search-selected">
+            <?= Html::encode($selected) ?>
+        </div>
+        <button type="button" id="reset-idd" class="reset-input-dd btn btn-link py-1
+            <?= Html::encode($selected) === '' ? 'd-none' : '' ?>">
+            reset
+        </button>
+    </div>
+    <div class='c-dropdown idd-dropdown dropdown-container d-input  bg-transparent  w-100'>
+        <div class='dropdown bg-transparent'>
+            <?= Html::textInput(
+                '',
+                null,
+                [
+                    'class' => $classes,
+                    'id' => $search,
+                    'placeholder' => $placeholder,
+                ]
+            ) ?>
+            <button id="idd-toggle"
+                    class='btn btn-outline-dark btn-sm dropdown-toggle w-100 px-1 fw-normal bg-secondary-subtle'
+                    type='button'
+                    data-bs-toggle='dropdown'
+                    data-bs-auto-close='dropdown' aria-expanded='false'>
+                <?= $toggle_btn_text ?>
+            </button>
+            <?= Html::textInput(
+                $name_main,
+                Html::encode($selected),
+                [
+                    'class' => ['d-none'],
+                    'id' => $to_submit,
+                    'required' => '',
+                ]
+            ) ?>
+            <p class="invalid-feedback feedback position-absolute mt-0 pt-0 fw-bold">
+                Field must not be empty
+            </p>
+            <ul class='dropdown-menu px-1 w-100 me-2 shadow-sm visually-hidden overflow-x-hidden text-truncate'></ul>
+        </div>
+    </div>
+</div>

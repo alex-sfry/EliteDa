@@ -1,0 +1,326 @@
+<?php
+
+/**
+ * @var string $ref_error
+ * @var string $cargo_error
+ * @var string $profit_error
+ * @var string $targetSys
+ * @var string $cargo
+ * @var string $profit
+ * @var string $pad_sizes
+ * @var string $incl_surface
+ * @var string $sort_options
+ * @var string $max_dist_from_ref
+ * @var string $max_dist_from_star
+ * @var string $min_supply_demand
+ * @var string $max_age_of_datap
+ * @var CommoditiesForm $form_model
+ */
+
+use app\models\CommoditiesForm;
+use app\widgets\CustomSelect\CustomSelect;
+use app\widgets\InputDropdown\InputDropdown;
+use yii\bootstrap5\LinkPager;
+use yii\helpers\Html;
+use yii\helpers\VarDumper;
+
+require(dirname(__DIR__, 2) . '/data/c_form_data.php');
+
+$select_options = [
+    'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
+    'sort_options' => ['Profit' => 'Profit', 'Updated at (time)' => 'Updated_at', 'Distance (LY)' => 'Distance'],
+    'max_dist_from_ref' => ['Any' => 'Any', '25' => '25 LY', '50' => '50 LY', '100' => '100 LY', '250' => '250 LY'],
+    'max_dist_from_star' => [
+        'Any' => 'Any',
+        '100' => '100 ls',
+        '500' => '500 ls',
+        '1000' => '1000 ls',
+        '2000' => '2000 ls',
+    ],
+    'min_supply_demand' => [
+        'Any' => 'Any',
+        '100' => '100',
+        '500' => '500',
+        '1000' => '1000',
+        '2000' => '2000',
+        '5000' => '5000',
+        '10000' => '10000'
+    ],
+    'max_age_of_data' => ['Any' => 'Any', '1' => '1 hour', '4' => '4 hours', '10' => '10 hours', '24' => '1 day'],
+];
+extract($select_options);
+
+$this->title = 'Commodities';
+?>
+<main class="flex-grow-1 d-flex flex-column justify-content-between">
+    <div class='wrapper d-flex flex-column h-100'>
+        <div class='cnt container-xxl px-3 d-flex'>
+            <div class='d-flex flex-column w-100 gap-3'>
+                <h1 class='mt-2 text-center fs-2 text-light-orange'><?= Html::encode($this->title) ?></h1>
+                <?= Html::beginForm(['/commodities/index'], 'post', [
+                    'id' => 'c-form',
+                    'novalidate' => true,
+                    'class' => 'c-form py-2 px-2 rounded-2 w-100 d-flex flex-column needs-validation',
+                ]) ?>
+                <div class='container-xxl'>
+                    <div class='d-flex flex-column justify-content-between gap-4'>
+                        <div class='row row-gap-3 justify-content-between'>
+                            <!--form column 1-->
+                            <div class='min-lett-spacing col-lg-4 row-gap-3'>
+                                <?= CustomSelect::widget([
+                                    'container' => 'c-custom-select',
+                                    'error' => $c_error,
+                                    'selected' => $form_model->commodities,
+                                    'search' => 'c-cselect-search',
+                                    'to_submit' => 'c-hiddenSelect',
+                                    'placeholder' => 'selected commodities',
+                                    'label_main' => 'Commodities:',
+                                    'toggle_btn_text' => 'Select commodities',
+                                    'name_main' => 'commodities[]',
+                                    'list_items' => $commodities_arr,
+                                    'validation' => true
+                                ]); ?>
+                            </div>
+                            <!--form column 2-->
+                            <div class="col-lg-4 d-flex row-gap-3 flex-column">
+                                <div>
+                                    <?= InputDropdown::widget([
+                                        'container' => 'c-ref-idd',
+                                        'error' => $ref_error,
+                                        'selected' => $form_model->refStation,
+                                        'search' => 'ref-idd-search',
+                                        'to_submit' => 'ref-to-submit',
+                                        'placeholder' => 'Enter station name here',
+                                        'ajax' => true,
+                                        'endpoint' => '/stations/system-station/?sys-st=',
+                                        'label_main' => 'Ref. station:',
+                                        'toggle_btn_text' => 'Get station list',
+                                        'name_main' => 'refStation',
+                                        'validation' => true
+                                    ]); ?>
+                                </div>
+                                <div>
+                                    <label class='min-lett-spacing fw-bold' for='landingPadSize'>
+                                        Min. landing pad size:
+                                    </label>
+                                    <?= Html::dropDownList(
+                                        'landingPadSize',
+                                        $form_model->landingPadSize,
+                                        $incl_surface,
+                                        [
+                                            'class' => [
+                                                'form-select',
+                                                'form-select-sm',
+                                                'shadow-none',
+                                                'border-dark',
+                                                'fw-normal'
+                                            ],
+                                            'id' => 'landingPadSize'
+                                        ]
+                                    ) ?>
+                                </div>
+                                <div>
+                                    <label class='min-lett-spacing fw-bold' for='includeSurface'>
+                                        Include surface:
+                                    </label>
+                                    <?= Html::dropDownList(
+                                        'includeSurface',
+                                        $form_model->includeSurface,
+                                        $pad_sizes,
+                                        [
+                                            'class' => [
+                                                'form-select',
+                                                'form-select-sm',
+                                                'shadow-none',
+                                                'border-dark',
+                                                'fw-normal'
+                                            ],
+                                            'id' => 'includeSurface'
+                                        ]
+                                    ) ?>
+                                </div>
+                                <div>
+                                    <label class='min-lett-spacing fw-bold' for='sortBy'>
+                                        Sort by:
+                                    </label>
+                                    <?= Html::dropDownList(
+                                        'sortBy',
+                                        $form_model->sortBy,
+                                        $sort_options,
+                                        [
+                                            'class' => [
+                                                'form-select',
+                                                'form-select-sm',
+                                                'shadow-none',
+                                                'border-dark',
+                                                'fw-normal'
+                                            ],
+                                            'id' => 'sortBy'
+                                        ]
+                                    ) ?>
+                                </div>
+                            </div>
+                            <!--form column 3-->
+                            <div class="col-lg-4 d-flex row-gap-3 flex-column">
+                                <div>
+                                    <label class='min-lett-spacing fw-bold' for='maxDistanceFromRefStar'>
+                                        Max. distance from ref. system:
+                                    </label>
+                                    <?= Html::dropDownList(
+                                        'maxDistanceFromRefStar',
+                                        $form_model->maxDistanceFromRefStar ?: '50',
+                                        $max_dist_from_ref,
+                                        [
+                                            'class' => [
+                                                'form-select',
+                                                'form-select-sm',
+                                                'shadow-none',
+                                                'border-dark',
+                                                'fw-normal'
+                                            ],
+                                            'id' => 'maxDistanceFromRefStar'
+                                        ]
+                                    ) ?>
+                                </div>
+                                <div>
+                                    <label class='min-lett-spacing fw-bold' for='distanceFromStar'>
+                                        Max. distance from the star:
+                                    </label>
+                                    <?= Html::dropDownList(
+                                        'distanceFromStar',
+                                        $form_model->distanceFromStar ?: '500',
+                                        $max_dist_from_star,
+                                        [
+                                            'class' => [
+                                                'form-select',
+                                                'form-select-sm',
+                                                'shadow-none',
+                                                'border-dark',
+                                                'fw-normal'
+                                            ],
+                                            'id' => 'distanceFromStar'
+                                        ]
+                                    ) ?>
+                                </div>
+                                <div>
+                                    <label class='min-lett-spacing fw-bold' for='minSupplyDemand'>
+                                        Min. supply / demand:
+                                    </label>
+                                    <?= Html::dropDownList(
+                                        'minSupplyDemand',
+                                        $form_model->minSupplyDemand ?: '1000',
+                                        $min_supply_demand,
+                                        [
+                                            'class' => [
+                                                'form-select',
+                                                'form-select-sm',
+                                                'shadow-none',
+                                                'border-dark',
+                                                'fw-normal'
+                                            ],
+                                            'id' => 'minSupplyDemand'
+                                        ]
+                                    ) ?>
+                                </div>
+                                <div>
+                                    <label class='min-lett-spacing fw-bold' for='dataAge'>
+                                        Max. age of data:
+                                    </label>
+                                    <?= Html::dropDownList(
+                                        'dataAge',
+                                        $form_model->dataAge ?: 'Any',
+                                        $max_age_of_data,
+                                        [
+                                            'class' => [
+                                                'form-select',
+                                                'form-select-sm',
+                                                'shadow-none',
+                                                'border-dark',
+                                                'fw-normal'
+                                            ],
+                                            'id' => 'dataAge'
+                                        ]
+                                    ) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <!--buy/sell block-->
+                            <div class='buy-sell-switch ol-xl-2 d-flex
+                                    text-center justify-content-center align-content-center gap-3'>
+                                <div class=" text-end">
+                                    <input
+                                        class='btn-check'
+                                        type='radio'
+                                        id='buy-toggle'
+                                        name='buySellSwitch'
+                                        value='buy'
+                                        autocomplete='off'
+                                        checked>
+                                    <label class='btn p-1 border-0' for='buy-toggle'>
+                                        i want to buy
+                                    </label>
+                                </div>
+                                <div class=" text-end">
+                                    <input
+                                        class='btn-check'
+                                        type='radio'
+                                        id='sell-toggle'
+                                        name='buySellSwitch'
+                                        value='sell'
+                                        autocomplete='off'
+                                        <?= $form_model->buySellSwitch === 'sell' ? 'checked' : '' ?>>
+                                    <label class='btn p-1 border-0' for='sell-toggle'>
+                                        i want to sell
+                                    </label>
+                                </div>
+                            </div>
+                            <!--submit block-->
+                            <div class='row justify-content-center'>
+                                <div class='col-md-3 pt-4 pb-2'>
+                                    <button
+                                        class='btn btn-violet fw-bold text-light text-uppercase mt-2
+                                                 w-100'
+                                        type='submit'
+                                        name='c-form-submit'>
+                                        Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?= Html::endForm() ?>
+            </div>
+        </div>
+    </div>
+    <div class="bg-light mt-3">
+        <?php
+        isset($post) && VarDumper::dump($post, 10, true);
+        echo '<br> =============================================== <br>';
+//        isset($prices) && VarDumper::dump($prices, 10, true);
+        isset($provider) && VarDumper::dump($provider, 10, true);
+        echo '<br> =============================================== <br>';
+
+        if (isset($pagination)) {
+            $pager = LinkPager::widget([
+                'pagination' => $pagination,
+                'disableCurrentPageButton' => true,
+                'maxButtonCount' => 5,
+                'firstPageLabel' => 'first',
+                'lastPageLabel' => 'last',
+                'prevPageCssClass' => 'prev-page',
+                'nextPageCssClass' => 'next-page'
+            ]);
+
+            $current_page = $pagination->getPage() + 1;
+            $page_size = $pagination->getPageSize();
+            $first_in_range = $page_size * $current_page - $page_size + 1;
+            $last_in_range = $pagination->totalCount - $current_page >= $page_size - 1 ?
+                $pagination->totalCount : $page_size * $current_page;
+            echo "<div>$first_in_range-$last_in_range / $pagination->totalCount</div>";
+            echo $pager;
+        }
+        ?>
+    </div>
+</main>

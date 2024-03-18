@@ -1,0 +1,101 @@
+@import 'fonts';
+@import "vars";
+@import 'header';
+@import 'footer';
+@import 'cTable';
+@import 'cForm';
+@import 'tradeRoutes';
+@import 'movingArrows';
+@import 'mixins';
+@import "../../../node_modules/bootstrap/scss/functions.scss";
+@import "../../../node_modules/bootstrap/scss/variables.scss";
+
+:root {
+    --dd-font-size-calc: 1rem;
+    --input-border-color: #dee2e6;
+    --dd-font-size: 0.875rem;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+}
+
+input {
+    outline: 0;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.body-wrapper {
+    height: 100vh;
+    background-color: $main-background;
+    overflow-y: scroll;
+}
+
+main {
+    font-family: 'SintonyRegular', sans-serif;
+    font-weight: 400;
+    background-color: $main-background;
+    
+    h1 {
+        @include fnt('SintonyBold', 700, 2rem);
+    }
+    
+    .nav-button {
+        @include fnt-lett('SintonyBold', 700, 1.1px);
+        transition: all 0.2s linear;
+    }
+    
+    .nav-button:hover {
+        background-color: $warning !important;
+        color: $primary !important;
+        box-shadow: 0 0 4px 4px $light;
+    }
+}
+
+form {
+    &-check-input:focus {
+        box-shadow: none;
+        border-color: $border-color
+    }
+
+    &-check-input:checked {
+        border-color: $custom-light-orange;
+    }
+    
+    &-control.is-invalid {
+        background-image: none;
+    }
+    
+    .tr-text-input {
+        height: 31px;
+    }
+}
+
+.c-loading {
+    width: fit-content;
+    box-shadow: 0 0 4px 4px $light-bg-subtle;
+}
+
+.c-form,
+.c-table {
+    font-size: 0.875rem;
+}
+
+.prev-page {
+    margin-left: 4px;
+}
+
+.next-page {
+    margin-right: 4px;
+}
