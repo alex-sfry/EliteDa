@@ -21,9 +21,10 @@ class InputDropdown extends Widget
     public string $label_switch1 = '';
     public string $label_switch2 = '';
     public string $name_radio = '';
+    public string $selected_radio = '';
     public string $endpoint1 = '';
     public string $endpoint2 = '';
-    public bool $validation = false;
+    public bool $required = false;
 
     public function init(): void
     {
@@ -51,9 +52,10 @@ class InputDropdown extends Widget
                 'label_switch1' => $this->label_switch1,
                 'label_switch2' => $this->label_switch2,
                 'name_radio' => $this->name_radio,
+                'selected_radio' => $this->selected_radio,
                 'endpoint1' => $this->endpoint1,
                 'endpoint2' => $this->endpoint2,
-                'validation' => $this->validation
+                'required' => $this->required,
             ]
         );
     }

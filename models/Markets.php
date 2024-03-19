@@ -17,7 +17,6 @@ use yii\db\ActiveQuery;
  * @property int $stock
  * @property int $stock_bracket
  * @property int $market_id
- * @property string $timestamp
  *
  * @property Stations $market
  */
@@ -61,6 +60,7 @@ class Markets extends \yii\db\ActiveRecord
             'stock_bracket' => 'Stock Bracket',
             'market_id' => 'Market ID',
             'timestamp' => 'Timestamp',
+            'distance' => 'dist'
         ];
     }
 

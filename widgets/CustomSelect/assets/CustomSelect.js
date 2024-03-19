@@ -117,7 +117,6 @@ class CustomSelect {
         this.selectedItemsDiv.addEventListener('click', (e) => this.handleDeleteSelectedItem(e));
         dropdownList.addEventListener('click', (e) => this.handleDropdownItemClick(e));
 
-        this.config.validation === '1' &&
         this.form.addEventListener("submit", () => this.isValidated(this.itemsToSubmitSelect, this.label));
     };
 

@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "systems".
@@ -24,7 +25,7 @@ use yii\db\ActiveQuery;
  * @property Security $security
  * @property Stations[] $stations
  */
-class Systems extends \yii\db\ActiveRecord
+class Systems extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -66,7 +67,7 @@ class Systems extends \yii\db\ActiveRecord
             'population' => 'Population',
             'security_id' => 'Security ID',
             'allegiance_id' => 'Allegiance ID',
-            'economy_id' => 'Economy ID',
+            'economy_id' => 'Economy ID'
         ];
     }
 

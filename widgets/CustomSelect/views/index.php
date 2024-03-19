@@ -11,7 +11,7 @@
  * @var string $toggle_btn_text
  * @var string $name_main
  * @var array $list_items
- * @var bool $validation
+ * @var string $required
  */
 
 use yii\helpers\Html;
@@ -23,8 +23,7 @@ Yii::$app->view->registerJs(
             container: "' . $container . '",
             search: "' . $search . '",
             toSubmit: "' . $to_submit . '",
-            placeholder: "' . $placeholder . '",
-            validation : "' . $validation . '"
+            placeholder: "' . $placeholder . '"
         };
         
         document.addEventListener("DOMContentLoaded", () => {
@@ -35,8 +34,7 @@ Yii::$app->view->registerJs(
             container: "' . $container . '",
             search: "' . $search . '",
             toSubmit: "' . $to_submit . '",
-            placeholder: "' . $placeholder . '",
-            validation : "' . $validation . '"
+            placeholder: "' . $placeholder . '"
         };
         
         document.addEventListener("DOMContentLoaded", () => {
@@ -74,7 +72,7 @@ foreach ($selected as $key => $value) {
                 ],
                 'id' => $to_submit,
                 'multiple' => '',
-                'required' => ''
+                'required' => $required ? '' : null
             ]
         ) ?>
         <p class="invalid-feedback position-absolute fw-bold top-100">

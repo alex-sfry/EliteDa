@@ -14,14 +14,8 @@ class TradeRoutesController extends Controller
         $session = Yii::$app->session;
         $session->open();
 //        $session->destroy();
-
         $request = Yii::$app->request;
-
-        if (!$session->get('tr') && $request->post()) {
-            $session->set('tr', $request->post());
-            $post = $session->get('tr');
-        }
-
+//        VarDumper::dump($request->post(), 10, true);
         $params  = [];
         $params['ref_error'] = '';
         $params['cargo_error'] = '';
@@ -29,19 +23,25 @@ class TradeRoutesController extends Controller
         $form_model = new TradeRoutesForm();
         $params['form_model'] = $form_model;
 
-        if ($request->isPost  || isset($post)) {
-            $params['post'] = $post;
+        if (count($request->post()) > 0) {
+            $params['post']  = $request->post();
+            $session->set('tr', $request->post());
+        } else {
+            $params['post'] = $session->get('tr');
+        }
 
+        if ($request->isPost || $params['post']) {
             if (isset($params['post']['_csrf'])) {
                 unset($params['post']['_csrf']);
             }
 
-            $form_model->setAttributes($post);
+            $form_model->setAttributes($params['post']);
             $params['ref_error'] =  $form_model->validate('refSysStation') ? '' : 'is-invalid';
             $params['cargo_error'] =  $form_model->validate('cargo') ? '' : 'is-invalid';
             $params['profit_error'] =  $form_model->validate('profit') ? '' : 'is-invalid';
 
             if ($form_model->hasErrors()) {
+                $params['errors'] = $form_model;
                 return $this->render('index', $params);
             }
 

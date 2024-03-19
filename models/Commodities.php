@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "commodities".
@@ -12,7 +13,7 @@ use Yii;
  * @property string $category
  * @property string $name
  */
-class Commodities extends \yii\db\ActiveRecord
+class Commodities extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -25,7 +26,7 @@ class Commodities extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['id', 'symbol', 'category', 'name'], 'required'],
@@ -38,7 +39,7 @@ class Commodities extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',

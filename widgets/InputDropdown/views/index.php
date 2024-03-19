@@ -18,7 +18,8 @@
  * @var string $name_radio
  * @var string $endpoint1
  * @var string $endpoint2
- * @var bool $validation
+ * @var bool $required
+ * @var string $selected_radio
  */
 
 use yii\helpers\Html;
@@ -36,8 +37,7 @@ Yii::$app->view->registerJs(
             endpoint2: "' . $endpoint2 . '",
             switchValue: "' . $selected . '",
             switchName1: "' . $label_switch1 . '",
-            switchName2: "' . $label_switch2 . '",
-            validation : "' . $validation . '"
+            switchName2: "' . $label_switch2 . '"
         };
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -54,8 +54,7 @@ Yii::$app->view->registerJs(
             endpoint2: "' . $endpoint2 . '",
             switchValue: "' . $selected . '",
             switchName1: "' . $label_switch1 . '",
-            switchName2: "' . $label_switch2 . '",
-            validation : "' . $validation . '"
+            switchName2: "' . $label_switch2 . '"
         };
         
         document.addEventListener("DOMContentLoaded", () => {
@@ -104,8 +103,9 @@ if (isset($error) && $error === 'is-invalid') {
                     <?= $label_switch1 ?>
                 </label>
                 <?= HTML::radio(
-                    $name_radio/*'targetSysStation'*/,
-                    $selected,
+                    $name_radio,
+                    $selected_radio === 'system' && !str_contains($selected, ' / ') ||
+                    $selected_radio === 'station' && $selected && !str_contains($selected, ' / '),
                     [
                         'class' => $classes_radio,
                         'id' => "target_$label_switch1",
@@ -117,7 +117,8 @@ if (isset($error) && $error === 'is-invalid') {
                 </label>
                 <?= HTML::radio(
                     $name_radio,
-                    $selected,
+                    $selected_radio === 'station' && str_contains($selected, ' / ') ||
+                     $selected_radio === 'system' && $selected && str_contains($selected, ' / '),
                     [
                         'class' => $classes_radio,
                         'id' => "target_$label_switch2",
@@ -168,7 +169,7 @@ if (isset($error) && $error === 'is-invalid') {
                 [
                     'class' => ['d-none'],
                     'id' => $to_submit,
-                    'required' => '',
+                    'required' => $required ? '' : null
                 ]
             ) ?>
             <p class="invalid-feedback feedback position-absolute mt-0 pt-0 fw-bold">

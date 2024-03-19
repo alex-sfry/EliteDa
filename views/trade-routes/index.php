@@ -91,7 +91,7 @@ $this->title = 'Trade routes';
                                                 'label_main' => 'Ref. station:',
                                                 'toggle_btn_text' => 'Get station list',
                                                 'name_main' => 'refSysStation',
-                                                'validation' => true
+                                                'required' => 'required'
                                             ]); ?>
                                             <?= InputDropdown::widget([
                                                 'container' => 'tr-target-idd',
@@ -107,6 +107,7 @@ $this->title = 'Trade routes';
                                                 'label_switch1' => 'system',
                                                 'label_switch2' => 'station',
                                                 'name_radio' => 'targetSysStationName',
+                                                'selected_radio' => $form_model->targetSysStationName,
                                                 'endpoint1' => '/systems/system/?sys=',
                                                 'endpoint2' => '/stations/system-station/?sys-st=',
                                             ]); ?>
@@ -372,7 +373,7 @@ $this->title = 'Trade routes';
         <?php
         isset($post) && VarDumper::dump($post, 10, true);
 //        VarDumper::dump($form_model, 10, true);
-        echo $form_model->roundTrip;
+        isset($errors) && VarDumper::dump($errors, 10, true);
         ?>
     </div>
 </main>

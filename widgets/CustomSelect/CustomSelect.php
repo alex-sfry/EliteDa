@@ -16,7 +16,7 @@ class CustomSelect extends Widget
     public string $toggle_btn_text = '';
     public string $name_main = '';
     public array $list_items = [];
-    public bool $validation = false;
+    public string $required = '';
 
     public function init(): void
     {
@@ -39,7 +39,7 @@ class CustomSelect extends Widget
                 'toggle_btn_text' => $this->toggle_btn_text,
                 'name_main' => $this->name_main,
                 'list_items' => $this->list_items,
-                'validation' => $this->validation
+                'required' => $this->required
             ]
         );
     }

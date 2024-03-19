@@ -78,7 +78,7 @@ $this->title = 'Commodities';
                                     'toggle_btn_text' => 'Select commodities',
                                     'name_main' => 'commodities[]',
                                     'list_items' => $commodities_arr,
-                                    'validation' => true
+                                    'required' => 'required'
                                 ]); ?>
                             </div>
                             <!--form column 2-->
@@ -96,7 +96,7 @@ $this->title = 'Commodities';
                                         'label_main' => 'Ref. station:',
                                         'toggle_btn_text' => 'Get station list',
                                         'name_main' => 'refStation',
-                                        'validation' => true
+                                        'required' => 'required'
                                     ]); ?>
                                 </div>
                                 <div>
@@ -297,9 +297,12 @@ $this->title = 'Commodities';
     <div class="bg-light mt-3">
         <?php
         isset($post) && VarDumper::dump($post, 10, true);
-        echo '<br> =============================================== <br>';
-//        isset($prices) && VarDumper::dump($prices, 10, true);
-        isset($provider) && VarDumper::dump($provider, 10, true);
+        echo '<br> ====================Market=========================== <br>';
+        isset($market) && VarDumper::dump($market, 10, true);
+        echo '<br> ====================Result=========================== <br>';
+        isset($provider) && VarDumper::dump($provider->models[1], 10, true);
+        echo '<br> ======================Models========================= <br>';
+        isset($models) && VarDumper::dump($models, 10, true);
         echo '<br> =============================================== <br>';
 
         if (isset($pagination)) {
@@ -313,12 +316,7 @@ $this->title = 'Commodities';
                 'nextPageCssClass' => 'next-page'
             ]);
 
-            $current_page = $pagination->getPage() + 1;
-            $page_size = $pagination->getPageSize();
-            $first_in_range = $page_size * $current_page - $page_size + 1;
-            $last_in_range = $pagination->totalCount - $current_page >= $page_size - 1 ?
-                $pagination->totalCount : $page_size * $current_page;
-            echo "<div>$first_in_range-$last_in_range / $pagination->totalCount</div>";
+            echo $page_count_info . '<br>';
             echo $pager;
         }
         ?>

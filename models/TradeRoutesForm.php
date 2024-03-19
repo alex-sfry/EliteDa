@@ -28,7 +28,7 @@ class TradeRoutesForm extends Model
                 'landingPadSize',
                 'includeSurface',
                 'sortBy',
-//                'targetSysStationName',
+                'targetSysStationName',
                 'maxDistanceFromRefStar',
                 'distanceFromStar',
                 'minSupplyDemand',

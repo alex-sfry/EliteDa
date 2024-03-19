@@ -19,7 +19,6 @@ class InputDropdown {
         // local state to prevent fetch on dropdown close (click to close)
         this.searchValue = '';
         this.setEventListeners();
-        this.checkSwitch();
     }
 
     ddListFillFetch= async (searchValue, endpoint) => {
@@ -100,7 +99,7 @@ class InputDropdown {
                 if (!radioSwitch[0].checked && !radioSwitch[1].checked) return;
                 if (radioSwitch[0].checked) this.switchValue = this.config.switchName1;
                 if (radioSwitch[1].checked) this.switchValue = this.config.switchName2;
-
+                console.log(this.switchValue)
                 switch (this.switchValue) {
                     case this.config.switchName1 :
                         this.endpoint = this.config.endpoint1;
@@ -168,21 +167,13 @@ class InputDropdown {
         this.dropdownList.addEventListener('click', (e) => this.handleDropdownItemClick(e));
         this.resetBtn && this.resetBtn.addEventListener('click', this.reset);
 
-        this.config.switch && this.config.switch.forEach(elem => {
-            elem.addEventListener('click', () => this.switchValue = elem.value);
-        });
-        this.config.validation === '1' &&
         this.form.addEventListener("submit", () => this.isValidated(this.toSubmit, this.label));
-    };
-    checkSwitch = () => {
-        this.config.switch && this.config.switch.forEach(elem => {
-            if (elem.checked) this.switchValue = elem.value;
-        });
     };
 
     reset = () => {
-        this.makeVisibleListItem();
+        const radioSwitch = document.querySelectorAll(`#${this.config.container} .target-sys-station-input`);
 
+        this.makeVisibleListItem();
         this.toSubmit.value = '';
         this.selected.textContent = '';
         this.selected.classList.add('d-none');
@@ -191,7 +182,7 @@ class InputDropdown {
         this.switchValue = null;
         this.dropdownList.classList.add('visually-hidden');
 
-        this.config.switch && this.config.switch.forEach(elem => elem.checked = false);
+        radioSwitch && radioSwitch.forEach(elem => elem.checked = false);
     };
 
     makeVisibleListItem = () => {
