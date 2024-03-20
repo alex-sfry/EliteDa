@@ -300,7 +300,7 @@ $this->title = 'Commodities';
         echo '<br> ====================Market=========================== <br>';
         isset($market) && VarDumper::dump($market, 10, true);
         echo '<br> ====================Result=========================== <br>';
-        isset($provider) && VarDumper::dump($provider->models[1], 10, true);
+        isset($provider) && VarDumper::dump($provider, 10, true);
         echo '<br> ======================Models========================= <br>';
         isset($models) && VarDumper::dump($models, 10, true);
         echo '<br> =============================================== <br>';

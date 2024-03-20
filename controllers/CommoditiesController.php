@@ -61,7 +61,6 @@ class CommoditiesController extends Controller
             $params['provider'] = $provider;
             $params['models'] = $models;
             $params['result'] = $result;
-//            $params['market'] = $c_model->getMarketItem('sol', 'daedalus');
             return $this->render('index', $params);
         }
 
