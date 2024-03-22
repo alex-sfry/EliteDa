@@ -1,12 +1,5 @@
 @import 'fonts';
 @import "vars";
-@import 'header';
-@import 'footer';
-@import 'cTable';
-@import 'cForm';
-@import 'tradeRoutes';
-@import 'movingArrows';
-@import 'mixins';
 @import "../../../node_modules/bootstrap/scss/functions.scss";
 @import "../../../node_modules/bootstrap/scss/variables.scss";
 
@@ -36,23 +29,130 @@ body {
     overflow-x: hidden;
 }
 
+.sintony-reg {
+    font-family: 'SintonyRegular', sans-serif;
+    font-weight: 400;
+}
+
+.sintony-bold {
+    font-family: 'SintonyBold', sans-serif;
+    font-weight: 700;
+}
+
+.font-inherit {
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+}
+
 .body-wrapper {
     height: 100vh;
     background-color: $main-background;
     overflow-y: scroll;
 }
 
+/**
+* pagination styles
+*/
+
+.prev-page {
+    margin-left: 4px;
+}
+
+.next-page {
+    margin-right: 4px;
+}
+
+.c-pagination-cnt {
+    .pagination {
+        @extend .prev-page;
+        @extend .next-page;
+        margin-right: 16px;
+        margin-bottom: 0;
+    }
+}
+
+/**
+* header styles
+*/
+.header {
+    height: 96px;
+    max-height: 96px;
+    
+    .logo,
+    .navbar-brand:hover {
+        font-family: 'EuroCaps', sans-serif;
+        font-size: $f-size-logo;
+        color: $custom-orange !important;
+    }
+    
+    .menu {
+        &__item {
+            position: relative;
+            width: fit-content;
+        }
+        
+        &__link::after {
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            content: "";
+            width: 0;
+            height: 3px;
+            background-color: $custom-light-orange;
+            transition-property: width, left;
+            transition-duration: 200ms;
+            transition-timing-function: linear;
+        }
+        
+        &__link:hover:not(.active) {
+            &::after {
+                left: 0;
+                width: 100%;
+            }
+        }
+        
+        &__link {
+            @extend .sintony-bold;
+            letter-spacing: 1px;
+            font-size: 1rem;
+        }
+        
+        &__link:hover,
+        &__link.active {
+            color: $custom-light-orange !important;
+        }
+    }
+}
+
+/**
+* footer styles
+*/
+.footer {
+    height: auto;
+    
+    p {
+        @extend .sintony-reg;
+        font-size: 0.625rem;
+    }
+}
+
+/**
+* main styles
+*/
 main {
     font-family: 'SintonyRegular', sans-serif;
     font-weight: 400;
     background-color: $main-background;
     
     h1 {
-        @include fnt('SintonyBold', 700, 2rem);
+        @extend .sintony-bold;
+        font-size: 2rem;
     }
     
     .nav-button {
-        @include fnt-lett('SintonyBold', 700, 1.1px);
+        @extend .sintony-bold;
+        letter-spacing: 1.1px;
         transition: all 0.2s linear;
     }
     
@@ -63,12 +163,15 @@ main {
     }
 }
 
+/**
+* generic form styles
+*/
 form {
     &-check-input:focus {
         box-shadow: none;
         border-color: $border-color
     }
-
+    
     &-check-input:checked {
         border-color: $custom-light-orange;
     }
@@ -82,9 +185,83 @@ form {
     }
 }
 
+/**
+* commodities form and result styles
+*/
+.c-form {
+    @extend .sintony-bold;
+    letter-spacing: 2px;
+    
+    .dropdown {
+        .btn-outline-dark {
+            @extend .font-inherit;
+        }
+        
+        .btn-outline-dark:active,
+        .btn-outline-dark:focus,
+        .btn-outline-dark {
+            color: $dark;
+        }
+        
+        .btn-outline-dark:hover {
+            background-color: $custom-light-orange !important;
+            color: $dark;
+        }
+    }
+    
+    select,
+    option {
+        @extend .sintony-reg;
+        letter-spacing: 2px;
+    }
+    
+    .btn-violet {
+        @extend .sintony-bold;
+        letter-spacing: 4px;
+    }
+    
+    .min-lett-spacing {
+        letter-spacing: 1px;
+    }
+    
+    .buy-sell-switch {
+        width: 100%;
+        
+        label {
+            background-color: $secondary-bg-subtle;
+            width: 72px;
+            max-width: fit-content;
+            font-size: inherit;
+        }
+        
+        label:hover,
+        .btn-check:checked + .btn {
+            background-color: $custom-light-orange;
+        }
+    }
+    
+    @media screen and (min-width: 1031px) {
+        .min-lett-spacing {
+            letter-spacing: 2px;
+        }
+    }
+}
+
 .c-loading {
     width: fit-content;
     box-shadow: 0 0 4px 4px $light-bg-subtle;
+}
+
+.c-result-legend {
+    width: 228px;
+    
+   &-item {
+        height: 20px;
+       
+       &-color {
+           width: 40px;
+       }
+    }
 }
 
 .c-form,
@@ -92,10 +269,187 @@ form {
     font-size: 0.875rem;
 }
 
-.prev-page {
-    margin-left: 4px;
+.c-table {
+    thead {
+        background-color: $custom-light-orange !important;
+        
+        tr {
+            
+            th:nth-child(6),
+            th:nth-child(9),
+            th:nth-child(10) {
+                a.sorted::after {
+                    content: "";
+                    padding: 8px;
+                    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up" viewBox="0 0 16 16"><path d="M3.204 11h9.592L8 5.519zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659" /></svg>');
+                    background-repeat: no-repeat;
+                    background-position: top;
+                }
+                
+                a.sorted.asc::after {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+        
+        th:nth-child(6):hover,
+        th:nth-child(9):hover,
+        th:nth-child(10):hover {
+            background-color: $warning !important;
+            
+            a {
+                color: $light !important;
+            }
+        }
+    }
 }
 
-.next-page {
-    margin-right: 4px;
+tr {
+    td,
+    th {
+        white-space: nowrap;
+        width: 300px;
+    }
+    
+    td {
+        border: 0;
+    }
+    
+    td:first-child,
+    th:first-child {
+        min-width: fit-content;
+        width: fit-content;
+        max-width: fit-content;
+    }
+    
+    td:nth-child(2),
+    th:nth-child(2) {
+        min-width: fit-content;
+        width: 228px;
+        max-width: fit-content;
+    }
+    
+    td:nth-child(3),
+    th:nth-child(3) {
+        min-width: fit-content;
+        width: 152px;
+        max-width: 160px;
+    }
+    
+    td:nth-child(4),
+    th:nth-child(4) {
+        min-width: fit-content;
+        max-width: 56px;
+    }
+    
+    td:nth-child(5),
+    th:nth-child(5) {
+        min-width: fit-content;
+        width: 140px;
+        max-width: fit-content;
+    }
+    
+    td:nth-child(6),
+    th:nth-child(6) {
+        min-width: 78px;
+        max-width: 78px;
+    }
+    
+    td:nth-child(7),
+    th:nth-child(7) {
+        min-width: 112px;
+        max-width: 112px;
+    }
+    
+    td:nth-child(8),
+    th:nth-child(8) {
+        min-width: 76px;
+        max-width: 76px;
+    }
+    
+    td:nth-child(9) {
+        @extend .sintony-bold
+    }
+    
+    td:nth-child(9),
+    th:nth-child(9) {
+        min-width: fit-content;
+        width: 80px;
+        max-width: max-content;
+    }
+    
+    td:nth-child(10),
+    th:nth-child(10) {
+        min-width: 128px;
+        max-width: 128px;
+    }
 }
+
+/*
+* Trade Routes page styles
+*/
+.tr-route {
+    &-block {
+        background-color: #0b5ed7;
+    }
+    
+    .tr-info-block ul li,
+    .tr-info-block-mid {
+        font-size: 0.875rem;
+    }
+    
+    .tr-info-block {
+        background-color: #664d03;
+        
+        li {
+            list-style: none;
+        }
+    }
+}
+
+/*
+* moving arrows styles
+*/
+.arrow {
+    position: absolute;
+    
+    span {
+        display: block;
+        width: 1.5vw;
+        height: 1.5vw;
+        border-bottom: 5px solid $custom-light-orange;
+        border-right: 5px solid $custom-light-orange;
+        transform: rotate(45deg);
+        margin: -10px;
+        animation: animate 2s infinite;
+    }
+    
+    span:nth-child(2) {
+        animation-delay: -0.2s;
+    }
+    
+    span:nth-child(3) {
+        animation-delay: -0.4s;
+    }
+}
+
+.arrow.arrow-right {
+    top: 32%;
+    left: 45%;
+    transform: rotate(-90deg);
+}
+
+@keyframes animate {
+    0% {
+        opacity: 0;
+        transform: rotate(45deg) translate(-20px, -20px);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(45deg) translate(20px, 20px);
+    }
+}
+

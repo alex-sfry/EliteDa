@@ -45,7 +45,7 @@ export default {
             cacheGroups: {
                 bootstrap: {
                     test: /bootstrap.scss/,
-                    name: 'bootstrap.min',
+                    name: 'bootstrap',
                     type: 'css/mini-extract',
                     chunks: 'all',
                     enforce: true,

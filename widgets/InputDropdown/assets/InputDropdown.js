@@ -93,7 +93,7 @@ class InputDropdown {
         }
 
         if (this.config.ajax) {
-            const radioSwitch = document.querySelectorAll(`#${this.config.container} .target-sys-station-input`);
+            const radioSwitch = document.querySelectorAll(`#${this.config.container} .idd-switch`);
 
             if (radioSwitch.length > 0) {
                 if (!radioSwitch[0].checked && !radioSwitch[1].checked) return;
@@ -171,7 +171,7 @@ class InputDropdown {
     };
 
     reset = () => {
-        const radioSwitch = document.querySelectorAll(`#${this.config.container} .target-sys-station-input`);
+        const radioSwitch = document.querySelectorAll(`#${this.config.container} .idd-switch`);
 
         this.makeVisibleListItem();
         this.toSubmit.value = '';

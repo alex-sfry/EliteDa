@@ -2,6 +2,11 @@
     width: 100%;
 }
 
+.c-select p.invalid-feedback {
+    top: 18rem;
+    width: fit-content;
+}
+
 .c-select .dropdown .dropdown-toggle,
 .c-select .dropdown .selected-items {
     font-family: 'SintonyRegular', sans-serif;
@@ -60,15 +65,15 @@
     background-color: var(--bs-cyan);
     padding-top: 3px;
 }
-.c-select .selected-items > div  button.close {
+.c-select .selected-items > div button.close {
     width: 20px;
     background: none;
 }
-.c-select .selected-items > div  button.close svg {
+.c-select .selected-items > div button.close svg {
     opacity: 0.6;
     margin-bottom: 3px;
 }
 
-.c-select .selected-items > div  button.close svg:hover {
+.c-select .selected-items > div button.close svg:hover {
     opacity: 1;
 }

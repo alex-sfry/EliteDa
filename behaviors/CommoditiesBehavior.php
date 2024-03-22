@@ -253,6 +253,9 @@ class CommoditiesBehavior extends Behavior
         'wreckagecomponents' => 'Wreckage Components',
     ];
 
+    /**
+     * @return array|string[]
+     */
     public function getCommodities(): array
     {
         return $this->commodities;

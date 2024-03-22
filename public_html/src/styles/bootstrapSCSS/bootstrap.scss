@@ -18,7 +18,9 @@ $form-check-input-checked-bg-color: $custom-light-orange;
 $custom-colors: (
   "violet": #7752FE,
   "light-orange": #FC9918,
-  "custom-orange": #F14A16
+  "custom-orange": #F14A16,
+  "header": #370665,
+  "custom-white": #FBFBFB
 );
 
 $theme-colors: map-merge($theme-colors,  $custom-colors);

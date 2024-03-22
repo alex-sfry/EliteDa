@@ -1,12 +1,11 @@
 import '../styles/scss/style.scss';
-// import '../../../widgets/InputDropdown/assets/InputDropdown.css';
 // import '../styles/bootstrapSCSS/bootstrap.scss';
 import {commoditiesForm} from './commodities.js';
 import {tradeRouteForm} from './tradeRoutes.js';
 import {isValidated} from './isValidated.js';
 
 const initHeader = () => {
-    document.querySelectorAll('.menu-link').forEach(item => {
+    document.querySelectorAll('.menu__link').forEach(item => {
         if (item.getAttribute('href') === window.location.pathname ||
             window.location.pathname.includes(item.getAttribute('href'))) {
             item.classList.add('active');

@@ -28,7 +28,7 @@ require(dirname(__DIR__, 2) . '/data/c_form_data.php');
 
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
-    'sort_options' => ['Profit' => 'Profit', 'Updated at (time)' => 'Updated_at', 'Distance (LY)' => 'Distance'],
+    'sort_options' => ['Price' => 'Price', 'Updated_at' => 'Updated at (time)', 'Distance' => 'Distance (LY)'],
     'max_dist_from_ref' => ['Any' => 'Any', '25' => '25 LY', '50' => '50 LY', '100' => '100 LY', '250' => '250 LY'],
     'max_dist_from_star' => [
         'Any' => 'Any',
@@ -54,13 +54,13 @@ $this->title = 'Commodities';
 ?>
 <main class="flex-grow-1 d-flex flex-column justify-content-between">
     <div class='wrapper d-flex flex-column h-100'>
-        <div class='cnt container-xxl px-3 d-flex'>
+        <div class='container-xxl px-3 d-flex'>
             <div class='d-flex flex-column w-100 gap-3'>
                 <h1 class='mt-2 text-center fs-2 text-light-orange'><?= Html::encode($this->title) ?></h1>
                 <?= Html::beginForm(['/commodities/index'], 'post', [
                     'id' => 'c-form',
                     'novalidate' => true,
-                    'class' => 'c-form py-2 px-2 rounded-2 w-100 d-flex flex-column needs-validation',
+                    'class' => 'c-form bg-custom-white py-2 px-2 rounded-2 w-100 d-flex flex-column needs-validation',
                 ]) ?>
                 <div class='container-xxl'>
                     <div class='d-flex flex-column justify-content-between gap-4'>
@@ -71,7 +71,7 @@ $this->title = 'Commodities';
                                     'container' => 'c-custom-select',
                                     'error' => $c_error,
                                     'selected' => $form_model->commodities,
-                                    'search' => 'c-cselect-search',
+                                    'search' => 'c-select-search',
                                     'to_submit' => 'c-hiddenSelect',
                                     'placeholder' => 'selected commodities',
                                     'label_main' => 'Commodities:',
@@ -106,7 +106,7 @@ $this->title = 'Commodities';
                                     <?= Html::dropDownList(
                                         'landingPadSize',
                                         $form_model->landingPadSize,
-                                        $incl_surface,
+                                        $pad_sizes,
                                         [
                                             'class' => [
                                                 'form-select',
@@ -126,7 +126,7 @@ $this->title = 'Commodities';
                                     <?= Html::dropDownList(
                                         'includeSurface',
                                         $form_model->includeSurface,
-                                        $pad_sizes,
+                                        $incl_surface,
                                         [
                                             'class' => [
                                                 'form-select',
@@ -246,8 +246,8 @@ $this->title = 'Commodities';
                         </div>
                         <div>
                             <!--buy/sell block-->
-                            <div class='buy-sell-switch ol-xl-2 d-flex
-                                    text-center justify-content-center align-content-center gap-3'>
+                            <div class='buy-sell-switch ol-xl-2 d-flex text-center justify-content-center
+                            align-content-center gap-3'>
                                 <div class=" text-end">
                                     <input
                                         class='btn-check'
@@ -291,34 +291,41 @@ $this->title = 'Commodities';
                     </div>
                 </div>
                 <?= Html::endForm() ?>
+                <?= $result ?? null; ?>
             </div>
         </div>
     </div>
     <div class="bg-light mt-3">
         <?php
-        isset($post) && VarDumper::dump($post, 10, true);
-        echo '<br> ====================Market=========================== <br>';
-        isset($market) && VarDumper::dump($market, 10, true);
-        echo '<br> ====================Result=========================== <br>';
-        isset($provider) && VarDumper::dump($provider, 10, true);
-        echo '<br> ======================Models========================= <br>';
-        isset($models) && VarDumper::dump($models, 10, true);
-        echo '<br> =============================================== <br>';
+//        isset($post) && VarDumper::dump($post, 10, true);
+//        echo '<br> ====================Market=========================== <br>';
+//        isset($date) && VarDumper::dump(Yii::$app->formatter->asDuration($date), 10, true);
+//        echo '<br> ====================Market=========================== <br>';
+//        isset($market) && VarDumper::dump($market, 10, true);
+//        echo '<br> ====================Result=========================== <br>';
+//        isset($provider) && VarDumper::dump($provider, 10, true);
+//        echo '<br> ======================Models========================= <br>';
+//        isset($models) && VarDumper::dump($models, 10, true);
+//        echo '<br> =============================================== <br>';
+//        isset($result) && VarDumper::dump($result, 10, true);
+//        echo '<br> =============================================== <br>';
 
-        if (isset($pagination)) {
-            $pager = LinkPager::widget([
-                'pagination' => $pagination,
-                'disableCurrentPageButton' => true,
-                'maxButtonCount' => 5,
-                'firstPageLabel' => 'first',
-                'lastPageLabel' => 'last',
-                'prevPageCssClass' => 'prev-page',
-                'nextPageCssClass' => 'next-page'
-            ]);
-
-            echo $page_count_info . '<br>';
-            echo $pager;
-        }
+//        if (isset($pagination)) {
+//            $pager = LinkPager::widget([
+//                'pagination' => $pagination,
+//                'disableCurrentPageButton' => true,
+//                'maxButtonCount' => 5,
+//                'firstPageLabel' => 'first',
+//                'lastPageLabel' => 'last',
+//                'prevPageCssClass' => 'prev-page',
+//                'nextPageCssClass' => 'next-page'
+//            ]);
+//
+//            echo '<div class="d-flex justify-content-center align-items-center">';
+//            echo $page_count_info . '<br>';
+//            echo $pager;
+//            echo '</div>';
+//        }
         ?>
     </div>
 </main>

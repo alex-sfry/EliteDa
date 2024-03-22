@@ -46,30 +46,17 @@ $select_options = [
 ];
 extract($select_options);
 
-$targetSysStation_cls = [
-    'w-100',
-    'p-1',
-    'border',
-    'rounded-2',
-    'shadow-none',
-    'bg-transparent',
-    'fw-normal',
-    'sys-search',
-    'mb-1',
-    'border-dark'
-];
-
 $this->title = 'Trade routes';
 ?>
 <main class="flex-grow-1 d-flex flex-column justify-content-between">
     <div class='wrapper d-flex flex-column h-100'>
-        <div class='cnt container-xxl px-3 d-flex'>
+        <div class='container-xxl px-3 d-flex'>
             <div class='d-flex flex-column w-100 gap-3'>
                 <h1 class='mt-2 text-center fs-2 text-light-orange'><?= Html::encode($this->title) ?></h1>
                 <?= Html::beginForm(['/trade-routes/index'], 'post', [
                     'id' => 'tr-form',
                     'novalidate' => true,
-                    'class' => 'c-form py-2 px-2 rounded-2 w-100 d-flex flex-column needs-validation',
+                    'class' => 'c-form bg-custom-white py-2 px-2 rounded-2 w-100 d-flex flex-column needs-validation',
                 ]) ?>
                     <div class='container-xxl'>
                         <div class='d-flex flex-column justify-content-between gap-4'>
@@ -212,7 +199,7 @@ $this->title = 'Trade routes';
                                                 <?= Html::dropDownList(
                                                     'landingPadSize',
                                                     $form_model->landingPadSize,
-                                                    $incl_surface,
+                                                    $pad_sizes,
                                                     [
                                                         'class' => [
                                                         'form-select',
@@ -232,7 +219,7 @@ $this->title = 'Trade routes';
                                                 <?= Html::dropDownList(
                                                     'includeSurface',
                                                     $form_model->includeSurface,
-                                                    $pad_sizes,
+                                                    $incl_surface,
                                                     [
                                                         'class' => [
                                                             'form-select',

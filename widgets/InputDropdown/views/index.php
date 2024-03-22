@@ -78,10 +78,11 @@ $classes = [
 ];
 
 $classes_radio = [
-    'target-sys-station-input',
+    'idd-switch',
     'form-check-input',
     'me-3',
     'ms-1',
+    'shadow-none'
 ];
 
 if (isset($error) && $error === 'is-invalid') {
@@ -98,8 +99,7 @@ if (isset($error) && $error === 'is-invalid') {
                 <?= $label_main ?>
             </label>
             <div class="d-flex">
-                <label
-                    class="target-sys-station min-lett-spacing fw-bold" for="target_<?= $label_switch1 ?>">
+                <label class="min-lett-spacing fw-bold" for="target_<?= $label_switch1 ?>">
                     <?= $label_switch1 ?>
                 </label>
                 <?= HTML::radio(
@@ -112,7 +112,7 @@ if (isset($error) && $error === 'is-invalid') {
                         'value' => $label_switch1,
                     ]
                 ); ?>
-                <label class="target-sys-station min-lett-spacing fw-bold" for="target_<?= $label_switch2 ?>">
+                <label class="min-lett-spacing fw-bold" for="target_<?= $label_switch2 ?>">
                     <?= $label_switch2 ?>
                 </label>
                 <?= HTML::radio(
