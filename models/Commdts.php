@@ -96,7 +96,8 @@ class Commdts extends BaseCommodities
         return new ActiveDataProvider(config: [
             'query' => $prices,
             'pagination' => [
-                'defaultPageSize' => 10,
+                'pageSizeLimit' => [0, 100],
+                'defaultPageSize' => 100,
             ],
             'sort' => [
                 'attributes' => [

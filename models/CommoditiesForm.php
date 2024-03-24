@@ -4,7 +4,8 @@ namespace app\models;
 
 class CommoditiesForm extends \yii\base\Model
 {
-    public string $refStation = '';
+//    public string $refStation = '';
+    public string $refSystem = '';
     public string $landingPadSize = '';
     public string $includeSurface = '';
     public string $sortBy = '';
@@ -18,7 +19,7 @@ class CommoditiesForm extends \yii\base\Model
     public function rules(): array
     {
         return [
-            [['refStation', 'commodities'], 'required'],
+            [[/*'refStation'*/'refSystem', 'commodities'], 'required'],
             [[
                 'landingPadSize',
                 'includeSurface',

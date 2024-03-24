@@ -87,15 +87,15 @@ $this->title = 'Commodities';
                                     <?= InputDropdown::widget([
                                         'container' => 'c-ref-idd',
                                         'error' => $ref_error,
-                                        'selected' => $form_model->refStation,
+                                        'selected' => $form_model->refSystem,
                                         'search' => 'ref-idd-search',
                                         'to_submit' => 'ref-to-submit',
                                         'placeholder' => 'Enter station name here',
                                         'ajax' => true,
-                                        'endpoint' => '/stations/system-station/?sys-st=',
+                                        'endpoint' => '/systems/system/?sys=',
                                         'label_main' => 'Ref. station:',
                                         'toggle_btn_text' => 'Get station list',
-                                        'name_main' => 'refStation',
+                                        'name_main' => 'refSystem',
                                         'required' => 'required'
                                     ]); ?>
                                 </div>
@@ -294,38 +294,5 @@ $this->title = 'Commodities';
                 <?= $result ?? null; ?>
             </div>
         </div>
-    </div>
-    <div class="bg-light mt-3">
-        <?php
-//        isset($post) && VarDumper::dump($post, 10, true);
-//        echo '<br> ====================Market=========================== <br>';
-//        isset($date) && VarDumper::dump(Yii::$app->formatter->asDuration($date), 10, true);
-//        echo '<br> ====================Market=========================== <br>';
-//        isset($market) && VarDumper::dump($market, 10, true);
-//        echo '<br> ====================Result=========================== <br>';
-//        isset($provider) && VarDumper::dump($provider, 10, true);
-//        echo '<br> ======================Models========================= <br>';
-//        isset($models) && VarDumper::dump($models, 10, true);
-//        echo '<br> =============================================== <br>';
-//        isset($result) && VarDumper::dump($result, 10, true);
-//        echo '<br> =============================================== <br>';
-
-//        if (isset($pagination)) {
-//            $pager = LinkPager::widget([
-//                'pagination' => $pagination,
-//                'disableCurrentPageButton' => true,
-//                'maxButtonCount' => 5,
-//                'firstPageLabel' => 'first',
-//                'lastPageLabel' => 'last',
-//                'prevPageCssClass' => 'prev-page',
-//                'nextPageCssClass' => 'next-page'
-//            ]);
-//
-//            echo '<div class="d-flex justify-content-center align-items-center">';
-//            echo $page_count_info . '<br>';
-//            echo $pager;
-//            echo '</div>';
-//        }
-        ?>
     </div>
 </main>

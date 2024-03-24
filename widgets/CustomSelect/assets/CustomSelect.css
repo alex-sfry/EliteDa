@@ -17,11 +17,11 @@
 }
 .c-select .dropdown .dropdown-menu .c-list {
     overflow-y: auto;
-    max-height: calc(7 * (var(--dd-font-size-calc) + 7px) * 2);
+    max-height: calc(7 * (1rem + 7px) * 2);
     background-color: var(--bs-dropdown-bg);
 }
 .c-select .dropdown .dropdown-menu .c-list .c-list-item {
-    font-size: var(--dd-font-size);
+    font-size: 0.875rem;
 }
 
 .c-select .dropdown .dropdown-menu .dropdown-item {
@@ -47,7 +47,7 @@
 }
 
 .c-select .dropdown .dropdown-menu .form-control:focus {
-    border-color: var(--input-border-color);
+    border-color: var(--bs-gray-300);
 }
 
 .c-select .dropdown .dropdown-menu > input::placeholder {

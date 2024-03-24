@@ -55,7 +55,7 @@ class InputDropdown extends Widget
                 'selected_radio' => $this->selected_radio,
                 'endpoint1' => $this->endpoint1,
                 'endpoint2' => $this->endpoint2,
-                'required' => $this->required,
+                'required' => $this->required
             ]
         );
     }

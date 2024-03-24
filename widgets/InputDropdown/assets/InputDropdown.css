@@ -1,6 +1,6 @@
 .c-dropdown .dropdown .dropdown-menu {
     border-color: var(--bs-dark-border-subtle);
-    max-height: calc(8 * (var(--dd-font-size-calc) + 7px) * 2);
+    max-height: calc(8 * (1rem + 7px) * 2);
     overflow-y: auto;
     background-color: var(--bs-dropdown-bg);
 }
@@ -16,7 +16,7 @@
 }
 
 .c-dropdown .dropdown .dropdown-menu .input-dd-fs {
-    font-size: var(--dd-font-size);
+    font-size: 0.875rem;
 }
 
 .c-dropdown .dropdown-item,

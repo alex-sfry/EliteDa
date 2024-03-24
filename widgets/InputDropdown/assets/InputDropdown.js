@@ -18,6 +18,8 @@ class InputDropdown {
 
         // local state to prevent fetch on dropdown close (click to close)
         this.searchValue = '';
+        this.lastSearchValue = 'test';
+        // =========================================
         this.setEventListeners();
     }
 
@@ -92,14 +94,15 @@ class InputDropdown {
             return;
         }
 
-        if (this.config.ajax) {
+        if (this.config.ajax && this.ddSearch.value !== this.lastSearchValue) {
+            console.log('fetch')
             const radioSwitch = document.querySelectorAll(`#${this.config.container} .idd-switch`);
 
             if (radioSwitch.length > 0) {
                 if (!radioSwitch[0].checked && !radioSwitch[1].checked) return;
                 if (radioSwitch[0].checked) this.switchValue = this.config.switchName1;
                 if (radioSwitch[1].checked) this.switchValue = this.config.switchName2;
-                console.log(this.switchValue)
+
                 switch (this.switchValue) {
                     case this.config.switchName1 :
                         this.endpoint = this.config.endpoint1;
@@ -117,29 +120,33 @@ class InputDropdown {
                 this.showNotFound();
                 return;
             }
-        } else this.ddLisItems = this.getListItems(this.ddSearch.value);
-
-        this.dropdownList.innerHTML = '';
-        this.dropdownList.classList.remove('visually-hidden');
-
-        if (this.ddLisItems.length <= 1) {
-            if (this.ddLisItems.length === 0) {
-                return this.showNotFound();
-            }
-
-            if (this.ddLisItems[0] === this.selected.textContent) {
-                return this.showNotFound();
-            }
         }
 
-        this.ddLisItems.forEach(item => {
-            if (item === this.selected.textContent) return;
+        if (this.ddSearch.value !== this.lastSearchValue) {
+            this.dropdownList.innerHTML = '';
+            this.dropdownList.classList.remove('visually-hidden');
 
-            const listItemElem = document.createElement('li');
-            listItemElem.classList.add('form-dropdown', 'dropdown-item', 'fw-normal', 'input-dd-fs');
-            listItemElem.textContent = item;
-            this.dropdownList.appendChild(listItemElem);
-        });
+            if (this.ddLisItems.length <= 1) {
+                if (this.ddLisItems.length === 0) {
+                    return this.showNotFound();
+                }
+
+                if (this.ddLisItems[0] === this.selected.textContent) {
+                    return this.showNotFound();
+                }
+            }
+
+            this.ddLisItems.forEach(item => {
+                if (item === this.selected.textContent) return;
+
+                const listItemElem = document.createElement('li');
+                listItemElem.classList.add('form-dropdown', 'dropdown-item', 'fw-normal', 'input-dd-fs');
+                listItemElem.textContent = item;
+                this.dropdownList.appendChild(listItemElem);
+            });
+
+            this.lastSearchValue = this.ddSearch.value;
+        } else this.dropdownList.classList.remove('visually-hidden');
     };
 
     setInvalid = (elem, elemLabel) => {
