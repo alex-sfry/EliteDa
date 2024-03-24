@@ -20,10 +20,11 @@ class Commdts extends BaseCommodities
     /**
      * @param string $sys_name
      * @param array $post
+     * @param int $limit
      *
      * @return \yii\data\ActiveDataProvider
      */
-    public function getPrices(string $sys_name, array $post): ActiveDataProvider
+    public function getPrices(string $sys_name, array $post, int $limit): ActiveDataProvider
     {
         extract($this->getCoords($sys_name));
         $c_symbols = [];
@@ -96,8 +97,8 @@ class Commdts extends BaseCommodities
         return new ActiveDataProvider(config: [
             'query' => $prices,
             'pagination' => [
-                'pageSizeLimit' => [0, 100],
-                'defaultPageSize' => 100,
+                'pageSizeLimit' => [0, $limit],
+                'defaultPageSize' => $limit,
             ],
             'sort' => [
                 'attributes' => [

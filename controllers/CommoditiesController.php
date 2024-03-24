@@ -53,7 +53,8 @@ class CommoditiesController extends Controller
             $sys_name = $params['post']['refSystem'];
 
             $c_model = new Commdts();
-            $provider = $c_model->getPrices($sys_name, $params['post']);
+            $limit = 100;
+            $provider = $c_model->getPrices($sys_name, $params['post'], $limit);
             $params['models']  = $c_model->modifyModels($provider->getModels());
 
             $sort = $provider->getSort();
@@ -96,31 +97,27 @@ class CommoditiesController extends Controller
                 $last_in_range = $pagination->totalCount - ($current_page - 1) * $page_size <= $page_size - 1 ?
                     $pagination->totalCount : $page_size * $current_page;
                 $params['page_count_info'] =
-                    "<div class='text-light me-3'>$first_in_range-$last_in_range / $pagination->totalCount</div>";
+                    "<div class='page-counter text-light me-3'>
+                            $first_in_range-$last_in_range / $pagination->totalCount
+                        </div>";
             }
 
             $params['pagination'] = $pagination;
-//            $params['provider'] = $provider;
-//            $params['date'] = $models[0]['time_diff'];
 
             if ($request->get()) {
                 $pagination->setPage($request->get('page') - 1);
                 $response = Yii::$app->response;
                 $response->format = Response::FORMAT_JSON;
                 $response->data = [
-                    'pagination' => $pagination,
+                    'limit' => $limit,
                     'links' => $pagination->getLinks(),
                     'page' => $pagination->getPage(),
                     'lastPage' => $pagination->pageCount,
-                    'data' => $params['models']
+                    'data' => $params['models'],
+                    'params' => $pagination->params,
+                    'totalCount' => $pagination->totalCount
                 ];
                 $response->send();
-
-//                return Json::encode([
-//                    'pagination' => $pagination,
-//                    'links' => $pagination->getLinks(),
-//                    'data' => $params['models']
-//                ]);
             }
             $params['result'] = $this->renderPartial('c_table', $params);
             return $this->render('index', $params);
