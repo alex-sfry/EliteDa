@@ -1,7 +1,6 @@
 export const commoditiesForm = (loader, removeLoader) => {
     const form = document.querySelector('#c-form');
     const table = document.querySelector('.c-table');
-    // const pagination = document.querySelector('.pagination');
     removeLoader(table);
 
     const handleSubmit = (e) => {
