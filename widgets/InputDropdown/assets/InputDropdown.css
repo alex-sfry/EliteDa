@@ -1,7 +1,5 @@
 .c-dropdown .dropdown .dropdown-menu {
-    border-color: var(--bs-dark-border-subtle);
     max-height: calc(8 * (1rem + 7px) * 2);
-    overflow-y: auto;
     background-color: var(--bs-dropdown-bg);
 }
 
@@ -26,12 +24,10 @@
 
 .search-selected {
     letter-spacing: 1px;
-    background-color: var(--bs-info);
     width: fit-content;
     height: fit-content;
 }
 
 .input-dd-selected-items .reset-input-dd {
     font-size: inherit;
-    line-height: 1;
 }
