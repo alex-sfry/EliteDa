@@ -6,8 +6,6 @@ use app\models\Commdts;
 use Yii;
 use app\models\CommoditiesForm;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Json;
-use yii\helpers\StringHelper;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\Response;
@@ -16,6 +14,7 @@ class CommoditiesController extends Controller
 {
     /**
      * @return string
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionIndex(): string
     {
@@ -38,6 +37,8 @@ class CommoditiesController extends Controller
         }
 
         if ($request->isPost || $params['post']) {
+            $request->isPost && $session->remove('c_sort');
+
             if (isset($params['post']['_csrf'])) {
                 unset($params['post']['_csrf']);
             }
@@ -54,7 +55,7 @@ class CommoditiesController extends Controller
 
             $c_model = new Commdts();
             $limit = 100;
-            $provider = $c_model->getPrices($sys_name, $params['post'], $limit);
+            $provider = $c_model->getPrices($sys_name, $params['post'], $limit, $session->get('c_sort'));
             $params['models']  = $c_model->modifyModels($provider->getModels());
 
             $sort = $provider->getSort();
@@ -79,9 +80,7 @@ class CommoditiesController extends Controller
                     $params['price_sort'] = null;
             }
 
-//            $params['price_sort_dir'] =
             $params['sort'] = $sort;
-
             $price =  $params['post']['buySellSwitch'] === 'sell' ? 'sell_price' : 'buy_price';
             $params['sort_price'] = $sort->createUrl($price);
             $params['sort_updated'] = $sort->createUrl('time_diff');
@@ -104,7 +103,11 @@ class CommoditiesController extends Controller
 
             $params['pagination'] = $pagination;
 
-            if ($request->get()) {
+            if ($request->get('page')) {
+                if ($session->get('c_sort')) {
+                    $sort->setAttributeOrders($session->get('c_sort'));
+                }
+
                 $pagination->setPage($request->get('page') - 1);
                 $response = Yii::$app->response;
                 $response->format = Response::FORMAT_JSON;
@@ -113,13 +116,35 @@ class CommoditiesController extends Controller
                     'links' => $pagination->getLinks(),
                     'page' => $pagination->getPage(),
                     'lastPage' => $pagination->pageCount,
-                    'data' => $params['models'],
+                    'data' => $provider->getModels(),
                     'params' => $pagination->params,
+                    'totalCount' => $pagination->totalCount,
+                    'attributeOrders' => $sort->attributeOrders,
+                    'c_sort' => $session->get('c_sort')
+                ];
+                $response->send();
+            }
+
+            if ($request->get('sort')) {
+                $session->set('c_sort', $sort->attributeOrders);
+                $provider->pagination->setPage(0);
+
+                $response = Yii::$app->response;
+                $response->format = Response::FORMAT_JSON;
+                $response->data = [
+                    'data' => $provider->getModels(),
+                    'sort' => $sort,
+                    'attributeOrders' => $sort->attributeOrders,
+                    'sortUrl' => $sort->createUrl(ltrim($request->get('sort'), '-')),
+                    'page' => $pagination->getPage(),
+                    'limit' => $limit,
                     'totalCount' => $pagination->totalCount
                 ];
                 $response->send();
             }
+            $params['sess'] = $session->get('c_sort');
             $params['result'] = $this->renderPartial('c_table', $params);
+
             return $this->render('index', $params);
         }
 

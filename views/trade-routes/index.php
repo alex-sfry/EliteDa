@@ -48,7 +48,7 @@ extract($select_options);
 
 $this->title = 'Trade routes';
 ?>
-<main class="flex-grow-1 d-flex flex-column justify-content-between">
+<main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between">
     <div class='wrapper d-flex flex-column h-100'>
         <div class='container-xxl px-3 d-flex'>
             <div class='d-flex flex-column w-100 gap-3'>
@@ -56,7 +56,8 @@ $this->title = 'Trade routes';
                 <?= Html::beginForm(['/trade-routes/index'], 'post', [
                     'id' => 'tr-form',
                     'novalidate' => true,
-                    'class' => 'c-form bg-custom-white py-2 px-2 rounded-2 w-100 d-flex flex-column needs-validation',
+                    'class' => 'c-form fs-7 bg-custom-white py-2 px-2 rounded-2 w-100 d-flex flex-column 
+                                    needs-validation',
                 ]) ?>
                     <div class='container-xxl'>
                         <div class='d-flex flex-column justify-content-between gap-4'>

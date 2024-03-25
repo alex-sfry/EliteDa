@@ -27,7 +27,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 </head>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
-    <div class="body-wrapper d-flex flex-column justify-content-between overflow-x-hidden">
+    <div class="body-wrapper bg-main-background d-flex flex-column justify-content-between overflow-x-hidden
+        overflow-y-scroll">
         <header id="header" class="header bg-header">
             <nav class="navbar navbar-expand-lg bg-header py-0 position-relative z-3">
                 <div class="container-xxl my-0 mx-auto px-3">
@@ -46,7 +47,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="menu navbar-nav d-flex w-100 flex-md-wrap justify-content-center
                             align-content-center gap-lg-5">
-                            <li class="menu__item nav-item text-center mb-2 mb-lg-0">
+                            <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative">
                                 <a
                                     class="menu__link nav-link text-uppercase text-light"
                                     aria-current="page"
@@ -55,13 +56,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                     commodities
                                 </a>
                             </li>
-                            <li class="menu__item nav-item text-center mb-2 mb-lg-0">
+                            <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative">
                                 <a class="menu__link nav-link text-uppercase text-light"
                                    href="<?= Url::to(['trade-routes/index']) ?>">
                                     trade routes
                                 </a>
                             </li>
-                            <li class="menu__item nav-item text-center mb-2 mb-lg-0">
+                            <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative">
                                 <a class="menu__link nav-link text-uppercase text-light" href="#">
                                     Engineering
                                 </a>

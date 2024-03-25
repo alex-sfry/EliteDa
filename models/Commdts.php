@@ -24,7 +24,7 @@ class Commdts extends BaseCommodities
      *
      * @return \yii\data\ActiveDataProvider
      */
-    public function getPrices(string $sys_name, array $post, int $limit): ActiveDataProvider
+    public function getPrices(string $sys_name, array $post, int $limit, $session): ActiveDataProvider
     {
         extract($this->getCoords($sys_name));
         $c_symbols = [];
@@ -94,6 +94,13 @@ class Commdts extends BaseCommodities
                 $sort_order = $price_sort_direction;
         }
 
+        $sort_rules = $sort_order === 'asc' ? SORT_ASC : SORT_DESC;
+
+        if ($session) {
+            $sort_attr = array_keys($session)[0];
+            $sort_rules = array_values($session)[0];
+        }
+
         return new ActiveDataProvider(config: [
             'query' => $prices,
             'pagination' => [
@@ -108,7 +115,7 @@ class Commdts extends BaseCommodities
                     'buy_price'
                 ],
                 'defaultOrder' => [
-                    $sort_attr => $sort_order === 'asc' ? SORT_ASC : SORT_DESC,
+                    $sort_attr => $sort_rules
                 ],
             ],
         ]);

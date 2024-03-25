@@ -52,7 +52,7 @@ extract($select_options);
 
 $this->title = 'Commodities';
 ?>
-<main class="flex-grow-1 d-flex flex-column justify-content-between">
+<main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between">
     <div class='wrapper d-flex flex-column h-100'>
         <div class='container-xxl px-3 d-flex'>
             <div class='d-flex flex-column w-100 gap-3'>
@@ -60,7 +60,8 @@ $this->title = 'Commodities';
                 <?= Html::beginForm(['/commodities/index'], 'post', [
                     'id' => 'c-form',
                     'novalidate' => true,
-                    'class' => 'c-form bg-custom-white py-2 px-2 rounded-2 w-100 d-flex flex-column needs-validation',
+                    'class' => 'c-form fs-7 bg-custom-white py-2 px-2 rounded-2 w-100 d-flex flex-column 
+                                    needs-validation',
                 ]) ?>
                 <div class='container-xxl'>
                     <div class='d-flex flex-column justify-content-between gap-4'>
@@ -246,7 +247,7 @@ $this->title = 'Commodities';
                         </div>
                         <div>
                             <!--buy/sell block-->
-                            <div class='buy-sell-switch ol-xl-2 d-flex text-center justify-content-center
+                            <div class='buy-sell-switch ol-xl-2 d-flex text-center justify-content-center w-100
                             align-content-center gap-3'>
                                 <div class=" text-end">
                                     <input

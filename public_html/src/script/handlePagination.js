@@ -1,23 +1,11 @@
+import {fetchData} from './fetchData.js';
+
 export const handlePagination = (first, prev, next, last, pageBtnQty) => {
     const pagination = document.querySelectorAll('.pagination');
     const getCurrentDataPage = () => document.querySelector('li.active > a').getAttribute('data-page');
 
-    const getNewPagaData = async (url) => {
-        try {
-            const res = await fetch(
-                url, {
-                    method: 'GET',
-                    headers: {
-                        contentType: 'application/json',
-                    },
-                });
-            if (res.ok) {
-                return await res.json();
-            }
-        }
-        catch (error) {
-            console.log(error.message);
-        }
+    const renderData = (data) => {
+
     };
 
     const renderNewPageBtns = (links, next, last, current, totalCount, limit, setEventListeners) => {
@@ -72,13 +60,14 @@ export const handlePagination = (first, prev, next, last, pageBtnQty) => {
         pageCounter.forEach(item => item.textContent =
             `${getCurrentDataPage() * limit + 1} - ${next * limit < totalCount ? next * limit : 
                 totalCount} / ${totalCount}`);
+
         setEventListeners();
     };
 
     const handleClick = async (e) => {
         e.preventDefault();
         if (e.currentTarget.parentElement.classList.contains('active')) return;
-        const res = await getNewPagaData(e.currentTarget.getAttribute('href'));
+        const res = await fetchData(e.currentTarget.getAttribute('href'));
         console.log(res);
         renderNewPageBtns(
             res.links,
@@ -89,11 +78,14 @@ export const handlePagination = (first, prev, next, last, pageBtnQty) => {
             res.limit, // qty per page
             setEventListeners
         );
+
+        renderData(res);
     };
 
     const setEventListeners = () => {
         document.querySelectorAll(`.page-item > .page-link`)
                 .forEach(item => item.addEventListener('click', handleClick));
     };
+
     setEventListeners();
 };

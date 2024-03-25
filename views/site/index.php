@@ -6,7 +6,7 @@ use yii\helpers\Url;
 $this->title = 'Elite Dangerous Assistant';
 ?>
 
-<main class="flex-grow-1 mb-4">
+<main class="flex-grow-1 mb-4 bg-main-background">
     <div class="container-xxl px-3">
         <div class="row justify-content-evenly row-gap-3 my-4">
             <h1 class="text-center mb-4 text-light-orange fs-2"><?= Html::encode($this->title) ?></h1>

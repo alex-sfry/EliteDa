@@ -3,14 +3,9 @@
 @import "../../../node_modules/bootstrap/scss/functions.scss";
 @import "../../../node_modules/bootstrap/scss/variables.scss";
 
-
-//li.page-item:focus {
-//
-//}
-
 .sort_arrow {
     content: "";
-    padding: 8px;
+    padding: $spacer * .5;
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="%23f8f9fa" class="bi bi-caret-up" viewBox="0 0 16 16"><path d="M3.204 11h9.592L8 5.519zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659"  /></svg>');
     background-repeat: no-repeat;
     background-position: top;
@@ -54,14 +49,11 @@ body {
 
 .body-wrapper {
     height: 100vh;
-    background-color: $main-background;
-    overflow-y: scroll;
 }
 
 /**
 * pagination styles
 */
-
 .prev-page {
     margin-left: 4px;
 }
@@ -76,6 +68,34 @@ body {
         @extend .next-page;
         margin-right: 16px;
         margin-bottom: 0;
+    }
+    
+    .pagination {
+        .page-item.first,
+        .page-item.last {
+            max-width: 38px;
+            
+            a {
+                padding-left: 4px;
+                padding-right: 4px;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 464px) {
+    .c-pagination-cnt {
+        .pagination {
+            .page-item.first,
+            .page-item.last {
+                max-width: 100%;
+                
+                a {
+                    padding-left: 12px;
+                    padding-right: 12px;
+                }
+            }
+        }
     }
 }
 
@@ -95,7 +115,6 @@ body {
     
     .menu {
         &__item {
-            position: relative;
             width: fit-content;
         }
         
@@ -150,11 +169,9 @@ body {
 main {
     font-family: 'SintonyRegular', sans-serif;
     font-weight: 400;
-    background-color: $main-background;
     
     h1 {
         @extend .sintony-bold;
-        font-size: 2rem;
     }
     
     .nav-button {
@@ -232,8 +249,6 @@ form {
     }
     
     .buy-sell-switch {
-        width: 100%;
-        
         label {
             background-color: $secondary-bg-subtle;
             width: 72px;
@@ -271,11 +286,6 @@ form {
     }
 }
 
-.c-form,
-.c-table {
-    font-size: 0.875rem;
-}
-
 .c-result-legend {
     h2::after {
         content: '';
@@ -290,8 +300,6 @@ form {
 
 .c-table {
     thead {
-        background-color: $custom-light-orange !important;
-        
         tr {
             th:nth-child(6),
             th:nth-child(9),
@@ -338,12 +346,7 @@ form {
 tr {
     td,
     th {
-        white-space: nowrap;
         width: 300px;
-    }
-    
-    td {
-        border: 0;
     }
     
     td:first-child,

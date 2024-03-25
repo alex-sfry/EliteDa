@@ -1,4 +1,5 @@
 import {handlePagination} from './handlePagination.js';
+import {tableSort} from './tableSort.js';
 
 export const commoditiesForm = (loader, removeLoader) => {
     const form = document.querySelector('#c-form');
@@ -15,6 +16,6 @@ export const commoditiesForm = (loader, removeLoader) => {
     };
 
     form.addEventListener('submit', (e) => handleSubmit(e));
-
     if (pagination) handlePagination('first', 'prev-page', 'next-page', 'last', 7);
+    if (table) tableSort('.c-table', handlePagination, pagination.innerHTML);
 };

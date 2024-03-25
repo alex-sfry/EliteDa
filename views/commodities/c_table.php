@@ -43,7 +43,7 @@ $table_head = [
         </div>
     </div>
 </div>
-<div class="c-pagination-cnt d-flex justify-content-center align-items-center my-0">
+<div class="c-pagination-cnt d-flex justify-content-center align-items-center my-0 flex-wrap">
     <?php
     if (isset($pagination)) {
         echo $page_count_info ?? null;
@@ -61,38 +61,41 @@ $table_head = [
     ?>
 </div>
 <div class="rounded-2 table-responsive">
-    <table class="c-table table table-striped mb-0 <?= count($models) > 0 ? 'overflow-x-auto' : 'overflow-hidden' ?>">
-        <thead>
+    <table class="c-table fs-7 table table-striped mb-0 <?= count($models) > 0 ? 'overflow-x-auto' :
+        'overflow-hidden' ?>">
+        <thead class="bg-light-orange">
             <tr class="border-0">
                 <?php foreach ($table_head as $item) : ?>
                     <?php echo match ($item) {
-                        'Price' => "<th class='bg-light-orange p-0 text-body' scope='col'>
+                        'Price' => "<th class='bg-light-orange p-0 text-body hover text-nowrap' scope='col'>
                             <a
                                 href='$sort_price'
-                                class='text-decoration-none d-block w-100 h-100 px-1 py-2 text-primary d-flex 
+                                class='sort text-decoration-none d-block w-100 h-100 px-1 py-2 text-primary d-flex 
                                 justify-content-between $price_sort'>
                                 $item
                            </a>
                         </th>",
                         'Updated' =>
-                        "<th class='bg-light-orange p-0 text-body' scope='col'>
+                        "<th class='bg-light-orange p-0 text-body text-nowrap' scope='col'>
                             <a
                                 href='$sort_updated'
-                                class='text-decoration-none d-block w-100 h-100 px-1 py-2 text-primary
+                                class='sort text-decoration-none d-block w-100 h-100 px-1 py-2 text-primary
                                 d-flex justify-content-between $time_sort'>
                                 $item
                             </a>
                         </th>",
                         'Dist.(LY)' =>
-                        "<th class='bg-light-orange p-0 text-body' scope='col'>
+                        "<th class='bg-light-orange p-0 text-body text-nowrap' scope='col'>
                             <a
                                 href='$sort_dist_ly'
-                                class='text-decoration-none d-block w-100 h-100 px-1 py-2 text-primary
+                                class='sort text-decoration-none d-block w-100 h-100 px-1 py-2 text-primary
                                 d-flex justify-content-between $d_ly_sort'>
                                 $item
                             </a>
                         </th>",
-                        default => "<th class='bg-light-orange text-body' scope='col' data-sort='asc'>$item</th>",
+                        default => "<th class='bg-light-orange text-body text-nowrap' scope='col' data-sort='asc'>
+                                                $item
+                                            </th>",
                     }; ?>
                 <?php endforeach; ?>
             </tr>
@@ -136,6 +139,6 @@ $table_head = [
 </div>
 <div class="bg-light mt-3">
     <?php
-//    VarDumper::dump($sort->attributeOrders, 10, true);
+//    VarDumper::dump($session, 10, true);
     ?>
 </div>

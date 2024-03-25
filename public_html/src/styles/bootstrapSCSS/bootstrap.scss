@@ -20,10 +20,19 @@ $custom-colors: (
   "light-orange": #FC9918,
   "custom-orange": #F14A16,
   "header": #370665,
-  "custom-white": #FBFBFB
+  "custom-white": #FBFBFB,
+  "main-background": #35589A
+);
+
+$h7-font-size: $font-size-base * 0.875;
+
+$custom-fonts: (
+7: $font-size-base * 0.875,
+8: $font-size-base * 0.75
 );
 
 $theme-colors: map-merge($theme-colors,  $custom-colors);
+$font-sizes: map-merge($font-sizes,  $custom-fonts);
 
 // ==================================================================
 
