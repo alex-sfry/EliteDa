@@ -103,46 +103,46 @@ class CommoditiesController extends Controller
 
             $params['pagination'] = $pagination;
 
-            if ($request->get('page')) {
-                if ($session->get('c_sort')) {
-                    $sort->setAttributeOrders($session->get('c_sort'));
-                }
-
-                $pagination->setPage($request->get('page') - 1);
-                $response = Yii::$app->response;
-                $response->format = Response::FORMAT_JSON;
-                $response->data = [
-                    'limit' => $limit,
-                    'links' => $pagination->getLinks(),
-                    'page' => $pagination->getPage(),
-                    'lastPage' => $pagination->pageCount,
-                    'data' => $provider->getModels(),
-                    'params' => $pagination->params,
-                    'totalCount' => $pagination->totalCount,
-                    'attributeOrders' => $sort->attributeOrders,
-                    'c_sort' => $session->get('c_sort')
-                ];
-                $response->send();
-            }
-
-            if ($request->get('sort')) {
-                $session->set('c_sort', $sort->attributeOrders);
-                $provider->pagination->setPage(0);
-
-                $response = Yii::$app->response;
-                $response->format = Response::FORMAT_JSON;
-                $response->data = [
-                    'data' => $provider->getModels(),
-                    'sort' => $sort,
-                    'attributeOrders' => $sort->attributeOrders,
-                    'sortUrl' => $sort->createUrl(ltrim($request->get('sort'), '-')),
-                    'page' => $pagination->getPage(),
-                    'limit' => $limit,
-                    'totalCount' => $pagination->totalCount
-                ];
-                $response->send();
-            }
-            $params['sess'] = $session->get('c_sort');
+//            if ($request->get('page')) {
+//                if ($session->get('c_sort')) {
+//                    $sort->setAttributeOrders($session->get('c_sort'));
+//                }
+//
+//                $pagination->setPage($request->get('page') - 1);
+//                $response = Yii::$app->response;
+//                $response->format = Response::FORMAT_JSON;
+//                $response->data = [
+//                    'limit' => $limit,
+//                    'links' => $pagination->getLinks(),
+//                    'page' => $pagination->getPage(),
+//                    'lastPage' => $pagination->pageCount,
+//                    'data' => $provider->getModels(),
+//                    'params' => $pagination->params,
+//                    'totalCount' => $pagination->totalCount,
+//                    'attributeOrders' => $sort->attributeOrders,
+//                    'c_sort' => $session->get('c_sort')
+//                ];
+//                $response->send();
+//            }
+//
+//            if ($request->get('sort')) {
+//                $session->set('c_sort', $sort->attributeOrders);
+//                $provider->pagination->setPage(0);
+//
+//                $response = Yii::$app->response;
+//                $response->format = Response::FORMAT_JSON;
+//                $response->data = [
+//                    'data' => $provider->getModels(),
+//                    'sort' => $sort,
+//                    'attributeOrders' => $sort->attributeOrders,
+//                    'sortUrl' => $sort->createUrl(ltrim($request->get('sort'), '-')),
+//                    'page' => $pagination->getPage(),
+//                    'limit' => $limit,
+//                    'totalCount' => $pagination->totalCount
+//                ];
+//                $response->send();
+//            }
+//            $params['sess'] = $session->get('c_sort');
             $params['result'] = $this->renderPartial('c_table', $params);
 
             return $this->render('index', $params);

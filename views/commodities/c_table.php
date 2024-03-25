@@ -11,6 +11,7 @@
  * @var string $price_sort
  * @var string $time_sort
  * @var string $d_ly_sort
+ * @var \yii\data\Pagination $pagination
  */
 
 use yii\bootstrap5\LinkPager;
@@ -50,7 +51,7 @@ $table_head = [
         echo LinkPager::widget([
             'id' => 'pgr01',
             'pagination' => $pagination,
-            'disableCurrentPageButton' => true,
+            'disableCurrentPageButton' => false,
             'maxButtonCount' => 7,
             'firstPageLabel' => 'first',
             'lastPageLabel' => 'last',
@@ -128,7 +129,7 @@ $table_head = [
     echo LinkPager::widget([
         'id' => 'pgr02',
         'pagination' => $pagination,
-        'disableCurrentPageButton' => true,
+        'disableCurrentPageButton' => false,
         'maxButtonCount' => 7,
         'firstPageLabel' => 'first',
         'lastPageLabel' => 'last',
