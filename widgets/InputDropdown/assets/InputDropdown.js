@@ -23,7 +23,7 @@ class InputDropdown {
         this.setEventListeners();
     }
 
-    ddListFillFetch= async (searchValue, endpoint) => {
+    async ddListFillFetch(searchValue, endpoint) {
         try {
             let data = null;
             const res = await fetch(
@@ -59,7 +59,7 @@ class InputDropdown {
         }
     };
 
-    handleDropdownItemClick = (e) => {
+    handleDropdownItemClick(e) {
         if (!e.target.classList.contains('form-dropdown')) return;
         if (e.target.textContent.trim() === this.selected.textContent) return;
 
@@ -73,7 +73,7 @@ class InputDropdown {
         this.searchValue = this.ddSearch.value;
     };
 
-    handleDropdownInput = async () => {
+    async handleDropdownInput() {
         if (!this.dropdownList.classList.contains('show')) return;
 
         if (!this.ddSearch.value) {
@@ -149,19 +149,19 @@ class InputDropdown {
         } else this.dropdownList.classList.remove('visually-hidden');
     };
 
-    setInvalid = (elem, elemLabel) => {
+    setInvalid(elem, elemLabel) {
         elemLabel.classList.add('text-danger', 'is-invalid');
         elem.classList.remove('border-dark');
         elem.classList.add('is-invalid', 'border-2', 'border-danger');
     };
 
-    setValid = (elem, elemLabel) => {
+    setValid(elem, elemLabel) {
         elemLabel.classList.remove('text-danger', 'is-invalid');
         elem.classList.add('border-dark');
         elem.classList.remove('is-invalid', 'border-2', 'border-danger');
     };
 
-    isValidated = (elem, label) => {
+    isValidated(elem, label) {
         if (!elem.checkValidity()) {
             this.setInvalid(this.ddSearch, label);
         }else {
@@ -169,15 +169,15 @@ class InputDropdown {
         }
     }
 
-    setEventListeners = () => {
-        this.ddToggle.addEventListener('click', this.handleDropdownInput);
+    setEventListeners() {
+        this.ddToggle.addEventListener('click', () => this.handleDropdownInput());
         this.dropdownList.addEventListener('click', (e) => this.handleDropdownItemClick(e));
-        this.resetBtn && this.resetBtn.addEventListener('click', this.reset);
+        this.resetBtn && this.resetBtn.addEventListener('click', () =>  this.reset());
 
         this.form.addEventListener("submit", () => this.isValidated(this.toSubmit, this.label));
     };
 
-    reset = () => {
+    reset() {
         const radioSwitch = document.querySelectorAll(`#${this.config.container} .idd-switch`);
 
         this.makeVisibleListItem();
@@ -192,12 +192,12 @@ class InputDropdown {
         radioSwitch && radioSwitch.forEach(elem => elem.checked = false);
     };
 
-    makeVisibleListItem = () => {
+    makeVisibleListItem() {
         const hiddenListItem = this.dropdownList.querySelector('.d-none');
         if (hiddenListItem) hiddenListItem.classList.remove('d-none');
     };
 
-    showNotFound = () => {
+    showNotFound () {
         this.dropdownList.style.textAlign = 'center';
         this.dropdownList.textContent = 'Not found';
     };

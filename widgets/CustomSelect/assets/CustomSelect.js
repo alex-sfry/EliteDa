@@ -13,7 +13,7 @@ class CustomSelect {
         this.setSelectedItemsDivMsg();
     }
 
-    initDropdownValues = () => {
+    initDropdownValues() {
         const selectedItems = this.selectedItemsDiv.querySelectorAll('div');
 
         selectedItems.forEach(selectedItem => {
@@ -23,7 +23,7 @@ class CustomSelect {
         });
     };
 
-    handleDropdownInput = (e) => {
+    handleDropdownInput(e) {
         this.getDropdownListItems().forEach(item => {
             !item.textContent.toLowerCase().trim().startsWith(e.target.value.toLowerCase().trim()) ?
                 item.classList.add('hidden') :
@@ -31,7 +31,7 @@ class CustomSelect {
         });
     };
 
-    handleDropdownItemClick = (e) => {
+    handleDropdownItemClick(e) {
         if (!e.target.classList.contains('c-list-item')) return;
 
         if (this.itemsToSubmitSelect.querySelectorAll('option').length === 5) return;
@@ -68,7 +68,7 @@ class CustomSelect {
         }
     };
 
-    handleDeleteSelectedItem = (e) => {
+    handleDeleteSelectedItem(e) {
         if (e.target.matches('button > .svg-close') || e.target.matches('button > .svg-close > path')) {
             const selItmDiv = e.target.closest(`#${this.config.container} .c-select .selected-items > div`);
             selItmDiv.remove();
@@ -88,21 +88,21 @@ class CustomSelect {
         this.setSelectedItemsDivMsg();
     };
 
-    setInvalid = (elemHidden, elemVisible, elemLabel) => {
+    setInvalid(elemHidden, elemVisible, elemLabel) {
         elemLabel.classList.add('text-danger');
         elemHidden.classList.add('is-invalid');
         elemVisible.classList.add('border-2', 'border-danger');
         elemVisible.classList.remove('border-dark');
     };
 
-    setValid = (elemHidden, elemVisible, elemLabel) => {
+    setValid(elemHidden, elemVisible, elemLabel) {
         elemLabel.classList.remove('text-danger');
         elemHidden.classList.remove('is-invalid');
         elemVisible.classList.remove('border-2', 'border-danger');
         elemVisible.classList.add('border-dark');
     };
 
-    isValidated = (elem, label) => {
+    isValidated(elem, label) {
         if (!elem.checkValidity()) {
             this.setInvalid(this.itemsToSubmitSelect, this.selectedItemsDiv, label);
         }else {
@@ -110,9 +110,10 @@ class CustomSelect {
         }
     }
 
-    setEventListeners = () => {
+    setEventListeners() {
         const commoditiesSearchField = document.querySelector(`#${this.config.search}`);
         const dropdownList = document.querySelector(`#${this.config.container} .c-list`);
+
         commoditiesSearchField.addEventListener('input', (e) => this.handleDropdownInput(e));
         this.selectedItemsDiv.addEventListener('click', (e) => this.handleDeleteSelectedItem(e));
         dropdownList.addEventListener('click', (e) => this.handleDropdownItemClick(e));
@@ -120,11 +121,11 @@ class CustomSelect {
         this.form.addEventListener("submit", () => this.isValidated(this.itemsToSubmitSelect, this.label));
     };
 
-    getDropdownListItems = () => {
+    getDropdownListItems() {
         return document.querySelectorAll(`#${this.config.search} + ul > .dropdown-item`);
     };
 
-    setSelectedItemsDivMsg = () => {
+    setSelectedItemsDivMsg() {
         const selectedItems = this.selectedItemsDiv.querySelectorAll('div');
 
         if (selectedItems.length === 0) {
