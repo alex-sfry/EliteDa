@@ -50,7 +50,7 @@ class CustomSelect {
             null;
 
         const selItm = document.createElement('div');
-        selItm.classList.add('ps-1', 'rounded-2');
+        selItm.classList.add('ps-1', 'rounded-2', 'bg-info');
         selItm.innerHTML = e.target.textContent + selectedItemDivider;
 
         if (this.selectedItemsDiv.textContent === 'selected commodities') this.selectedItemsDiv.textContent = '';

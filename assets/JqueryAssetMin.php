@@ -9,6 +9,7 @@
 namespace app\assets;
 
 use yii\web\AssetBundle;
+use yii\web\View;
 
 /**
  * This asset bundle provides the [jQuery](https://jquery.com/) JavaScript library.
@@ -21,5 +22,9 @@ class JqueryAssetMin extends AssetBundle
     public $sourcePath = '@bower/jquery/dist';
     public $js = [
         'jquery.min.js',
+    ];
+    public $jsOptions = [
+        'defer' => '',
+        'position' => View::POS_HEAD
     ];
 }

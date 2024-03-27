@@ -58,7 +58,7 @@ foreach ($selected as $key => $value) {
         for='c-hiddenSelect'>
         <?= $label_main ?>
     </label>
-    <div class='c-select dropdown-container m-0 bg-transparent position-relative w-100'>
+    <div class='c-select dropdown-container m-0 bg-transparent position-relative'>
         <?= Html::dropDownList(
             $name_main,
             $selected,
@@ -83,7 +83,7 @@ foreach ($selected as $key => $value) {
                 fw-normal <?= isset($error) && $error === 'is-invalid' ?
                 'is-invalid border-2 border-danger' : 'border-dark' ?>">
                 <?php foreach ($selected as $item) : ?>
-                    <div class="ps-1 rounded-2 bg bg-info">
+                    <div class="ps-1 rounded-2 bg-info">
                         <?= Html::encode($item) ?>
                         <span class='border-start border-1 border-black lh-1'></span>
                         <button
@@ -111,7 +111,7 @@ foreach ($selected as $key => $value) {
                 <?= $toggle_btn_text ?>
             </button>
             <div class="position-relative">
-                <div class='dropdown-menu border-dark-subtle px-1 w-100 p-1 mt-1 shadow-sm'>
+                <div class='dropdown-menu px-1 w-100 p-1 mt-1 shadow-sm'>
                     <?= Html::textInput(
                         '',
                         '',
@@ -121,11 +121,11 @@ foreach ($selected as $key => $value) {
                             'placeholder' => 'search'
                         ]
                     ); ?>
-                    <ul class='c-list px-0 pt-2 pb-0 mb-0 overflow-y-auto '>
-                        <li class='dropdown-item fw-normal px-2 lh-2 h-0 m-0 p-0'></li>
+                    <ul class='c-list px-0 pt-2 pb-0 mb-0'>
+                        <li class='dropdown-item fw-normal px-2 lh-lg h-0 m-0 p-0'></li>
                         <?php foreach ($list_items as $item) : ?>
-                            <li class='c-list-item dropdown-item lh-2 fw-normal px-2 h-0 m-0 p-0 overflow-x-hidden
-                                text-truncate'>
+                            <li class='c-list-item dropdown-item fw-normal px-2 h-0 m-0 p-0 overflow-x-hidden
+                                text-truncate lh-lg'>
                                 <?= Html::encode($item) ?>
                             </li>
                         <?php endforeach; ?>
