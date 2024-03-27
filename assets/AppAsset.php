@@ -9,6 +9,7 @@
 namespace app\assets;
 
 use yii\web\AssetBundle;
+use yii\web\View;
 
 /**
  * Main application asset bundle.
@@ -28,10 +29,14 @@ class AppAsset extends AssetBundle
 //        'templates/js/bootstrap.min.js',
         'templates/js/main.min.js'
     ];
+    public $jsOptions = [
+        'defer' => '',
+        'position' => View::POS_HEAD
+    ];
     public $depends = [
 //        'yii\web\YiiAsset',
         'app\assets\BootstrapAssetMin',
-//        'app\assets\YiiAssetMin',
+        'app\assets\YiiAssetMin',
 //        'yii\bootstrap5\BootstrapAsset'
     ];
 }

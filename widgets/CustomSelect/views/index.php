@@ -83,7 +83,7 @@ foreach ($selected as $key => $value) {
                 fw-normal <?= isset($error) && $error === 'is-invalid' ?
                 'is-invalid border-2 border-danger' : 'border-dark' ?>">
                 <?php foreach ($selected as $item) : ?>
-                    <div class="ps-1 rounded-2">
+                    <div class="ps-1 rounded-2 bg-info">
                         <?= Html::encode($item) ?>
                         <span class='border-start border-1 border-black lh-1'></span>
                         <button
@@ -122,10 +122,10 @@ foreach ($selected as $key => $value) {
                         ]
                     ); ?>
                     <ul class='c-list px-0 pt-2 pb-0 mb-0'>
-                        <li class='dropdown-item fw-normal px-2 lh-1 h-0 m-0 p-0'></li>
+                        <li class='dropdown-item fw-normal px-2 lh-lg h-0 m-0 p-0'></li>
                         <?php foreach ($list_items as $item) : ?>
                             <li class='c-list-item dropdown-item fw-normal px-2 h-0 m-0 p-0 overflow-x-hidden
-                                text-truncate'>
+                                text-truncate lh-lg'>
                                 <?= Html::encode($item) ?>
                             </li>
                         <?php endforeach; ?>

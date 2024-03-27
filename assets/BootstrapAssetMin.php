@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace app\assets;
 
 use yii\web\AssetBundle;
+use yii\web\View;
 
 /**
  * Twitter Bootstrap 5 CSS bundle.
@@ -32,5 +33,9 @@ class BootstrapAssetMin extends AssetBundle
     ];
     public $js = [
         'templates/js/bootstrap.min.js'
+    ];
+    public $jsOptions = [
+        'defer' => '',
+        'position' => View::POS_HEAD
     ];
 }

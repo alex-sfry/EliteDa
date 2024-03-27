@@ -1,40 +1,30 @@
 import {fetchData} from './fetchData.js';
-// import {handlePagination} from './handlePagination.js';
 
-export const tableSort = async (cnt, handlePagination, paginationHTML = null) => {
-    const sortableColumns = document.querySelectorAll('a.sort');
-
+export const tableSort = async (cnt, handlePagination = null, paginationHTML = null) => {
     const resetPagination = (limit, totalCount) => {
-        document.querySelectorAll('.pagination').forEach(item => item.innerHTML = paginationHTML);
-        document.querySelectorAll('.page-counter').forEach(item => {
-            item.textContent = `${0 * limit + 1} - ${1 * limit} / ${totalCount}`;
-        });
-
+        $('.pagination').html(paginationHTML);
+        $('.page-counter').text(`${0 * limit + 1} - ${1 * limit} / ${totalCount}`);
         handlePagination('first', 'prev-page', 'next-page', 'last', 7);
     };
     const renderData = (data) => {
 
     };
 
-    const handleClick = async (e) => {
+    async function handleClick(e) {
         e.preventDefault();
-        const sortLinkElem = e.currentTarget;
-        const data = await fetchData(`${sortLinkElem.getAttribute('href')}`);
+        const data = await fetchData($(this).attr('href'));
         console.log(data);
-        paginationHTML && resetPagination(data.limit, data.totalCount);
-        sortableColumns.forEach(item => item.classList.remove('asc', 'desc', 'sorted'));
+        handlePagination && resetPagination(data.limit, data.totalCount);
+        $('a.sort').removeClass(['asc', 'desc', 'sorted']);
 
         if (Object.values(data.attributeOrders)[0] === 4) {
-            sortLinkElem.classList.add('sorted', 'asc');
-        } else sortLinkElem.classList.add('sorted', 'desc');
+            $(this).addClass(['sorted', 'asc']);
+        } else $(this).addClass(['sorted', 'desc']);
 
-        sortLinkElem.setAttribute('href', data.sortUrl);
+        $(this).attr('href', data.sortUrl);
         renderData(data);
-    };
+    }
 
-    const setEventListeners = () => {
-        document.querySelectorAll(`${cnt} .sort`).forEach(item => item.addEventListener('click', handleClick));
-    };
-
+    const setEventListeners = () => $(cnt + ' .sort').on('click', handleClick);
     setEventListeners();
 };

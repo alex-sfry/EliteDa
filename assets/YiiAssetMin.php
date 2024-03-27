@@ -9,6 +9,7 @@
 namespace app\assets;
 
 use yii\web\AssetBundle;
+use yii\web\View;
 
 /**
  * This asset bundle provides the base JavaScript files for the Yii Framework.
@@ -21,6 +22,10 @@ class YiiAssetMin extends AssetBundle
     public $sourcePath = '@yii/assets';
     public $js = [
         'yii.js',
+    ];
+    public $jsOptions = [
+        'defer' => '',
+        'position' => View::POS_HEAD
     ];
     public $depends = [
         'app\assets\JqueryAssetMin',

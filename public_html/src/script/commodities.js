@@ -2,20 +2,18 @@ import {handlePagination} from './handlePagination.js';
 import {tableSort} from './tableSort.js';
 
 export const commoditiesForm = (loader, removeLoader) => {
-    const form = document.querySelector('#c-form');
-    const table = document.querySelector('.c-table');
-    const pagination = document.querySelector('.pagination');
-    removeLoader(table);
+    const $form = $('#c-form');
+    const $table = $('.c-table');
+    const $pagination = $('.pagination');
+    removeLoader($table);
 
     const handleSubmit = (e) => {
-        const form = document.querySelector('#c-form');
-
-        if (!form.checkValidity()) {
+        if (!$form[0].checkValidity()) {
             e.preventDefault();
-        } else loader(form, table);
+        } else loader($form, $table);
     };
 
-    form.addEventListener('submit', (e) => handleSubmit(e));
-    if (pagination) handlePagination('first', 'prev-page', 'next-page', 'last', 7);
-    if (table) tableSort('.c-table', handlePagination, pagination.innerHTML);
+    $form.on('submit', handleSubmit);
+    if ($pagination.length) handlePagination('first', 'prev-page', 'next-page', 'last', 7);
+    if ($table.length) tableSort('.c-table', handlePagination, $pagination.html());
 };

@@ -21,6 +21,7 @@ class Commdts extends BaseCommodities
      * @param string $sys_name
      * @param array $post
      * @param int $limit
+     * @param $session
      *
      * @return \yii\data\ActiveDataProvider
      */

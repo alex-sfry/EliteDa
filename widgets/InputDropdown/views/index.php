@@ -135,12 +135,12 @@ if (isset($error) && $error === 'is-invalid') {
         </label>
     <?php endif; ?>
     <div class="input-dd-selected-items d-flex">
-        <div class="search-selected px-1 py-1 lh-1 rounded-2
+        <div class="search-selected info bg-info px-1 py-1 lh-1 rounded-2
              <?= $selected === '' ? 'd-none' : '' ?>"
              id="idd-search-selected">
             <?= Html::encode($selected) ?>
         </div>
-        <button type="button" id="reset-idd" class="reset-input-dd btn btn-link py-1
+        <button type="button" id="reset-idd" class="reset-input-dd btn btn-link py-1 lh-1
             <?= Html::encode($selected) === '' ? 'd-none' : '' ?>">
             reset
         </button>
@@ -175,7 +175,8 @@ if (isset($error) && $error === 'is-invalid') {
             <p class="invalid-feedback feedback position-absolute mt-0 pt-0 fw-bold">
                 Field must not be empty
             </p>
-            <ul class='dropdown-menu px-1 w-100 me-2 shadow-sm visually-hidden overflow-x-hidden text-truncate'></ul>
+            <ul class='dropdown-menu border-dark-subtle px-1 w-100 me-2 shadow-sm visually-hidden overflow-y-auto
+                            overflow-x-hidden text-truncate'></ul>
         </div>
     </div>
 </div>

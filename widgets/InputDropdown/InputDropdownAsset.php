@@ -3,6 +3,7 @@
 namespace app\widgets\InputDropdown;
 
 use yii\web\AssetBundle;
+use yii\web\View;
 
 class InputDropdownAsset extends AssetBundle
 {
@@ -14,5 +15,9 @@ class InputDropdownAsset extends AssetBundle
 //        'yii\web\YiiAsset',
         'app\assets\BootstrapAssetMin',
         'app\assets\AppAsset'
+    ];
+    public $jsOptions = [
+        'defer' => '',
+        'position' => View::POS_HEAD
     ];
 }

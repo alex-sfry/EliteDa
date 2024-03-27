@@ -3,6 +3,7 @@
 namespace app\widgets\CustomSelect;
 
 use yii\web\AssetBundle;
+use yii\web\View;
 
 class CustomSelectAsset extends AssetBundle
 {
@@ -14,5 +15,9 @@ class CustomSelectAsset extends AssetBundle
         //        'yii\web\YiiAsset',
         'app\assets\BootstrapAssetMin',
         'app\assets\AppAsset'
+    ];
+    public $jsOptions = [
+        'defer' => '',
+        'position' => View::POS_HEAD
     ];
 }

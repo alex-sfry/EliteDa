@@ -1,18 +1,16 @@
 import {fetchData} from './fetchData.js';
 
 export const handlePagination = (first, prev, next, last, pageBtnQty) => {
-    const pagination = document.querySelectorAll('.pagination');
-    const getCurrentDataPage = () => document.querySelector('li.active > a').getAttribute('data-page');
+    const getCurrentDataPage = () => $('li.active > a').attr('data-page');
 
     const renderData = (data) => {
 
     };
 
     const renderNewPageBtns = (links, next, last, current, totalCount, limit, setEventListeners) => {
-        const pageCounter = document.querySelectorAll('.page-counter');
-        const pageNumBtns = Array.from(document.querySelectorAll(`li > .page-link`));
-        const pageBtnFirstNum = parseInt(pageNumBtns[2].getAttribute('data-page')) + 1;
-        const pageBtnLastNum = parseInt(pageNumBtns[pageNumBtns.length - 3 ].getAttribute('data-page')) + 1;
+        const $pageNumBtns = $('li > .page-link');
+        const pageBtnFirstNum = parseInt($pageNumBtns.eq(2).attr('data-page')) + 1;
+        const pageBtnLastNum = parseInt($pageNumBtns.eq($pageNumBtns.length - 3).attr('data-page')) + 1;
         const clsBegin = next === 1 ? 'page-link disabled' : 'page-link';
         const clsEnd = next === last ? 'page-link disabled' : 'page-link';
 
@@ -25,7 +23,7 @@ export const handlePagination = (first, prev, next, last, pageBtnQty) => {
                     </a>
                 </li>`;
 
-        for (let i = 0 ; i < pageBtnQty; i++) {
+        for (let i = 0; i < pageBtnQty; i++) {
             const href = links.first.substring(0, links.first.length - 1);
             let pageNum;
 
@@ -56,18 +54,17 @@ export const handlePagination = (first, prev, next, last, pageBtnQty) => {
                     <a class="${clsEnd}" href="${links.last}" data-page="${last - 1}">last</a>
                 </li>`;
 
-        pagination.forEach(item => item.innerHTML = html);
-        pageCounter.forEach(item => item.textContent =
-            `${getCurrentDataPage() * limit + 1} - ${next * limit < totalCount ? next * limit : 
-                totalCount} / ${totalCount}`);
+        $('.pagination').html(html);
+        $('.page-counter').text(`${getCurrentDataPage() * limit + 1} 
+       - ${next * limit < totalCount ? next * limit : totalCount} / ${totalCount}`);
 
         setEventListeners();
     };
 
-    const handleClick = async (e) => {
+    async function handleClick(e) {
         e.preventDefault();
-        if (e.currentTarget.parentElement.classList.contains('active')) return;
-        const res = await fetchData(e.currentTarget.getAttribute('href'));
+        if ($(this).parent().is('.active')) return;
+        const res = await fetchData($(this).attr('href'));
         console.log(res);
         renderNewPageBtns(
             res.links,
@@ -76,16 +73,12 @@ export const handlePagination = (first, prev, next, last, pageBtnQty) => {
             getCurrentDataPage(), // zero based current page
             res.totalCount,
             res.limit, // qty per page
-            setEventListeners
+            setEventListeners,
         );
 
         renderData(res);
-    };
+    }
 
-    const setEventListeners = () => {
-        document.querySelectorAll(`.page-item > .page-link`)
-                .forEach(item => item.addEventListener('click', handleClick));
-    };
-
+    const setEventListeners = () => $('.page-item > .page-link').on('click', handleClick);
     setEventListeners();
 };

@@ -1,7 +1,3 @@
-.c-select {
-    width: 100%;
-}
-
 .c-select p.invalid-feedback {
     top: 18rem;
     width: fit-content;
@@ -10,13 +6,10 @@
 .c-select .dropdown .dropdown-toggle,
 .c-select .dropdown .selected-items {
     font-family: 'SintonyRegular', sans-serif;
+    font-weight: 400;
 }
 
-.c-select .dropdown .dropdown-menu {
-    border-color: var(--bs-gray-500);
-}
 .c-select .dropdown .dropdown-menu .c-list {
-    overflow-y: auto;
     max-height: calc(7 * (1rem + 7px) * 2);
     background-color: var(--bs-dropdown-bg);
 }
@@ -27,7 +20,6 @@
 .c-select .dropdown .dropdown-menu .dropdown-item {
     cursor: pointer;
     background-color: inherit;
-    line-height: 2;
 }
 
 .c-select .dropdown .dropdown-menu .dropdown-item:hover {
@@ -62,7 +54,6 @@
 
 .c-select .selected-items > div {
     letter-spacing: 1px;
-    background-color: var(--bs-cyan);
     padding-top: 3px;
 }
 .c-select .selected-items > div button.close {

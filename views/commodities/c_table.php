@@ -50,7 +50,7 @@ $table_head = [
         echo LinkPager::widget([
             'id' => 'pgr01',
             'pagination' => $pagination,
-            'disableCurrentPageButton' => true,
+            'disableCurrentPageButton' => false,
             'maxButtonCount' => 7,
             'firstPageLabel' => 'first',
             'lastPageLabel' => 'last',
@@ -128,12 +128,17 @@ $table_head = [
     echo LinkPager::widget([
         'id' => 'pgr02',
         'pagination' => $pagination,
-        'disableCurrentPageButton' => true,
+        'disableCurrentPageButton' => false,
         'maxButtonCount' => 7,
         'firstPageLabel' => 'first',
         'lastPageLabel' => 'last',
         'prevPageCssClass' => 'prev-page',
         'nextPageCssClass' => 'next-page'
     ]);
+    ?>
+</div>
+<div class="bg-light mt-3">
+    <?php
+//    VarDumper::dump($session, 10, true);
     ?>
 </div>

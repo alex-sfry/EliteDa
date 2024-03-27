@@ -91,11 +91,11 @@ $this->title = 'Commodities';
                                         'selected' => $form_model->refSystem,
                                         'search' => 'ref-idd-search',
                                         'to_submit' => 'ref-to-submit',
-                                        'placeholder' => 'Enter station name here',
+                                        'placeholder' => 'Enter system name here',
                                         'ajax' => true,
                                         'endpoint' => '/systems/system/?sys=',
                                         'label_main' => 'Ref. station:',
-                                        'toggle_btn_text' => 'Get station list',
+                                        'toggle_btn_text' => 'Get system list',
                                         'name_main' => 'refSystem',
                                         'required' => 'required'
                                     ]); ?>

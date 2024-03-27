@@ -351,54 +351,61 @@ tr {
     
     td:first-child,
     th:first-child {
-        min-width: fit-content;
+        //min-width: fit-content;
         width: fit-content;
-        max-width: fit-content;
+        //max-width: fit-content;
     }
     
     td:nth-child(2),
     th:nth-child(2) {
-        min-width: fit-content;
-        width: 228px;
-        max-width: fit-content;
+        //min-width: fit-content;
+        //width: 228px;
+        //max-width: fit-content;
+        width: fit-content;
     }
     
     td:nth-child(3),
     th:nth-child(3) {
-        min-width: fit-content;
-        width: 152px;
-        max-width: 160px;
+        //min-width: fit-content;
+        //width: 152px;
+        //max-width: 160px;
+        width: fit-content;
     }
     
     td:nth-child(4),
     th:nth-child(4) {
-        min-width: fit-content;
-        max-width: 56px;
+        //min-width: fit-content;
+        //max-width: 56px;
+        width: fit-content;
     }
     
     td:nth-child(5),
     th:nth-child(5) {
-        min-width: fit-content;
-        width: 140px;
-        max-width: fit-content;
+        //min-width: fit-content;
+        //width: 140px;
+        //max-width: fit-content;
+        width: fit-content;
     }
     
     td:nth-child(6),
     th:nth-child(6) {
-        min-width: 80px;
-        max-width: 80px;
+        //min-width: 80px;
+        //max-width: 80px;
+        width: fit-content;
     }
     
     td:nth-child(7),
     th:nth-child(7) {
-        min-width: 112px;
-        max-width: 112px;
+        //min-width: 112px;
+        //max-width: 112px;
+        width: fit-content;
     }
     
     td:nth-child(8),
     th:nth-child(8) {
-        min-width: 76px;
-        max-width: 76px;
+        //min-width: 76px;
+        //max-width: 76px;
+        width: fit-content;
     }
     
     td:nth-child(9) {
@@ -407,15 +414,17 @@ tr {
     
     td:nth-child(9),
     th:nth-child(9) {
-        min-width: fit-content;
-        width: 80px;
-        max-width: max-content;
+        //min-width: fit-content;
+        //width: 80px;
+        //max-width: max-content;
+        width: fit-content;
     }
     
     td:nth-child(10),
     th:nth-child(10) {
-        min-width: 128px;
-        max-width: 128px;
+        //min-width: 128px;
+        //max-width: 128px;
+        width: fit-content;
     }
 }
 
