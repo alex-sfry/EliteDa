@@ -1,5 +1,6 @@
 import '../styles/scss/style.scss';
 // import '../styles/bootstrapSCSS/bootstrap.scss';
+import {fetchData} from './fetchData.js';
 import {commoditiesForm} from './commodities.js';
 import {tradeRouteForm} from './tradeRoutes.js';
 import {isValidated} from './isValidated.js';
@@ -33,8 +34,8 @@ const removeLoader = ($elem) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     initHeader();
-    if ($('#c-form').length)  commoditiesForm(loader, removeLoader);
-    if ($('#tr-form').length)  tradeRouteForm(isValidated, loader, removeLoader);
+    if ($('#c-form').length)  commoditiesForm(loader, removeLoader, fetchData);
+    if ($('#tr-form').length)  tradeRouteForm(isValidated, loader, removeLoader, fetchData);
 });
 
 

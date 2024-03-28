@@ -1,4 +1,4 @@
-export const tradeRouteForm = (isValidated, loader, removeLoader) => {
+export const tradeRouteForm = (isValidated, loader, removeLoader, fetchData) => {
     const form = document.querySelector('#tr-form');
     const handleSubmit = (e) => {
         const cargoSpaceLabel = document.querySelector('label[for=\'cargo\']');

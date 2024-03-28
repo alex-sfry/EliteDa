@@ -1,7 +1,7 @@
-import {handlePagination} from './handlePagination.js';
-import {tableSort} from './tableSort.js';
+import {Pagination} from './Pagination.js';
+import {SortTable} from './SortTable.js';
 
-export const commoditiesForm = (loader, removeLoader) => {
+export const commoditiesForm = (loader, removeLoader, fetchData) => {
     const $form = $('#c-form');
     const $table = $('.c-table');
     const $pagination = $('.pagination');
@@ -14,6 +14,21 @@ export const commoditiesForm = (loader, removeLoader) => {
     };
 
     $form.on('submit', handleSubmit);
-    if ($pagination.length) handlePagination('first', 'prev-page', 'next-page', 'last', 7);
-    if ($table.length) tableSort('.c-table', handlePagination, $pagination.html());
+
+    const proxyHandler={
+        set(target, prop, val) {
+            if (prop === "data") {
+                console.log(val);
+                return val;
+            }
+        },
+    };
+
+    const pagination = $pagination.length ?
+        new Proxy(new Pagination(7, fetchData, $pagination.html()), proxyHandler) : null;
+    const sortTable = $pagination.length ?
+        new Proxy(new SortTable('.c-table', fetchData, pagination), proxyHandler) : null;
+
+    pagination.setEventListeners();
+    sortTable.setEventListeners();
 };

@@ -4,6 +4,7 @@ import {fileURLToPath} from 'url';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
+// import purgecss from '@fullhuman/postcss-purgecss';
 
 let mode = 'development';
 let watch = false;
@@ -98,6 +99,16 @@ export default {
                                             // Options
                                         },
                                     ],
+                                    // [
+                                    //     purgecss({
+                                    //         content: [
+                                    //             './templates/**/*.js',
+                                    //             '../views/**/*.php',
+                                    //             '../widgets/**/*.php',
+                                    //             '../widgets/**/*.js'
+                                    //         ]
+                                    //     })
+                                    // ]
                                 ],
                             },
                         },
