@@ -116,7 +116,7 @@ class CommoditiesController extends Controller
                     'links' => $pagination->getLinks(),
                     'page' => $pagination->getPage(),
                     'lastPage' => $pagination->pageCount,
-                    'data' => $provider->getModels(),
+                    'data' => $c_model->modifyModels($provider->getModels()),
                     'params' => $pagination->params,
                     'totalCount' => $pagination->totalCount,
                     'attributeOrders' => $sort->attributeOrders,
@@ -132,7 +132,7 @@ class CommoditiesController extends Controller
                 $response = Yii::$app->response;
                 $response->format = Response::FORMAT_JSON;
                 $response->data = [
-                    'data' => $provider->getModels(),
+                    'data' => $c_model->modifyModels($provider->getModels()),
                     'sort' => $sort,
                     'attributeOrders' => $sort->attributeOrders,
                     'sortUrl' => $sort->createUrl(ltrim($request->get('sort'), '-')),

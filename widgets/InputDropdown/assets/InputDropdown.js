@@ -95,7 +95,6 @@ class InputDropdown {
         }
 
         if (this.config.ajax && this.ddSearch.value !== this.lastSearchValue) {
-            console.log('fetch')
             const radioSwitch = document.querySelectorAll(`#${this.config.container} .idd-switch`);
 
             if (radioSwitch.length > 0) {

@@ -61,11 +61,11 @@ $table_head = [
     }
     ?>
 </div>
-<div class="rounded-2 table-responsive">
+<div id='c-table' class="rounded-2 table-responsive">
     <table class="c-table fs-7 table table-striped mb-0 <?= count($models) > 0 ? 'overflow-x-auto' :
         'overflow-hidden' ?>">
-        <thead class="bg-light-orange">
-            <tr class="border-0">
+        <thead>
+            <tr>
                 <?php foreach ($table_head as $item) : ?>
                     <?php echo match ($item) {
                         'Price' => "<th class='bg-light-orange p-0 text-body hover text-nowrap' scope='col'>
@@ -101,7 +101,7 @@ $table_head = [
                 <?php endforeach; ?>
             </tr>
         </thead>
-        <tbody class="table-group-divider rounded-2">
+        <tbody class="table-group-divider">
             <?php foreach ($models as $item) : ?>
                 <tr>
                     <td class="text-start text-truncate"><?= Html::encode($item['commodity']) ?></td>
@@ -138,8 +138,8 @@ $table_head = [
     ]);
     ?>
 </div>
-<div class="bg-light mt-3">
+<!--<div class="bg-light mt-3">-->
     <?php
 //    VarDumper::dump($session, 10, true);
     ?>
-</div>
+<!--</div>-->

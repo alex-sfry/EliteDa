@@ -1,13 +1,10 @@
-export function SortTable(cnt, fetchData, pagination = null/*, paginationHTML = null*/) {
+export function SortTable(cnt, fetchData, pagination = null, table =null) {
     this.cnt = cnt;
     this.pagination = pagination;
     this.fetchData = fetchData;
     this.data = null;
+    this.table = table;
 }
-
-SortTable.prototype.renderData = function(data) {
-
-};
 
 SortTable.prototype.handleClick = async function(e) {
     e.preventDefault();
@@ -22,11 +19,8 @@ SortTable.prototype.handleClick = async function(e) {
     } else $(e.currentTarget).addClass(['sorted', 'desc']);
 
     $(e.currentTarget).attr('href', data.sortUrl);
-    this.renderData(data);
 };
 
 SortTable.prototype.setEventListeners = function() {
     $(this.cnt + ' .sort').on('click', (e) => this.handleClick(e));
 };
-
-

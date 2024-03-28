@@ -1,16 +1,13 @@
-export function Pagination(maxPageBtnQty, fetchData, paginationHTML = null) {
+export function Pagination(maxPageBtnQty, fetchData, paginationHTML = null, table = null) {
     this.fetchData = fetchData;
     this.maxPageBtnQty = maxPageBtnQty;
     this.paginationHTML = paginationHTML;
     this.data = null;
+    this.table = table;
 }
 
 Pagination.prototype.getCurrentDataPage = function() {
     return $('li.active > a').attr('data-page');
-};
-
-Pagination.prototype.renderData = function(data) {
-
 };
 
 Pagination.prototype.renderNewPageBtns = function(links, next, last, current, totalCount, limit, maxPageBtnQty) {
@@ -72,7 +69,6 @@ Pagination.prototype.handleClick = async function (e) {
     e.preventDefault();
     if ($(e.currentTarget).parent().is('.active')) return;
     const res = await this.fetchData($(e.currentTarget).attr('href'));
-    // console.log(res);
     this.data = res;
     this.renderNewPageBtns(
         res.links,
@@ -83,8 +79,6 @@ Pagination.prototype.handleClick = async function (e) {
         res.limit, // qty per page
         this.maxPageBtnQty
     );
-
-    this.renderData(res);
 };
 
 Pagination.prototype.resetPagination = function(limit, totalCount) {

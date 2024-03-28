@@ -1,5 +1,6 @@
 import {Pagination} from './Pagination.js';
 import {SortTable} from './SortTable.js';
+import {Table} from './Table.js';
 
 export const commoditiesForm = (loader, removeLoader, fetchData) => {
     const $form = $('#c-form');
@@ -15,19 +16,22 @@ export const commoditiesForm = (loader, removeLoader, fetchData) => {
 
     $form.on('submit', handleSubmit);
 
-    const proxyHandler={
+    const table = new Table('c-table');
+
+    const proxyHandler= {
         set(target, prop, val) {
             if (prop === "data") {
-                console.log(val);
-                return val;
+                table.fillTable(val.data);
+                console.log(val)
+                return true;
             }
         },
     };
 
     const pagination = $pagination.length ?
-        new Proxy(new Pagination(7, fetchData, $pagination.html()), proxyHandler) : null;
+        new Proxy(new Pagination(7, fetchData, $pagination.html(), table), proxyHandler) : null;
     const sortTable = $pagination.length ?
-        new Proxy(new SortTable('.c-table', fetchData, pagination), proxyHandler) : null;
+        new Proxy(new SortTable('.c-table', fetchData, pagination, table), proxyHandler) : null;
 
     pagination.setEventListeners();
     sortTable.setEventListeners();
