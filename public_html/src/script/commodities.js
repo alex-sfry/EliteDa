@@ -22,9 +22,9 @@ export const commoditiesForm = (loader, removeLoader, fetchData) => {
         set(target, prop, val) {
             if (prop === "data") {
                 table.fillTable(val.data);
-                console.log(val)
                 return true;
             }
+            return true;
         },
     };
 
@@ -33,6 +33,15 @@ export const commoditiesForm = (loader, removeLoader, fetchData) => {
     const sortTable = $pagination.length ?
         new Proxy(new SortTable('.c-table', fetchData, pagination, table), proxyHandler) : null;
 
-    pagination.setEventListeners();
-    sortTable.setEventListeners();
+    pagination && pagination.setEventListeners();
+    sortTable && sortTable.setEventListeners();
+
+    $('#accordionForm .accordion-button').on('click', function() {
+        if ($(this).text().trim() === 'Close form') {
+            $(this).text('Open form');
+        } else if ($(this).text().trim() === 'Open form') {
+            $(this).text('Close form');
+        }
+    });
 };
+

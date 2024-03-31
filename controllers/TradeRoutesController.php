@@ -2,8 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\TradeRoutes;
 use app\models\TradeRoutesForm;
 use Yii;
+use yii\helpers\ArrayHelper;
+use yii\helpers\StringHelper;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
 
@@ -15,7 +18,7 @@ class TradeRoutesController extends Controller
         $session->open();
 //        $session->destroy();
         $request = Yii::$app->request;
-//        VarDumper::dump($request->post(), 10, true);
+
         $params  = [];
         $params['ref_error'] = '';
         $params['cargo_error'] = '';
@@ -31,6 +34,7 @@ class TradeRoutesController extends Controller
         }
 
         if ($request->isPost || $params['post']) {
+//            $request->isPost && $session->remove('c_sort');
             if (isset($params['post']['_csrf'])) {
                 unset($params['post']['_csrf']);
             }
@@ -45,7 +49,34 @@ class TradeRoutesController extends Controller
                 return $this->render('index', $params);
             }
 
-//            $result = $trade_routes->getData();
+            $params['post']['ref_system'] = StringHelper::explode($session->get('tr')['refSysStation'], ' / ', true)[0];
+            $params['post']['ref_station'] = StringHelper::explode(
+                $session->get('tr')['refSysStation'],
+                ' / ',
+                true
+            )[1];
+
+            $limit = 20;
+
+            $tr_model = new TradeRoutes($params['post']);
+
+            $data_dir = $tr_model->getData($limit);
+            $pagination = $data_dir->getPagination();
+            $params['models'] = $data_dir->getModels();
+
+            if (isset($params['post']['roundTrip'])) {
+                $target_market_ids = ArrayHelper::getColumn($params['models'], 'target_market_id');
+                $params['models']  = $tr_model->modifyModels(
+                    $tr_model->getResultWithRoundTrip(
+                        $params['models'],
+                        $tr_model->getRoundTrip($target_market_ids)->all()
+                    )
+                );
+            } else {
+                $params['models']  = $tr_model->modifyModels($params['models']);
+            }
+
+            $params['pagination'] = $pagination;
         }
 
         return $this->render('index', $params);

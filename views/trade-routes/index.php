@@ -19,12 +19,13 @@
 
 use app\models\TradeRoutesForm;
 use app\widgets\InputDropdown\InputDropdown;
+use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 use yii\helpers\VarDumper;
 
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
-    'sort_options' => ['Profit' => 'Profit', 'Updated at (time)' => 'Updated_at', 'Distance (LY)' => 'Distance'],
+    'sort_options' => ['Profit' => 'Profit', 'Updated_at' => 'Updated at (time)', 'Distance' => 'Distance (LY)'],
     'max_dist_from_ref' => ['Any' => 'Any', '25' => '25 LY', '50' => '50 LY', '100' => '100 LY', '250' => '250 LY'],
     'max_dist_from_star' => [
         'Any' => 'Any',
@@ -357,11 +358,29 @@ $this->title = 'Trade routes';
             </div>
         </div>
     </div>
+    <div class="c-pagination-cnt d-flex justify-content-center align-items-center mt-3 mb-2 flex-wrap">
+        <?php
+        if (isset($pagination)) {
+            echo $page_count_info ?? null;
+            echo LinkPager::widget([
+                'id' => 'pgr01',
+                'pagination' => $pagination,
+                'disableCurrentPageButton' => false,
+                'maxButtonCount' => 7,
+                'firstPageLabel' => 'first',
+                'lastPageLabel' => 'last',
+                'prevPageCssClass' => 'prev-page',
+                'nextPageCssClass' => 'next-page'
+            ]);
+        }
+        ?>
+    </div>
     <div class="bg-light mt-3">
         <?php
         isset($post) && VarDumper::dump($post, 10, true);
 //        VarDumper::dump($form_model, 10, true);
         isset($errors) && VarDumper::dump($errors, 10, true);
+        isset($models) && VarDumper::dump($models, 10, true);
         ?>
     </div>
 </main>

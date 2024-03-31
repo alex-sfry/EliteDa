@@ -212,6 +212,16 @@ form {
 /**
 * commodities form and result styles
 */
+#accordionForm {
+    .accordion-button:not(.collapsed) {
+        background-color: $custom-light-orange;
+    }
+    
+    .accordion-button:focus {
+        box-shadow: none;
+    }
+}
+
 .c-form {
     @extend .sintony-bold;
     letter-spacing: 2px;

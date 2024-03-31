@@ -4,6 +4,7 @@ namespace app\models;
 
 use app\behaviors\TimeBehavior;
 use yii\data\ActiveDataProvider;
+use yii\db\Expression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 
@@ -21,7 +22,6 @@ class Commdts extends BaseCommodities
      * @param string $sys_name
      * @param array $post
      * @param int $limit
-     * @param $session
      *
      * @return \yii\data\ActiveDataProvider
      */
@@ -79,7 +79,10 @@ class Commdts extends BaseCommodities
             $post['maxDistanceFromRefStar'],
         ]);
 
-        $post['dataAge'] !== 'Any' && $prices->andWhere(['>', 'TIMESTAMP', "DATE_SUB(NOW(), {$post['dataAge']} HOUR"]);
+        $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$post['dataAge']} HOUR)");
+
+        $post['dataAge'] !== 'Any' &&
+        $prices->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
 
         switch ($post['sortBy']) {
             case 'Updated_at':

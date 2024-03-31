@@ -51,11 +51,9 @@ class CommoditiesController extends Controller
                 return $this->render('index', $params);
             }
 
-            $sys_name = $params['post']['refSystem'];
-
             $c_model = new Commdts();
             $limit = 100;
-            $provider = $c_model->getPrices($sys_name, $params['post'], $limit, $session->get('c_sort'));
+            $provider = $c_model->getPrices($params['post']['refSystem'], $params['post'], $limit);
             $params['models']  = $c_model->modifyModels($provider->getModels());
 
             $sort = $provider->getSort();
@@ -142,7 +140,7 @@ class CommoditiesController extends Controller
                 ];
                 $response->send();
             }
-            $params['sess'] = $session->get('c_sort');
+//            $params['sess'] = $session->get('c_sort');
             $params['result'] = $this->renderPartial('c_table', $params);
 
             return $this->render('index', $params);

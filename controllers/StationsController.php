@@ -28,7 +28,7 @@ class StationsController extends Controller
                 ->select('systems.name as system, stations.name as station')
                 ->innerJoin('systems', 'stations.system_id = systems.id')
                 ->where(['like', 'stations.name', "$get_param%", false])
-                ->orderBy('stations.name')
+                ->orderBy('systems.name')
                 ->asArray()
                 ->all();
 

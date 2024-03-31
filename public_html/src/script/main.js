@@ -1,9 +1,9 @@
 import '../styles/scss/style.scss';
 // import '../styles/bootstrapSCSS/bootstrap.scss';
 import {fetchData} from './fetchData.js';
+import {isValidated} from './isValidated.js';
 import {commoditiesForm} from './commodities.js';
 import {tradeRouteForm} from './tradeRoutes.js';
-import {isValidated} from './isValidated.js';
 
 const initHeader = () => {
     $('.menu__link').each(function() {
@@ -37,5 +37,3 @@ document.addEventListener('DOMContentLoaded', () => {
     if ($('#c-form').length)  commoditiesForm(loader, removeLoader, fetchData);
     if ($('#tr-form').length)  tradeRouteForm(isValidated, loader, removeLoader, fetchData);
 });
-
-
