@@ -10,7 +10,11 @@ const initHeader = () => {
         if ($(this).attr('href') === window.location.pathname ||
             window.location.pathname.includes($(this).attr('href'))) {
             $(this).addClass('active');
-        } else $(this).removeClass('active');
+            $(this).closest('.menu__item').children('.menu__link').addClass('active');
+        } else {
+            $(this).removeClass('active');
+            $(this).closest('.menu__link').removeClass('active');
+        }
     });
 };
 

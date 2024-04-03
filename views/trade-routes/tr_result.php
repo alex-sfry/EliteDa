@@ -27,7 +27,7 @@ use yii\bootstrap5\LinkPager;
     <?php foreach ($models as $key => $value) : ?>
         <div class="tr-route d-flex flex-column row-gap-lg-1 row-gap-sm-2 border border-2 border-light-orange h-auto
                         bg-custom-white">
-            <h2 class="fs-4 text-center pt-1">Route #<?= $key + 1 + $pagination->pageSize * $pagination->page ?></h2>
+            <span class="fs-5 text-center">Route #<?= $key + 1 + $pagination->pageSize * $pagination->page ?></span>
             <div class="tr-route-block h-auto w-100 px-3 pb-3">
                 <div class="tr-route-block-inner row justify-content-between my-0 mx-auto rounded-2">
                     <div class="tr-info-block col-lg-5 py-1 rounded-start-2">
@@ -84,7 +84,8 @@ use yii\bootstrap5\LinkPager;
                                 <span></span>
                             </div>
                         </div>
-                        <div class="tr-info-block-mid text-lg-start text-sm-center ms-lg-0 ms-5 h-auto my-auto">
+                        <div class="tr-info-block-mid text-lg-start text-sm-center ms-lg-0 ms-5 h-auto my-auto
+                                        sintony-bold">
                             Profit per trip (Cr):
                             <span class="text-success sintony-bold"><?= $value['dir_profit'] ?></span>
                             <div class="w-100 bg-dark"></div>
@@ -200,7 +201,8 @@ use yii\bootstrap5\LinkPager;
                                     <span></span>
                                 </div>
                             </div>
-                            <div class="tr-info-block-mid text-lg-start text-sm-center ms-lg-0 ms-5 h-auto my-auto">
+                            <div class="tr-info-block-mid text-lg-start text-sm-center ms-lg-0 ms-5 h-auto my-auto
+                                            sintony-bold">
                                 Profit per trip (Cr):
                                 <span class="text-success sintony-bold"><?= $value['round_profit'] ?></span>
                                 <div class="w-100 bg-dark"></div>

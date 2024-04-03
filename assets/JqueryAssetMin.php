@@ -24,7 +24,7 @@ class JqueryAssetMin extends AssetBundle
         'jquery.min.js',
     ];
     public $jsOptions = [
-        'defer' => '',
+//        'defer' => '',
         'position' => View::POS_HEAD
     ];
 }

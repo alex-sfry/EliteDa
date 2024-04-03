@@ -173,7 +173,7 @@ class InputDropdown {
         this.dropdownList.addEventListener('click', (e) => this.handleDropdownItemClick(e));
         this.resetBtn && this.resetBtn.addEventListener('click', () =>  this.reset());
 
-        this.form.addEventListener("submit", () => this.isValidated(this.toSubmit, this.label));
+        this.form && this.form.addEventListener("submit", () => this.isValidated(this.toSubmit, this.label));
     };
 
     reset() {

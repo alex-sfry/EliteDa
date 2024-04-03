@@ -62,10 +62,25 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                     trade routes
                                 </a>
                             </li>
-                            <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative">
-                                <a class="menu__link nav-link text-uppercase text-light" href="#">
+                            <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative dropdown">
+                                <a
+                                    class="menu__link nav-link text-uppercase text-light"
+                                    href="#"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
                                     Engineering
                                 </a>
+                                <ul class="dropdown-menu border-light-orange rounded-2 bg-header mt-0 py-0">
+                                    <li class="dropdown-item py-0 rounded-2">
+                                        <a
+                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item"
+                                            href="<?= Url::to(['material-traders/index']) ?>">
+                                            Material traders
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </div>

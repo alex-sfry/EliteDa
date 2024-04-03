@@ -70,14 +70,13 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                'contact' => 'site/contact',
-                'entry' => 'site/entry',
-                'test' => 'test/index',
+//                'contact' => 'site/contact',
+//                'entry' => 'site/entry',
                 'systems/index/<sys:\w+>' => 'systems/index',
                 'stations/index/<station:\w+>' => 'stations/index',
-//                'commodities/?w+' => 'commodities/index',
                 'commodities' => 'commodities/index',
                 'trade-routes' => 'trade-routes/index',
+                'material-traders' => 'material-traders/index',
 //                '<controller>/<action>' =>  '<controller>/<action>',
                 '' => 'site/index'
             ],

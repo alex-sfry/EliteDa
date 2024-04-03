@@ -20,6 +20,8 @@
  * @var string $endpoint2
  * @var bool $required
  * @var string $selected_radio
+ *  @var string  $btn_position
+ * @var string  $input_bg
  */
 
 use yii\helpers\Html;
@@ -71,10 +73,10 @@ $classes = [
     'border',
     'rounded-2',
     'shadow-none',
-    'bg-transparent',
     'fw-normal',
     'sys-search',
     'mb-1',
+//    $input_bg === '' ? 'bg-transparent' : ''
 ];
 
 $classes_radio = [
@@ -85,6 +87,8 @@ $classes_radio = [
     'shadow-none'
 ];
 
+//$reset_color = $input_bg !== '' ? 'text-light' : '';
+
 if (isset($error) && $error === 'is-invalid') {
     HTML::addCssClass($classes, 'is-invalid border-2 border-danger');
 } else {
@@ -92,7 +96,7 @@ if (isset($error) && $error === 'is-invalid') {
 }
 ?>
 
-<div id="<?= $container ?>" class="position-relative">
+<div id="<?= $container ?>" class="position-relative <?= $input_bg !== '' ? $input_bg . ' px-1 rounded-1' : ''?>">
     <?php if ($radio_switch) : ?>
         <div>
             <label for="target-idd-search">
@@ -145,8 +149,10 @@ if (isset($error) && $error === 'is-invalid') {
             reset
         </button>
     </div>
-    <div class='c-dropdown idd-dropdown dropdown-container d-input  bg-transparent  w-100'>
-        <div class='dropdown bg-transparent'>
+    <div class='c-dropdown idd-dropdown dropdown-container d-input <?= $input_bg === '' ? 'bg-transparent' : '' ?>
+                    w-100'>
+        <div
+            class="dropdown <?= $btn_position === 'right' ? 'd-flex justify-content-end gap-1' : '' ?>">
             <?= Html::textInput(
                 '',
                 null,
@@ -157,10 +163,11 @@ if (isset($error) && $error === 'is-invalid') {
                 ]
             ) ?>
             <button id="idd-toggle"
-                    class='btn btn-outline-dark btn-sm dropdown-toggle w-100 px-1 fw-normal bg-secondary-subtle'
+                    class="btn btn-outline-dark btn-sm dropdown-toggle px-1 fw-normal bg-secondary-subtle w-100"
                     type='button'
                     data-bs-toggle='dropdown'
-                    data-bs-auto-close='dropdown' aria-expanded='false'>
+                    data-bs-auto-close='dropdown' aria-expanded='false'
+                    style="<?= $btn_position === 'right' ? 'height: 34px' : '' ?>">
                 <?= $toggle_btn_text ?>
             </button>
             <?= Html::textInput(

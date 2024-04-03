@@ -119,30 +119,51 @@ body {
     
     .menu {
         &__item {
-            width: fit-content;
+            //width: fit-content;
         }
         
-        &__link::after {
-            position: absolute;
-            bottom: -1px;
-            left: 50%;
-            content: "";
-            width: 0;
-            height: 3px;
-            background-color: $custom-light-orange;
-            transition-property: width, left;
-            transition-duration: 200ms;
-            transition-timing-function: linear;
-        }
+        //&__link::after {
+        //    position: absolute;
+        //    bottom: -1px;
+        //    left: 50%;
+        //    content: "";
+        //    width: 0;
+        //    height: 3px;
+        //    background-color: $custom-light-orange;
+        //    transition-property: width, left;
+        //    transition-duration: 200ms;
+        //    transition-timing-function: linear;
+        //}
+        //
+        //&__link:hover:not(.active){
+        //    &::after {
+        //        left: 0;
+        //        width: 100%;
+        //    }
+        //}
+        //
+        //&__link:hover.show {
+        //    &::after {
+        //        left: 50%;
+        //        width: 0;
+        //    }
+        //}
         
-        &__link:hover:not(.active) {
-            &::after {
-                left: 0;
-                width: 100%;
-            }
-        }
+        //&__link_nested::after {
+        //    bottom: 10px;
+        //}
+        //
+        //&__link_nested:hover:not(.active){
+        //    &::after {
+        //        left: 10%;
+        //        width: 80%;
+        //    }
+        //}
         
         &__link {
+            &_nested.active {
+                background-color: $header-color !important;
+            }
             @extend .sintony-bold;
             letter-spacing: 1px;
             font-size: 1rem;
@@ -151,6 +172,13 @@ body {
         &__link:hover,
         &__link.active {
             color: $custom-light-orange !important;
+            
+        }
+    }
+    
+    .dropdown-menu {
+        .dropdown-item:hover {
+            background-color: $header-color;
         }
     }
 }
@@ -171,13 +199,6 @@ body {
 * main styles
 */
 main {
-    font-family: 'SintonyRegular', sans-serif;
-    font-weight: 400;
-    
-    h1 {
-        @extend .sintony-bold;
-    }
-    
     .nav-button {
         @extend .sintony-bold;
         letter-spacing: 1.1px;
@@ -361,60 +382,41 @@ tr {
     
     td:first-child,
     th:first-child {
-        //min-width: fit-content;
         width: fit-content;
-        //max-width: fit-content;
     }
     
     td:nth-child(2),
     th:nth-child(2) {
-        //min-width: fit-content;
-        //width: 228px;
-        //max-width: fit-content;
         width: fit-content;
     }
     
     td:nth-child(3),
     th:nth-child(3) {
-        //min-width: fit-content;
-        //width: 152px;
-        //max-width: 160px;
         width: fit-content;
     }
     
     td:nth-child(4),
     th:nth-child(4) {
-        //min-width: fit-content;
-        //max-width: 56px;
         width: fit-content;
     }
     
     td:nth-child(5),
     th:nth-child(5) {
-        //min-width: fit-content;
-        //width: 140px;
-        //max-width: fit-content;
         width: fit-content;
     }
     
     td:nth-child(6),
     th:nth-child(6) {
-        //min-width: 80px;
-        //max-width: 80px;
         width: fit-content;
     }
     
     td:nth-child(7),
     th:nth-child(7) {
-        //min-width: 112px;
-        //max-width: 112px;
         width: fit-content;
     }
     
     td:nth-child(8),
     th:nth-child(8) {
-        //min-width: 76px;
-        //max-width: 76px;
         width: fit-content;
     }
     
@@ -424,16 +426,11 @@ tr {
     
     td:nth-child(9),
     th:nth-child(9) {
-        //min-width: fit-content;
-        //width: 80px;
-        //max-width: max-content;
         width: fit-content;
     }
     
     td:nth-child(10),
     th:nth-child(10) {
-        //min-width: 128px;
-        //max-width: 128px;
         width: fit-content;
     }
 }
@@ -563,4 +560,22 @@ tr {
         transform: rotate(45deg) translate(20px, 20px);
     }
 }
+
+.grid-view {
+    .summary {
+        color: $light;
+    }
+    
+    table {
+        th {
+            background-color: $custom-light-orange;
+        }
+    }
+    
+    nav#w1 {
+        display: flex;
+        justify-content: center;
+    }
+}
+
 
