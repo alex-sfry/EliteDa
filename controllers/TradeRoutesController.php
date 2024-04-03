@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\behaviors\PageCounter;
 use app\models\TradeRoutes;
 use app\models\TradeRoutesForm;
 use Yii;
@@ -12,6 +13,17 @@ use yii\web\Controller;
 
 class TradeRoutesController extends Controller
 {
+    public function behaviors(): array
+    {
+        return ArrayHelper::merge(
+            parent::behaviors(),
+            [PageCounter::class]
+        );
+    }
+
+    /**
+     * @return string
+     */
     public function actionIndex(): string
     {
         $session = Yii::$app->session;
@@ -76,7 +88,12 @@ class TradeRoutesController extends Controller
                 $params['models']  = $tr_model->modifyModels($params['models']);
             }
 
+            if ($pagination->getPageCount() !== 0) {
+                $params['page_count_info'] = $this->getPageCounter($pagination);
+            }
+
             $params['pagination'] = $pagination;
+            $params['result'] = $this->renderPartial('tr_result', $params);
         }
 
         return $this->render('index', $params);

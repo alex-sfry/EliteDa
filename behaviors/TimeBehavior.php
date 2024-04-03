@@ -6,7 +6,12 @@ use yii\base\Behavior;
 
 class TimeBehavior extends Behavior
 {
-    public function getTimeDiff($time): string
+    /**
+     * @param int $time
+     *
+     * @return string
+     */
+    public function getTimeDiff(int $time): string
     {
         if ($time >= 60) {
             if ($time >= 1440) {

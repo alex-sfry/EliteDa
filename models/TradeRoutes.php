@@ -44,6 +44,11 @@ class TradeRoutes extends BaseCommodities
         );
     }
 
+    /**
+     * @param $limit
+     *
+     * @return \yii\data\ActiveDataProvider
+     */
     public function getData($limit): ActiveDataProvider
     {
         switch ($this->post['sortBy']) {
@@ -82,6 +87,9 @@ class TradeRoutes extends BaseCommodities
         ]);
     }
 
+    /**
+     * @return \yii\db\Query
+     */
     private function getSourceMarket(): Query
     {
         return (new Query())
@@ -91,6 +99,7 @@ class TradeRoutes extends BaseCommodities
                 'stock',
                 'm.market_id',
                 'type',
+                'distance_to_arrival AS source_distance_ls',
                 'TIMESTAMPDIFF(SECOND, TIMESTAMP, NOW()) as source_time_diff',
             ])
             ->from(['m' => 'markets'])
@@ -101,6 +110,9 @@ class TradeRoutes extends BaseCommodities
             ->andWhere(['>', 'stock', $this->post['minSupplyDemand']]);
     }
 
+    /**
+     * @return \yii\db\Query
+     */
     private function getTargetMarkets(): Query
     {
         extract($this->getCoords($this->sys_name));
@@ -111,7 +123,9 @@ class TradeRoutes extends BaseCommodities
                 ->select([
                     new Expression("{$item['source_time_diff']} AS source_time_diff"),
                     new Expression("{$item['stock']} AS source_stock"),
+                    new Expression("{$item['buy_price']} AS source_buy_price"),
                     new Expression(':type AS source_type', [':type' => $item['type']]),
+                    new Expression("{$item['source_distance_ls']} AS source_distance_ls"),
                     'm.name AS commodity',
                     'st.name AS target_station',
                     'type AS target_type',
@@ -173,6 +187,11 @@ class TradeRoutes extends BaseCommodities
             ->from($query1);
     }
 
+    /**
+     * @param $target_market_ids
+     *
+     * @return \yii\db\Query
+     */
     public function getRoundTrip($target_market_ids): Query
     {
         $cargo = (int)$this->post['cargo'];
@@ -224,6 +243,12 @@ class TradeRoutes extends BaseCommodities
             ->from($query1);
     }
 
+    /**
+     * @param array $dir_data
+     * @param array $round_trip_data
+     *
+     * @return array
+     */
     public function getResultWithRoundTrip(array $dir_data, array $round_trip_data): array
     {
         $temp_arr = [];
@@ -254,6 +279,11 @@ class TradeRoutes extends BaseCommodities
         return $merged_arr;
     }
 
+    /**
+     * @param array $models
+     *
+     * @return array
+     */
     public function modifyModels(array $models): array
     {
         foreach ($models as $key => $value) {
@@ -269,16 +299,20 @@ class TradeRoutes extends BaseCommodities
             }
 
             $value['commodity'] = $this->commodities[strtolower($value['commodity'])];
+            $value['source']['buy_price'] = $value['source_buy_price'];
             $value['source']['pad'] = $this->getLandingPadSizes()[$value['source_type']];
             $value['target']['pad'] = $this->getLandingPadSizes()[$value['target_type']];
-            $value['source']['time_diff'] = $value['source_time_diff'];
-            $value['target']['time_diff'] = $value['target_time_diff'];
+            $value['source']['time_diff'] = $this->getTimeDiff($value['source_time_diff']);
+            $value['target']['time_diff'] = $this->getTimeDiff($value['target_time_diff']);
             $value['source']['stock'] = $value['source_stock'];
             $value['target']['station'] = $value['target_station'];
+            $value['source']['type'] = $value['source_type'];
+            $value['target']['type'] = $value['target_type'];
             $value['target']['system'] = $value['target_system'];
             $value['source']['station'] = $this->st_name;
             $value['source']['system'] = $this->sys_name;
             $value['target']['distance_ls'] = $value['target_distance_ls'];
+            $value['source']['distance_ls'] = $value['source_distance_ls'];
 
             $value['source']['surface'] = match ($value['source_type']) {
                 'Planetary Outpost', 'Planetary Port', 'Odyssey Settlement' => true,
@@ -308,6 +342,10 @@ class TradeRoutes extends BaseCommodities
             unset($value['target_stock']);
             unset($value['source_sell_price']);
             unset($value['source_demand']);
+            unset($value['source_distance_ls']);
+            unset($value['source_buy_price']);
+            unset($value['source_type']);
+            unset($value['target_type']);
 
             $models[$key] = $value;
         }

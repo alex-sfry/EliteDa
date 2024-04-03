@@ -35,13 +35,5 @@ export const commoditiesForm = (loader, removeLoader, fetchData) => {
 
     pagination && pagination.setEventListeners();
     sortTable && sortTable.setEventListeners();
-
-    $('#accordionForm .accordion-button').on('click', function() {
-        if ($(this).text().trim() === 'Close form') {
-            $(this).text('Open form');
-        } else if ($(this).text().trim() === 'Open form') {
-            $(this).text('Close form');
-        }
-    });
 };
 

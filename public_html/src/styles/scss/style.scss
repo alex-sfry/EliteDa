@@ -203,10 +203,6 @@ form {
     &-control.is-invalid {
         background-image: none;
     }
-    
-    .tr-text-input {
-        height: 31px;
-    }
 }
 
 /**
@@ -443,19 +439,45 @@ tr {
 */
 .tr-route {
     &-block {
-        background-color: #0b5ed7;
-    }
-    
-    .tr-info-block ul li,
-    .tr-info-block-mid {
-        font-size: 0.875rem;
+        &-inner {
+            background-color: $light;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
     }
     
     .tr-info-block {
-        background-color: #664d03;
+        background-color: $light;
         
-        li {
-            list-style: none;
+        &-right {
+            border-bottom-left-radius: 0.375rem;
+            border-bottom-right-radius: 0.375rem;
+        }
+        
+        &-left {
+            border-top-left-radius: 0.375rem;
+            border-top-right-radius: 0.375rem;
+        }
+        
+        @media screen and (min-width: 992px) {
+            &-right {
+                border-top-right-radius: 0.375rem;
+            }
+            
+            &-left {
+                border-bottom-left-radius: 0.375rem;
+            }
+        }
+        
+        &-mid {
+            font-size: 0.875rem;
+            
+            div {
+                height: 1px;
+            }
+        }
+        
+        td {
+            background-color: $light;
         }
     }
 }
@@ -486,10 +508,42 @@ tr {
     }
 }
 
+.arrow.arrow-left,
 .arrow.arrow-right {
     top: 32%;
     left: 45%;
-    transform: rotate(-90deg);
+}
+
+.arrow.arrow-right {
+    transform: rotate(0deg);
+}
+
+.arrow.arrow-left {
+    transform: rotate(180deg);
+}
+
+.arrow-cnt {
+    min-height: 100px;
+}
+
+@media screen and (min-width: 992px) {
+    .arrow-cnt {
+        min-height: 80px;
+    }
+    
+    .arrow.arrow-right,
+    .arrow.arrow-left{
+        top: 32%;
+        left: 45%;
+    }
+    
+    .arrow.arrow-right {
+        transform: rotate(-90deg);
+    }
+    
+    .arrow.arrow-left {
+        transform: rotate(90deg);
+    }
 }
 
 @keyframes animate {

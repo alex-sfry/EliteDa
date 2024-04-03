@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\behaviors\PageCounter;
 use app\models\Commdts;
 use Yii;
 use app\models\CommoditiesForm;
@@ -12,6 +13,14 @@ use yii\web\Response;
 
 class CommoditiesController extends Controller
 {
+    public function behaviors(): array
+    {
+        return ArrayHelper::merge(
+            parent::behaviors(),
+            [PageCounter::class]
+        );
+    }
+
     /**
      * @return string
      * @throws \yii\base\InvalidConfigException
@@ -87,16 +96,7 @@ class CommoditiesController extends Controller
             $pagination = $provider->getPagination();
 
             if ($pagination->getPageCount() !== 0) {
-            /*calculations for pages info near pagination buttons*/
-                $current_page = $pagination->getPage() + 1;
-                $page_size = $pagination->getPageSize();
-                $first_in_range = $page_size * $current_page - $page_size + 1;
-                $last_in_range = $pagination->totalCount - ($current_page - 1) * $page_size <= $page_size - 1 ?
-                    $pagination->totalCount : $page_size * $current_page;
-                $params['page_count_info'] =
-                    "<div class='page-counter text-light me-2'>
-                            $first_in_range-$last_in_range / $pagination->totalCount
-                        </div>";
+                $params['page_count_info'] = $this->getPageCounter($pagination);
             }
 
             $params['pagination'] = $pagination;
