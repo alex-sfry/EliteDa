@@ -297,7 +297,7 @@ $this->title = 'Commodities';
                                                 </div>
                                             </div>
                                             <!--submit block-->
-                                            <div class='row justify-content-center'>
+                                            <div class='row justify-content-center text-center'>
                                                 <div class='col-md-3 pt-4 pb-2'>
                                                     <button
                                                         class='btn btn-violet fw-bold text-light text-uppercase mt-2
@@ -307,6 +307,9 @@ $this->title = 'Commodities';
                                                         Search
                                                     </button>
                                                 </div>
+                                                <span class="fst-italic text-danger fs-7">
+                                                    Note: carriers are not included
+                                                </span>
                                             </div>
                                         </div>
                                     </div>

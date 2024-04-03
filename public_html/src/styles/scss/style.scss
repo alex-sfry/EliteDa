@@ -64,6 +64,10 @@ body {
 
 .c-pagination-cnt {
     .pagination {
+        li > a {
+            font-size: 0.875rem;
+        }
+        
         @extend .prev-page;
         @extend .next-page;
         margin-right: 16px;

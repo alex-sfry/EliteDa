@@ -21,7 +21,7 @@ class PageCounter extends Behavior
         $last_in_range = $pagination->totalCount - ($current_page - 1) * $page_size <= $page_size - 1 ?
             $pagination->totalCount : $page_size * $current_page;
 
-        return "<div class='page-counter text-light me-2'>
+        return "<div class='page-counter text-light me-2 fs-7'>
                         $first_in_range-$last_in_range / $pagination->totalCount
                     </div>";
     }
