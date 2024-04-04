@@ -26,7 +26,6 @@ class InputDropdown extends Widget
     public string $endpoint2 = '';
     public bool $required = false;
     public string $btn_position = '';
-    public string $input_bg = '';
 
     public function init(): void
     {
@@ -59,7 +58,6 @@ class InputDropdown extends Widget
                 'endpoint2' => $this->endpoint2,
                 'required' => $this->required,
                 'btn_position' => $this->btn_position,
-                'input_bg' => $this->input_bg
             ]
         );
     }

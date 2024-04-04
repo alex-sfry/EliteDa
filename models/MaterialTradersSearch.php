@@ -43,6 +43,9 @@ class MaterialTradersSearch extends MaterialTraders
         $query = MaterialTraders::find();
 
         // add conditions that should always apply here
+        $query
+            ->innerJoinWith('system')
+            ->innerJoinWith('station');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -64,6 +67,7 @@ class MaterialTradersSearch extends MaterialTraders
         ]);
 
         $query->andFilterWhere(['like', 'material_type', $this->material_type]);
+//        $query->andFilterWhere(['like', 'systems.name', 'systems.name']);
 
         return $dataProvider;
     }

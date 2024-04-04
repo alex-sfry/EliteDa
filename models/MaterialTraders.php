@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "material_traders".
@@ -72,5 +73,34 @@ class MaterialTraders extends ActiveRecord
     public function getSystem(): ActiveQuery
     {
         return $this->hasOne(Systems::class, ['id' => 'system_id']);
+    }
+
+    /**
+     * manually added method
+     * get range to ref system
+     */
+    public function getTotal(): float|bool|string
+    {
+        if (Yii::$app->session->get('mt')) {
+            $sys = Systems::find()
+                ->where(['name' => Yii::$app->session->get('mt')])->one();
+
+            $distance =  round(sqrt(
+                pow(
+                    $sys->x - $this->system->x,
+                    2
+                ) + pow(
+                    $sys->y - $this->system->y,
+                    2
+                ) + pow(
+                    $sys->z - $this->system->z,
+                    2
+                )
+            ), 2);
+
+            return $distance . ' (' . $sys->name . ')';
+        }
+
+        return 'false';
     }
 }

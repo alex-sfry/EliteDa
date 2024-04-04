@@ -21,7 +21,6 @@
  * @var bool $required
  * @var string $selected_radio
  *  @var string  $btn_position
- * @var string  $input_bg
  */
 
 use yii\helpers\Html;
@@ -76,7 +75,6 @@ $classes = [
     'fw-normal',
     'sys-search',
     'mb-1',
-//    $input_bg === '' ? 'bg-transparent' : ''
 ];
 
 $classes_radio = [
@@ -87,8 +85,6 @@ $classes_radio = [
     'shadow-none'
 ];
 
-//$reset_color = $input_bg !== '' ? 'text-light' : '';
-
 if (isset($error) && $error === 'is-invalid') {
     HTML::addCssClass($classes, 'is-invalid border-2 border-danger');
 } else {
@@ -96,7 +92,7 @@ if (isset($error) && $error === 'is-invalid') {
 }
 ?>
 
-<div id="<?= $container ?>" class="position-relative <?= $input_bg !== '' ? $input_bg . ' px-1 rounded-1' : ''?>">
+<div id="<?= $container ?>" class="position-relative">
     <?php if ($radio_switch) : ?>
         <div>
             <label for="target-idd-search">
@@ -149,8 +145,7 @@ if (isset($error) && $error === 'is-invalid') {
             reset
         </button>
     </div>
-    <div class='c-dropdown idd-dropdown dropdown-container d-input <?= $input_bg === '' ? 'bg-transparent' : '' ?>
-                    w-100'>
+    <div class='c-dropdown idd-dropdown dropdown-container d-input w-100'>
         <div
             class="dropdown <?= $btn_position === 'right' ? 'd-flex justify-content-end gap-1' : '' ?>">
             <?= Html::textInput(

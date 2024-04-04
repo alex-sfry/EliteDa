@@ -7,9 +7,9 @@
 
 use app\widgets\InputDropdown\InputDropdown;
 use yii\data\ActiveDataProvider;
-use yii\db\ActiveRecord;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\VarDumper;
 
 $this->title = 'Material Traders';
 ?>
@@ -20,29 +20,32 @@ $this->title = 'Material Traders';
             <div class='d-flex flex-column w-100'>
                 <h1 class="text-light-orange text-center sintony-bold"><?= Html::encode($this->title) ?></h1>
                 <div class="mt-tr-ref-idd ms-auto">
-                    <?= InputDropdown::widget([
-                        'container' => 'mt-tr-ref-idd',
-//                        'error' => $ref_error,
-//                        'selected' => $form_model->refSysStation,
-                        'search' => 'ref-idd-search',
-                        'to_submit' => 'ref-to-submit',
-                        'placeholder' => 'Enter system',
-                        'ajax' => true,
-                        'endpoint' => '/systems/system/?sys=',
-                        'label_main' => 'Ref. system:',
-                        'toggle_btn_text' => 'Search',
-                        'name_main' => 'refSysStation',
-                        'required' => 'required',
-                        'btn_position' => 'right',
-                        'input_bg' => 'bg-white'
-                    ]); ?>
+                    <?= Html::beginForm(['/material-traders/index'], 'post', [
+                        'id' => 'mt-form',
+                        'class' => 'bg-custom-white p-1 rounded-2',
+                        'novalidate' => true,
+                    ]) ?>
+                        <?= InputDropdown::widget([
+                            'container' => 'mt-tr-ref-idd',
+                            'search' => 'ref-idd-search',
+                            'to_submit' => 'ref-to-submit',
+                            'placeholder' => 'Enter system',
+                            'ajax' => true,
+                            'endpoint' => '/systems/system/?sys=',
+                            'label_main' => 'Ref. system:',
+                            'toggle_btn_text' => 'Search',
+                            'name_main' => 'refSysStation',
+                            'required' => 'required',
+                            'btn_position' => 'right'
+                        ]); ?>
+                        <button class="btn btn-violet btn-sm">submit</button>
+                    <?= Html::endForm() ?>
                 </div>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'columns' => [
 //                        ['class' => 'yii\grid\CheckboxColumn'],
-                        ['attribute' => 'id'],
                         [
                             'attribute' => 'material_type',
                             'filter' => ['Encoded' => 'Encoded', 'Manufactured' => 'Manufactured', 'Raw' => 'Raw'],
@@ -50,12 +53,23 @@ $this->title = 'Material Traders';
                                 'class' => 'form-select',
                             ]
                         ],
-                        ['attribute' => 'system_id'],
-                        ['attribute' => 'station_id'],
-                        // ...
+                        ['attribute' => 'system.name', 'label' => 'System'],
+                        ['attribute' => 'station.name', 'label' => 'Station'],
+                        ['attribute' => 'station.type', 'label' => 'Station type'],
+                        [
+                            'attribute' => 'total',
+                            'value' => function ($data) {
+                                return $data->getTotal();
+                            }
+                        ],
+
                     ],
                     'pager' => [
-                        'class' => 'yii\bootstrap5\LinkPager'
+                        'class' => 'yii\bootstrap5\LinkPager',
+                        'firstPageLabel' => 'first',
+                        'lastPageLabel' => 'last',
+                        'prevPageCssClass' => 'prev-page',
+                        'nextPageCssClass' => 'next-page'
                     ],
                 ]) ?>
             </div>
