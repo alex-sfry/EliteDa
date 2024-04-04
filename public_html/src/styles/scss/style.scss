@@ -442,7 +442,7 @@ tr {
     &-block {
         &-inner {
             background-color: $light;
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
         }
     }
     
@@ -561,6 +561,9 @@ tr {
     }
 }
 
+/*
+* gridview for material traders
+*/
 .grid-view {
     .summary {
         color: $light;
@@ -578,4 +581,29 @@ tr {
     }
 }
 
+#w0 {
+    a.asc,
+    a.desc {
+        position: relative;
+    }
+    
+    a.asc::after,
+    a.desc::after {
+        display: inline-block;
+        position: absolute;
+        margin-left: 4px;
+    }
+    
+    a.asc::after {
+        top: -4px;
+        @extend .sort_arrow;
+    }
+    
+    a.desc::after {
+        top: -8px;
+        @extend .sort_arrow;
+        transform-origin: bottom;
+        transform: rotate(180deg);
+    }
+}
 

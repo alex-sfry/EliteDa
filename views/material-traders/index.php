@@ -57,9 +57,9 @@ $this->title = 'Material Traders';
                         ['attribute' => 'station.name', 'label' => 'Station'],
                         ['attribute' => 'station.type', 'label' => 'Station type'],
                         [
-                            'attribute' => 'total',
+                            'attribute' => 'Distance (LY)',
                             'value' => function ($data) {
-                                return $data->getTotal();
+                                return $data->getDistance();
                             }
                         ],
 

@@ -27,7 +27,7 @@ $this->title = 'Elite Dangerous Assistant';
                 <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
                     justify-content-center"
                    href="<?= Url::to(['material-traders/index']) ?>">
-                    Engineering
+                    Material traders
                 </a>
             </div>
         </div>

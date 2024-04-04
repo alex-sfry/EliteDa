@@ -112,7 +112,7 @@ $this->title = 'Commodities';
                                                         'placeholder' => 'Enter system name here',
                                                         'ajax' => true,
                                                         'endpoint' => '/systems/system/?sys=',
-                                                        'label_main' => 'Ref. station:',
+                                                        'label_main' => 'Ref. system:',
                                                         'toggle_btn_text' => 'Get system list',
                                                         'name_main' => 'refSystem',
                                                         'required' => 'required'

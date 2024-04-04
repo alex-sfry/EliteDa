@@ -36,6 +36,7 @@ class MaterialTraders extends ActiveRecord
         return [
             [['system_id', 'station_id'], 'required'],
             [['system_id', 'station_id'], 'integer'],
+            [['distance'], 'safe'],
             [['material_type'], 'string', 'max' => 50],
             [['station_id'], 'exist', 'skipOnError' => true, 'targetClass' => Stations::class, 'targetAttribute' => ['station_id' => 'id']],
             [['system_id'], 'exist', 'skipOnError' => true, 'targetClass' => Systems::class, 'targetAttribute' => ['system_id' => 'id']],
@@ -79,7 +80,7 @@ class MaterialTraders extends ActiveRecord
      * manually added method
      * get range to ref system
      */
-    public function getTotal(): float|bool|string
+    public function getDistance(): float|bool|string
     {
         if (Yii::$app->session->get('mt')) {
             $sys = Systems::find()
@@ -101,6 +102,6 @@ class MaterialTraders extends ActiveRecord
             return $distance . ' (' . $sys->name . ')';
         }
 
-        return 'false';
+        return 'select ref. system';
     }
 }

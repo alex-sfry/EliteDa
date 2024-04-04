@@ -3,8 +3,10 @@
 namespace app\controllers;
 
 use app\models\MaterialTradersSearch;
+use app\models\Systems;
 use Yii;
 use yii\data\Pagination;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 
 class MaterialTradersController extends Controller
@@ -13,12 +15,18 @@ class MaterialTradersController extends Controller
     {
         $session = Yii::$app->session;
         $session->open();
-//        $session->destroy();
+        //        $session->destroy();
         $request = Yii::$app->request;
         !$session->get('mt') && $session->set('mt', $request->post());
 
         $searchModel = new MaterialTradersSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+
+        $sys = Systems::find()
+            ->where(['name' => Yii::$app->session->get('mt')])->one();
+        $distance = "ROUND(SQRT(POW((systems.x - $sys->x), 2) + POW((systems.y - $sys->y), 2) + 
+                        POW((systems.z - $sys->z), 2)), 2)";
+
         $dataProvider->sort->attributes['system.name'] = [
             'asc' => ['systems.name' => SORT_ASC],
             'desc' => ['systems.name' => SORT_DESC],
@@ -27,9 +35,13 @@ class MaterialTradersController extends Controller
             'asc' => ['stations.name' => SORT_ASC],
             'desc' => ['stations.name' => SORT_DESC],
         ];
+        $dataProvider->sort->attributes['Distance (LY)'] = [
+            'asc' => [$distance => SORT_ASC],
+            'desc' => [$distance => SORT_DESC],
+        ];
+
         $pagination = new Pagination();
         $pagination->pageSize = 20;
-
         $dataProvider->setPagination($pagination);
 
         $params['dataProvider'] = $dataProvider;
