@@ -9,13 +9,12 @@ export const commoditiesForm = (loader, removeLoader, fetchData) => {
     removeLoader($table);
 
     const handleSubmit = (e) => {
-        if (!$form[0].checkValidity()) {
+        if (!$form.get(0).checkValidity()) {
             e.preventDefault();
         } else loader($form, $table);
     };
 
     $form.on('submit', handleSubmit);
-
     const table = new Table('c-table');
 
     const proxyHandler= {

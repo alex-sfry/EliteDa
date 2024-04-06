@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\behaviors\CommoditiesBehavior;
 use app\behaviors\PageCounter;
 use app\models\Commdts;
 use Yii;
@@ -17,7 +18,7 @@ class CommoditiesController extends Controller
     {
         return ArrayHelper::merge(
             parent::behaviors(),
-            [PageCounter::class]
+            [PageCounter::class, CommoditiesBehavior::class]
         );
     }
 
@@ -37,6 +38,7 @@ class CommoditiesController extends Controller
         $params['ref_error'] = '';
         $form_model = new CommoditiesForm();
         $params['form_model'] = $form_model;
+        $params['commodities_arr'] = $this->getCommodities();
 
         if (count($request->post()) > 0) {
             $params['post'] = $request->post();

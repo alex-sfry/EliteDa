@@ -41,6 +41,7 @@ $this->title = 'Material Traders';
                         <button class="btn btn-violet btn-sm">submit</button>
                     <?= Html::endForm() ?>
                 </div>
+                <?php $i = 0 ?>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
@@ -57,12 +58,11 @@ $this->title = 'Material Traders';
                         ['attribute' => 'station.name', 'label' => 'Station'],
                         ['attribute' => 'station.type', 'label' => 'Station type'],
                         [
-                            'attribute' => 'Distance (LY)',
-                            'value' => function ($data) {
-                                return $data->getDistance();
+                            'attribute' => 'distance',
+                            'value' => function ($model) {
+                                return $model->distance . ' (' . Yii::$app->session->get('mt')['refSysStation'] . ')';
                             }
                         ],
-
                     ],
                     'pager' => [
                         'class' => 'yii\bootstrap5\LinkPager',

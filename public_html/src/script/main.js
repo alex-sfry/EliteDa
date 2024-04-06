@@ -4,6 +4,7 @@ import {fetchData} from './fetchData.js';
 import {isValidated} from './isValidated.js';
 import {commoditiesForm} from './commodities.js';
 import {tradeRouteForm} from './tradeRoutes.js';
+import {matTraders} from './matTraders.js';
 
 const initHeader = () => {
     $('.menu__link').each(function() {
@@ -36,10 +37,75 @@ const removeLoader = ($elem) => {
     }
 };
 
+const getMaterialsFromTable = async () => {
+    const table = [];
+
+    $('#encoded tbody tr').each(function() {
+        table.push({
+            name: $(this).find('th').text().trim(),
+            category: $(this).find('td').eq(0).text().trim(),
+            grade: $(this).find('td').eq(1).text().trim(),
+            type: 'encoded',
+            location: ''
+        });
+    });
+
+    $('#manf tbody tr').each(function() {
+        table.push({
+            name: $(this).find('th').text().trim(),
+            category: $(this).find('td').eq(0).text().trim(),
+            grade: $(this).find('td').eq(1).text().trim(),
+            type: 'manufactured',
+            location: $(this).find('td').eq(2).text().trim(),
+        });
+    });
+
+    $('#raw tbody tr').each(function() {
+        table.push({
+            name: $(this).find('th').text().trim(),
+            category: $(this).find('td').eq(0).text().trim(),
+            grade: $(this).find('td').eq(1).text().trim(),
+            type: 'raw',
+            location: $(this).find('td').eq(2).text().trim(),
+        });
+    });
+
+    console.log(table);
+
+    $('#addToDb').on('click', async function() {
+    const url = '/addtodb-insert';
+
+        try {
+            console.log('ok');
+            const res = await fetch(
+                url, {
+                    method: 'POST',
+                    mode: 'cors', // this cannot be 'no-cors'
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(table),
+                });
+            if (res.ok) {
+                console.log(await res.json());
+                // return await res.json();
+            } else {
+                console.log('fetch error');
+            }
+        }
+        catch (error) {
+            console.log(error.message);
+        }
+    });
+};
+
+
 document.addEventListener('DOMContentLoaded', () => {
     initHeader();
     if ($('#c-form').length)  commoditiesForm(loader, removeLoader, fetchData);
     if ($('#tr-form').length)  tradeRouteForm(isValidated, loader, removeLoader);
+    if ($('#mt-form').length)  matTraders();
 
     $('#accordionForm .accordion-button').on('click', function() {
         if ($(this).text().trim() === 'Close form') {
@@ -48,4 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
             $(this).text('Close form');
         }
     });
+
+    if ($('table.article-table').length) getMaterialsFromTable();
 });

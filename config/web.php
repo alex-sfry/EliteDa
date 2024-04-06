@@ -38,6 +38,9 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'y6-kI8DCYXsT-N2nIJALHgB291FX8bGO',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -70,8 +73,13 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'member'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'book'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'materials'],
 //                'contact' => 'site/contact',
 //                'entry' => 'site/entry',
+                'addtodb-insert' => 'addtodb/insert',
+                'addtodb' => 'addtodb/index',
                 'systems/index/<sys:\w+>' => 'systems/index',
                 'stations/index/<station:\w+>' => 'stations/index',
                 'commodities' => 'commodities/index',
@@ -92,7 +100,7 @@ if (YII_ENV_DEV) {
         'class' => 'yii\debug\Module',
         'panels' => [
             'httpclient' => [
-                'class' => 'yii\\httpclient\\debug\\HttpClientPanel',
+                'class' => 'yii\httpclient\debug\HttpClientPanel',
             ],
         ],
         // uncomment the following to add your IP if you are not connecting from localhost.

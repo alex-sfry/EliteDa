@@ -31,3 +31,9 @@
 .input-dd-selected-items .reset-input-dd {
     font-size: inherit;
 }
+
+.btn-right-error {
+    top: 100%;
+    left: 34%;
+
+}

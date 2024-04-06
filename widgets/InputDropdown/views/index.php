@@ -174,7 +174,8 @@ if (isset($error) && $error === 'is-invalid') {
                     'required' => $required ? '' : null
                 ]
             ) ?>
-            <p class="invalid-feedback feedback position-absolute mt-0 pt-0 fw-bold">
+            <p class="invalid-feedback feedback position-absolute fw-bold mt-0 pt-0
+            <?= $btn_position === 'right' ? 'btn-right-error' : '' ?>">
                 Field must not be empty
             </p>
             <ul class='dropdown-menu border-dark-subtle px-1 w-100 me-2 shadow-sm visually-hidden overflow-y-auto

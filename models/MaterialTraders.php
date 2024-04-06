@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\db\Expression;
 
 /**
  * This is the model class for table "material_traders".
@@ -20,6 +19,8 @@ use yii\db\Expression;
  */
 class MaterialTraders extends ActiveRecord
 {
+    public $distance;
+
     /**
      * {@inheritdoc}
      */
@@ -36,7 +37,6 @@ class MaterialTraders extends ActiveRecord
         return [
             [['system_id', 'station_id'], 'required'],
             [['system_id', 'station_id'], 'integer'],
-            [['distance'], 'safe'],
             [['material_type'], 'string', 'max' => 50],
             [['station_id'], 'exist', 'skipOnError' => true, 'targetClass' => Stations::class, 'targetAttribute' => ['station_id' => 'id']],
             [['system_id'], 'exist', 'skipOnError' => true, 'targetClass' => Systems::class, 'targetAttribute' => ['system_id' => 'id']],
@@ -51,6 +51,7 @@ class MaterialTraders extends ActiveRecord
         return [
             'material_type' => 'Material Type',
             'id' => 'ID',
+            'distance' => 'Distance',
             'system_id' => 'System ID',
             'station_id' => 'Station ID',
         ];
@@ -74,34 +75,5 @@ class MaterialTraders extends ActiveRecord
     public function getSystem(): ActiveQuery
     {
         return $this->hasOne(Systems::class, ['id' => 'system_id']);
-    }
-
-    /**
-     * manually added method
-     * get range to ref system
-     */
-    public function getDistance(): float|bool|string
-    {
-        if (Yii::$app->session->get('mt')) {
-            $sys = Systems::find()
-                ->where(['name' => Yii::$app->session->get('mt')])->one();
-
-            $distance =  round(sqrt(
-                pow(
-                    $sys->x - $this->system->x,
-                    2
-                ) + pow(
-                    $sys->y - $this->system->y,
-                    2
-                ) + pow(
-                    $sys->z - $this->system->z,
-                    2
-                )
-            ), 2);
-
-            return $distance . ' (' . $sys->name . ')';
-        }
-
-        return 'select ref. system';
     }
 }

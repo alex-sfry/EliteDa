@@ -4,8 +4,10 @@ export const fetchData = async (url, loaderCnt = null) => {
         const res = await fetch(
             url, {
                 method: 'GET',
+                mode: 'cors', // this cannot be 'no-cors'
                 headers: {
-                    contentType: 'application/json',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
                 },
             });
         if (res.ok) {

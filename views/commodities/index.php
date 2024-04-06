@@ -24,8 +24,6 @@ use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 use yii\helpers\VarDumper;
 
-require(dirname(__DIR__, 2) . '/data/c_form_data.php');
-
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
     'sort_options' => ['Price' => 'Price', 'Updated_at' => 'Updated at (time)', 'Distance' => 'Distance (LY)'],

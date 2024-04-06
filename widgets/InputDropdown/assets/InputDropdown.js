@@ -29,8 +29,10 @@ class InputDropdown {
             const res = await fetch(
                 `${endpoint}${searchValue.trim()}`, {
                     method: 'GET',
+                    mode: 'cors', // this cannot be 'no-cors'
                     headers: {
-                        contentType: 'application/json',
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
                     },
                 });
 

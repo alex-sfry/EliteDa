@@ -5,7 +5,6 @@ namespace app\controllers;
 use app\models\MaterialTradersSearch;
 use app\models\Systems;
 use Yii;
-use yii\data\Pagination;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
 
@@ -15,17 +14,31 @@ class MaterialTradersController extends Controller
     {
         $session = Yii::$app->session;
         $session->open();
-        //        $session->destroy();
+//        $session->destroy();
         $request = Yii::$app->request;
-        !$session->get('mt') && $session->set('mt', $request->post());
+
+        if (count($request->post()) > 0) {
+            $session->set('mt', $request->post());
+        } else {
+            !isset($session->get('mt')['refSysStation']) && $session->set('mt', ['refSysStation' => 'Sol']);
+        }
+
+        if (isset($session->get('mt')['refSysStation'])) {
+            if ($session->get('mt')['refSysStation'] !== '') {
+                $refCoords = Systems::find()
+                    -> select(['x', 'y', 'z'])
+                    ->where(['name' => $session->get('mt')['refSysStation']])
+                    ->asArray()
+                    ->one();
+            }
+        }
+
+        if (!isset($refCoords)) {
+            $refCoords = ['x' => 0, 'y' => 0, 'z' => 0];
+        }
 
         $searchModel = new MaterialTradersSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        $sys = Systems::find()
-            ->where(['name' => Yii::$app->session->get('mt')])->one();
-        $distance = "ROUND(SQRT(POW((systems.x - $sys->x), 2) + POW((systems.y - $sys->y), 2) + 
-                        POW((systems.z - $sys->z), 2)), 2)";
+        $dataProvider = $searchModel->search($this->request->queryParams, $refCoords);
 
         $dataProvider->sort->attributes['system.name'] = [
             'asc' => ['systems.name' => SORT_ASC],
@@ -35,18 +48,14 @@ class MaterialTradersController extends Controller
             'asc' => ['stations.name' => SORT_ASC],
             'desc' => ['stations.name' => SORT_DESC],
         ];
-        $dataProvider->sort->attributes['Distance (LY)'] = [
-            'asc' => [$distance => SORT_ASC],
-            'desc' => [$distance => SORT_DESC],
+        $dataProvider->sort->attributes['distance'] = [
+            'asc' => ['distance' => SORT_ASC],
+            'desc' => ['distance' => SORT_DESC],
         ];
-
-        $pagination = new Pagination();
-        $pagination->pageSize = 20;
-        $dataProvider->setPagination($pagination);
 
         $params['dataProvider'] = $dataProvider;
         $params['searchModel'] = $searchModel;
-        $params['request'] = $session->get('mt');
+        $params['refCoords'] = $refCoords;
 
         return $this->render('index', $params);
     }

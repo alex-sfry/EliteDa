@@ -4,7 +4,8 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\MaterialTraders;
+use Yii;
+use yii\db\Expression;
 
 /**
  * MaterialTradersSearch represents the model behind the search form of `app\models\MaterialTraders`.
@@ -38,12 +39,20 @@ class MaterialTradersSearch extends MaterialTraders
      *
      * @return ActiveDataProvider
      */
-    public function search(array $params): ActiveDataProvider
+    public function search(array $params, $refCoords): ActiveDataProvider
     {
+        extract($refCoords);
         $query = MaterialTraders::find();
 
         // add conditions that should always apply here
         $query
+            ->select([
+                '*',
+                new Expression(
+                    "ROUND(SQRT(POW((systems.x - $x), 2) + POW((systems.y - $y), 2) +
+                    POW((systems.z - $z), 2)), 2) AS distance"
+                ),
+            ])
             ->innerJoinWith('system')
             ->innerJoinWith('station');
 
@@ -64,10 +73,10 @@ class MaterialTradersSearch extends MaterialTraders
             'id' => $this->id,
             'system_id' => $this->system_id,
             'station_id' => $this->station_id,
+            'distance' => $this->distance,
         ]);
 
         $query->andFilterWhere(['like', 'material_type', $this->material_type]);
-//        $query->andFilterWhere(['like', 'systems.name', 'systems.name']);
 
         return $dataProvider;
     }
