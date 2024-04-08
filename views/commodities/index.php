@@ -14,15 +14,13 @@
  * @var string $max_dist_from_star
  * @var string $min_supply_demand
  * @var string $max_age_of_datap
- * @var CommoditiesForm $form_model
+ * @var \app\models\forms\CommoditiesForm $form_model
  */
 
-use app\models\CommoditiesForm;
+use app\models\forms\CommoditiesForm;
 use app\widgets\CustomSelect\CustomSelect;
 use app\widgets\InputDropdown\InputDropdown;
-use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
-use yii\helpers\VarDumper;
 
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],

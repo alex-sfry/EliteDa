@@ -12,6 +12,9 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\PhpManager',
+        ],
         'assetManager' => [
             'converter' => [
                 'class' => 'yii\web\AssetConverter',
@@ -85,7 +88,7 @@ $config = [
                 'commodities' => 'commodities/index',
                 'trade-routes' => 'trade-routes/index',
                 'material-traders' => 'material-traders/index',
-//                '<controller>/<action>' =>  '<controller>/<action>',
+                '<controller>/<action>' =>  '<controller>/<action>',
                 '' => 'site/index'
             ],
         ],

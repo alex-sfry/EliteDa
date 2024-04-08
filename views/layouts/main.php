@@ -25,7 +25,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column" style="height:100vh">
 <?php $this->beginBody() ?>
     <div class="body-wrapper bg-main-background d-flex flex-column justify-content-between overflow-x-hidden
         overflow-y-scroll">
@@ -45,6 +45,34 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
+                        <div class="d-flex nowrap justify-content-center align-items-center justify-content-lg-start
+                                        align-items-lg-start order-last">
+                                <?php if (Yii::$app->user->isGuest) : ?>
+                                    <a class="sintony-reg text-light" href="<?= Url::to(['user/signup']) ?>">
+                                        Register
+                                    </a>
+                                    <span class="text-light mx-1">|</span>
+                                    <a class="sintony-reg text-light" href="<?= Url::to(['user/login']) ?>">Login</a>
+                                <?php else : ?>
+                                    <div class="row justify-content-start flex-row flex-lg-column row-gap-1 g-0">
+                                        <div class="col">
+                                            <span
+                                                class="sintony-reg nowrap text-info text-decoration-underline"
+                                                style=" white-space: nowrap;">
+                                                Welcome, <?= Yii::$app->user->identity->username ?>
+                                            </span>
+                                        </div>
+                                        <div class="col col-lg-8">
+                                            <a
+                                                href="/user/logout"
+                                                class="sintony-reg nowrap text-warning ms-2 ms-lg-0 rounded-1
+                                            text-light bg-light-orange p-1">
+                                                Log out
+                                            </a>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                        </div>
                         <ul class="menu navbar-nav d-flex w-100 flex-md-wrap justify-content-center
                             align-content-center gap-lg-5">
                             <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative">

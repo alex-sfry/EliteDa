@@ -14,13 +14,12 @@
  * @var string $max_dist_from_star
  * @var string $min_supply_demand
  * @var string $max_age_of_data
- * @var TradeRoutesForm $form_model
+ * @var \app\models\forms\TradeRoutesForm $form_model
  */
 
-use app\models\TradeRoutesForm;
+use app\models\forms\TradeRoutesForm;
 use app\widgets\InputDropdown\InputDropdown;
 use yii\helpers\Html;
-use yii\helpers\VarDumper;
 
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],

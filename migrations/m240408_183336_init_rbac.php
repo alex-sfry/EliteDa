@@ -1,0 +1,52 @@
+<?php
+
+use yii\db\Migration;
+
+/**
+ * Class m240408_183336_init_rbac
+ */
+class m240408_183336_init_rbac extends Migration
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function safeUp(): void
+    {
+        $auth = Yii::$app->authManager;
+
+        $accessAddtodb = $auth->createPermission('accessAddtodb');
+        $accessAddtodb->description = 'Access to AddToDb page';
+        $auth->add($accessAddtodb);
+
+        $admin = $auth->createRole('admin');
+        $auth->add($admin);
+        $auth->addChild($admin, $accessAddtodb);
+
+        $auth->assign($admin, 1);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function safeDown(): void
+    {
+        $auth = Yii::$app->authManager;
+
+        $auth->removeAll();
+    }
+
+    /*
+    // Use up()/down() to run migration code without a transaction.
+    public function up()
+    {
+
+    }
+
+    public function down()
+    {
+        echo "m240408_183336_init_rbac cannot be reverted.\n";
+
+        return false;
+    }
+    */
+}
