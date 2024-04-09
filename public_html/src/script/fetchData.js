@@ -1,14 +1,15 @@
-export const fetchData = async (url, loaderCnt = null) => {
+export const fetchData = async (url, method = 'GET', body= null, loaderCnt = null) => {
     loaderCnt && enableLoader(loaderCnt);
     try {
         const res = await fetch(
             url, {
-                method: 'GET',
+                method: method,
                 mode: 'cors', // this cannot be 'no-cors'
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
+                body: body
             });
         if (res.ok) {
             return await res.json();

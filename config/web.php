@@ -76,13 +76,8 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'member'],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'book'],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'materials'],
 //                'contact' => 'site/contact',
 //                'entry' => 'site/entry',
-//                'addtodb-insert' => 'addtodb/insert',
-//                'addtodb' => 'addtodb/index',
                 'systems/index/<sys:\w+>' => 'systems/index',
                 'stations/index/<station:\w+>' => 'stations/index',
                 'commodities' => 'commodities/index',
