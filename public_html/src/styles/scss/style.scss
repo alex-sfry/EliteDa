@@ -60,6 +60,26 @@ body {
     height: 100vh;
 }
 
+.col-tile,
+.main-tile {
+    max-width: 240px;
+}
+
+.main-tile {
+    height: 80px;
+    a {
+        font-size: 0.875rem;
+    }
+}
+
+@media screen and (min-width: 330px) {
+    .main-tile {
+        a {
+            font-size: 1rem;
+        }
+    }
+}
+
 /**
 * pagination styles
 */

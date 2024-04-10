@@ -107,6 +107,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                             href="<?= Url::to(['material-traders/index']) ?>">
                                             Material traders
                                         </a>
+                                        <a
+                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item"
+                                            href="<?= Url::to(['materials/index']) ?>">
+                                            Materials
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
