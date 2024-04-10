@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models;
+namespace app\models\search;
 
+use app\models\MaterialTraders;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use Yii;
 use yii\db\Expression;
 
 /**

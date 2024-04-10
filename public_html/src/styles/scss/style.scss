@@ -3,12 +3,21 @@
 @import "../../../node_modules/bootstrap/scss/functions.scss";
 @import "../../../node_modules/bootstrap/scss/variables.scss";
 
+.f-ctrl-no-shadow {
+    box-shadow: none;
+    border-color: $border-color;
+}
+
 .sort_arrow {
     content: "";
     padding: $spacer * .5;
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="%23f8f9fa" class="bi bi-caret-up" viewBox="0 0 16 16"><path d="M3.204 11h9.592L8 5.519zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659"  /></svg>');
     background-repeat: no-repeat;
     background-position: top;
+}
+
+select {
+    cursor: pointer;
 }
 
 a {
@@ -118,48 +127,6 @@ body {
     }
     
     .menu {
-        &__item {
-            //width: fit-content;
-        }
-        
-        //&__link::after {
-        //    position: absolute;
-        //    bottom: -1px;
-        //    left: 50%;
-        //    content: "";
-        //    width: 0;
-        //    height: 3px;
-        //    background-color: $custom-light-orange;
-        //    transition-property: width, left;
-        //    transition-duration: 200ms;
-        //    transition-timing-function: linear;
-        //}
-        //
-        //&__link:hover:not(.active){
-        //    &::after {
-        //        left: 0;
-        //        width: 100%;
-        //    }
-        //}
-        //
-        //&__link:hover.show {
-        //    &::after {
-        //        left: 50%;
-        //        width: 0;
-        //    }
-        //}
-        
-        //&__link_nested::after {
-        //    bottom: 10px;
-        //}
-        //
-        //&__link_nested:hover:not(.active){
-        //    &::after {
-        //        left: 10%;
-        //        width: 80%;
-        //    }
-        //}
-        
         &__link {
             &_nested.active {
                 background-color: $header-color !important;
@@ -217,8 +184,7 @@ main {
 */
 form {
     &-check-input:focus {
-        box-shadow: none;
-        border-color: $border-color
+        @extend .f-ctrl-no-shadow
     }
     
     &-check-input:checked {
@@ -562,7 +528,7 @@ tr {
 }
 
 /*
-* gridview for material traders
+* gridview
 */
 .grid-view {
     .summary {
@@ -604,5 +570,9 @@ tr {
         @extend .sort_arrow;
         transform-origin: bottom;
         transform: rotate(180deg);
+    }
+    
+    .filters select:focus {
+        @extend .f-ctrl-no-shadow;
     }
 }

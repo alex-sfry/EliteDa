@@ -2,10 +2,9 @@
 
 namespace app\controllers;
 
-use app\models\MaterialTradersSearch;
+use app\models\search\MaterialTradersSearch;
 use app\models\Systems;
 use Yii;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
 
 class MaterialTradersController extends Controller
