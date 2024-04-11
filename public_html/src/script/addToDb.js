@@ -1,4 +1,4 @@
-export const getMaterialsFromTable = async (fetchData) => {
+export const getDataFromDom = async (fetchData) => {
     const table = [];
 
     $('#encoded tbody tr').each(function() {
@@ -31,7 +31,7 @@ export const getMaterialsFromTable = async (fetchData) => {
         });
     });
 
-    console.log(table);
+    // console.log(table);
 
     $('#addMaterials').on('click', async function() {
         const url = '/addtodb/materials';

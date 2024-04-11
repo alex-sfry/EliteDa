@@ -5,7 +5,7 @@ import {isValidated} from './isValidated.js';
 import {commoditiesForm} from './commodities.js';
 import {tradeRouteForm} from './tradeRoutes.js';
 import {matTraders} from './matTraders.js';
-import {getMaterialsFromTable} from './addToDb.js';
+import {getDataFromDom} from './addToDb.js';
 
 const initHeader = () => {
     $('.menu__link').each(function() {
@@ -52,5 +52,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    if ($('table.article-table').length) getMaterialsFromTable(fetchData);
+    if ($('table.article-table').length) getDataFromDom(fetchData);
 });

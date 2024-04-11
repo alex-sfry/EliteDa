@@ -19,6 +19,654 @@ $this->title = 'Add to DB';
     </div>
 </main>
 
+<table
+    class="article-table sortable mw-collapsible jquery-tablesorter mw-made-collapsible d-none"
+    style="font-size:10pt">
+    <thead>
+        <tr>
+            <th class="headerSort headerSortUp" tabindex="0" role="columnheader button" title="Sort descending">Engineer
+            </th>
+            <th class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Base Name
+            </th>
+            <th class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Modifications offered
+            </th>
+            <th class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">System
+            </th>
+            <th class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Planet
+            </th>
+            <th class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">
+                <span class="mw-collapsible-toggle mw-collapsible-toggle-default"
+                      role="button"
+                      tabindex="0"
+                      aria-expanded="true"><a class="mw-collapsible-text">Collapse</a></span>
+                Region
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <a href="/wiki/Bill_Turner" title="Bill Turner">Bill Turner</a>
+            </td>
+            <td>Turner Metallics Inc
+            </td>
+            <td>
+                <ul>
+                    <li>Sensors (G5)</li>
+                    <li>Plasma Accelerator (G5)</li>
+                    <li>AFMU (G3)</li>
+                    <li>Detailed Surface Scanner (G5)</li>
+                    <li>Frame Shift Wake Scanner (G3)</li>
+                    <li>Fuel Scoop (G3)</li>
+                    <li>Kill Warrant Scanner (G3)</li>
+                    <li>Life Support (G3)</li>
+                    <li>Manifest Scanner (G3)</li>
+                    <li>Refinery (G3)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Alioth" title="Alioth">Alioth</a>
+            </td>
+            <td>4 a
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Broo_Tarquin" title="Broo Tarquin">Broo Tarquin</a>
+            </td>
+            <td>Broo's Legacy
+            </td>
+            <td>
+                <ul>
+                    <li>Beam Laser (G5)</li>
+                    <li>Burst Laser (G5)</li>
+                    <li>Pulse Laser (G5)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Muang" title="Muang">Muang</a>
+            </td>
+            <td>5 a
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Chloe_Sedesi" title="Chloe Sedesi">Chloe Sedesi</a>
+            </td>
+            <td>Cinder Dock
+            </td>
+            <td>
+                <ul>
+                    <li>Thrusters (G5)</li>
+                    <li>Frame Shift Drive (G3)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Shenve" title="Shenve">Shenve</a>
+            </td>
+            <td>A 6
+            </td>
+            <td>
+                <a href="/wiki/Witch_Head_Nebula" title="Witch Head Nebula">Witch Head Nebula</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Colonel_Bris_Dekker"
+                   class="mw-redirect"
+                   title="Colonel Bris Dekker">Colonel Bris Dekker
+                </a>
+            </td>
+            <td>Dekker's Yard
+            </td>
+            <td>
+                <ul>
+                    <li>Frame Shift Drive Interdictor (G4)</li>
+                    <li>Frame Shift Drive (G3)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Sol" title="Sol">Sol</a>
+            </td>
+            <td>Iapetus
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Didi_Vatermann" title="Didi Vatermann">Didi Vatermann</a>
+            </td>
+            <td>Vatermann LLC
+            </td>
+            <td>
+                <ul>
+                    <li>Shield Booster (G5)</li>
+                    <li>Shield Generator (G3)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Leesti" title="Leesti">Leesti</a>
+            </td>
+            <td>1 a
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Elvira_Martuuk" title="Elvira Martuuk">Elvira Martuuk</a>
+            </td>
+            <td>Long Sight Base
+            </td>
+            <td>
+                <ul>
+                    <li>Frame Shift Drive (G5)</li>
+                    <li>Shield Generator (G3)</li>
+                    <li>Thrusters (G2)</li>
+                    <li>Shield Cell Bank (G1)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Khun" title="Khun">Khun</a>
+            </td>
+            <td>5
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Etienne_Dorn" title="Etienne Dorn">Etienne Dorn</a>
+            </td>
+            <td>Kraken's Retreat
+            </td>
+            <td>
+                <ul>
+                    <li>Detailed Surface Scanner (G5)</li>
+                    <li>Frame Shift Wake Scanner (G5)</li>
+                    <li>Life Support (G5)</li>
+                    <li>Manifest Scanner (G5)</li>
+                    <li>Plasma Accelerator (G5)</li>
+                    <li>Power Distributor (G5)</li>
+                    <li>Power Plant (G5)</li>
+                    <li>Sensors (G5)</li>
+                    <li>Rail Gun (G5)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Los" title="Los">Los</a>
+            </td>
+            <td>A 2 b
+            </td>
+            <td>
+                <a href="/wiki/Colonia_Region" title="Colonia Region">Colonia Region</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Felicity_Farseer" title="Felicity Farseer">Felicity Farseer</a>
+            </td>
+            <td>Farseer Inc
+            </td>
+            <td>
+                <ul>
+                    <li>Frame Shift Drive (G5)</li>
+                    <li>Detailed Surface Scanner (G3)</li>
+                    <li>Sensors (G3)</li>
+                    <li>Thrusters (G3)</li>
+                    <li>Power Plant (G1)</li>
+                    <li>Frame Shift Drive Interdictor (G1)</li>
+                    <li>Shield Booster (G1)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Deciat" title="Deciat">Deciat</a>
+            </td>
+            <td>6 a
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Hera_Tani" title="Hera Tani">Hera Tani</a>
+            </td>
+            <td>The Jet's Hole
+            </td>
+            <td>
+                <ul>
+                    <li>Detailed Surface Scanner (G5)</li>
+                    <li>Power Plant (G5)</li>
+                    <li>Power Distributor (G3)</li>
+                    <li>Sensors (G3)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Kuwemaki" title="Kuwemaki">Kuwemaki</a>
+            </td>
+            <td>A 3 a
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Juri_Ishmaak" title="Juri Ishmaak">Juri Ishmaak</a>
+            </td>
+            <td>Pater's Memorial
+            </td>
+            <td>
+                <ul>
+                    <li>Detailed Surface Scanner (G5)</li>
+                    <li>Mine Launcher (G5)</li>
+                    <li>Sensors (G5)</li>
+                    <li>Frame Shift Wake Scanner (G3)</li>
+                    <li>Kill Warrant Scanner (G3)</li>
+                    <li>Manifest Scanner (G3)</li>
+                    <li>Missile Rack (G3)</li>
+                    <li>Seeker Missile Rack (G3)</li>
+                    <li>Torpedo Pylon (G3)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Giryak" title="Giryak">Giryak</a>
+            </td>
+            <td>2 a
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Lei_Cheung" title="Lei Cheung">Lei Cheung</a>
+            </td>
+            <td>Trader's Rest
+            </td>
+            <td>
+                <ul>
+                    <li>Shield Generator (G5)</li>
+                    <li>Detailed Surface Scanner (G5)</li>
+                    <li>Sensors (G5)</li>
+                    <li>Shield Booster (G3)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Laksak" title="Laksak">Laksak</a>
+            </td>
+            <td>A 1
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Liz_Ryder" title="Liz Ryder">Liz Ryder</a>
+            </td>
+            <td>Demolition Unlimited
+            </td>
+            <td>
+                <ul>
+                    <li>Missile Rack (G5)</li>
+                    <li>Seeker Missile Rack (G5)</li>
+                    <li>Torpedo Pylon (G5) Mine Launcher (G3)</li>
+                    <li>Hull Reinforcement Package (G1)</li>
+                    <li>Armour (G1)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Eurybia" title="Eurybia">Eurybia</a>
+            </td>
+            <td>Makalu
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Lori_Jameson" title="Lori Jameson">Lori Jameson</a>
+            </td>
+            <td>Jameson Base
+            </td>
+            <td>
+                <ul>
+                    <li>Detailed Surface Scanner (G5)</li>
+                    <li>Sensors (G5)</li>
+                    <li>AFMU (G4)</li>
+                    <li>Fuel Scoop (G4)</li>
+                    <li>Life Support (G4)</li>
+                    <li>Refinery (G4)</li>
+                    <li>Frame Shift Wake Scanner (G3)</li>
+                    <li>Manifest Scanner (G3)</li>
+                    <li>Shield Cell Bank (G3)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Shinrarta_Dezhra" title="Shinrarta Dezhra">Shinrarta Dezhra</a>
+            </td>
+            <td>A 1
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Marco_Qwent" title="Marco Qwent">Marco Qwent</a>
+            </td>
+            <td>Qwent Research Base
+            </td>
+            <td>
+                <ul>
+                    <li>Power Plant (G4)</li>
+                    <li>Power Distributor (G3)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Sirius" title="Sirius">Sirius</a>
+            </td>
+            <td>Lucifer
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Marsha_Hicks" title="Marsha Hicks">Marsha Hicks</a>
+            </td>
+            <td>The Watchtower
+            </td>
+            <td>
+                <ul>
+                    <li>Cannon (G5)</li>
+                    <li>Fragment Cannon (G5)</li>
+                    <li>Fuel Scoop (G5)</li>
+                    <li>Fuel Transfer Limpet Controller (G5)</li>
+                    <li>Hatch Breaker Limpet Controller (G5)</li>
+                    <li>Multi-cannon (G5)</li>
+                    <li>Prospector Limpet Controller (G5)</li>
+                    <li>Refinery (G5)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Tir" title="Tir">Tir</a>
+            </td>
+            <td>A 2
+            </td>
+            <td>
+                <a href="/wiki/Colonia_Region" title="Colonia Region">Colonia Region</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Mel_Brandon" title="Mel Brandon">Mel Brandon</a>
+            </td>
+            <td>The Brig
+            </td>
+            <td>
+                <ul>
+                    <li>Beam Laser (G5)</li>
+                    <li>Burst Laser (G5)</li>
+                    <li>Pulse Laser (G5)</li>
+                    <li>Shield Generator (G5)</li>
+                    <li>Thrusters (G5)</li>
+                    <li>Shield Booster (G5)</li>
+                    <li>Frame Shift Drive (G5)</li>
+                    <li>Frame Shift Drive Interdictor (G5)</li>
+                    <li>Shield Cell Bank (G4)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Luchtaine" title="Luchtaine">Luchtaine</a>
+            </td>
+            <td>A 1 c
+            </td>
+            <td>
+                <a href="/wiki/Colonia_Region" title="Colonia Region">Colonia Region</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Petra_Olmanova" title="Petra Olmanova">Petra Olmanova</a>
+            </td>
+            <td>Sanctuary
+            </td>
+            <td>
+                <ul>
+                    <li>Armour (G5)</li>
+                    <li>AFMU (G5)</li>
+                    <li>Chaff Launcher (G5)</li>
+                    <li>ECM (G5)</li>
+                    <li>Heat Sink Launcher (G5)</li>
+                    <li>Hull Reinforcement Package (G5)</li>
+                    <li>Mine Launcher (G5)</li>
+                    <li>Missile Rack (G5)</li>
+                    <li>Point Defence (G5)</li>
+                    <li>Seeker Missile Rack (G5)</li>
+                    <li>Torpedo Pylon (G5)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Asura" title="Asura">Asura</a>
+            </td>
+            <td>1 a
+            </td>
+            <td>
+                <a href="/wiki/Colonia_Region" title="Colonia Region">Colonia Region</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Professor_Palin" class="mw-redirect" title="Professor Palin">Professor Palin</a>
+            </td>
+            <td>Abel Laboratory
+            </td>
+            <td>
+                <ul>
+                    <li>Thrusters (G5)</li>
+                    <li>Frame Shift Drive (G3)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Arque" title="Arque">Arque</a>
+            </td>
+            <td>4 e
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Ram_Tah" title="Ram Tah">Ram Tah</a>
+            </td>
+            <td>Phoenix Base
+            </td>
+            <td>
+                <ul>
+                    <li>Chaff Launcher (G5)</li>
+                    <li>ECM (G5)</li>
+                    <li>Heat Sink Launcher (G5)</li>
+                    <li>Point Defense (G5)</li>
+                    <li>Collector Limpet Controller (G4)</li>
+                    <li>Fuel Transfer Limpet Controller (G4)</li>
+                    <li>Prospector Limpet Controller (G4)</li>
+                    <li>Hatch Breaker Limpet Controller (G3)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Meene" title="Meene">Meene</a>
+            </td>
+            <td>AB 5 d
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Selene_Jean" title="Selene Jean">Selene Jean</a>
+            </td>
+            <td>Prospector's Rest
+            </td>
+            <td>
+                <ul>
+                    <li>Armour (G5)</li>
+                    <li>Hull Reinforcement Package (G5)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Kuk" title="Kuk">Kuk</a>
+            </td>
+            <td>B 3
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/The_Dweller" title="The Dweller">The Dweller</a>
+            </td>
+            <td>Black Hide
+            </td>
+            <td>
+                <ul>
+                    <li>Beam Lasers (G3)</li>
+                    <li>Burst Lasers (G3)</li>
+                    <li>Pulse Lasers (G4)</li>
+                    <li>Power Distributor (G5)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Wyrd" title="Wyrd">Wyrd</a>
+            </td>
+            <td>A 2
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/The_Sarge" title="The Sarge">The Sarge</a>
+            </td>
+            <td>The Beach
+            </td>
+            <td>
+                <ul>
+                    <li>Cannon (G5)</li>
+                    <li>Collector Limpet Controller (G5)</li>
+                    <li>Fuel Transfer Limpet Controller (G5)</li>
+                    <li>Hatch Breaker Limpet Controller (G5)</li>
+                    <li>Prospector Limpet Controller (G5)</li>
+                    <li>Rail Gun (G3)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Beta-3_Tucani" title="Beta-3 Tucani">Beta-3 Tucani</a>
+            </td>
+            <td>2 b a
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Tiana_Fortune" title="Tiana Fortune">Tiana Fortune</a>
+            </td>
+            <td>Fortune's Loss
+            </td>
+            <td>
+                <ul>
+                    <li>Manifest Scanner (G5)</li>
+                    <li>Collector Limpet Controller (G5)</li>
+                    <li>Frame Shift Wake Scanner (G5)</li>
+                    <li>Fuel Transfer Limpet Controller (G5)</li>
+                    <li>Hatch Breaker Limpet Controller (G5)</li>
+                    <li>Kill Warrant Scanner (G5)</li>
+                    <li>Prospector Limpet Controller (G5)</li>
+                    <li>Sensors (G5)</li>
+                    <li>Detailed Surface Scanner (G3)</li>
+                    <li>Frame Shift Drive Interdictor (G5)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Achenar" title="Achenar">Achenar</a>
+            </td>
+            <td>4 a
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Tod_%22The_Blaster%22_McQuinn"
+                   title="Tod &quot;The Blaster&quot; McQuinn">Tod "The Blaster" McQuinn
+                </a>
+            </td>
+            <td>Trophy Camp
+            </td>
+            <td>
+                <ul>
+                    <li>Multi-cannon (G5)</li>
+                    <li>Rail Gun (G5)</li>
+                    <li>Cannon (G2)</li>
+                    <li>Fragment Cannon (G2)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Wolf_397" title="Wolf 397">Wolf 397</a>
+            </td>
+            <td>Trus Madi
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/wiki/Zacariah_Nemo" title="Zacariah Nemo">Zacariah Nemo</a>
+            </td>
+            <td>Nemo Cyber Party Base
+            </td>
+            <td>
+                <ul>
+                    <li>Fragment Cannon (G5)</li>
+                    <li>Multi-cannon (G3)</li>
+                    <li>Plasma Accelerator (G2)</li>
+                </ul>
+            </td>
+            <td>
+                <a href="/wiki/Yoru" title="Yoru">Yoru</a>
+            </td>
+            <td>4
+            </td>
+            <td>
+                <a href="/wiki/Core_Systems" title="Core Systems">Core Systems</a>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot></tfoot>
+</table>
+
 <div id="encoded" class="d-none">
     <h2>Encoded materials</h2>
     <table class="article-table article-table-selected sortable jquery-tablesorter">
@@ -74,12 +722,16 @@ $this->title = 'Add to DB';
             </tr>
             <tr>
                 <th>
-                    <a href="/wiki/Anomalous_Bulk_Scan_Data" title="Anomalous Bulk Scan Data">Anomalous Bulk Scan Data</a>
+                    <a href="/wiki/Anomalous_Bulk_Scan_Data"
+                       title="Anomalous Bulk Scan Data">Anomalous Bulk Scan Data
+                    </a>
                 </th>
                 <td data-sort-value="5">Data Archives
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
             </tr>
             <tr>
@@ -101,7 +753,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="2">Wake Scans
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
             </tr>
             <tr>
@@ -130,7 +784,9 @@ $this->title = 'Add to DB';
             </tr>
             <tr>
                 <th>
-                    <a href="/wiki/Classified_Scan_Fragment" title="Classified Scan Fragment">Classified Scan Fragment</a>
+                    <a href="/wiki/Classified_Scan_Fragment"
+                       title="Classified Scan Fragment">Classified Scan Fragment
+                    </a>
                 </th>
                 <td data-sort-value="5">Data Archives
                 </td>
@@ -181,7 +837,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="3">Shield Data
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
             </tr>
             <tr>
@@ -215,7 +873,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="1">Emission Data
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
             </tr>
             <tr>
@@ -367,7 +1027,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="8">Guardian Data
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
             </tr>
             <tr>
@@ -421,7 +1083,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="6">Encoded Firmware
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
             </tr>
             <tr>
@@ -478,7 +1142,9 @@ $this->title = 'Add to DB';
             </tr>
             <tr>
                 <th>
-                    <a href="/wiki/Thargoid_Structural_Data" title="Thargoid Structural Data">Thargoid Structural Data</a>
+                    <a href="/wiki/Thargoid_Structural_Data"
+                       title="Thargoid Structural Data">Thargoid Structural Data
+                    </a>
                 </th>
                 <td data-sort-value="7">Thargoid Data
                 </td>
@@ -498,7 +1164,9 @@ $this->title = 'Add to DB';
             </tr>
             <tr>
                 <th>
-                    <a href="/wiki/Unexpected_Emission_Data" title="Unexpected Emission Data">Unexpected Emission Data</a>
+                    <a href="/wiki/Unexpected_Emission_Data"
+                       title="Unexpected Emission Data">Unexpected Emission Data
+                    </a>
                 </th>
                 <td data-sort-value="1">Emission Data
                 </td>
@@ -535,7 +1203,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="4">Encryption Files
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
             </tr>
         </tbody>
@@ -549,7 +1219,11 @@ $this->title = 'Add to DB';
             <tr>
                 <th scope="col" class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Name
                 </th>
-                <th scope="col" class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Category
+                <th scope="col"
+                    class="headerSort"
+                    tabindex="0"
+                    role="columnheader button"
+                    title="Sort ascending">Category
                 </th>
                 <th scope="col" class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Grade
                 </th>
@@ -565,7 +1239,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="4">Conductive
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>
                 </td>
@@ -637,7 +1313,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="1">Chemical
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>
                 </td>
@@ -649,7 +1327,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="8">Composite
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>
                 </td>
@@ -716,7 +1396,9 @@ $this->title = 'Add to DB';
             </tr>
             <tr>
                 <th>
-                    <a href="/wiki/Core_Dynamics_Composites" title="Core Dynamics Composites">Core Dynamics Composites</a>
+                    <a href="/wiki/Core_Dynamics_Composites"
+                       title="Core Dynamics Composites">Core Dynamics Composites
+                    </a>
                 </th>
                 <td data-sort-value="8">Composite
                 </td>
@@ -733,7 +1415,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="9">Crystals
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>
                 </td>
@@ -752,7 +1436,9 @@ $this->title = 'Add to DB';
             </tr>
             <tr>
                 <th>
-                    <a href="/wiki/Exquisite_Focus_Crystals" title="Exquisite Focus Crystals">Exquisite Focus Crystals</a>
+                    <a href="/wiki/Exquisite_Focus_Crystals"
+                       title="Exquisite Focus Crystals">Exquisite Focus Crystals
+                    </a>
                 </th>
                 <td data-sort-value="9">Crystals
                 </td>
@@ -817,7 +1503,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="6">Capacitors
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>
                 </td>
@@ -829,7 +1517,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="12">Guardian Components
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>Guardian sites
                 </td>
@@ -883,7 +1573,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="12">Guardian Components
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>Guardian sites
                 </td>
@@ -895,7 +1587,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="3">Heat
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>
                 </td>
@@ -1027,7 +1721,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="5">Mechanical Components
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>
                 </td>
@@ -1046,7 +1742,9 @@ $this->title = 'Add to DB';
             </tr>
             <tr>
                 <th>
-                    <a href="/wiki/Military_Supercapacitors" title="Military Supercapacitors">Military Supercapacitors</a>
+                    <a href="/wiki/Military_Supercapacitors"
+                       title="Military Supercapacitors">Military Supercapacitors
+                    </a>
                 </th>
                 <td data-sort-value="6">Capacitors
                 </td>
@@ -1058,7 +1756,9 @@ $this->title = 'Add to DB';
             </tr>
             <tr>
                 <th>
-                    <a href="/wiki/Pharmaceutical_Isolators" title="Pharmaceutical Isolators">Pharmaceutical Isolators</a>
+                    <a href="/wiki/Pharmaceutical_Isolators"
+                       title="Pharmaceutical Isolators">Pharmaceutical Isolators
+                    </a>
                 </th>
                 <td data-sort-value="1">Chemical
                 </td>
@@ -1183,7 +1883,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="10">Alloys
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>
                 </td>
@@ -1231,7 +1933,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="2">Thermic
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>
                 </td>
@@ -1320,7 +2024,9 @@ $this->title = 'Add to DB';
                 <td data-sort-value="7">Shielding
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>
                 </td>
@@ -1350,7 +2056,11 @@ $this->title = 'Add to DB';
             <tr>
                 <th scope="col" class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Name
                 </th>
-                <th scope="col" class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Category
+                <th scope="col"
+                    class="headerSort"
+                    tabindex="0"
+                    role="columnheader button"
+                    title="Sort ascending">Category
                 </th>
                 <th scope="col" class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Grade
                 </th>
@@ -1414,7 +2124,9 @@ $this->title = 'Add to DB';
                 <td>1
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>Planet surfaces, asteroids
                 </td>
@@ -1450,7 +2162,9 @@ $this->title = 'Add to DB';
                 <td>4
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>Planet surfaces, asteroids
                 </td>
@@ -1462,7 +2176,9 @@ $this->title = 'Add to DB';
                 <td>7
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>Asteroids
                 </td>
@@ -1510,7 +2226,9 @@ $this->title = 'Add to DB';
                 <td>5
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>Planet surfaces, asteroids
                 </td>
@@ -1534,7 +2252,9 @@ $this->title = 'Add to DB';
                 <td>2
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>Planet surfaces, asteroids
                 </td>
@@ -1558,7 +2278,9 @@ $this->title = 'Add to DB';
                 <td>6
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>Asteroids
                 </td>
@@ -1594,7 +2316,9 @@ $this->title = 'Add to DB';
                 <td>3
                 </td>
                 <td data-sort-value="1">
-                    <a href="/wiki/Category:Very_common_materials" title="Category:Very common materials">Very Common</a>
+                    <a href="/wiki/Category:Very_common_materials"
+                       title="Category:Very common materials">Very Common
+                    </a>
                 </td>
                 <td>Planet surfaces, asteroids
                 </td>
