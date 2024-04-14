@@ -78,6 +78,7 @@ $config = [
             'rules' => [
 //                'contact' => 'site/contact',
 //                'entry' => 'site/entry',
+                'engineers/details/<id:\w+>' => 'engineers/details',
                 'systems/index/<sys:\w+>' => 'systems/index',
                 'stations/index/<station:\w+>' => 'stations/index',
                 'commodities' => 'commodities/index',

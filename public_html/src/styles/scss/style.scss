@@ -591,8 +591,16 @@ tr {
         transform-origin: bottom;
         transform: rotate(180deg);
     }
-    
+
+    .filters input:focus,
     .filters select:focus {
         @extend .f-ctrl-no-shadow;
+    }
+}
+
+.engineers-header {
+    th:first-child {
+        min-width: 120px;
+        white-space: nowrap;
     }
 }
