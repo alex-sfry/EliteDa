@@ -6,28 +6,31 @@
  * @var ArrayDataProvider $searchModel
  */
 
-use yii\data\ArrayDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\helpers\VarDumper;
 
 $this->title = 'Engineers';
 ?>
 
 <div class="bg-light">
-<!--    --><?php //VarDumper::dump($engineers, 10, true); ?>
+    <!--    --><?php //VarDumper::dump($engineers, 10, true); ?>
 </div>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='wrapper d-flex flex-column h-100'>
         <div class='container-xxl px-3'>
             <div class='row flex-column overflow-x-auto'>
-                <div class='col'>
-                    <h1 class="text-light-orange text-center sintony-bold"><?= Html::encode($this->title) ?></h1>
+                <div class='engineers-cnt col'>
+                    <h1 class="mt-2 text-light-orange text-center sintony-bold"><?= $this->title ?></h1>
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'headerRowOptions' => [
                             'class' => 'engineers-header'
+                        ],
+                        'rowOptions' => [
+                            'class' => 'engineers-body-row'
                         ],
                         'columns' => [
                             [
@@ -41,6 +44,14 @@ $this->title = 'Engineers';
                             [
                                 'attribute' => 'name',
                                 'label' => 'Name',
+                                'value' => function ($model) {
+                                    $id = (int)$model['id'];
+                                    return Html::a(
+                                        $model['name'],
+                                        Url::toRoute(["engineers/details/$id"])
+                                    );
+                                },
+                                'format' => 'raw'
                             ],
                             ['attribute' => 'system', 'label' => 'System'],
                             ['attribute' => 'station', 'label' => 'Station'],

@@ -25,7 +25,7 @@ class YiiAssetMin extends AssetBundle
     ];
     public $jsOptions = [
 //        'defer' => '',
-        'position' => View::POS_HEAD
+        'position' => View::POS_END
     ];
     public $depends = [
         'app\assets\JqueryAssetMin',

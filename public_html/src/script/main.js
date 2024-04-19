@@ -51,6 +51,15 @@ document.addEventListener('DOMContentLoaded', () => {
             $(this).text('Close form');
         }
     });
-
+    
+    if ($("[role='tablist']").length) {
+        $('.nav-link').on('click', function() {
+            $('.nav-link.active').removeClass('active');
+            $(this).addClass('active');
+            $('.tab-pane.active').removeClass('active');
+            $(`#${$(this).attr('data-bs-toggle')}`).addClass('active');
+        });
+    }
+    
     // if ($('.add-to-db').length) getDataFromDom(fetchData);
 });

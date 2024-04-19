@@ -30,8 +30,8 @@ class AppAsset extends AssetBundle
         'templates/js/main.min.js'
     ];
     public $jsOptions = [
-        'defer' => '',
-        'position' => View::POS_HEAD
+        // 'defer' => '',
+        'position' => View::POS_END
     ];
     public $depends = [
 //        'yii\web\YiiAsset',

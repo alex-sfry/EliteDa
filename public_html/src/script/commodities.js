@@ -30,7 +30,8 @@ export const commoditiesForm = (loader, removeLoader, fetchData) => {
     const pagination = $pagination.length ?
         new Proxy(new Pagination(7, fetchData, $pagination.html(), table), proxyHandler) : null;
     const sortTable = $pagination.length ?
-        new Proxy(new SortTable('.c-table', fetchData, pagination, table), proxyHandler) : null;
+        new Proxy(new SortTable('.c-table', fetchData, table, pagination), proxyHandler) :
+        new Proxy(new SortTable('.c-table', fetchData, table), proxyHandler);
 
     pagination && pagination.setEventListeners();
     sortTable && sortTable.setEventListeners();

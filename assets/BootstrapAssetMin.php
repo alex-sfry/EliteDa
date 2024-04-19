@@ -35,7 +35,7 @@ class BootstrapAssetMin extends AssetBundle
         'templates/js/bootstrap.min.js'
     ];
     public $jsOptions = [
-        'defer' => '',
-        'position' => View::POS_HEAD
+        // 'defer' => '',
+        'position' => View::POS_END
     ];
 }

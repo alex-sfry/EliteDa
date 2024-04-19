@@ -59,14 +59,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                             <span
                                                 class="sintony-reg nowrap text-info text-decoration-underline"
                                                 style=" white-space: nowrap;">
-                                                Welcome, <?= Yii::$app->user->identity->username ?>
+                                                <?= Yii::$app->user->identity->username ?>
                                             </span>
                                         </div>
                                         <div class="col col-lg-8">
                                             <a
                                                 href="/user/logout"
-                                                class="sintony-reg nowrap text-warning ms-2 ms-lg-0 rounded-1
-                                            text-light bg-light-orange p-1">
+                                                class="sintony-reg text-warning ms-2 ms-lg-0 rounded-1
+                                            text-light bg-light-orange p-1"
+                                                style=" white-space: nowrap;">
                                                 Log out
                                             </a>
                                         </div>
@@ -101,6 +102,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 </a>
                                 <ul class="dropdown-menu border-light-orange rounded-2 bg-header mt-0 py-0">
                                     <li class="dropdown-item py-0 rounded-2">
+                                        <a
+                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item"
+                                            href="<?= Url::to(['engineers/index']) ?>">
+                                            Engineers
+                                        </a>
                                         <a
                                             class="menu__link menu__link_nested nav-link text-uppercase text-light
                                                     dropdown-item"

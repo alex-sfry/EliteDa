@@ -1,4 +1,4 @@
-export function SortTable(cnt, fetchData, pagination = null, table =null) {
+export function SortTable(cnt, fetchData, table =null, pagination = null) {
     this.cnt = cnt;
     this.pagination = pagination;
     this.fetchData = fetchData;

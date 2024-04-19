@@ -2,7 +2,6 @@
 
 namespace app\models\search;
 
-use app\models\Materials;
 use Yii;
 use yii\base\Model;
 use yii\data\ArrayDataProvider;
@@ -40,7 +39,7 @@ class EngineersSearch extends Model
         $json = file_get_contents(Yii::$app->basePath . '/data/engineers.json');
         $this->load($params);
 
-        $data = array_filter(Json::decode($json), function ($value) {
+        $data = array_filter(Json::decode($json)/* $arr */, function ($value) {
             if (!empty(Yii::$app->request->queryParams['EngineersSearch']['name'])) {
                 return stripos($value['name'], Yii::$app->request->queryParams['EngineersSearch']['name']) !== false;
             }

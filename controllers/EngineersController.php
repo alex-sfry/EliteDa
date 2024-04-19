@@ -5,7 +5,6 @@ namespace app\controllers;
 use app\models\search\EngineersSearch;
 use Yii;
 use yii\helpers\Json;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
 
 class EngineersController extends Controller
@@ -18,20 +17,19 @@ class EngineersController extends Controller
         $params['dataProvider'] = $dataProvider;
         $params['searchModel'] = $searchModel;
         $params['queryParams'] = $this->request->queryParams;
-//        $params['engineers'] = Json::decode(file_get_contents(Yii::$app->basePath . '/data/engineers.json'));
 
         return $this->render('index', $params);
     }
 
-    public function actionDetails($id): void
+    public function actionDetails(int $id): string
     {
         $engineers = Json::decode(file_get_contents(Yii::$app->basePath . '/data/engineers.json'));
         $filtered_item = array_filter($engineers, function ($value) use ($id) {
-            return stripos($value['id'], $id) !== false;
+            return $value['id'] === $id;
         });
 
-        echo $filtered_item[$id - 1]['id'];
+        $params['model'] = $filtered_item[$id - 1];
 
-        VarDumper::dump($filtered_item, 10, true);
+        return $this->render('details', $params);
     }
 }

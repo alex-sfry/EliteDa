@@ -19,7 +19,7 @@ $this->title = 'Material Traders';
         <div class='container-xxl px-3'>
             <div class='row flex-column overflow-x-auto'>
                 <div class='col'>
-                    <h1 class="text-light-orange text-center sintony-bold"><?= Html::encode($this->title) ?></h1>
+                    <h1 class="mt-2 text-light-orange text-center sintony-bold"><?= Html::encode($this->title) ?></h1>
                     <div class="mt-tr-ref-idd ms-auto d-flex justify-content-end">
                         <?= Html::beginForm(['/material-traders/index'], 'post', [
                             'id' => 'mt-form',

@@ -17,7 +17,7 @@ class InputDropdownAsset extends AssetBundle
         'app\assets\AppAsset'
     ];
     public $jsOptions = [
-        'defer' => '',
-        'position' => View::POS_HEAD
+        // 'defer' => '',
+        'position' => View::POS_END
     ];
 }
