@@ -48,6 +48,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <div class="d-flex nowrap justify-content-center align-items-center justify-content-lg-start
                                         align-items-lg-start order-last">
                                 <?php if (Yii::$app->user->isGuest) : ?>
+                                    <a class="sintony-reg text-light" href="<?= Url::to(['user/signup']) ?>">
+                                        Register
+                                    </a>
+                                    <span class="text-light mx-1">|</span>
                                     <a class="sintony-reg text-light" href="<?= Url::to(['user/login']) ?>">Login</a>
                                 <?php else : ?>
                                     <div class="row justify-content-start flex-row flex-lg-column row-gap-1 g-0">
