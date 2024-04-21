@@ -7,7 +7,6 @@ use yii\base\Behavior;
 
 class SystemBehavior extends Behavior
 {
-
     /**
      * @param $sys_name
      *

@@ -3,14 +3,17 @@
 namespace app\models;
 
 use app\behaviors\TimeBehavior;
+use app\behaviors\CommoditiesBehavior;
+use app\behaviors\StationBehavior;
+use app\behaviors\SystemBehavior;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
-use yii\helpers\VarDumper;
+use yii\base\Model;
 
-class TradeRoutes extends BaseCommodities
+class TradeRoutes extends Model
 {
     private string $st_name;
     private string $sys_name;
@@ -40,7 +43,12 @@ class TradeRoutes extends BaseCommodities
     {
         return ArrayHelper::merge(
             parent::behaviors(),
-            [TimeBehavior::class]
+            [
+                TimeBehavior::class,
+                CommoditiesBehavior::class,
+                SystemBehavior::class,
+                StationBehavior::class
+            ]
         );
     }
 
