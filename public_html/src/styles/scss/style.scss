@@ -365,69 +365,38 @@ form {
     }
 }
 
-tr {
-
-    td,
-    th {
-        width: 300px;
-    }
-
-    td:first-child,
-    th:first-child {
-        width: fit-content;
-    }
-
-    td:nth-child(2),
-    th:nth-child(2) {
-        width: fit-content;
-    }
-
-    td:nth-child(3),
-    th:nth-child(3) {
-        width: fit-content;
-    }
-
-    td:nth-child(4),
-    th:nth-child(4) {
-        width: fit-content;
-    }
-
-    td:nth-child(5),
-    th:nth-child(5) {
-        width: fit-content;
-    }
-
-    td:nth-child(6),
-    th:nth-child(6) {
-        width: fit-content;
-    }
-
-    td:nth-child(7),
-    th:nth-child(7) {
-        width: fit-content;
-    }
-
-    td:nth-child(8),
-    th:nth-child(8) {
-        width: fit-content;
-    }
-
-    td:nth-child(9) {
-        @extend .sintony-bold
-    }
-
-    td:nth-child(9),
-    th:nth-child(9) {
-        width: fit-content;
-    }
-
-    td:nth-child(10),
-    th:nth-child(10) {
-        width: fit-content;
-    }
+.c-table{
+    tr {
+        td:first-child,
+        th:first-child,
+        td:nth-child(2),
+        th:nth-child(2),
+        td:nth-child(3),
+        th:nth-child(3),
+        td:nth-child(4),
+        th:nth-child(4),
+        td:nth-child(5),
+        th:nth-child(5),
+        td:nth-child(6),
+        th:nth-child(6),
+        td:nth-child(7),
+        th:nth-child(7),
+        td:nth-child(8),
+        th:nth-child(8),
+        td:nth-child(9),
+        th:nth-child(9),
+        td:nth-child(10),
+        th:nth-child(10) {
+            width: fit-content;
+        }
+        
+        td:nth-child(9) {
+            @extend .sintony-bold
+        }
+    }    
 }
 
-/*
+/**
 * Trade Routes page styles
 */
 .tr-route {
@@ -475,7 +444,7 @@ tr {
     }
 }
 
-/*
+/**
 * moving arrows styles
 */
 .arrow {
@@ -555,7 +524,7 @@ tr {
     }
 }
 
-/*
+/**
 * gridview
 */
 .grid-view {
