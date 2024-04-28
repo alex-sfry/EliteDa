@@ -22,7 +22,7 @@ class PageCounter extends Behavior
             $pagination->totalCount : $page_size * $current_page;
 
         return "<div class='page-counter text-light me-2 fs-7'>
-                    $first_in_range-$last_in_range / $pagination->totalCount
+                    $first_in_range - $last_in_range / $pagination->totalCount
                 </div>";
     }
 }

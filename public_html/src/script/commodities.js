@@ -36,4 +36,3 @@ export const commoditiesForm = (loader, removeLoader, fetchData) => {
     pagination && pagination.setEventListeners();
     sortTable && sortTable.setEventListeners();
 };
-

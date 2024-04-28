@@ -91,7 +91,8 @@ $this->title = 'Ship modules';
                                                     'toggle_btn_text' => 'Select modules',
                                                     'name_main' => 'cMainSelect[]',
                                                     'list_items' => $ship_modules_arr,
-                                                    'required' => 'required'
+                                                    'required' => 'required',
+                                                    'filter_method' => 'includes',
                                                 ]); ?>
                                             </div>
                                             <!--form column 2-->

@@ -70,6 +70,7 @@ Pagination.prototype.handleClick = async function (e) {
     if ($(e.currentTarget).parent().is('.active')) return;
     const res = await this.fetchData($(e.currentTarget).attr('href'));
     this.data = res;
+
     this.renderNewPageBtns(
         res.links,
         res.page + 1, // zero based next page received from backend + 1
@@ -81,9 +82,18 @@ Pagination.prototype.handleClick = async function (e) {
     );
 };
 
-Pagination.prototype.resetPagination = function(limit, totalCount) {
-    $('.pagination').html(this.paginationHTML);
+Pagination.prototype.resetPagination = function(limit, totalCount, links, lastPage) {
     $('.page-counter').text(`${0 * limit + 1} - ${1 * limit} / ${totalCount}`);
+
+    this.renderNewPageBtns(
+        links,
+        1, // zero based next page received from backend + 1
+        lastPage,
+        0, // zero based current page
+        totalCount,
+        limit, // qty per page
+        this.maxPageBtnQty
+    );
     this.setEventListeners();
 };
 

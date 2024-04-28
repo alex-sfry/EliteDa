@@ -46,7 +46,7 @@ $table_head = [
     }
     ?>
 </div>
-<div id='c-table' class="rounded-2 table-responsive">
+<div id='mod-table' class="rounded-2 table-responsive">
     <table class="mod-table fs-7 table table-striped mb-0 <?= count($models) > 0 ? 'overflow-x-auto' :
         'overflow-hidden' ?>">
         <thead>

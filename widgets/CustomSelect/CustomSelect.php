@@ -17,6 +17,7 @@ class CustomSelect extends Widget
     public string $name_main = '';
     public array $list_items = [];
     public string $required = '';
+    public string $filter_method = 'startsWith';
 
     public function init(): void
     {
@@ -39,7 +40,8 @@ class CustomSelect extends Widget
                 'toggle_btn_text' => $this->toggle_btn_text,
                 'name_main' => $this->name_main,
                 'list_items' => $this->list_items,
-                'required' => $this->required
+                'required' => $this->required,
+                'filter_method' => $this->filter_method
             ]
         );
     }

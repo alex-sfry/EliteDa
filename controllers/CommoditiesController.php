@@ -65,7 +65,7 @@ class CommoditiesController extends Controller
             }
 
             $c_model = new Commdts();
-            $limit = 100;
+            $limit = 50;
             $provider = $c_model->getPrices($params['post']['refSystem'], $params['post'], $limit);
             $params['models']  = $c_model->modifyModels($provider->getModels());
 
@@ -137,6 +137,9 @@ class CommoditiesController extends Controller
                     'data' => $c_model->modifyModels($provider->getModels()),
                     'sort' => $sort,
                     'attributeOrders' => $sort->attributeOrders,
+                    'links' => $pagination->getLinks(),
+                    'lastPage' => $pagination->pageCount,
+                    'totalCount' => $pagination->totalCount,
                     'sortUrl' => $sort->createUrl(ltrim($request->get('sort'), '-')),
                     'page' => $pagination->getPage(),
                     'limit' => $limit,
@@ -144,7 +147,7 @@ class CommoditiesController extends Controller
                 ];
                 $response->send();
             }
-//            $params['sess'] = $session->get('c_sort');
+
             $params['result'] = $this->renderPartial('c_table', $params);
 
             return $this->render('index', $params);

@@ -9,9 +9,12 @@ export function SortTable(cnt, fetchData, table =null, pagination = null) {
 SortTable.prototype.handleClick = async function(e) {
     e.preventDefault();
     const data = await this.fetchData($(e.currentTarget).attr('href'));
-    // console.log(data);
     this.data = data;
-    this.pagination && this.pagination.resetPagination.apply(this.pagination, [data.limit, data.totalCount]);
+    this.pagination &&
+    this.pagination.resetPagination.apply(
+        this.pagination,
+        [data.limit,data.totalCount,data.links,data.lastPage]
+        );
     $('a.sort').removeClass(['asc', 'desc', 'sorted']);
 
     if (Object.values(data.attributeOrders)[0] === 4) {

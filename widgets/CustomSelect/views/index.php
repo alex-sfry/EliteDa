@@ -12,6 +12,7 @@
  * @var string $name_main
  * @var array $list_items
  * @var string $required
+ * @var string $filter_method
  */
 
 use yii\helpers\Html;
@@ -23,7 +24,8 @@ Yii::$app->view->registerJs(
             container: "' . $container . '",
             search: "' . $search . '",
             toSubmit: "' . $to_submit . '",
-            placeholder: "' . $placeholder . '"
+            placeholder: "' . $placeholder . '",
+            filterMethod: "' . $filter_method . '"
         };
         
         document.addEventListener("DOMContentLoaded", () => {
@@ -34,7 +36,8 @@ Yii::$app->view->registerJs(
             container: "' . $container . '",
             search: "' . $search . '",
             toSubmit: "' . $to_submit . '",
-            placeholder: "' . $placeholder . '"
+            placeholder: "' . $placeholder . '",
+            filterMethod: "' . $filter_method . '"
         };
         
         document.addEventListener("DOMContentLoaded", () => {

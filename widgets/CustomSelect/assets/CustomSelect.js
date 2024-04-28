@@ -24,11 +24,20 @@ class CustomSelect {
     };
 
     handleDropdownInput(e) {
-        this.getDropdownListItems().forEach(item => {
-            !item.textContent.toLowerCase().trim().startsWith(e.target.value.toLowerCase().trim()) ?
-                item.classList.add('hidden') :
-                item.classList.remove('hidden');
-        });
+        console.log(this.config.filterMethod)
+        if (this.config.filterMethod === 'startsWith') {
+            this.getDropdownListItems().forEach(item => {
+                !item.textContent.toLowerCase().trim().startsWith(e.target.value.toLowerCase().trim()) ?
+                    item.classList.add('hidden') :
+                        item.classList.remove('hidden');
+            })
+        }else if (this.config.filterMethod === 'includes') {
+            this.getDropdownListItems().forEach(item => {
+                !item.textContent.toLowerCase().trim().includes(e.target.value.toLowerCase().trim()) ?
+                    item.classList.add('hidden') :
+                        item.classList.remove('hidden');
+            })
+        }
     };
 
     handleDropdownItemClick(e) {

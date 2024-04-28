@@ -6,7 +6,7 @@ use app\models\ShipMods;
 use Yii;
 use app\models\forms\ShipModulesForm;
 use yii\helpers\ArrayHelper;
-// use yii\web\Response;
+use yii\web\Response;
 use yii\web\Controller;
 use app\behaviors\ShipModulesBehavior;
 use app\behaviors\PageCounter;
@@ -14,7 +14,7 @@ use yii\helpers\VarDumper;
 
 class ShipModulesController extends Controller
 {
-     /**
+    /**
      * @return array
      */
     public function behaviors(): array
@@ -66,10 +66,10 @@ class ShipModulesController extends Controller
 
             $sys_name = $params['post']['refSystem'];
 
-            $c_model = new ShipMods($params['ship_modules_arr']);
+            $mod_model = new ShipMods($params['ship_modules_arr']);
             $limit = 50;
-            $provider = $c_model->getModules($sys_name, $params['post'], $limit, $session->get('mod_sort'));
-            $params['models']  = $c_model->modifyModels($provider->getModels(), $params['post']);
+            $provider = $mod_model->getModules($sys_name, $params['post'], $limit, $session->get('mod_sort'));
+            $params['models']  = $mod_model->modifyModels($provider->getModels(), $params['post']);
 
             $sort = $provider->getSort();
             $params['module_sort'] = null;
@@ -102,6 +102,50 @@ class ShipModulesController extends Controller
             }
 
             $params['pagination'] = $pagination;
+
+            if ($request->get('page')) {
+                if ($session->get('mod_sort')) {
+                    $sort->setAttributeOrders($session->get('mod_sort'));
+                }
+                $provider->setSort($sort);
+                $pagination->setPage($request->get('page') - 1);
+                $response = Yii::$app->response;
+                $response->format = Response::FORMAT_JSON;
+                $response->data = [
+                    'limit' => $limit,
+                    'links' => $pagination->getLinks(),
+                    'page' => $pagination->getPage(),
+                    'lastPage' => $pagination->pageCount,
+                    'data' => $mod_model->modifyModels($provider->getModels()),
+                    'params' => $pagination->params,
+                    'totalCount' => $pagination->totalCount,
+                    'attributeOrders' => $sort->attributeOrders,
+                    'mod_sort' => $session->get('mod_sort')
+                ];
+                $response->send();
+            }
+
+            if ($request->get('sort')) {
+                $session->set('mod_sort', $sort->attributeOrders);
+                $provider->pagination->setPage(0);
+
+                $response = Yii::$app->response;
+                $response->format = Response::FORMAT_JSON;
+                $response->data = [
+                    'data' => $mod_model->modifyModels($provider->getModels()),
+                    'sort' => $sort,
+                    'attributeOrders' => $sort->attributeOrders,
+                    'links' => $pagination->getLinks(),
+                    'lastPage' => $pagination->pageCount,
+                    'totalCount' => $pagination->totalCount,
+                    'sortUrl' => $sort->createUrl(ltrim($request->get('sort'), '-')),
+                    'page' => $pagination->getPage(),
+                    'limit' => $limit,
+                    'totalCount' => $pagination->totalCount
+                ];
+                $response->send();
+            }
+
             $params['result'] = $this->renderPartial('mod_table', $params);
 
             return $this->render('index', $params);

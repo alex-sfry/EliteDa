@@ -3,7 +3,6 @@
 namespace app\models;
 
 use app\behaviors\TimeBehavior;
-use app\behaviors\ShipModulesBehavior;
 use app\behaviors\StationBehavior;
 use app\behaviors\SystemBehavior;
 use yii\data\ActiveDataProvider;
@@ -17,13 +16,15 @@ class ShipMods extends Model
 {
     private array $mods_arr = [];
 
+    /**
+     * @return array
+     */
     public function behaviors(): array
     {
         return ArrayHelper::merge(
             parent::behaviors(),
             [
                 TimeBehavior::class,
-                // ShipModulesBehavior::class,
                 SystemBehavior::class,
                 StationBehavior::class,
             ]
@@ -55,8 +56,6 @@ class ShipMods extends Model
 
         $modules = (new Query())
             ->select([
-                // $price_type,
-                // $stock_demand,
                 'm.name AS module',
                 'st.name AS station',
                 'type',
@@ -68,9 +67,7 @@ class ShipMods extends Model
             ->from(['m' => 'ship_modules'])
             ->innerJoin(['st' => 'stations'], 'm.market_id = st.market_id')
             ->innerJoin(['sys' => 'systems'], 'st.system_id = sys.id')
-            ->where(['m.name' => $mod_symbols])
-            // ->andWhere(['>', $stock_demand, 0])
-            ;
+            ->where(['m.name' => $mod_symbols]);
 
         $post['landingPadSize'] === 'L' && $modules->andWhere(['not', ['type' => 'Outpost']]);
 
@@ -129,13 +126,8 @@ class ShipMods extends Model
      *
      * @return array
      */
-    public function modifyModels(array $models, array $post): array
+    public function modifyModels(array $models): array
     {
-        // VarDumper::dump(array_intersect($this->mods_arr, $post['cMainSelect']), 10, true);
-        // VarDumper::dump($this->mods_arr, 10, true);
-
-        // $this->mods_arr = array_change_key_case($this->mods_arr);
-
         foreach ($models as $key => $value) {
             $value['module'] = $this->mods_arr[strtolower($value['module'])];
             $value['pad'] = $this->getLandingPadSizes()[$value['type']];
