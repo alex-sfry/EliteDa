@@ -9,18 +9,20 @@
  * @var string $sort_options
  * @var string $max_dist_from_ref
  * @var string $max_dist_from_star
- * @var string $min_supply_demand
  * @var string $max_age_of_data
- * @var \app\models\forms\CommoditiesForm $form_model
+ * @var \app\models\forms\ShipModulesForm $form_model
  */
 
 use app\widgets\CustomSelect\CustomSelect;
 use app\widgets\InputDropdown\InputDropdown;
 use yii\helpers\Html;
+use yii\helpers\VarDumper;
+
+// VarDumper::dump($post, 10, true);
 
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
-    'sort_options' => ['Price' => 'Price', 'Updated_at' => 'Updated at (time)', 'Distance' => 'Distance (LY)'],
+    'sort_options' => ['Module' => 'Module', 'Updated_at' => 'Updated at (time)', 'Distance' => 'Distance (LY)'],
     'max_dist_from_ref' => ['Any' => 'Any', '25' => '25 LY', '50' => '50 LY', '100' => '100 LY', '250' => '250 LY'],
     'max_dist_from_star' => [
         'Any' => 'Any',
@@ -42,7 +44,7 @@ $select_options = [
 ];
 extract($select_options);
 
-$this->title = 'Commodities';
+$this->title = 'Ship modules';
 ?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='wrapper d-flex flex-column h-100'>
@@ -67,8 +69,8 @@ $this->title = 'Commodities';
                             class="accordion-collapse collapse <?= !isset($result) ? 'show' : '' ?>"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <?= Html::beginForm(['/commodities/index'], 'post', [
-                                    'id' => 'c-form',
+                                <?= Html::beginForm(['/ship-modules/index'], 'post', [
+                                    'id' => 'mod-form',
                                     'novalidate' => true,
                                     'class' => 'c-form fs-7 bg-custom-white py-2 px-2 rounded-2 w-100 d-flex 
                                     flex-column needs-validation',
@@ -80,15 +82,15 @@ $this->title = 'Commodities';
                                             <div class='min-lett-spacing col-lg-4 row-gap-3'>
                                                 <?= CustomSelect::widget([
                                                     'container' => 'c-custom-select',
-                                                    'error' => $c_error,
-                                                    'selected' => $form_model->commodities,
+                                                    'error' => $mod_error,
+                                                    'selected' => $form_model->cMainSelect,
                                                     'search' => 'c-select-search',
                                                     'to_submit' => 'c-hiddenSelect',
-                                                    'placeholder' => 'selected commodities',
-                                                    'label_main' => 'Commodities:',
-                                                    'toggle_btn_text' => 'Select commodities',
-                                                    'name_main' => 'commodities[]',
-                                                    'list_items' => $commodities_arr,
+                                                    'placeholder' => 'selected modules',
+                                                    'label_main' => 'Modules:',
+                                                    'toggle_btn_text' => 'Select modules',
+                                                    'name_main' => 'cMainSelect[]',
+                                                    'list_items' => $ship_modules_arr,
                                                     'required' => 'required'
                                                 ]); ?>
                                             </div>
@@ -258,36 +260,6 @@ $this->title = 'Commodities';
                                             </div>
                                         </div>
                                         <div>
-                                            <!--buy/sell block-->
-                                            <div class='buy-sell-switch ol-xl-2 d-flex text-center
-                                            justify-content-center w-100 align-content-center gap-3'>
-                                                <div class=" text-end">
-                                                    <input
-                                                        class='btn-check'
-                                                        type='radio'
-                                                        id='buy-toggle'
-                                                        name='buySellSwitch'
-                                                        value='buy'
-                                                        autocomplete='off'
-                                                        checked>
-                                                    <label class='btn p-1 border-0' for='buy-toggle'>
-                                                        i want to buy
-                                                    </label>
-                                                </div>
-                                                <div class=" text-end">
-                                                    <input
-                                                        class='btn-check'
-                                                        type='radio'
-                                                        id='sell-toggle'
-                                                        name='buySellSwitch'
-                                                        value='sell'
-                                                        autocomplete='off'
-                                                        <?= $form_model->buySellSwitch === 'sell' ? 'checked' : '' ?>>
-                                                    <label class='btn p-1 border-0' for='sell-toggle'>
-                                                        i want to sell
-                                                    </label>
-                                                </div>
-                                            </div>
                                             <!--submit block-->
                                             <div class='row justify-content-center text-center'>
                                                 <div class='col-md-3 pt-4 pb-2'>

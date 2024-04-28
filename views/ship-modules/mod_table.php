@@ -1,35 +1,20 @@
 <?php
 
-/**
- * @var array $models
- * @var string|null $page_count_info
- * @var string $pager
- * @var array $post
- * @var string $sort_price
- * @var string $sort_updated
- * @var string $sort_dist_ly
- * @var string $price_sort
- * @var string $time_sort
- * @var string $d_ly_sort
- * @var \yii\data\Pagination $pagination
- */
-
+use yii\helpers\VarDumper;
 use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
-use yii\helpers\VarDumper;
 
 $table_head = [
-    'Commodity',
+    'Module',
     'Station',
     'Type',
     'Pad',
     'System',
     'Dist.(LY)',
     'Dist. to arr.(ls)',
-    $post['buySellSwitch'] === 'buy' ? 'Supply' : 'Demand',
-    'Price',
     'Updated'
 ];
+
 ?>
 <div class="c-result-legend bg-body text-center mt-3">
     <h2 class="fs-6 position-relative">Station's type:</h2>
@@ -62,17 +47,17 @@ $table_head = [
     ?>
 </div>
 <div id='c-table' class="rounded-2 table-responsive">
-    <table class="c-table fs-7 table table-striped mb-0 <?= count($models) > 0 ? 'overflow-x-auto' :
+    <table class="mod-table fs-7 table table-striped mb-0 <?= count($models) > 0 ? 'overflow-x-auto' :
         'overflow-hidden' ?>">
         <thead>
             <tr>
                 <?php foreach ($table_head as $item) : ?>
                     <?php echo match ($item) {
-                        'Price' => "<th class='bg-light-orange p-0 text-body hover text-nowrap' scope='col'>
+                        'Module' => "<th class='bg-light-orange p-0 text-body hover text-nowrap' scope='col'>
                             <a
-                                href='$sort_price'
+                                href='$sort_module'
                                 class='sort text-decoration-none d-block w-100 h-100 px-1 py-2 text-primary d-flex 
-                                justify-content-between $price_sort'>
+                                justify-content-between $module_sort'>
                                 $item
                            </a>
                         </th>",
@@ -95,8 +80,8 @@ $table_head = [
                             </a>
                         </th>",
                         default => "<th class='bg-light-orange text-body text-nowrap' scope='col' data-sort='asc'>
-                                                $item
-                                            </th>",
+                                        $item
+                                    </th>",
                     }; ?>
                 <?php endforeach; ?>
             </tr>
@@ -104,7 +89,7 @@ $table_head = [
         <tbody class="table-group-divider">
             <?php foreach ($models as $item) : ?>
                 <tr>
-                    <td class="text-start text-truncate"><?= Html::encode($item['commodity']) ?></td>
+                    <td class="text-start text-truncate"><?= Html::encode($item['module']) ?></td>
                     <td class="text-start text-truncate"><?= Html::encode($item['station']) ?></td>
                     <td class="sintony-bold text-start text-truncate
                     <?= $item['surface'] ? 'text-success' : 'text-primary' ?>"><?= Html::encode($item['type']) ?></td>
@@ -112,34 +97,13 @@ $table_head = [
                     <td class="text-start text-truncate"><?= Html::encode($item['system']) ?></td>
                     <td class="text-start text-truncate"><?= (float)$item['distance_ly'] ?></td>
                     <td class="text-start text-truncate"><?= (int)$item['distance_ls'] ?></td>
-                    <td class="text-start text-truncate"><?= isset($item['stock'])  ?
-                            (int)$item['stock'] : (int)$item['demand'] ?></td>
-                    <td class="sintony-bold text-start text-truncate text-success">
-                        <?= isset($item['sell_price'])  ? (int)$item['sell_price'] : (int)$item['buy_price'] ?> Cr
-                    </td>
                     <td class="text-start text-truncate"><?= Html::encode($item['time_diff']) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
-<div class="c-pagination-cnt d-flex justify-content-center align-items-center pb-4">
-    <?php
-    echo $page_count_info ?? null;
-    echo LinkPager::widget([
-        'id' => 'pgr02',
-        'pagination' => $pagination,
-        'disableCurrentPageButton' => false,
-        'maxButtonCount' => 7,
-        'firstPageLabel' => 'first',
-        'lastPageLabel' => 'last',
-        'prevPageCssClass' => 'prev-page',
-        'nextPageCssClass' => 'next-page'
-    ]);
-    ?>
+
+<div class="bg-light">
+    <?php /* VarDumper::dump($models, 10, true); */ ?>
 </div>
-<!--<div class="bg-light mt-3">-->
-    <?php
-//    VarDumper::dump($session, 10, true);
-    ?>
-<!--</div>-->

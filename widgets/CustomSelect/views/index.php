@@ -121,7 +121,7 @@ foreach ($selected as $key => $value) {
                             'placeholder' => 'search'
                         ]
                     ); ?>
-                    <ul class='c-list px-0 pt-2 pb-0 mb-0'>
+                    <ul class='c-list px-0 pt-2 pb-0 mb-0 overflow-y-auto'>
                         <li class='dropdown-item fw-normal px-2 lh-lg h-0 m-0 p-0'></li>
                         <?php foreach ($list_items as $item) : ?>
                             <li class='c-list-item dropdown-item fw-normal px-2 h-0 m-0 p-0 overflow-x-hidden

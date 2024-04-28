@@ -53,7 +53,7 @@ class CustomSelect {
         selItm.classList.add('ps-1', 'rounded-2', 'bg-info');
         selItm.innerHTML = e.target.textContent + selectedItemDivider;
 
-        if (this.selectedItemsDiv.textContent === 'selected commodities') this.selectedItemsDiv.textContent = '';
+        if (this.selectedItemsDiv.textContent === this.config.placeholder) this.selectedItemsDiv.textContent = '';
         this.selectedItemsDiv.appendChild(selItm);
 
         const clickedItem =

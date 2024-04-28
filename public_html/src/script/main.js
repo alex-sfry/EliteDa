@@ -40,9 +40,9 @@ const removeLoader = ($elem) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     initHeader();
-    if ($('#c-form').length)  commoditiesForm(loader, removeLoader, fetchData);
-    if ($('#tr-form').length)  tradeRouteForm(isValidated, loader, removeLoader);
-    if ($('#mt-form').length)  matTraders();
+    if ($('#c-form').length) commoditiesForm(loader, removeLoader, fetchData);
+    if ($('#tr-form').length) tradeRouteForm(isValidated, loader, removeLoader);
+    if ($('#mt-form').length) matTraders();
 
     $('#accordionForm .accordion-button').on('click', function() {
         if ($(this).text().trim() === 'Close form') {

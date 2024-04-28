@@ -2,7 +2,7 @@
 
 namespace app\models\forms;
 
-class CommoditiesForm extends \yii\base\Model
+class ShipModulesForm extends \yii\base\Model
 {
     public string $refSystem = '';
     public string $landingPadSize = '';
@@ -12,13 +12,12 @@ class CommoditiesForm extends \yii\base\Model
     public string $distanceFromStar = '';
     public string $minSupplyDemand = '';
     public string $dataAge = '';
-    public string $buySellSwitch = 'buy';
-    public array $commodities = [];
+    public array $cMainSelect = [];
 
     public function rules(): array
     {
         return [
-            [['refSystem', 'commodities'], 'required'],
+            [['refSystem', 'cMainSelect'], 'required'],
             [[
                 'landingPadSize',
                 'includeSurface',
@@ -26,8 +25,7 @@ class CommoditiesForm extends \yii\base\Model
                 'maxDistanceFromRefStar',
                 'distanceFromStar',
                 'minSupplyDemand',
-                'dataAge',
-                'buySellSwitch'
+                'dataAge'
             ], 'safe']
         ];
     }

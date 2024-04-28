@@ -13,6 +13,9 @@ use yii\web\Response;
 
 class CommoditiesController extends Controller
 {
+    /**
+     * @return array
+     */
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -29,7 +32,7 @@ class CommoditiesController extends Controller
     {
         $session = Yii::$app->session;
         $session->open();
-//        $session->destroy();
+        // $session->destroy();
         $request = Yii::$app->request;
 
         $params = [];
@@ -55,7 +58,7 @@ class CommoditiesController extends Controller
 
             $form_model->setAttributes($params['post']);
             $params['c_error'] = $form_model->validate('commodities') ? '' : 'is-invalid';
-            $params['ref_error'] = $form_model->validate('refStation') ? '' : 'is-invalid';
+            $params['ref_error'] = $form_model->validate('refSystem', false) ? '' : 'is-invalid';
 
             if ($form_model->hasErrors()) {
                 return $this->render('index', $params);

@@ -81,6 +81,7 @@ $config = [
                 'engineers/details/<id:\w+>' => 'engineers/details',
                 'systems/index/<sys:\w+>' => 'systems/index',
                 'stations/index/<station:\w+>' => 'stations/index',
+                'ship-modules' => 'ship-modules/index',
                 'commodities' => 'commodities/index',
                 'trade-routes' => 'trade-routes/index',
                 'material-traders' => 'material-traders/index',

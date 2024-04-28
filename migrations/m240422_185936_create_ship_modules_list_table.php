@@ -5,14 +5,14 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%ship_modules}}`.
  */
-class m240422_185936_create_ship_modules_table extends Migration
+class m240422_185936_create_ship_modules_list_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%ship_modules}}', [
+        $this->createTable('{{%ship_modules_list}}', [
             'id' => $this->integer()->notNull(),
             'symbol' => $this->string(255)->notNull()->unique(),
             'name' => $this->string(255)->notNull(),
