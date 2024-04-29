@@ -4,6 +4,7 @@ import { fetchData } from './fetchData.js';
 import { isValidated } from './isValidated.js';
 import { commoditiesForm } from './commodities.js';
 import { shipModulesForm } from './shipModules.js';
+import { shipsForm } from './ships.js';
 import { tradeRouteForm } from './tradeRoutes.js';
 import { matTraders } from './matTraders.js';
 // import {getDataFromDom} from './addToDb.js';
@@ -43,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeader();
     if ($('#c-form').length) commoditiesForm(loader, removeLoader, fetchData);
     if ($('#mod-form').length) shipModulesForm(loader, removeLoader, fetchData);
+    if ($('#ships-form').length) shipsForm(loader, removeLoader, fetchData);
     if ($('#tr-form').length) tradeRouteForm(isValidated, loader, removeLoader);
     if ($('#mt-form').length) matTraders();
 

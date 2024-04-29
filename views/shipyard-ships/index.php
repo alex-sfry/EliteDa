@@ -2,7 +2,7 @@
 
 /**
  * @var string $ref_error
- * @var string $cargo_error
+ * @var string $ships_error
  * @var string $cargo
  * @var string $pad_sizes
  * @var string $incl_surface
@@ -10,7 +10,7 @@
  * @var string $max_dist_from_ref
  * @var string $max_dist_from_star
  * @var string $max_age_of_data
- * @var \app\models\forms\ShipModulesForm $form_model
+ * @var \app\models\forms\ShipyarShipsForm $form_model
  */
 
 use app\widgets\CustomSelect\CustomSelect;
@@ -22,7 +22,7 @@ use yii\helpers\VarDumper;
 
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
-    'sort_options' => ['Module' => 'Module', 'Updated_at' => 'Updated at (time)', 'Distance' => 'Distance (LY)'],
+    'sort_options' => ['Ship' => 'Ship', 'Updated_at' => 'Updated at (time)', 'Distance' => 'Distance (LY)'],
     'max_dist_from_ref' => ['Any' => 'Any', '25' => '25 LY', '50' => '50 LY', '100' => '100 LY', '250' => '250 LY'],
     'max_dist_from_star' => [
         'Any' => 'Any',
@@ -35,7 +35,7 @@ $select_options = [
 ];
 extract($select_options);
 
-$this->title = 'Ship modules';
+$this->title = 'Ships';
 ?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='wrapper d-flex flex-column h-100'>
@@ -60,8 +60,8 @@ $this->title = 'Ship modules';
                             class="accordion-collapse collapse <?= !isset($result) ? 'show' : '' ?>"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <?= Html::beginForm(['/ship-modules/index'], 'post', [
-                                    'id' => 'mod-form',
+                                <?= Html::beginForm(['/shipyard-ships/index'], 'post', [
+                                    'id' => 'ships-form',
                                     'novalidate' => true,
                                     'class' => 'c-form fs-7 bg-custom-white py-2 px-2 rounded-2 w-100 d-flex 
                                     flex-column needs-validation',
@@ -73,17 +73,16 @@ $this->title = 'Ship modules';
                                             <div class='min-lett-spacing col-lg-4 row-gap-3'>
                                                 <?= CustomSelect::widget([
                                                     'container' => 'c-custom-select',
-                                                    'error' => $mod_error,
+                                                    'error' => $ships_error,
                                                     'selected' => $form_model->cMainSelect,
                                                     'search' => 'c-select-search',
                                                     'to_submit' => 'c-hiddenSelect',
-                                                    'placeholder' => 'selected modules',
-                                                    'label_main' => 'Modules:',
-                                                    'toggle_btn_text' => 'Select modules',
+                                                    'placeholder' => 'selected ships',
+                                                    'label_main' => 'Ships:',
+                                                    'toggle_btn_text' => 'Select ships',
                                                     'name_main' => 'cMainSelect[]',
-                                                    'list_items' => $ship_modules_arr,
-                                                    'required' => 'required',
-                                                    'filter_method' => 'includes',
+                                                    'list_items' => $ships_arr,
+                                                    'required' => 'required'
                                                 ]); ?>
                                             </div>
                                             <!--form column 2-->
@@ -256,6 +255,7 @@ $this->title = 'Ship modules';
                         </div>
                     </div>
                 </div>
+
                 <?= $result ?? null; ?>
             </div>
         </div>

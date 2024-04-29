@@ -2,9 +2,9 @@ import {Pagination} from './Pagination.js';
 import {SortTable} from './SortTable.js';
 import {Table} from './Table.js';
 
-export const shipModulesForm = (loader, removeLoader, fetchData) => {
-    const $form = $('#mod-form');
-    const $table = $('.mod-table');
+export const shipsForm = (loader, removeLoader, fetchData) => {
+    const $form = $('#ships-form');
+    const $table = $('.ships-table');
     const $pagination = $('.pagination');
     removeLoader($table);
 
@@ -15,7 +15,7 @@ export const shipModulesForm = (loader, removeLoader, fetchData) => {
     };
 
     $form.on('submit', handleSubmit);
-    const table = new Table('mod-table');
+    const table = new Table('ships-table');
 
     const proxyHandler= {
         set(target, prop, val) {
@@ -30,8 +30,8 @@ export const shipModulesForm = (loader, removeLoader, fetchData) => {
     const pagination = $pagination.length ?
         new Proxy(new Pagination(7, fetchData, $pagination.html(), table), proxyHandler) : null;
     const sortTable = $pagination.length ?
-        new Proxy(new SortTable('.mod-table', fetchData, table, pagination), proxyHandler) :
-        new Proxy(new SortTable('.mod-table', fetchData, table), proxyHandler);
+        new Proxy(new SortTable('.ships-table', fetchData, table, pagination), proxyHandler) :
+        new Proxy(new SortTable('.ships-table', fetchData, table), proxyHandler);
 
     pagination && pagination.setEventListeners();
     sortTable && sortTable.setEventListeners();

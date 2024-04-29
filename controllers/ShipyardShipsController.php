@@ -2,17 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\ShipMods;
+use app\models\ShipyardShips;
 use Yii;
-use app\models\forms\ShipModulesForm;
+use app\models\forms\ShipyardShipsForm;
 use yii\helpers\ArrayHelper;
 use yii\web\Response;
 use yii\web\Controller;
-use app\behaviors\ShipModulesBehavior;
+use app\behaviors\ShipyardShipsBehavior;
 use app\behaviors\PageCounter;
 use yii\helpers\VarDumper;
 
-class ShipModulesController extends Controller
+class ShipyardShipsController extends Controller
 {
     /**
      * @return array
@@ -21,7 +21,7 @@ class ShipModulesController extends Controller
     {
         return ArrayHelper::merge(
             parent::behaviors(),
-            [PageCounter::class, ShipModulesBehavior::class]
+            [PageCounter::class, ShipyardShipsBehavior::class]
         );
     }
 
@@ -36,28 +36,28 @@ class ShipModulesController extends Controller
         $request = Yii::$app->request;
         $params = [];
 
-        $params['mod_error'] = '';
+        $params['ships_error'] = '';
         $params['ref_error'] = '';
-        $form_model = new ShipModulesForm();
+        $form_model = new ShipyardShipsForm();
         $params['form_model'] = $form_model;
-        $params['ship_modules_arr'] = $this->getShipModules();
+        $params['ships_arr'] = $this->getShipsList();
 
         if (count($request->post()) > 0) {
             $params['post'] = $request->post();
-            $session->set('mod', $request->post());
+            $session->set('ships', $request->post());
         } else {
-            $params['post'] = $session->get('mod');
+            $params['post'] = $session->get('ships');
         }
 
         if ($request->isPost || $params['post']) {
-            $request->isPost && $session->remove('mod_sort');
+            $request->isPost && $session->remove('ships_sort');
 
             if (isset($params['post']['_csrf'])) {
                 unset($params['post']['_csrf']);
             }
 
             $form_model->setAttributes($params['post']);
-            $params['mod_error'] = $form_model->validate('cMainSelect') ? '' : 'is-invalid';
+            $params['ships_error'] = $form_model->validate('cMainSelect') ? '' : 'is-invalid';
             $params['ref_error'] = $form_model->validate('refSystem', false) ? '' : 'is-invalid';
 
             if ($form_model->hasErrors()) {
@@ -66,19 +66,19 @@ class ShipModulesController extends Controller
 
             $sys_name = $params['post']['refSystem'];
 
-            $mod_model = new ShipMods($params['ship_modules_arr']);
+            $ships_model = new ShipyardShips($params['ships_arr']);
             $limit = 50;
-            $provider = $mod_model->getModules($sys_name, $params['post'], $limit, $session->get('mod_sort'));
-            $params['models']  = $mod_model->modifyModels($provider->getModels(), $params['post']);
+            $provider = $ships_model->getShips($sys_name, $params['post'], $limit, $session->get('ships_sort'));
+            $params['models']  = $ships_model->modifyModels($provider->getModels(), $params['post']);
 
             $sort = $provider->getSort();
-            $params['module_sort'] = null;
+            $params['ship_sort'] = null;
             $params['time_sort'] = null;
             $params['d_ly_sort'] = null;
 
             switch ($sort->attributeOrders) {
-                case ArrayHelper::keyExists('module', $sort->attributeOrders):
-                    $params['module_sort'] = ($sort->attributeOrders)['module'] === 4 ? 'sorted asc' : 'sorted desc';
+                case ArrayHelper::keyExists('ship', $sort->attributeOrders):
+                    $params['shipe_sort'] = ($sort->attributeOrders)['ship'] === 4 ? 'sorted asc' : 'sorted desc';
                     break;
                 case ArrayHelper::keyExists('time_diff', $sort->attributeOrders):
                     $params['time_sort'] = ($sort->attributeOrders)['time_diff'] === 4 ? 'sorted asc' : 'sorted desc';
@@ -87,11 +87,11 @@ class ShipModulesController extends Controller
                     $params['d_ly_sort'] = ($sort->attributeOrders)['distance_ly'] === 4 ? 'sorted asc' : 'sorted desc';
                     break;
                 default:
-                    $params['module'] = null;
+                    $params['ship'] = null;
             }
 
             $params['sort'] = $sort;
-            $params['sort_module'] = $sort->createUrl('module');
+            $params['sort_ship'] = $sort->createUrl('ship');
             $params['sort_updated'] = $sort->createUrl('time_diff');
             $params['sort_dist_ly'] = $sort->createUrl('distance_ly');
 
@@ -104,8 +104,8 @@ class ShipModulesController extends Controller
             $params['pagination'] = $pagination;
 
             if ($request->get('page')) {
-                if ($session->get('mod_sort')) {
-                    $sort->setAttributeOrders($session->get('mod_sort'));
+                if ($session->get('ships_sort')) {
+                    $sort->setAttributeOrders($session->get('ships_sort'));
                 }
                 $provider->setSort($sort);
                 $pagination->setPage($request->get('page') - 1);
@@ -116,23 +116,23 @@ class ShipModulesController extends Controller
                     'links' => $pagination->getLinks(),
                     'page' => $pagination->getPage(),
                     'lastPage' => $pagination->pageCount,
-                    'data' => $mod_model->modifyModels($provider->getModels()),
+                    'data' => $ships_model->modifyModels($provider->getModels()),
                     'params' => $pagination->params,
                     'totalCount' => $pagination->totalCount,
                     'attributeOrders' => $sort->attributeOrders,
-                    'mod_sort' => $session->get('mod_sort')
+                    'ships_sort' => $session->get('ships_sort')
                 ];
                 $response->send();
             }
 
             if ($request->get('sort')) {
-                $session->set('mod_sort', $sort->attributeOrders);
+                $session->set('ships_sort', $sort->attributeOrders);
                 $provider->pagination->setPage(0);
 
                 $response = Yii::$app->response;
                 $response->format = Response::FORMAT_JSON;
                 $response->data = [
-                    'data' => $mod_model->modifyModels($provider->getModels()),
+                    'data' => $ships_model->modifyModels($provider->getModels()),
                     'sort' => $sort,
                     'attributeOrders' => $sort->attributeOrders,
                     'links' => $pagination->getLinks(),
@@ -146,7 +146,7 @@ class ShipModulesController extends Controller
                 $response->send();
             }
 
-            $params['result'] = $this->renderPartial('mod_table', $params);
+            $params['result'] = $this->renderPartial('ships_table', $params);
 
             return $this->render('index', $params);
         }
