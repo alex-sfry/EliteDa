@@ -13,6 +13,9 @@ class ShipyardShipsBehavior extends Behavior
      */
     public function getShipsList(): array
     {
-        return Json::decode(file_get_contents(Yii::$app->basePath . '/data/ships.json'));
+        $arr = Json::decode(file_get_contents(Yii::$app->basePath . '/data/ships.json'));
+        asort($arr);
+
+        return $arr;
     }
 }

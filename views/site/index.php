@@ -17,7 +17,7 @@ $this->title = 'Elite Dangerous Assistant';
                     Commodities
                 </a>
             </div>
-            <div class="main-tile col-6 col-sm-4 text-light rounded-3 shr">
+            <div class="main-tile col-6 col-sm-4 text-light rounded-3">
                 <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
                         justify-content-center"
                    href="<?= Url::to(['trade-routes/index']) ?>">Trader routes
@@ -46,12 +46,23 @@ $this->title = 'Elite Dangerous Assistant';
                     </a>
                 </div>
             </div>
-            <div class="main-tile col-6 col-sm-4 text-light rounded-3 shr">
-                <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                        justify-content-center"
-                   href="<?= Url::to(['ship-modules/index']) ?>">Ship modules
-                </a>
+            <div class="col-tile col-6 col-sm-4 row-gap-2 d-flex flex-column align-content-end">
+                <div class="main-tile text-light gx-0 rounded-3">
+                    <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
+                            justify-content-center"
+                    href="<?= Url::to(['shipyard-ships/index']) ?>">
+                    Ships
+                    </a>
+                </div>
+                <div class="main-tile text-light gx-0 rounded-3">
+                    <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
+                            justify-content-center"
+                    href="<?= Url::to(['ship-modules/index']) ?>">
+                    Ship modules
+                    </a>
+                </div>
             </div>
+            
         </div>
     </div>
 </main>

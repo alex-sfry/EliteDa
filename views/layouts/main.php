@@ -133,6 +133,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                         <a
                                             class="menu__link menu__link_nested nav-link text-uppercase text-light
                                                     dropdown-item"
+                                            href="<?= Url::to(['shipyard-ships/index']) ?>">
+                                            Ships
+                                        </a>
+                                        <a
+                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item"
                                             href="<?= Url::to(['ship-modules/index']) ?>">
                                             Ship modules
                                         </a>
