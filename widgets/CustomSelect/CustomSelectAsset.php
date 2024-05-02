@@ -12,7 +12,6 @@ class CustomSelectAsset extends AssetBundle
     public $js = ['CustomSelect.js'];
 
     public $depends = [
-        //        'yii\web\YiiAsset',
         'app\assets\BootstrapAssetMin',
         'app\assets\AppAsset'
     ];

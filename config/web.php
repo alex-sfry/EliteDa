@@ -28,7 +28,6 @@ $config = [
             'bundles' => [
                 'yii\web\JqueryAsset' => [
                     'js' => ['jquery.min.js']
-//                    'js' => []
                 ],
                 'yii\bootstrap\BootstrapPluginAsset' => [
                     'js' => []
@@ -36,6 +35,30 @@ $config = [
                 'yii\bootstrap\BootstrapAsset' => [
                     'css' => [],
                 ],
+                'app\assets\YiiAssetMin' => [
+                    'sourcePath' => '@app/assetsMin',
+                    'js' => ['yii.js']
+                ],
+                'yii\web\YiiAsset' => [
+                    'sourcePath' => '@app/assetsMin',
+                    'js' => [ 'yii.js']
+                ],
+                'yii\grid\GridViewAsset' => [
+                    'sourcePath' => '@app/assetsMin',
+                    'js' => ['yii.gridView.js']
+                ],
+                'yii\captcha\CaptchaAsset' => [
+                    'sourcePath' => '@app/assetsMin',
+                    'js' => ['yii.captcha.js']
+                ],
+                'yii\widgets\ActiveFormAsset' => [
+                    'sourcePath' => '@app/assetsMin',
+                    'js' => ['yii.activeForm.js']
+                ],
+                'yii\validators\ValidationAsset' => [
+                    'sourcePath' => '@app/assetsMin',
+                    'js' => ['yii.validation.js']
+                ]
             ],
         ],
         'request' => [
@@ -76,8 +99,8 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-//                'contact' => 'site/contact',
-//                'entry' => 'site/entry',
+               'contact' => 'site/contact',
+                // 'entry' => 'site/entry',
                 'engineers/details/<id:\w+>' => 'engineers/details',
                 'systems/index/<sys:\w+>' => 'systems/index',
                 'stations/index/<station:\w+>' => 'stations/index',

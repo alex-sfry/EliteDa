@@ -20,8 +20,10 @@ use yii\web\View;
 class YiiAssetMin extends AssetBundle
 {
     public $sourcePath = '@yii/assets';
+    // public $sourcePath = '@app/assetsMin';
     public $js = [
         'yii.js',
+        // 'yii2.js',
     ];
     public $jsOptions = [
 //        'defer' => '',
