@@ -2,6 +2,7 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$mail = require __DIR__ . '/mail_config.php';
 
 $config = [
     'id' => 'basic',
@@ -81,8 +82,9 @@ $config = [
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
             'viewPath' => '@app/mail',
+            'transport' => $mail,
             // send all mails to a file by default.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -101,6 +103,7 @@ $config = [
             'rules' => [
                'contact' => 'site/contact',
                 // 'entry' => 'site/entry',
+                'engineers' => 'engineers/index',
                 'engineers/details/<id:\w+>' => 'engineers/details',
                 'systems/index/<sys:\w+>' => 'systems/index',
                 'stations/index/<station:\w+>' => 'stations/index',
@@ -108,6 +111,7 @@ $config = [
                 'ship-modules' => 'ship-modules/index',
                 'commodities' => 'commodities/index',
                 'trade-routes' => 'trade-routes/index',
+                'materials' => 'materials/index',
                 'material-traders' => 'material-traders/index',
                 '<controller>/<action>' =>  '<controller>/<action>',
                 '' => 'site/index'

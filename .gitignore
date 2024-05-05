@@ -36,6 +36,7 @@ tests/_support/_generated
 /.vagrant
 
 config/db.php
+config/mail_config.php
 
 cgi-bin
 logs

@@ -27,6 +27,17 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 </head>
 <body class="d-flex flex-column" style="height:100vh">
 <?php $this->beginBody() ?>
+    <div class="cookies-consent-wrapper hide">
+        <img src="#" alt="">
+        <div class="content">
+            <header>Cookies Consent</header>
+            <p>This website use cookies to ensure you get the best experience on our website.</p>
+            <div class="buttons">
+                <button class="item">I understand</button>
+                <!-- <a href="#" class="item">Learn more</a> -->
+            </div>
+        </div>
+    </div>
     <div class="body-wrapper bg-main-background d-flex flex-column justify-content-between overflow-x-hidden
         overflow-y-scroll">
         <header id="header" class="header bg-header">
@@ -155,20 +166,39 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <?= $content ?>
 
         <footer id="footer" class="footer bg-header py-2">
-            <div class="container-xxl px-3">
-                <p class="my-0 text-light-orange mx-auto">
-                    This website is not an official tool for the game Elite: Dangerous and is not affiliated
-                    with Frontier Developments.
-                    All information provided is based on publicly available information and data supplied by players,
-                    and may not be entirely accurate. 'Elite', the Elite logo, the Elite: Dangerous logo, 'Frontier'
-                    and the Frontier logo are registered trademarks of Frontier Developments plc.
-                    All rights reserved. All other trademarks and copyrights are acknowledged as the property of their
-                    respective owners.
-                </p>
+            <div class="container-xxl px-3 h-100">
+                <div class="row column-gap-1 row-gap-2 column-gap-sm-0 flex-column flex-sm-row 
+                            justify-content-sm-between">
+                    <div class="col-sm-10 col-12">
+                        <p class="my-0 text-warning">
+                            This website is not an official tool for the game Elite: Dangerous and is not affiliated
+                            with Frontier Developments.
+                            All information provided is based on publicly available information and data supplied by 
+                            players, and may not be entirely accurate. 'Elite', the Elite logo, 
+                            the Elite: Dangerous logo, 'Frontier' and the Frontier logo are registered trademarks 
+                            of Frontier Developments plc.
+                            All rights reserved. All other trademarks and copyrights are acknowledged as the property 
+                            of their respective owners.
+                        </p>
+                    </div>
+                    <div class="contact-block col-sm-2 col-12 h-100 d-flex flex-column flex-sm-row gap-2 gap-md-0 
+                                align-items-sm-center">
+                        <div class="d-sm-block d-none bg-light px-0 h-100" style="min-width: 2px;"></div>
+                        <div class="d-inline-flex d-sm-none bg-light px-0" style="height: 2px;"></div>
+                        <a 
+                            class="footer__link nav-link text-light text-uppercase sintony-bold fs-7 mx-auto"
+                            href="<?= Url::to(['site/contact']) ?>">
+                            contact
+                        </a>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>
-<?php $this->endBody() ?>
+<?php
+$this->endBody();
+?>
+
 </body>
 </html>
 <?php $this->endPage() ?>

@@ -7,7 +7,10 @@ import { shipModulesForm } from './shipModules.js';
 import { shipsForm } from './ships.js';
 import { tradeRouteForm } from './tradeRoutes.js';
 import { matTraders } from './matTraders.js';
+import { cookiesConsent } from './cookiesConsent.js';
 // import {getDataFromDom} from './addToDb.js';
+
+cookiesConsent();
 
 const initHeader = () => {
     $('.menu__link').each(function () {
@@ -18,6 +21,19 @@ const initHeader = () => {
         } else {
             $(this).removeClass('active');
             $(this).closest('.menu__link').removeClass('active');
+        }
+    });
+};
+
+const initFooter = () => {
+    $('.footer__link').each(function () {
+        if ($(this).attr('href') === window.location.pathname ||
+            window.location.pathname.includes($(this).attr('href'))) {
+            $(this).addClass('active');
+            // $(this).closest('.menu__item').children('.menu__link').addClass('active');
+        } else {
+            $(this).removeClass('active');
+            // $(this).closest('.menu__link').removeClass('active');
         }
     });
 };
@@ -42,6 +58,7 @@ const removeLoader = ($elem) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     initHeader();
+    initFooter();
     if ($('#c-form').length) commoditiesForm(loader, removeLoader, fetchData);
     if ($('#mod-form').length) shipModulesForm(loader, removeLoader, fetchData);
     if ($('#ships-form').length) shipsForm(loader, removeLoader, fetchData);

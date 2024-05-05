@@ -1,7 +1,7 @@
 @import 'fonts';
 @import "vars";
 @import "../../../node_modules/bootstrap/scss/functions.scss";
-@import "../../../node_modules/bootstrap/scss/variables.scss";
+@import "../../../node_modules/bootstrap/scss/variables.scss"; 
 
 .f-ctrl-no-shadow {
     box-shadow: none;
@@ -58,6 +58,82 @@ body {
 
 .body-wrapper {
     height: 100vh;
+}
+
+.cookies-consent-wrapper {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    max-width: 365px;
+    background: #fff;
+    padding: 25px 25px 30px 25px;
+    border-radius: 15px;
+    box-shadow: 1px 7px 14px -5px rgba(0, 0, 0, 0.15);
+    text-align: center;
+
+    img {
+        max-width: 90px;
+    }
+}
+
+.cookies-consent-wrapper.hide {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+}
+
+::selection {
+    color: #fff;
+    background: #fcba7f;
+}
+
+.content {
+    margin-top: 10px;
+
+    header {
+        font-size: 25px;
+        font-weight: 600;
+    }
+
+    p {
+        color: #858585;
+        margin: 5px 0 20px 0;
+    }
+
+    .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 5px;
+            background: #fcba7f;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(0.97);
+        }
+
+        .item {
+            margin: 0 10px;
+        }
+
+        a {
+            color: #fcba7f;
+        }
+    }
 }
 
 .col-tile,
@@ -151,6 +227,8 @@ body {
 
     .menu {
         &__link {
+            transition: color 0.2s linear;
+            
             &_nested.active {
                 background-color: $header-color  !important;
             }
@@ -183,6 +261,21 @@ body {
     p {
         @extend .sintony-reg;
         font-size: 0.625rem;
+    }
+
+    &__link {
+        transition: color 0.2s linear;
+    }
+
+    &__link:hover,
+    &__link.active {
+        color: $info !important;
+    }
+
+    @media screen and (min-width: 576px) {
+        .row {
+            height: 100%;
+        }
     }
 }
 
@@ -598,4 +691,9 @@ form {
         white-space: nowrap;
         background-color: $custom-light-orange;
     }
+}
+
+.site-contact {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
 }

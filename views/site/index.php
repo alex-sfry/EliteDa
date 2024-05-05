@@ -62,7 +62,6 @@ $this->title = 'Elite Dangerous Assistant';
                     </a>
                 </div>
             </div>
-            
         </div>
     </div>
 </main>

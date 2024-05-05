@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'adminEmail' => 'admin@example.com',
-    'senderEmail' => 'noreply@example.com',
-    'senderName' => 'Example.com mailer',
+    'adminEmail' => 'admin@elida.space',
+    'senderEmail' => 'admin@elida.space',
+    'senderName' => 'elida contact form',
     'user.passwordMinLength' => 6
 ];
