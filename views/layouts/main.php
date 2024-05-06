@@ -83,21 +83,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         </div>
                         <ul class="menu navbar-nav d-flex w-100 flex-md-wrap justify-content-center
                             align-content-center gap-lg-5">
-                            <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative">
-                                <a
-                                    class="menu__link nav-link text-uppercase text-light"
-                                    aria-current="page"
-                                    href="<?= Url::to(['commodities/index']) ?>"
-                                >
-                                    commodities
-                                </a>
-                            </li>
-                            <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative">
-                                <a class="menu__link nav-link text-uppercase text-light"
-                                   href="<?= Url::to(['trade-routes/index']) ?>">
-                                    trade routes
-                                </a>
-                            </li>
                             <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative dropdown">
                                 <a
                                     class="menu__link nav-link text-uppercase text-light"
@@ -105,27 +90,22 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                     role="button"
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    Engineering
+                                    market
                                 </a>
                                 <ul class="dropdown-menu border-light-orange rounded-2 bg-header mt-0 py-0">
                                     <li class="dropdown-item py-0 rounded-2">
                                         <a
-                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
-                                                    dropdown-item"
-                                            href="<?= Url::to(['engineers/index']) ?>">
-                                            Engineers
+                                            class="menu__link menu__link_nested nav-link text-uppercase text-light 
+                                            dropdown-item"
+                                            aria-current="page"
+                                            href="<?= Url::to(['commodities/index']) ?>">
+                                            commodities
                                         </a>
-                                        <a
-                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
-                                                    dropdown-item"
-                                            href="<?= Url::to(['material-traders/index']) ?>">
-                                            Material traders
-                                        </a>
-                                        <a
-                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
-                                                    dropdown-item"
-                                            href="<?= Url::to(['materials/index']) ?>">
-                                            Materials
+                                        <a 
+                                            class="menu__link menu__link_nested nav-link text-uppercase text-light 
+                                            dropdown-item"
+                                            href="<?= Url::to(['trade-routes/index']) ?>">
+                                            trade routes
                                         </a>
                                     </li>
                                 </ul>
@@ -137,7 +117,39 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                     role="button"
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    Shipyard
+                                    engineering
+                                </a>
+                                <ul class="dropdown-menu border-light-orange rounded-2 bg-header mt-0 py-0">
+                                    <li class="dropdown-item py-0 rounded-2">
+                                        <a
+                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item"
+                                            href="<?= Url::to(['engineers/index']) ?>">
+                                            engineers
+                                        </a>
+                                        <a
+                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item"
+                                            href="<?= Url::to(['material-traders/index']) ?>">
+                                            material traders
+                                        </a>
+                                        <a
+                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item"
+                                            href="<?= Url::to(['materials/index']) ?>">
+                                            materials
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative dropdown">
+                                <a
+                                    class="menu__link nav-link text-uppercase text-light"
+                                    href="#"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    shipyard
                                 </a>
                                 <ul class="dropdown-menu border-light-orange rounded-2 bg-header mt-0 py-0">
                                     <li class="dropdown-item py-0 rounded-2">
@@ -145,13 +157,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                             class="menu__link menu__link_nested nav-link text-uppercase text-light
                                                     dropdown-item"
                                             href="<?= Url::to(['shipyard-ships/index']) ?>">
-                                            Ships
+                                            ships
                                         </a>
                                         <a
                                             class="menu__link menu__link_nested nav-link text-uppercase text-light
                                                     dropdown-item"
                                             href="<?= Url::to(['ship-modules/index']) ?>">
-                                            Ship modules
+                                            ship modules
                                         </a>
                                     </li>
                                 </ul>

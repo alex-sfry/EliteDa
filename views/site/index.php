@@ -10,18 +10,21 @@ $this->title = 'Elite Dangerous Assistant';
     <div class="container-xxl px-3">
         <div class="row justify-content-evenly row-gap-4">
             <h1 class="text-center mb-4 text-light-orange fs-2 mt-3"><?= Html::encode($this->title) ?></h1>
-            <div class="main-tile col-6 col-sm-4 text-light rounded-3">
-                <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                    justify-content-center"
-                   href="<?= Url::to(['commodities/index']) ?>">
-                    Commodities
-                </a>
-            </div>
-            <div class="main-tile col-6 col-sm-4 text-light rounded-3">
-                <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                        justify-content-center"
-                   href="<?= Url::to(['trade-routes/index']) ?>">Trader routes
-                </a>
+            <div class="col-tile col-6 col-sm-4 row-gap-2 d-flex flex-column align-content-end">
+                <div class="main-tile text-light gx-0 rounded-33">
+                    <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
+                            justify-content-center"
+                    href="<?= Url::to(['commodities/index']) ?>">
+                        Commodities
+                    </a>
+                </div>
+                <div class="main-tile text-light gx-0 rounded-3">
+                    <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
+                            justify-content-center"
+                    href="<?= Url::to(['trade-routes/index']) ?>">
+                    Trade routes
+                    </a>
+                </div>
             </div>
             <div class="col-tile col-6 col-sm-4 row-gap-2 d-flex flex-column align-content-end">
                 <div class="main-tile text-light gx-0 rounded-3">
@@ -31,7 +34,7 @@ $this->title = 'Elite Dangerous Assistant';
                         Engineers
                     </a>
                 </div>
-                <div class="main-tile text-light rounded-3">
+                <div class="main-tile text-light gx-0 rounded-3">
                     <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
                     justify-content-center"
                        href="<?= Url::to(['material-traders/index']) ?>">
