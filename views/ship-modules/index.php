@@ -18,7 +18,7 @@ use app\widgets\InputDropdown\InputDropdown;
 use yii\helpers\Html;
 use yii\helpers\VarDumper;
 
-// VarDumper::dump($post, 10, true);
+// VarDumper::dump($get, 10, true);
 
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
@@ -60,7 +60,7 @@ $this->title = 'Ship modules';
                             class="accordion-collapse collapse <?= !isset($result) ? 'show' : '' ?>"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <?= Html::beginForm(['/ship-modules/index'], 'post', [
+                                <?= Html::beginForm(['/ship-modules/index'], 'get', [
                                     'id' => 'mod-form',
                                     'novalidate' => true,
                                     'class' => 'c-form fs-7 bg-custom-white py-2 px-2 rounded-2 w-100 d-flex 

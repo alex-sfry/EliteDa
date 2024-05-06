@@ -17,24 +17,24 @@ class TradeRoutes extends Model
 {
     private string $st_name;
     private string $sys_name;
-    private array $post;
+    private array $get;
     private array $source_market = [];
     private array $dir_route_queries = [];
     private string $target_sys;
     private string $target_st;
 
-    public function __construct(array $post)
+    public function __construct(array $get)
     {
-        $this->st_name = $post['ref_station'];
-        $this->sys_name = $post['ref_system'];
-        $this->post = $post;
+        $this->st_name = $get['ref_station'];
+        $this->sys_name = $get['ref_system'];
+        $this->get = $get;
 
-        if (isset($post['targetSysStationName']) && $post['targetSysStation'] !== '') {
-            if ($post['targetSysStationName'] === 'station') {
-                $this->target_sys = StringHelper::explode($post['targetSysStation'], ' / ', true)[0];
-                $this->target_st = StringHelper::explode($post['targetSysStation'], ' / ', true)[1];
+        if (isset($get['targetSysStationName']) && $get['targetSysStation'] !== '') {
+            if ($get['targetSysStationName'] === 'station') {
+                $this->target_sys = StringHelper::explode($get['targetSysStation'], ' / ', true)[0];
+                $this->target_st = StringHelper::explode($get['targetSysStation'], ' / ', true)[1];
             } else {
-                $this->target_sys = $post['targetSysStation'];
+                $this->target_sys = $get['targetSysStation'];
             }
         }
     }
@@ -59,7 +59,7 @@ class TradeRoutes extends Model
      */
     public function getData($limit): ActiveDataProvider
     {
-        switch ($this->post['sortBy']) {
+        switch ($this->get['sortBy']) {
             case 'Updated_at':
                 $sort_attr = 'target_time_diff';
                 $sort_order = 'asc';
@@ -115,7 +115,7 @@ class TradeRoutes extends Model
             ->innerJoin(['sys' => 'systems'], 'st.system_id = sys.id')
             ->where(['st.name' => $this->st_name, 'sys.name' => $this->sys_name])
             ->andWhere(['>', 'mean_price', 'buy_price'])
-            ->andWhere(['>', 'stock', $this->post['minSupplyDemand']]);
+            ->andWhere(['>', 'stock', $this->get['minSupplyDemand']]);
     }
 
     /**
@@ -124,7 +124,7 @@ class TradeRoutes extends Model
     private function getTargetMarkets(): Query
     {
         extract($this->getCoords($this->sys_name));
-        $cargo = (int)$this->post['cargo'];
+        $cargo = (int)$this->get['cargo'];
 
         foreach ($this->source_market as $item) {
             $query = (new Query())
@@ -150,35 +150,35 @@ class TradeRoutes extends Model
                 ->innerJoin(['st' => 'stations'], 'm.market_id = st.market_id')
                 ->innerJoin(['sys' => 'systems'], 'st.system_id = sys.id')
                 ->where(['m.name' => $item['commodity']])
-                ->andWhere(['>', 'demand', (int)$this->post['minSupplyDemand']])
+                ->andWhere(['>', 'demand', (int)$this->get['minSupplyDemand']])
                 ->andWhere([
-                    '>', "(sell_price - {$item['buy_price']}) * $cargo", $this->post['profit']
+                    '>', "(sell_price - {$item['buy_price']}) * $cargo", $this->get['profit']
                 ]);
 
-            $this->post['landingPadSize'] === 'L' && $query->andWhere(['not', ['type' => 'Outpost']]);
+            $this->get['landingPadSize'] === 'L' && $query->andWhere(['not', ['type' => 'Outpost']]);
 
-            $this->post['includeSurface'] === 'No' &&
+            $this->get['includeSurface'] === 'No' &&
             $query->andWhere(['not in', 'type', ['Planetary Port', 'Planetary Outpost', 'Odyssey Settlement']]);
 
-            $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$this->post['dataAge']} HOUR)");
+            $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$this->get['dataAge']} HOUR)");
 
-            $this->post['dataAge'] !== 'Any' &&
+            $this->get['dataAge'] !== 'Any' &&
             $query->andWhere(['>', 'timestamp', $date_sub_expr]);
 
-            if (isset($this->post['targetSysStationName']) && $this->post['targetSysStation'] !== '') {
-                $this->post['targetSysStationName'] === 'station' &&
+            if (isset($this->get['targetSysStationName']) && $this->get['targetSysStation'] !== '') {
+                $this->get['targetSysStationName'] === 'station' &&
                 $query->andWhere(['st.name' => $this->target_st, 'sys.name' => $this->target_sys]);
-                $this->post['targetSysStationName'] === 'system' &&
+                $this->get['targetSysStationName'] === 'system' &&
                 $query->andWhere(['sys.name' => $this->target_sys]);
             } else {
-                $this->post['maxDistanceFromRefStar'] !== 'Any' && $query->andWhere([
+                $this->get['maxDistanceFromRefStar'] !== 'Any' && $query->andWhere([
                     '<=',
                     "ROUND(SQRT(POW((sys.x - $x), 2) + POW((sys.y - $y), 2) + POW((sys.z - $z), 2)), 2)",
-                    $this->post['maxDistanceFromRefStar'],
+                    $this->get['maxDistanceFromRefStar'],
                 ]);
 
-                $this->post['distanceFromStar'] !== 'Any' &&
-                $query->andWhere(['<=', 'distance_to_arrival', $this->post['distanceFromStar']]);
+                $this->get['distanceFromStar'] !== 'Any' &&
+                $query->andWhere(['<=', 'distance_to_arrival', $this->get['distanceFromStar']]);
             }
 
             $this->dir_route_queries[] = $query;
@@ -202,8 +202,8 @@ class TradeRoutes extends Model
      */
     public function getRoundTrip($target_market_ids): Query
     {
-        $cargo = (int)$this->post['cargo'];
-        $minSupplyDemand = (int)$this->post['minSupplyDemand'];
+        $cargo = (int)$this->get['cargo'];
+        $minSupplyDemand = (int)$this->get['minSupplyDemand'];
 
         $source_sell = (new Query())
             ->select(['m.name AS commodity', 'sell_price AS source_sell_price', 'demand AS source_demand'])
@@ -229,11 +229,11 @@ class TradeRoutes extends Model
                 ])
                 ->from(['m' => 'markets'])
                 ->where(['m.name' => $item['commodity']])
-                ->andWhere(['>', 'stock', (int)$this->post['minSupplyDemand']])
+                ->andWhere(['>', 'stock', (int)$this->get['minSupplyDemand']])
                 ->andWhere([
                     '>',
                     "({$item['source_sell_price']} - buy_price) * $cargo",
-                    (int)$this->post['profit']
+                    (int)$this->get['profit']
                 ])
                 ->andWhere(['m.market_id' => $target_market_ids]);
 
@@ -296,7 +296,8 @@ class TradeRoutes extends Model
     {
         foreach ($models as $key => $value) {
             if (isset($value['round_commodity'])) {
-                $value['round_commodity'] = $this->commodities[strtolower($value['round_commodity'])];
+                $value['round_commodity'] = isset($this->commodities[strtolower($value['round_commodity'])]) ?
+                    $this->commodities[strtolower($value['round_commodity'])] : $value['round_commodity'];
                 $value['target']['buy_price'] = $value['target_buy_price'];
                 $value['target']['stock'] = $value['target_stock'];
                 $value['source']['sell_price'] = $value['source_sell_price'];
@@ -306,7 +307,8 @@ class TradeRoutes extends Model
                 $value['round_trip'] = false;
             }
 
-            $value['commodity'] = $this->commodities[strtolower($value['commodity'])];
+            $value['commodity'] = isset($this->commodities[strtolower($value['commodity'])]) ?
+                $this->commodities[strtolower($value['commodity'])] : $value['commodity'];
             $value['source']['buy_price'] = $value['source_buy_price'];
             $value['source']['pad'] = $this->getLandingPadSizes()[$value['source_type']];
             $value['target']['pad'] = $this->getLandingPadSizes()[$value['target_type']];

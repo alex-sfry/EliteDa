@@ -17,7 +17,11 @@ Table.prototype.fillShipsModsTable = function (data) {
 
         $(this).find('td').each(function (cellIndex) {
             cellIndex === 0 && $(this).text(data[rowIndex].module || data[rowIndex].ship);
-            cellIndex === 1 && $(this).text(data[rowIndex].station);
+            cellIndex === 1 && $(this)
+            .html(
+                `<a href='/stations/details/${data[rowIndex].station_id}' target='_blank'>
+                ${data[rowIndex].station}</a>`
+            );
             cellIndex === 2 && $(this).text(data[rowIndex].type);
             if (cellIndex === 2 && data[rowIndex].surface) {
                 $(this).addClass('text-success');
@@ -46,7 +50,11 @@ Table.prototype.fillTable = function (data) {
 
         $(this).find('td').each(function (cellIndex) {
             cellIndex === 0 && $(this).text(data[rowIndex].commodity);
-            cellIndex === 1 && $(this).text(data[rowIndex].station);
+            cellIndex === 1 && $(this)
+                .html(
+                    `<a href='/stations/details/${data[rowIndex].station_id}' target='_blank'>
+                    ${data[rowIndex].station}</a>`
+                );
             cellIndex === 2 && $(this).text(data[rowIndex].type);
             if (cellIndex === 2 && data[rowIndex].surface) {
                 $(this).addClass('text-success');

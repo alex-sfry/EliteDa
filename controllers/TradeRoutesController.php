@@ -27,7 +27,7 @@ class TradeRoutesController extends Controller
     {
         $session = Yii::$app->session;
         $session->open();
-//        $session->destroy();
+        // $session->destroy();
         $request = Yii::$app->request;
 
         $params  = [];
@@ -37,20 +37,19 @@ class TradeRoutesController extends Controller
         $form_model = new TradeRoutesForm();
         $params['form_model'] = $form_model;
 
-        if (count($request->post()) > 0) {
-            $params['post']  = $request->post();
-            $session->set('tr', $request->post());
+        if (count($request->get()) > 0) {
+            $params['get'] = $request->get();
+            $session->set('tr', $request->get());
         } else {
-            $params['post'] = $session->get('tr');
+            $params['get'] = $session->get('tr');
         }
 
-        if ($request->isPost || $params['post']) {
-//            $request->isPost && $session->remove('c_sort');
-            if (isset($params['post']['_csrf'])) {
-                unset($params['post']['_csrf']);
+        if ($request->isGet || $params['get']) {
+            if (isset($params['get']['_csrf'])) {
+                unset($params['get']['_csrf']);
             }
 
-            $form_model->setAttributes($params['post']);
+            $form_model->setAttributes($params['get']);
             $params['ref_error'] =  $form_model->validate('refSysStation') ? '' : 'is-invalid';
             $params['cargo_error'] =  $form_model->validate('cargo') ? '' : 'is-invalid';
             $params['profit_error'] =  $form_model->validate('profit') ? '' : 'is-invalid';
@@ -60,8 +59,8 @@ class TradeRoutesController extends Controller
                 return $this->render('index', $params);
             }
 
-            $params['post']['ref_system'] = StringHelper::explode($session->get('tr')['refSysStation'], ' / ', true)[0];
-            $params['post']['ref_station'] = StringHelper::explode(
+            $params['get']['ref_system'] = StringHelper::explode($session->get('tr')['refSysStation'], ' / ', true)[0];
+            $params['get']['ref_station'] = StringHelper::explode(
                 $session->get('tr')['refSysStation'],
                 ' / ',
                 true
@@ -69,13 +68,13 @@ class TradeRoutesController extends Controller
 
             $limit = 20;
 
-            $tr_model = new TradeRoutes($params['post']);
+            $tr_model = new TradeRoutes($params['get']);
 
             $data_dir = $tr_model->getData($limit);
             $pagination = $data_dir->getPagination();
             $params['models'] = $data_dir->getModels();
 
-            if (isset($params['post']['roundTrip'])) {
+            if (isset($params['get']['roundTrip'])) {
                 $target_market_ids = ArrayHelper::getColumn($params['models'], 'target_market_id');
                 $params['models']  = $tr_model->modifyModels(
                     $tr_model->getResultWithRoundTrip(

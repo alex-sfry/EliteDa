@@ -42,21 +42,21 @@ class CommoditiesController extends Controller
         $params['form_model'] = $form_model;
         $params['commodities_arr'] = $this->getCommodities();
 
-        if (count($request->post()) > 0) {
-            $params['post'] = $request->post();
-            $session->set('c', $request->post());
+        if (count($request->get()) > 0) {
+            $params['get'] = $request->get();
+            $session->set('c', $request->get());
         } else {
-            $params['post'] = $session->get('c');
+            $params['get'] = $session->get('c');
         }
 
-        if ($request->isPost || $params['post']) {
-            $request->isPost && $session->remove('c_sort');
+        if ($request->isGet || $params['get']) {
+            $request->isGet && $session->remove('c_sort');
 
-            if (isset($params['post']['_csrf'])) {
-                unset($params['post']['_csrf']);
+            if (isset($params['get']['_csrf'])) {
+                unset($params['get']['_csrf']);
             }
 
-            $form_model->setAttributes($params['post']);
+            $form_model->setAttributes($params['get']);
             $params['c_error'] = $form_model->validate('commodities') ? '' : 'is-invalid';
             $params['ref_error'] = $form_model->validate('refSystem', false) ? '' : 'is-invalid';
 
@@ -66,7 +66,7 @@ class CommoditiesController extends Controller
 
             $c_model = new Commdts();
             $limit = 50;
-            $provider = $c_model->getPrices($params['post']['refSystem'], $params['post'], $limit);
+            $provider = $c_model->getPrices($params['get']['refSystem'], $params['get'], $limit);
             $params['models']  = $c_model->modifyModels($provider->getModels());
 
             $sort = $provider->getSort();
@@ -92,7 +92,7 @@ class CommoditiesController extends Controller
             }
 
             $params['sort'] = $sort;
-            $price =  $params['post']['buySellSwitch'] === 'sell' ? 'sell_price' : 'buy_price';
+            $price =  $params['get']['buySellSwitch'] === 'sell' ? 'sell_price' : 'buy_price';
             $params['sort_price'] = $sort->createUrl($price);
             $params['sort_updated'] = $sort->createUrl('time_diff');
             $params['sort_dist_ly'] = $sort->createUrl('distance_ly');

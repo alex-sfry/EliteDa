@@ -29,24 +29,24 @@ class Commdts extends Model
 
     /**
      * @param string $sys_name
-     * @param array $post
+     * @param array $get
      * @param int $limit
      *
      * @return \yii\data\ActiveDataProvider
      */
-    public function getPrices(string $sys_name, array $post, int $limit): ActiveDataProvider
+    public function getPrices(string $sys_name, array $get, int $limit): ActiveDataProvider
     {
         extract($this->getCoords($sys_name));
         $c_symbols = [];
 
         foreach ($this->commodities as $key => $value) {
-            if (in_array($value, $post['commodities'])) {
+            if (in_array($value, $get['commodities'])) {
                 $c_symbols[] = $key;
             }
         }
 
         // price related vars depending on form data
-        if ($post['buySellSwitch'] === 'buy') {
+        if ($get['buySellSwitch'] === 'buy') {
             $price_type = 'buy_price';
             $stock_demand = 'stock';
             $price_sort_direction = 'asc';
@@ -62,6 +62,7 @@ class Commdts extends Model
                 $stock_demand,
                 'm.name AS commodity',
                 'st.name AS station',
+                'st.id AS station_id',
                 'type',
                 'distance_to_arrival AS distance_ls',
                 'sys.name AS system',
@@ -74,26 +75,26 @@ class Commdts extends Model
             ->where(['m.name' => $c_symbols])
             ->andWhere(['>', $stock_demand, 0]);
 
-        $post['landingPadSize'] === 'L' && $prices->andWhere(['not', ['type' => 'Outpost']]);
+        $get['landingPadSize'] === 'L' && $prices->andWhere(['not', ['type' => 'Outpost']]);
 
-        $post['includeSurface'] === 'No' &&
+        $get['includeSurface'] === 'No' &&
         $prices->andWhere(['not in', 'type', ['Planetary Port', 'Planetary Outpost', 'Odyssey Settlement']]);
 
-        $post['distanceFromStar'] !== 'Any' &&
-        $prices->andWhere(['<=', 'distance_to_arrival', $post['distanceFromStar']]);
+        $get['distanceFromStar'] !== 'Any' &&
+        $prices->andWhere(['<=', 'distance_to_arrival', $get['distanceFromStar']]);
 
-        $post['maxDistanceFromRefStar'] !== 'Any' && $prices->andWhere([
+        $get['maxDistanceFromRefStar'] !== 'Any' && $prices->andWhere([
             '<=',
             "ROUND(SQRT(POW((sys.x - $x), 2) + POW((sys.y - $y), 2) + POW((sys.z - $z), 2)), 2)",
-            $post['maxDistanceFromRefStar'],
+            $get['maxDistanceFromRefStar'],
         ]);
 
-        $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$post['dataAge']} HOUR)");
+        $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$get['dataAge']} HOUR)");
 
-        $post['dataAge'] !== 'Any' &&
+        $get['dataAge'] !== 'Any' &&
         $prices->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
 
-        switch ($post['sortBy']) {
+        switch ($get['sortBy']) {
             case 'Updated_at':
                 $sort_attr = 'time_diff';
                 $sort_order = 'asc';
@@ -135,7 +136,8 @@ class Commdts extends Model
     public function modifyModels(array $models): array
     {
         foreach ($models as $key => $value) {
-            $value['commodity'] = $this->commodities[strtolower($value['commodity'])];
+            $value['commodity'] = isset($this->commodities[strtolower($value['commodity'])]) ?
+                $this->commodities[strtolower($value['commodity'])] : $value['commodity'];
             $value['pad'] = $this->getLandingPadSizes()[$value['type']];
             $value['time_diff'] = $this->getTimeDiff($value['time_diff']);
 

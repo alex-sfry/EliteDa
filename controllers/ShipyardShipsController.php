@@ -42,21 +42,21 @@ class ShipyardShipsController extends Controller
         $params['form_model'] = $form_model;
         $params['ships_arr'] = $this->getShipsList();
 
-        if (count($request->post()) > 0) {
-            $params['post'] = $request->post();
-            $session->set('ships', $request->post());
+        if (count($request->get()) > 0) {
+            $params['get'] = $request->get();
+            $session->set('ships', $request->get());
         } else {
-            $params['post'] = $session->get('ships');
+            $params['get'] = $session->get('ships');
         }
 
-        if ($request->isPost || $params['post']) {
-            $request->isPost && $session->remove('ships_sort');
+        if ($request->isGet || $params['get']) {
+            $request->isGet && $session->remove('ships_sort');
 
-            if (isset($params['post']['_csrf'])) {
-                unset($params['post']['_csrf']);
+            if (isset($params['get']['_csrf'])) {
+                unset($params['get']['_csrf']);
             }
 
-            $form_model->setAttributes($params['post']);
+            $form_model->setAttributes($params['get']);
             $params['ships_error'] = $form_model->validate('cMainSelect') ? '' : 'is-invalid';
             $params['ref_error'] = $form_model->validate('refSystem', false) ? '' : 'is-invalid';
 
@@ -64,12 +64,12 @@ class ShipyardShipsController extends Controller
                 return $this->render('index', $params);
             }
 
-            $sys_name = $params['post']['refSystem'];
+            $sys_name = $params['get']['refSystem'];
 
             $ships_model = new ShipyardShips($params['ships_arr']);
             $limit = 50;
-            $provider = $ships_model->getShips($sys_name, $params['post'], $limit, $session->get('ships_sort'));
-            $params['models']  = $ships_model->modifyModels($provider->getModels(), $params['post']);
+            $provider = $ships_model->getShips($sys_name, $params['get'], $limit, $session->get('ships_sort'));
+            $params['models']  = $ships_model->modifyModels($provider->getModels(), $params['get']);
 
             $sort = $provider->getSort();
             $params['ship_sort'] = null;

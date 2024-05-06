@@ -17,7 +17,7 @@ $this->title = $model['name'];
     <div class='wrapper d-flex flex-column h-100'>
         <div class='container-xxl px-3'>
             <div class='row justify-content-center overflow-x-auto'>
-                <div class='engineer-details-cnt col-8'>
+                <div class='details-cnt col-8'>
                     <h1 class="mt-2 text-light-orange text-center sintony-bold"><?= $this->title ?></h1>
                     <?= DetailView::widget([
                         'model' => $model,

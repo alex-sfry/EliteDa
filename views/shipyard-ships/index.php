@@ -60,7 +60,7 @@ $this->title = 'Ships';
                             class="accordion-collapse collapse <?= !isset($result) ? 'show' : '' ?>"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <?= Html::beginForm(['/shipyard-ships/index'], 'post', [
+                                <?= Html::beginForm(['/shipyard-ships/index'], 'get', [
                                     'id' => 'ships-form',
                                     'novalidate' => true,
                                     'class' => 'c-form fs-7 bg-custom-white py-2 px-2 rounded-2 w-100 d-flex 

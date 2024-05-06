@@ -4,7 +4,7 @@
  * @var array $models
  * @var string|null $page_count_info
  * @var string $pager
- * @var array $post
+ * @var array $get
  * @var string $sort_price
  * @var string $sort_updated
  * @var string $sort_dist_ly
@@ -16,6 +16,7 @@
 
 use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\helpers\VarDumper;
 
 $table_head = [
@@ -26,7 +27,7 @@ $table_head = [
     'System',
     'Dist.(LY)',
     'Dist. to arr.(ls)',
-    $post['buySellSwitch'] === 'buy' ? 'Supply' : 'Demand',
+    $get['buySellSwitch'] === 'buy' ? 'Supply' : 'Demand',
     'Price',
     'Updated'
 ];
@@ -105,7 +106,12 @@ $table_head = [
             <?php foreach ($models as $item) : ?>
                 <tr>
                     <td class="text-start text-truncate"><?= Html::encode($item['commodity']) ?></td>
-                    <td class="text-start text-truncate"><?= Html::encode($item['station']) ?></td>
+                    <td class="table-link text-start text-truncate text-decoration-underline link-underline-primary">
+                        <?= Html::a(
+                            Html::encode($item['station']),
+                            Url::toRoute(["stations/details/{$item['station_id']}"])
+                        );?>
+                    </td>
                     <td class="sintony-bold text-start text-truncate
                     <?= $item['surface'] ? 'text-success' : 'text-primary' ?>"><?= Html::encode($item['type']) ?></td>
                     <td class="text-start text-truncate"><?= Html::encode($item['pad']) ?></td>

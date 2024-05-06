@@ -67,7 +67,7 @@ $this->title = 'Commodities';
                             class="accordion-collapse collapse <?= !isset($result) ? 'show' : '' ?>"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <?= Html::beginForm(['/commodities/index'], 'post', [
+                                <?= Html::beginForm(['/commodities/index'], 'get', [
                                     'id' => 'c-form',
                                     'novalidate' => true,
                                     'class' => 'c-form fs-7 bg-custom-white py-2 px-2 rounded-2 w-100 d-flex 

@@ -3,6 +3,10 @@
 @import "../../../node_modules/bootstrap/scss/functions.scss";
 @import "../../../node_modules/bootstrap/scss/variables.scss"; 
 
+.w180 {
+    width: 180px;
+}
+
 .f-ctrl-no-shadow {
     box-shadow: none;
     border-color: $border-color;
@@ -451,6 +455,17 @@ form {
     th {
         width: fit-content; 
     }
+
+    .table-link {
+        transition: all 0.2s linear;
+        text-decoration-style: dashed !important;
+        text-underline-offset: 4px;
+    }
+
+    .table-link:hover {
+        background-color: $warning;
+        text-decoration-color: $dark !important;
+    }
 }
 
 /**
@@ -665,7 +680,7 @@ form {
     }
 }
 
-.engineer-details-cnt {
+.details-cnt {
     th, td {
         border: 0;
     }

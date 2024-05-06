@@ -70,7 +70,7 @@ $this->title = 'Trade routes';
                             class="accordion-collapse collapse <?= !isset($result) ? 'show' : '' ?>"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <?= Html::beginForm(['/trade-routes/index'], 'post', [
+                                <?= Html::beginForm(['/trade-routes/index'], 'get', [
                                     'id' => 'tr-form',
                                     'novalidate' => true,
                                     'class' => 'c-form fs-7 bg-custom-white py-2 px-2 rounded-2 w-100 d-flex 
@@ -384,12 +384,4 @@ $this->title = 'Trade routes';
         </div>
     </div>
     <?= $result ?? null; ?>
-<!--    <div class="bg-light mt-3">-->
-        <?php
-//        isset($post) && VarDumper::dump($post, 10, true);
-//        VarDumper::dump($form_model, 10, true);
-//        isset($errors) && VarDumper::dump($errors, 10, true);
-//        isset($models) && VarDumper::dump($models, 10, true);
-        ?>
-<!--    </div>-->
 </main>

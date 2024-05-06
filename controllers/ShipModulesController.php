@@ -42,21 +42,21 @@ class ShipModulesController extends Controller
         $params['form_model'] = $form_model;
         $params['ship_modules_arr'] = $this->getShipModules();
 
-        if (count($request->post()) > 0) {
-            $params['post'] = $request->post();
-            $session->set('mod', $request->post());
+        if (count($request->get()) > 0) {
+            $params['get'] = $request->get();
+            $session->set('mod', $request->get());
         } else {
-            $params['post'] = $session->get('mod');
+            $params['get'] = $session->get('mod');
         }
 
-        if ($request->isPost || $params['post']) {
-            $request->isPost && $session->remove('mod_sort');
+        if ($request->isGet || $params['get']) {
+            $request->isGet && $session->remove('mod_sort');
 
-            if (isset($params['post']['_csrf'])) {
-                unset($params['post']['_csrf']);
+            if (isset($params['get']['_csrf'])) {
+                unset($params['get']['_csrf']);
             }
 
-            $form_model->setAttributes($params['post']);
+            $form_model->setAttributes($params['get']);
             $params['mod_error'] = $form_model->validate('cMainSelect') ? '' : 'is-invalid';
             $params['ref_error'] = $form_model->validate('refSystem', false) ? '' : 'is-invalid';
 
@@ -64,12 +64,12 @@ class ShipModulesController extends Controller
                 return $this->render('index', $params);
             }
 
-            $sys_name = $params['post']['refSystem'];
+            $sys_name = $params['get']['refSystem'];
 
             $mod_model = new ShipMods($params['ship_modules_arr']);
             $limit = 50;
-            $provider = $mod_model->getModules($sys_name, $params['post'], $limit, $session->get('mod_sort'));
-            $params['models']  = $mod_model->modifyModels($provider->getModels(), $params['post']);
+            $provider = $mod_model->getModules($sys_name, $params['get'], $limit, $session->get('mod_sort'));
+            $params['models']  = $mod_model->modifyModels($provider->getModels(), $params['get']);
 
             $sort = $provider->getSort();
             $params['module_sort'] = null;
