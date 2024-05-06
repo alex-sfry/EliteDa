@@ -193,33 +193,32 @@ class CsvController extends Controller
 
         foreach ($this->csv_arr as $key => $value) {
             $commodities_arr[strtolower($value['symbol'])] = $value['name'];
-            // $this->csv_arr[$key]['symbol'] = strtolower($value['symbol']);
         }
 
-        // $commodities_arr = array_change_key_case($commodities_arr);
+        $commodities_arr = array_change_key_case($commodities_arr);
 
-        // file_put_contents(
-        //     Yii::getAlias('@app/data/commodities.json'),
-        //     Json::encode($commodities_arr, JSON_PRETTY_PRINT)
-        // );
+        file_put_contents(
+            Yii::getAlias('@app/data/commodities.json'),
+            Json::encode($commodities_arr, JSON_PRETTY_PRINT)
+        );
 
-        // $batch_rows = array_map(function ($item) {
-        //     return array_values($item);
-        // }, $this->csv_arr);
+        $batch_rows = array_map(function ($item) {
+            return array_values($item);
+        }, $this->csv_arr);
 
-        // $cmd_db_list = Commodities::find()
-        // ->asArray()
-        // ->all();
+        $cmd_db_list = Commodities::find()
+        ->asArray()
+        ->all();
 
-        VarDumper::dump($this->csv_arr[0]);
+        // VarDumper::dump($this->csv_arr[0]);
         // VarDumper::dump($cmd_db_list[0]);
         VarDumper::dump(Json::decode(file_get_contents(Yii::$app->basePath . '/data/commodities.json')));
 
-        // Yii::$app->db->createCommand()
-        // ->batchInsert('commodities', [
-        //     'id', 'symbol', 'category', 'name'
-        // ], $batch_rows)
-        // ->execute();
+        Yii::$app->db->createCommand()
+        ->batchInsert('commodities', [
+            'id', 'symbol', 'category', 'name'
+        ], $batch_rows)
+        ->execute();
 
         return ExitCode::OK;
     }
