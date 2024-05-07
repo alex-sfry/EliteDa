@@ -45,11 +45,11 @@ class ShipyardShipsController extends Controller
         if (count($request->get()) > 0) {
             $params['get'] = $request->get();
             $session->set('ships', $request->get());
-        } else {
+        } elseif ($session->get('ships')) {
             $params['get'] = $session->get('ships');
         }
 
-        if ($request->isGet || $params['get']) {
+        if ($request->get() || $session->get('ships')) {
             $request->isGet && $session->remove('ships_sort');
 
             if (isset($params['get']['_csrf'])) {

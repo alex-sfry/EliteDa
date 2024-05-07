@@ -45,11 +45,11 @@ class ShipModulesController extends Controller
         if (count($request->get()) > 0) {
             $params['get'] = $request->get();
             $session->set('mod', $request->get());
-        } else {
+        } elseif ($session->get('mod')) {
             $params['get'] = $session->get('mod');
         }
 
-        if ($request->isGet || $params['get']) {
+        if ($request->get() || $session->get('mod')) {
             $request->isGet && $session->remove('mod_sort');
 
             if (isset($params['get']['_csrf'])) {

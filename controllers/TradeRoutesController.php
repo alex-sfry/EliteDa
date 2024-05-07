@@ -40,11 +40,11 @@ class TradeRoutesController extends Controller
         if (count($request->get()) > 0) {
             $params['get'] = $request->get();
             $session->set('tr', $request->get());
-        } else {
+        } elseif ($session->get('tr')) {
             $params['get'] = $session->get('tr');
         }
 
-        if ($request->isGet || $params['get']) {
+        if ($request->get() || $session->get('tr')) {
             if (isset($params['get']['_csrf'])) {
                 unset($params['get']['_csrf']);
             }

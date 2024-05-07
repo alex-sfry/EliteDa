@@ -20,7 +20,7 @@
  * @var string $endpoint2
  * @var bool $required
  * @var string $selected_radio
- *  @var string  $btn_position
+ * @var string  $btn_position
  */
 
 use yii\helpers\Html;

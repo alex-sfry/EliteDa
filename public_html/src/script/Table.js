@@ -19,7 +19,7 @@ Table.prototype.fillShipsModsTable = function (data) {
             cellIndex === 0 && $(this).text(data[rowIndex].module || data[rowIndex].ship);
             cellIndex === 1 && $(this)
             .html(
-                `<a href='/stations/details/${data[rowIndex].station_id}' target='_blank'>
+                `<a href='/stations/details/${data[rowIndex].station_id}'>
                 ${data[rowIndex].station}</a>`
             );
             cellIndex === 2 && $(this).text(data[rowIndex].type);
@@ -52,7 +52,7 @@ Table.prototype.fillTable = function (data) {
             cellIndex === 0 && $(this).text(data[rowIndex].commodity);
             cellIndex === 1 && $(this)
                 .html(
-                    `<a href='/stations/details/${data[rowIndex].station_id}' target='_blank'>
+                    `<a href='/stations/details/${data[rowIndex].station_id}'>
                     ${data[rowIndex].station}</a>`
                 );
             cellIndex === 2 && $(this).text(data[rowIndex].type);

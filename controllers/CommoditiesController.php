@@ -45,11 +45,11 @@ class CommoditiesController extends Controller
         if (count($request->get()) > 0) {
             $params['get'] = $request->get();
             $session->set('c', $request->get());
-        } else {
+        } elseif ($session->get('c')) {
             $params['get'] = $session->get('c');
         }
 
-        if ($request->isGet || $params['get']) {
+        if ($request->get() || $session->get('c')) {
             $request->isGet && $session->remove('c_sort');
 
             if (isset($params['get']['_csrf'])) {

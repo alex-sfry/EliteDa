@@ -25,7 +25,7 @@ class CustomSelect extends Widget
         parent::init();
     }
 
-    public function run()
+    public function run(): string
     {
         return $this->render(
             'index',
