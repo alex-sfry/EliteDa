@@ -1,0 +1,610 @@
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[0].use[3]!./src/styles/scss/style.scss ***!
+  \***********************************************************************************************************************************************************************************************************************/
+@font-face {
+    font-family: "Inter";
+    src: url(../fonts/Inter-Regular.woff2) format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: "SintonyRegular";
+    src: url(../fonts/Sintony-Regular.woff2) format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+@font-face {
+    font-family: "SintonyBold";
+    src: url(../fonts/Sintony-Bold.woff2) format("woff2");
+    font-weight: 700;
+    font-display: swap;
+}
+@font-face {
+    font-family: "EuroCaps";
+    src: url(../fonts/EUROCAPS.woff2) format("woff2");
+    font-weight: 400;
+    font-display: swap;
+}
+.w180 {
+    width: 180px;
+}
+
+.f-ctrl-no-shadow, #w0 .filters input:focus,
+#w0 .filters select:focus, form-check-input:focus {
+    box-shadow: none;
+    border-color: #dee2e6;
+}
+
+.sort_arrow, #w0 a.desc::after, #w0 a.asc::after, .c-table thead th:hover a.sorted.desc::after,
+.mod-table thead th:hover a.sorted.desc::after,
+.ships-table thead th:hover a.sorted.desc::after, .c-table thead th:hover a.sorted.asc::after,
+.mod-table thead th:hover a.sorted.asc::after,
+.ships-table thead th:hover a.sorted.asc::after, .c-table thead th a.sorted.desc::after,
+.mod-table thead th a.sorted.desc::after,
+.ships-table thead th a.sorted.desc::after, .c-table thead th a.sorted.asc::after,
+.mod-table thead th a.sorted.asc::after,
+.ships-table thead th a.sorted.asc::after {
+    content: "";
+    padding: 0.5rem;
+    background-image: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" fill=\"%23f8f9fa\" class=\"bi bi-caret-up\" viewBox=\"0 0 16 16\"><path d=\"M3.204 11h9.592L8 5.519zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659\"  /></svg>");
+    background-repeat: no-repeat;
+    background-position: top;
+}
+
+select {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+}
+
+input {
+    outline: 0;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.sintony-reg, .c-form select,
+.c-form option, .footer p {
+    font-family: "SintonyRegular", sans-serif;
+    font-weight: 400;
+}
+
+.sintony-bold, .c-form .btn-violet, .c-form, main .nav-button, .header .menu__link {
+    font-family: "SintonyBold", sans-serif;
+    font-weight: 700;
+}
+
+.font-inherit, .c-form .dropdown .btn-outline-dark {
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+}
+
+.body-wrapper {
+    height: 100vh;
+}
+
+.cookies-consent-wrapper {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 0.875rem;
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    max-width: 365px;
+    background: #fff;
+    padding: 25px 25px 30px 25px;
+    border-radius: 15px;
+    box-shadow: 1px 7px 14px -5px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+.cookies-consent-wrapper img {
+    max-width: 90px;
+}
+
+.cookies-consent-wrapper.hide {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+}
+
+::selection {
+    color: #fff;
+    background: #fcba7f;
+}
+
+.content {
+    margin-top: 10px;
+}
+.content header {
+    font-size: 25px;
+    font-weight: 600;
+}
+.content p {
+    color: #858585;
+    margin: 5px 0 20px 0;
+}
+.content .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.content .buttons button {
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 5px;
+    background: #fcba7f;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.content .buttons button:hover {
+    transform: scale(0.97);
+}
+.content .buttons .item {
+    margin: 0 10px;
+}
+.content .buttons a {
+    color: #fcba7f;
+}
+
+.col-tile,
+.main-tile {
+    max-width: 240px;
+}
+
+.main-tile {
+    height: 80px;
+}
+.main-tile a {
+    font-size: 0.875rem;
+}
+
+@media screen and (min-width: 330px) {
+    .main-tile a {
+        font-size: 1rem;
+    }
+}
+/**
+* pagination styles
+*/
+.prev-page, .c-pagination-cnt .pagination {
+    margin-left: 4px;
+}
+
+.next-page, .c-pagination-cnt .pagination {
+    margin-right: 4px;
+}
+
+.c-pagination-cnt .pagination {
+    margin-right: 16px;
+    margin-bottom: 0;
+}
+.c-pagination-cnt .pagination li > a {
+    font-size: 0.875rem;
+}
+.c-pagination-cnt .pagination .page-item.first,
+.c-pagination-cnt .pagination .page-item.last {
+    max-width: 38px;
+}
+.c-pagination-cnt .pagination .page-item.first a,
+.c-pagination-cnt .pagination .page-item.last a {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+@media screen and (min-width: 464px) {
+    .c-pagination-cnt .pagination .page-item.first,
+    .c-pagination-cnt .pagination .page-item.last {
+        max-width: 100%;
+    }
+    .c-pagination-cnt .pagination .page-item.first a,
+    .c-pagination-cnt .pagination .page-item.last a {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+/**
+* header styles
+*/
+.header {
+    height: 96px;
+    max-height: 96px;
+}
+.header .logo,
+.header .navbar-brand:hover {
+    font-family: "EuroCaps", sans-serif;
+    font-size: 3.5rem;
+    color: #F14A16 !important;
+}
+.header .menu__link {
+    transition: color 0.2s linear;
+    letter-spacing: 1px;
+    font-size: 1rem;
+}
+.header .menu__link_nested.active {
+    background-color: #370665 !important;
+}
+.header .menu__link:hover, .header .menu__link.active {
+    color: #FC9918 !important;
+}
+.header .dropdown-menu .dropdown-item:hover {
+    background-color: #370665;
+}
+
+/**
+* footer styles
+*/
+.footer {
+    height: auto;
+}
+.footer p {
+    font-size: 0.625rem;
+}
+.footer__link {
+    transition: color 0.2s linear;
+}
+.footer__link:hover, .footer__link.active {
+    color: #0dcaf0 !important;
+}
+@media screen and (min-width: 576px) {
+    .footer .row {
+        height: 100%;
+    }
+}
+
+/**
+* main styles
+*/
+main .nav-button {
+    letter-spacing: 1.1px;
+    transition: all 0.2s linear;
+}
+main .nav-button:hover {
+    background-color: #ffc107 !important;
+    color: #0d6efd !important;
+    box-shadow: 0 0 4px 4px #f8f9fa;
+}
+
+/**
+* generic form styles
+*/
+form-check-input:checked {
+    border-color: #FC9918;
+}
+form-control.is-invalid {
+    background-image: none;
+}
+
+/**
+* commodities form and result styles
+*/
+#accordionForm .accordion-button:not(.collapsed) {
+    background-color: #FC9918;
+}
+#accordionForm .accordion-button:focus {
+    box-shadow: none;
+}
+
+.c-form {
+    letter-spacing: 2px;
+}
+.c-form .dropdown .btn-outline-dark:active,
+.c-form .dropdown .btn-outline-dark:focus,
+.c-form .dropdown .btn-outline-dark {
+    color: #212529;
+}
+.c-form .dropdown .btn-outline-dark:hover {
+    background-color: #FC9918 !important;
+    color: #212529;
+}
+.c-form select,
+.c-form option {
+    letter-spacing: 2px;
+}
+.c-form .btn-violet {
+    letter-spacing: 4px;
+}
+.c-form .min-lett-spacing {
+    letter-spacing: 1px;
+}
+.c-form .buy-sell-switch label {
+    background-color: #e2e3e5;
+    width: 72px;
+    max-width: -webkit-fit-content;
+    max-width: -moz-fit-content;
+    max-width: fit-content;
+    font-size: inherit;
+}
+.c-form .buy-sell-switch label:hover,
+.c-form .buy-sell-switch .btn-check:checked + .btn {
+    background-color: #FC9918;
+}
+@media screen and (min-width: 1031px) {
+    .c-form .min-lett-spacing {
+        letter-spacing: 2px;
+    }
+}
+
+.c-loading {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    box-shadow: 0 0 4px 4px #fcfcfd;
+}
+
+.c-result-legend {
+    width: 228px;
+}
+.c-result-legend-item {
+    height: 20px;
+}
+.c-result-legend-item-color {
+    width: 28px;
+}
+
+.c-result-legend h2::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 29%;
+    width: 42%;
+    height: 1px;
+    background-color: #212529;
+}
+
+.c-table thead th a.sorted.desc::after,
+.mod-table thead th a.sorted.desc::after,
+.ships-table thead th a.sorted.desc::after {
+    transform: rotate(180deg);
+}
+.c-table thead th:hover a.sorted.asc::after,
+.mod-table thead th:hover a.sorted.asc::after,
+.ships-table thead th:hover a.sorted.asc::after {
+    background-image: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" fill=\"%212529\" class=\"bi bi-caret-up\" viewBox=\"0 0 16 16\"><path d=\"M3.204 11h9.592L8 5.519zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659\"  /></svg>");
+}
+.c-table thead th:hover a.sorted.desc::after,
+.mod-table thead th:hover a.sorted.desc::after,
+.ships-table thead th:hover a.sorted.desc::after {
+    background-image: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" fill=\"%212529\" class=\"bi bi-caret-up\" viewBox=\"0 0 16 16\"><path d=\"M3.204 11h9.592L8 5.519zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659\"  /></svg>");
+    transform: rotate(180deg);
+}
+.c-table thead th:hover > a.sort,
+.mod-table thead th:hover > a.sort,
+.ships-table thead th:hover > a.sort {
+    background-color: #ffc107 !important;
+    color: #f8f9fa !important;
+}
+.c-table td,
+.c-table th,
+.mod-table td,
+.mod-table th,
+.ships-table td,
+.ships-table th {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+}
+.c-table .table-link,
+.mod-table .table-link,
+.ships-table .table-link {
+    transition: all 0.2s linear;
+    text-decoration-style: dashed !important;
+    text-underline-offset: 4px;
+}
+.c-table .table-link:hover,
+.mod-table .table-link:hover,
+.ships-table .table-link:hover {
+    background-color: #ffc107;
+    text-decoration-color: #212529 !important;
+}
+
+/**
+* Trade Routes page styles
+*/
+.tr-route-block-inner {
+    background-color: #f8f9fa;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+}
+.tr-route .tr-info-block {
+    background-color: #f8f9fa;
+}
+.tr-route .tr-info-block-right {
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+}
+.tr-route .tr-info-block-left {
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+}
+@media screen and (min-width: 992px) {
+    .tr-route .tr-info-block-right {
+        border-top-right-radius: 0.375rem;
+    }
+    .tr-route .tr-info-block-left {
+        border-bottom-left-radius: 0.375rem;
+    }
+}
+.tr-route .tr-info-block-mid {
+    font-size: 0.875rem;
+}
+.tr-route .tr-info-block-mid div {
+    height: 1px;
+}
+.tr-route .tr-info-block td {
+    background-color: #f8f9fa;
+}
+
+/**
+* moving arrows styles
+*/
+.arrow {
+    position: absolute;
+}
+.arrow span {
+    display: block;
+    width: 1.5vw;
+    height: 1.5vw;
+    border-bottom: 5px solid #FC9918;
+    border-right: 5px solid #FC9918;
+    transform: rotate(45deg);
+    margin: -10px;
+    animation: animate 2s infinite;
+}
+.arrow span:nth-child(2) {
+    animation-delay: -0.2s;
+}
+.arrow span:nth-child(3) {
+    animation-delay: -0.4s;
+}
+
+.arrow.arrow-left,
+.arrow.arrow-right {
+    top: 32%;
+    left: 45%;
+}
+
+.arrow.arrow-right {
+    transform: rotate(0deg);
+}
+
+.arrow.arrow-left {
+    transform: rotate(180deg);
+}
+
+.arrow-cnt {
+    min-height: 100px;
+}
+
+@media screen and (min-width: 992px) {
+    .arrow-cnt {
+        min-height: 80px;
+    }
+    .arrow.arrow-right,
+    .arrow.arrow-left {
+        top: 32%;
+        left: 45%;
+    }
+    .arrow.arrow-right {
+        transform: rotate(-90deg);
+    }
+    .arrow.arrow-left {
+        transform: rotate(90deg);
+    }
+}
+@keyframes animate {
+    0% {
+        opacity: 0;
+        transform: rotate(45deg) translate(-20px, -20px);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(45deg) translate(20px, 20px);
+    }
+}
+/**
+* gridview
+*/
+.grid-view .summary {
+    color: #f8f9fa;
+}
+.grid-view table th {
+    background-color: #FC9918;
+}
+.grid-view nav#w1 {
+    display: flex;
+    justify-content: center;
+}
+
+#w0 a.asc,
+#w0 a.desc {
+    position: relative;
+}
+#w0 a.asc::after,
+#w0 a.desc::after {
+    display: inline-block;
+    position: absolute;
+    margin-left: 4px;
+}
+#w0 a.asc::after {
+    top: -4px;
+}
+#w0 a.desc::after {
+    top: -8px;
+    transform-origin: bottom;
+    transform: rotate(180deg);
+}
+.engineers-header th:first-child {
+    min-width: 120px;
+    white-space: nowrap;
+}
+
+.engineers-cnt tbody tr td:last-child {
+    min-width: 160px;
+}
+.engineers-cnt tbody .engineers-cnt tbody tr td:nth-child(2),
+.engineers-cnt tbody .engineers-cnt tbody tr td:nth-child(4) {
+    min-width: -webkit-fit-content;
+    min-width: -moz-fit-content;
+    min-width: fit-content;
+    white-space: nowrap;
+}
+.engineers-cnt .engineers-body-row td a {
+    -webkit-text-decoration: underline;
+    text-decoration: underline;
+    color: #0d6efd;
+    transition: all 0.2s linear;
+}
+.engineers-cnt .engineers-body-row td a:hover {
+    color: #ffc107;
+}
+
+.details-cnt th, .details-cnt td {
+    border: 0;
+}
+.details-cnt tr:first-child th {
+    border-top-left-radius: 0.375rem;
+}
+.details-cnt tr:first-child td {
+    border-top-right-radius: 0.375rem;
+}
+.details-cnt tr:last-child th {
+    border-bottom-left-radius: 0.375rem;
+}
+.details-cnt tr:last-child td {
+    border-bottom-right-radius: 0.375rem;
+}
+.details-cnt th {
+    min-width: -webkit-fit-content;
+    min-width: -moz-fit-content;
+    min-width: fit-content;
+    white-space: nowrap;
+    background-color: #FC9918;
+}
+
+.site-contact {
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+}
+
+/*# sourceMappingURL=main.css.map*/

@@ -26,9 +26,12 @@ $config = [
                     ],
                 ],
             ],
+            // 'appendTimestamp' => true,
+            // 'linkAssets' => true,
+            'forceCopy' => YII_ENV_DEV ? true : false,
             'bundles' => [
                 'yii\web\JqueryAsset' => [
-                    'js' => ['jquery.min.js']
+                    'js' => [YII_ENV_DEV ? 'jquery.js' : 'jquery.min.js']
                 ],
                 'yii\bootstrap\BootstrapPluginAsset' => [
                     'js' => []
@@ -36,29 +39,40 @@ $config = [
                 'yii\bootstrap\BootstrapAsset' => [
                     'css' => [],
                 ],
-                'app\assets\YiiAssetMin' => [
-                    'sourcePath' => '@app/assetsMin',
-                    'js' => ['yii.js']
+                'app\assets\BootstrapAssetMin' => [
+                    'baseUrl' => '@web/templates/',
+                    'css' => [YII_ENV_DEV ? 'css/bootstrap.min.css' : 'css/bootstrap.css'],
+                    'js' => [YII_ENV_DEV ? 'js/bootstrap.js' : 'js/bootstrap.min.js']
                 ],
                 'yii\web\YiiAsset' => [
-                    'sourcePath' => '@app/assetsMin',
+                    'sourcePath' => YII_ENV_DEV ? '@yii/assets' : '@app/assetsMin',
                     'js' => [ 'yii.js']
                 ],
                 'yii\grid\GridViewAsset' => [
-                    'sourcePath' => '@app/assetsMin',
+                    'sourcePath' => YII_ENV_DEV ? '@yii/assets' : '@app/assetsMin',
                     'js' => ['yii.gridView.js']
                 ],
                 'yii\captcha\CaptchaAsset' => [
-                    'sourcePath' => '@app/assetsMin',
+                    'sourcePath' => YII_ENV_DEV ? '@yii/assets' : '@app/assetsMin',
                     'js' => ['yii.captcha.js']
                 ],
                 'yii\widgets\ActiveFormAsset' => [
-                    'sourcePath' => '@app/assetsMin',
+                    'sourcePath' => YII_ENV_DEV ? '@yii/assets' : '@app/assetsMin',
                     'js' => ['yii.activeForm.js']
                 ],
                 'yii\validators\ValidationAsset' => [
-                    'sourcePath' => '@app/assetsMin',
+                    'sourcePath' => YII_ENV_DEV ? '@yii/assets' : '@app/assetsMin',
                     'js' => ['yii.validation.js']
+                ],
+                'app\widgets\CustomSelect\CustomSelectAsset' => [
+                    'sourcePath' => '@app/widgets/CustomSelect/assets',
+                    'css' => ['CustomSelect.css'],
+                    'js' => ['CustomSelect.js']
+                ],
+                'app\widgets\InputDropdown\InputDropdownAsset' => [
+                    'sourcePath' => '@app/widgets/InputDropdown/assets',
+                    'css' => ['InputDropdown.css'],
+                    'js' => ['InputDropdown.js']
                 ]
             ],
         ],

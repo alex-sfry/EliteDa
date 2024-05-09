@@ -15,7 +15,7 @@
  * @var string $filter_method
  */
 
-use yii\helpers\Html;
+ use yii\helpers\Html;
 
 Yii::$app->view->registerJs(
     '

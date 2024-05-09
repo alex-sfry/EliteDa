@@ -22,21 +22,19 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'templates/css/main.min.css',
-//        'templates/css/bootstrap.min.css'
+        YII_ENV_DEV ? 'templates/css/main.css'  : 'templates/css/main.min.css',
     ];
     public $js = [
-//        'templates/js/bootstrap.min.js',
-        'templates/js/main.min.js'
+        YII_ENV_DEV ? 'templates/js/main.js' : 'templates/js/main.min.js'
     ];
     public $jsOptions = [
         // 'defer' => '',
         'position' => View::POS_END
     ];
     public $depends = [
-//        'yii\web\YiiAsset',
+       'yii\web\YiiAsset',
         'app\assets\BootstrapAssetMin',
-        'app\assets\YiiAssetMin',
+        // 'app\assets\YiiAssetMin',
 //        'yii\bootstrap5\BootstrapAsset'
     ];
 }
