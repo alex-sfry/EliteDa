@@ -21,7 +21,10 @@ class StationsController extends Controller
     {
         return ArrayHelper::merge(
             parent::behaviors(),
-            [StationBehavior::class, CommoditiesBehavior::class]
+            [
+                StationBehavior::class,
+                CommoditiesBehavior::class
+            ]
         );
     }
 
@@ -70,6 +73,8 @@ class StationsController extends Controller
         foreach ($model as $key => $value) {
             $model[$key]['name'] = isset($this->commodities[strtolower($value['name'])]) ?
                 $this->commodities[strtolower($value['name'])] : $model[$key]['name'];
+
+            $model[$key]['timestamp'] = Yii::$app->formatter->asRelativeTime($model[$key]['timestamp']);
         }
 
         return $this->render('market', [

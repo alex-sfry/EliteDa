@@ -9,19 +9,27 @@
 */
 
 use yii\helpers\Html;
+use yii\helpers\VarDumper;
 
 Yii::$app->view->registerJs('');
 
 $classes = [];
 ?>
 
-<div id="<?= $container ?>" class="position-relative">
-    <table class="c-table fs-7 table table-striped mb-0 <?= count($model) > 0 ? 'overflow-x-auto' :
+<style>
+    .w-table thead th,
+    .w-table thead td {
+        width: fit-content;
+    }
+</style>
+
+<div id="<?= $container ?>" class="rounded-2 table-responsive">
+    <table class="w-table fs-7 table table-striped mb-0 <?= count($model) > 0 ? 'overflow-x-auto' :
                 'overflow-hidden' ?>">
         <thead>
             <tr>
                 <?php foreach ($column_labels as $label) : ?>
-                <th><?= $label ?></th>
+                <th class='bg-light-orange p-2 text-body text-nowrap' scope='col'><?= $label ?></th>
                 <?php endforeach; ?>
             </tr>
             <tr>
@@ -31,9 +39,13 @@ $classes = [];
             </tr>
         </thead>
         <tbody class="table-group-divider">
-            <tr>
-
-            </tr>
+            <?php foreach ($model as $item) : ?>
+                <tr>
+                    <?php foreach ($item as $key => $value) : ?>
+                        <td class="text-start text-truncate"><?= Html::encode($value) ?></td>
+                    <?php endforeach; ?>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>

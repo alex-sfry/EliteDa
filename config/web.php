@@ -12,6 +12,8 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    // 'language' => 'ru-RU',
+    // 'sourceLanguage' => 'en-US',
     'components' => [
         'authManager' => [
             'class' => 'yii\rbac\PhpManager',
@@ -41,7 +43,7 @@ $config = [
                 ],
                 'app\assets\BootstrapAssetMin' => [
                     'baseUrl' => '@web/templates/',
-                    'css' => [YII_ENV_DEV ? 'css/bootstrap.min.css' : 'css/bootstrap.css'],
+                    'css' => [YII_ENV_DEV ? 'css/bootstrap.css' : 'css/bootstrap.min.css'],
                     'js' => [YII_ENV_DEV ? 'js/bootstrap.js' : 'js/bootstrap.min.js']
                 ],
                 'yii\web\YiiAsset' => [

@@ -30,23 +30,6 @@ $table_head = [
         </div>
     </div>
 </div>
-<div class="c-pagination-cnt d-flex justify-content-center align-items-center my-0 flex-wrap">
-    <?php
-    if (isset($pagination)) {
-        echo $page_count_info ?? null;
-        echo LinkPager::widget([
-            'id' => 'pgr01',
-            'pagination' => $pagination,
-            'disableCurrentPageButton' => false,
-            'maxButtonCount' => 7,
-            'firstPageLabel' => 'first',
-            'lastPageLabel' => 'last',
-            'prevPageCssClass' => 'prev-page',
-            'nextPageCssClass' => 'next-page'
-        ]);
-    }
-    ?>
-</div>
 <div id='mod-table' class="rounded-2 table-responsive">
     <table class="mod-table fs-7 table table-striped mb-0 <?= count($models) > 0 ? 'overflow-x-auto' :
         'overflow-hidden' ?>">
@@ -109,7 +92,20 @@ $table_head = [
         </tbody>
     </table>
 </div>
-
-<div class="bg-light">
-    <?php /* VarDumper::dump($models, 10, true); */ ?>
+<div class="c-pagination-cnt d-flex justify-content-center align-items-center mb-3 flex-wrap">
+    <?php
+    if (isset($pagination)) {
+        echo $page_count_info ?? null;
+        echo LinkPager::widget([
+            'id' => 'pgr01',
+            'pagination' => $pagination,
+            'disableCurrentPageButton' => false,
+            'maxButtonCount' => 7,
+            'firstPageLabel' => 'first',
+            'lastPageLabel' => 'last',
+            'prevPageCssClass' => 'prev-page',
+            'nextPageCssClass' => 'next-page'
+        ]);
+    }
+    ?>
 </div>

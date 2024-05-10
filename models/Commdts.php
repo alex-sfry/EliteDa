@@ -67,7 +67,7 @@ class Commdts extends Model
                 'distance_to_arrival AS distance_ls',
                 'sys.name AS system',
                 "ROUND(SQRT(POW((sys.x - $x), 2) + POW((sys.y - $y), 2) + POW((sys.z - $z), 2)), 2) AS distance_ly",
-                'TIMESTAMPDIFF(SECOND, TIMESTAMP, NOW()) as time_diff',
+                'TIMESTAMPDIFF(MINUTE, TIMESTAMP, NOW()) as time_diff',
             ])
             ->from(['m' => 'markets'])
             ->innerJoin(['st' => 'stations'], 'm.market_id = st.market_id')

@@ -42,7 +42,7 @@ class ShipyardShipsController extends Controller
         $params['form_model'] = $form_model;
         $params['ships_arr'] = $this->getShipsList();
 
-        if (count($request->get()) > 0) {
+        if (count($request->get()) > 2) {
             $params['get'] = $request->get();
             $session->set('ships', $request->get());
         } elseif ($session->get('ships')) {

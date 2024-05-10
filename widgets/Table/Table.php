@@ -4,6 +4,7 @@ namespace app\widgets\Table;
 
 use yii\base\Widget;
 use yii\helpers\Html;
+use yii\helpers\VarDumper;
 
 class Table extends Widget
 {
@@ -23,12 +24,20 @@ class Table extends Widget
             'index',
             [
                 'container' => $this->container,
-                'model' => $this->model,
+                'model' => $this->removeArrayItem($this->model),
                 'columns' => $this->columns,
                 'column_labels' => $this->getColumnLabels(),
                 'column_filters' => $this->getFilter(),
             ]
         );
+    }
+
+    private function removeArrayItem($arr): array
+    {
+        return array_map(function ($item) {
+            unset($item['market_id']);
+            return $item;
+        }, $arr);
     }
 
     private function getColumnLabels(): array
@@ -54,8 +63,8 @@ class Table extends Widget
 
             switch ($column['filterInputOptions']['class']) {
                 case 'form-select':
-                    $elem =
-                        "<select class='{$column['filterInputOptions']['class']} w-auto' name='' id=''>";
+                    $elem = "<select class='{$column['filterInputOptions']['class']} w-auto py-1 fs-7' name='' id='' 
+                            style='box-shadow: none;border-color: var(--bs-gray-300);'>";
                     foreach ($column['filter'] as $key => $value) {
                         $elem .= "<option value='$key'>$value</option>";
                     }
@@ -64,7 +73,8 @@ class Table extends Widget
                     break;
 
                 case 'form-control':
-                    $filters[] = "<input class='{$column['filterInputOptions']['class']} w-auto' type='text'>";
+                    $filters[] = "<input class='{$column['filterInputOptions']['class']} w-auto py-1 fs-7' 
+                                type='text' style='box-shadow: none;border-color: var(--bs-gray-300);'>";
                     break;
             }
         }

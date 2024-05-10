@@ -55,7 +55,9 @@ export const purgeCSS = () => {
                 '../views/**/*.php',
                 '../widgets/**/*.php',
                 '../widgets/**/*.js',
-                '../assetsMin/**/*.js'
+                '../assetsMin/**/*.js',
+                '../vendor/yiisoft/yii2/widgets/**/*.js',
+                '../vendor/yiisoft/yii2/widgets/**/*.php',
             ],
             sourceMap: true
         }))

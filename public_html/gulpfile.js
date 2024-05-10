@@ -10,7 +10,7 @@ export { webpackBsDev } from './gulpfileWebpack.js';
 import { webpackBsProd } from './gulpfileWebpack.js';
 export { webpackBsProd } from './gulpfileWebpack.js';
 import sync from 'browser-sync';
-import {deleteAsync} from 'del';
+import { deleteAsync } from 'del';
 
 const browserSync = sync.create('localServer');
 let syncMode = false;
@@ -67,6 +67,14 @@ export const watch = () => {
 export const dev = gulp.series(gulp.parallel(webpackBsDev, webpackDev), watch);
 export const devSync = gulp.series(enableSync, gulp.parallel(webpackBsDev, webpackDev), watch);
 
-export const bs = gulp.series(gulp.parallel(bsStyles, webpackBsProd), purgeCSS, bsStylesMin);
+export const bsProd = gulp.series(
+    gulp.parallel(webpackBsDev, webpackDev), gulp.parallel(bsStyles, webpackBsProd), purgeCSS, bsStylesMin
+);
 export const widgets = gulp.parallel(widgetsStyles, widgetsScripts);
-export const build = gulp.series(clean, gulp.parallel(bs, widgets, scriptsYii2, webpackProd));
+export const build = gulp.series(
+    clean,
+    gulp.parallel(webpackBsDev, webpackDev),
+    bsProd,
+    gulp.parallel(bsStyles, widgets, scriptsYii2, webpackProd)
+);
+

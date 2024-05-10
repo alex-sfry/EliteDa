@@ -42,7 +42,7 @@ class ShipModulesController extends Controller
         $params['form_model'] = $form_model;
         $params['ship_modules_arr'] = $this->getShipModules();
 
-        if (count($request->get()) > 0) {
+        if (count($request->get()) > 2) {
             $params['get'] = $request->get();
             $session->set('mod', $request->get());
         } elseif ($session->get('mod')) {

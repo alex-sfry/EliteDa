@@ -108,7 +108,7 @@ class TradeRoutes extends Model
                 'm.market_id',
                 'type',
                 'distance_to_arrival AS source_distance_ls',
-                'TIMESTAMPDIFF(SECOND, TIMESTAMP, NOW()) as source_time_diff',
+                'TIMESTAMPDIFF(MINUTE, TIMESTAMP, NOW()) as source_time_diff',
             ])
             ->from(['m' => 'markets'])
             ->innerJoin(['st' => 'stations'], 'm.market_id = st.market_id')

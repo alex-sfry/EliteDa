@@ -42,7 +42,7 @@ class CommoditiesController extends Controller
         $params['form_model'] = $form_model;
         $params['commodities_arr'] = $this->getCommodities();
 
-        if (count($request->get()) > 0) {
+        if (count($request->get()) > 2) {
             $params['get'] = $request->get();
             $session->set('c', $request->get());
         } elseif ($session->get('c')) {

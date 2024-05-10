@@ -8,11 +8,11 @@ use yii\web\View;
 class TableAsset extends AssetBundle
 {
     public $sourcePath = '@app/widgets/Table/assets';
-    public $css = [/* 'InputDropdown.css' */];
+    public $css = [/* YII_ENV_DEV ? 'Table.css' : 'Table.min.css' */];
     public $js = [/* 'InputDropdown.js' */];
+    // public $publishOptions = ['forceCopy' => true];
 
     public $depends = [
-//        'yii\web\YiiAsset',
         'app\assets\BootstrapAssetMin',
         'app\assets\AppAsset'
     ];
