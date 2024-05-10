@@ -15,7 +15,7 @@ export const widgetsStyles = () => {
         autoprefixer(),
         cssnano()
     ];
-    return gulp.src('../widgets/**/*.css')
+    return gulp.src(['../widgets/**/*.css', '!../widgets/**/*.min.css'])
         .pipe(sourcemaps.init())
         .pipe(postcss(plugins))
         .pipe(rename({
@@ -35,7 +35,7 @@ export const bsStyles = () => {
         .pipe(gulp.dest('./templates/css/'));
 };
 
-export const bsCssMin = () => {
+export const bsStylesMin = () => {
     const plugins = [cssnano()];
     return gulp.src('./templates/css/bootstrap.css')
         .pipe(sourcemaps.init())

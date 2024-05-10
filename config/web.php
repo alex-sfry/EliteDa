@@ -28,7 +28,7 @@ $config = [
             ],
             // 'appendTimestamp' => true,
             // 'linkAssets' => true,
-            'forceCopy' => YII_ENV_DEV ? true : false,
+            // 'forceCopy' => YII_ENV_DEV ? true : false,
             'bundles' => [
                 'yii\web\JqueryAsset' => [
                     'js' => [YII_ENV_DEV ? 'jquery.js' : 'jquery.min.js']
@@ -64,16 +64,6 @@ $config = [
                     'sourcePath' => YII_ENV_DEV ? '@yii/assets' : '@app/assetsMin',
                     'js' => ['yii.validation.js']
                 ],
-                'app\widgets\CustomSelect\CustomSelectAsset' => [
-                    'sourcePath' => '@app/widgets/CustomSelect/assets',
-                    'css' => ['CustomSelect.css'],
-                    'js' => ['CustomSelect.js']
-                ],
-                'app\widgets\InputDropdown\InputDropdownAsset' => [
-                    'sourcePath' => '@app/widgets/InputDropdown/assets',
-                    'css' => ['InputDropdown.css'],
-                    'js' => ['InputDropdown.js']
-                ]
             ],
         ],
         'request' => [

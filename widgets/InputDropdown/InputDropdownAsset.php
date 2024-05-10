@@ -8,11 +8,11 @@ use yii\web\View;
 class InputDropdownAsset extends AssetBundle
 {
     public $sourcePath = '@app/widgets/InputDropdown/assets';
-    public $css = ['InputDropdown.css'];
-    public $js = ['InputDropdown.js'];
+    public $css = [YII_ENV_DEV ? 'InputDropdown.css' : 'InputDropdown.min.css'];
+    public $js = [YII_ENV_DEV ? 'InputDropdown.js' : 'InputDropdown.min.js'];
+    public $publishOptions = ['forceCopy' => true];
 
     public $depends = [
-//        'yii\web\YiiAsset',
         'app\assets\BootstrapAssetMin',
         'app\assets\AppAsset'
     ];
