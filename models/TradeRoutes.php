@@ -6,6 +6,7 @@ use app\behaviors\TimeBehavior;
 use app\behaviors\CommoditiesBehavior;
 use app\behaviors\StationBehavior;
 use app\behaviors\SystemBehavior;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 use yii\db\Query;
@@ -44,7 +45,6 @@ class TradeRoutes extends Model
         return ArrayHelper::merge(
             parent::behaviors(),
             [
-                TimeBehavior::class,
                 CommoditiesBehavior::class,
                 SystemBehavior::class,
                 StationBehavior::class
@@ -62,15 +62,15 @@ class TradeRoutes extends Model
         switch ($this->get['sortBy']) {
             case 'Updated_at':
                 $sort_attr = 'target_time_diff';
-                $sort_order = 'asc';
+                $sort_order = SORT_ASC;
                 break;
             case 'Distance':
                 $sort_attr = "distance_ly";
-                $sort_order = 'asc';
+                $sort_order = SORT_ASC;
                 break;
             default:
                 $sort_attr =  'dir_profit';
-                $sort_order = 'desc';
+                $sort_order = SORT_DESC;
         }
 
         $this->source_market = $this->getSourceMarket()->all();
@@ -89,7 +89,7 @@ class TradeRoutes extends Model
                     'target_time_diff'
                 ],
                 'defaultOrder' => [
-                    $sort_attr => $sort_order === 'asc' ? SORT_ASC : SORT_DESC
+                    $sort_attr => $sort_order
                 ],
             ],
         ]);
@@ -108,6 +108,7 @@ class TradeRoutes extends Model
                 'm.market_id',
                 'type',
                 'distance_to_arrival AS source_distance_ls',
+                'TIMESTAMP as source_timestamp',
                 'TIMESTAMPDIFF(MINUTE, TIMESTAMP, NOW()) as source_time_diff',
             ])
             ->from(['m' => 'markets'])
@@ -130,6 +131,7 @@ class TradeRoutes extends Model
             $query = (new Query())
                 ->select([
                     new Expression("{$item['source_time_diff']} AS source_time_diff"),
+                    new Expression("'{$item['source_timestamp']}' AS source_timestamp"),
                     new Expression("{$item['stock']} AS source_stock"),
                     new Expression("{$item['buy_price']} AS source_buy_price"),
                     new Expression(':type AS source_type', [':type' => $item['type']]),
@@ -144,6 +146,7 @@ class TradeRoutes extends Model
                     'm.market_id AS target_market_id',
                     "(sell_price - {$item['buy_price']}) * $cargo AS dir_profit",
                     "ROUND(SQRT(POW((sys.x-$x), 2)+POW((sys.y-$y), 2)+POW((sys.z-$z), 2)), 2) as distance_ly",
+                    'TIMESTAMP as target_timestamp',
                     'TIMESTAMPDIFF(MINUTE, TIMESTAMP, NOW()) AS target_time_diff',
                 ])
                 ->from(['m' => 'markets'])
@@ -312,8 +315,8 @@ class TradeRoutes extends Model
             $value['source']['buy_price'] = $value['source_buy_price'];
             $value['source']['pad'] = $this->getLandingPadSizes()[$value['source_type']];
             $value['target']['pad'] = $this->getLandingPadSizes()[$value['target_type']];
-            $value['source']['time_diff'] = $this->getTimeDiff($value['source_time_diff']);
-            $value['target']['time_diff'] = $this->getTimeDiff($value['target_time_diff']);
+            $value['source']['time_diff'] = Yii::$app->formatter->asRelativeTime($value['source_timestamp']);
+            $value['target']['time_diff'] = Yii::$app->formatter->asRelativeTime($value['target_timestamp']);
             $value['source']['stock'] = $value['source_stock'];
             $value['target']['station'] = $value['target_station'];
             $value['source']['type'] = $value['source_type'];

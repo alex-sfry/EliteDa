@@ -78,3 +78,4 @@ export const build = gulp.series(
     gulp.parallel(bsStyles, widgets, scriptsYii2, webpackProd)
 );
 
+export default dev;

@@ -2,10 +2,10 @@
 
 namespace app\models;
 
-use app\behaviors\TimeBehavior;
 use app\behaviors\CommoditiesBehavior;
 use app\behaviors\StationBehavior;
 use app\behaviors\SystemBehavior;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 use yii\db\Query;
@@ -19,7 +19,6 @@ class Commdts extends Model
         return ArrayHelper::merge(
             parent::behaviors(),
             [
-                TimeBehavior::class,
                 CommoditiesBehavior::class,
                 SystemBehavior::class,
                 StationBehavior::class,
@@ -49,11 +48,13 @@ class Commdts extends Model
         if ($get['buySellSwitch'] === 'buy') {
             $price_type = 'buy_price';
             $stock_demand = 'stock';
-            $price_sort_direction = 'asc';
+            // $price_sort_direction = 'asc';
+            $price_sort_direction = SORT_ASC;
         } else {
             $price_type = 'sell_price';
             $stock_demand = 'demand';
-            $price_sort_direction = 'desc';
+            // $price_sort_direction = 'desc';
+            $price_sort_direction = SORT_DESC;
         }
 
         $prices = (new Query())
@@ -67,6 +68,7 @@ class Commdts extends Model
                 'distance_to_arrival AS distance_ls',
                 'sys.name AS system',
                 "ROUND(SQRT(POW((sys.x - $x), 2) + POW((sys.y - $y), 2) + POW((sys.z - $z), 2)), 2) AS distance_ly",
+                'TIMESTAMP',
                 'TIMESTAMPDIFF(MINUTE, TIMESTAMP, NOW()) as time_diff',
             ])
             ->from(['m' => 'markets'])
@@ -97,11 +99,11 @@ class Commdts extends Model
         switch ($get['sortBy']) {
             case 'Updated_at':
                 $sort_attr = 'time_diff';
-                $sort_order = 'asc';
+                $sort_order = SORT_ASC;
                 break;
             case 'Distance':
                 $sort_attr = "distance_ly";
-                $sort_order = 'asc';
+                $sort_order = SORT_ASC;
                 break;
             default:
                 $sort_attr = $price_type;
@@ -122,7 +124,7 @@ class Commdts extends Model
                     'buy_price'
                 ],
                 'defaultOrder' => [
-                    $sort_attr => $sort_order === 'asc' ? SORT_ASC : SORT_DESC
+                    $sort_attr => $sort_order
                 ],
             ],
         ]);
@@ -139,8 +141,7 @@ class Commdts extends Model
             $value['commodity'] = isset($this->commodities[strtolower($value['commodity'])]) ?
                 $this->commodities[strtolower($value['commodity'])] : $value['commodity'];
             $value['pad'] = $this->getLandingPadSizes()[$value['type']];
-            $value['time_diff'] = $this->getTimeDiff($value['time_diff']);
-
+            $value['time_diff'] = Yii::$app->formatter->asRelativeTime($value['TIMESTAMP']);
             $value['surface'] = match ($value['type']) {
                 'Planetary Outpost', 'Planetary Port', 'Odyssey Settlement' => true,
                 default => false,

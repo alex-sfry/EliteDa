@@ -5,6 +5,7 @@ namespace app\models;
 use app\behaviors\TimeBehavior;
 use app\behaviors\StationBehavior;
 use app\behaviors\SystemBehavior;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 use yii\db\Query;
@@ -24,7 +25,6 @@ class ShipyardShips extends Model
         return ArrayHelper::merge(
             parent::behaviors(),
             [
-                TimeBehavior::class,
                 SystemBehavior::class,
                 StationBehavior::class,
             ]
@@ -63,6 +63,7 @@ class ShipyardShips extends Model
                 'distance_to_arrival AS distance_ls',
                 'sys.name AS system',
                 "ROUND(SQRT(POW((sys.x - $x), 2) + POW((sys.y - $y), 2) + POW((sys.z - $z), 2)), 2) AS distance_ly",
+                'TIMESTAMP',
                 'TIMESTAMPDIFF(MINUTE, TIMESTAMP, NOW()) as time_diff',
             ])
             ->from(['sh' => 'shipyard'])
@@ -92,15 +93,15 @@ class ShipyardShips extends Model
         switch ($get['sortBy']) {
             case 'Updated_at':
                 $sort_attr = 'time_diff';
-                $sort_order = 'asc';
+                $sort_order = SORT_ASC;
                 break;
             case 'Distance':
                 $sort_attr = "distance_ly";
-                $sort_order = 'asc';
+                $sort_order = SORT_ASC;
                 break;
             default:
                 $sort_attr = 'ship';
-                $sort_order = 'asc';
+                $sort_order = SORT_ASC;
         }
 
         return new ActiveDataProvider(config: [
@@ -116,7 +117,7 @@ class ShipyardShips extends Model
                     'ship'
                 ],
                 'defaultOrder' => [
-                    $sort_attr => $sort_order === 'asc' ? SORT_ASC : SORT_DESC
+                    $sort_attr => $sort_order
                 ],
             ],
         ]);
@@ -132,7 +133,7 @@ class ShipyardShips extends Model
         foreach ($models as $key => $value) {
             $value['ship'] = $this->ships_arr[strtolower($value['ship'])];
             $value['pad'] = $this->getLandingPadSizes()[$value['type']];
-            $value['time_diff'] = $this->getTimeDiff($value['time_diff']);
+            $value['time_diff'] = Yii::$app->formatter->asRelativeTime($value['TIMESTAMP']);
 
             $value['surface'] = match ($value['type']) {
                 'Planetary Outpost', 'Planetary Port', 'Odyssey Settlement' => true,

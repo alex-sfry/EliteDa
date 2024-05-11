@@ -3,6 +3,7 @@
 /** @var array $models */
 
 use yii\bootstrap5\LinkPager;
+use yii\helpers\VarDumper;
 
 ?>
 
@@ -187,7 +188,7 @@ use yii\bootstrap5\LinkPager;
                                         </tr>
                                         <tr>
                                             <td>Updated:</td>
-                                            <td class="text-end"><?= $value['source']['distance_ls'] ?></td>
+                                            <td class="text-end"><?= $value['source']['time_diff'] ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -276,6 +277,11 @@ use yii\bootstrap5\LinkPager;
                 'nextPageCssClass' => 'next-page',
             ]);
         }
+        ?>
+    </div>
+    <div class="bg-light mt-3">
+        <?php
+        VarDumper::dump($models, 10, true);
         ?>
     </div>
 </div>
