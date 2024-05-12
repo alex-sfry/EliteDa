@@ -3,7 +3,6 @@
 namespace app\widgets\Table;
 
 use yii\base\Widget;
-use yii\helpers\Html;
 use yii\helpers\VarDumper;
 
 class Table extends Widget

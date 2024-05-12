@@ -69,7 +69,7 @@ class Markets extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMarket(): ActiveQuery
+    public function getStation(): ActiveQuery
     {
         return $this->hasOne(Stations::class, ['market_id' => 'market_id']);
     }

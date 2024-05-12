@@ -38,6 +38,7 @@ class MaterialTradersController extends Controller
 
         $searchModel = new MaterialTradersSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, $refCoords);
+        $dataProvider->pagination = ['pageSize' => 50];
 
         $dataProvider->sort->attributes['system.name'] = [
             'asc' => ['systems.name' => SORT_ASC],

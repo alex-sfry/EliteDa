@@ -13,8 +13,8 @@ $this->title = $station_name . ' market';
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='container-xxl'>
         <div class="row">
-            <div class="col">
-                <h1 class='mt-2 text-center fs-2 text-light-orange sintony-bold'>
+            <div class="col mb-3">
+                <h1 class='mt-3 text-center fs-2 text-light-orange sintony-bold'>
                     <?= Html::encode($this->title) ?>
                 </h1>
                 <?php echo Table::widget([

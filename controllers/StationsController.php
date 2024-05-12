@@ -8,6 +8,7 @@ use app\models\Markets;
 use app\models\Stations;
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -61,25 +62,28 @@ class StationsController extends Controller
      *
      * @return string
      */
-    public function actionMarket(int $id, string $name): string
+    public function actionMarket(int $id): string
     {
         $id = (int)$id;
 
         $model = Markets::find()
+            ->with('station')
             ->where(['and', "markets.market_id=$id", ['or', 'stock>0', 'demand>0']])
             ->asArray()
             ->all();
 
+        $station_name = $model[0]['station']['name'];
+
         foreach ($model as $key => $value) {
             $model[$key]['name'] = isset($this->commodities[strtolower($value['name'])]) ?
                 $this->commodities[strtolower($value['name'])] : $model[$key]['name'];
-
             $model[$key]['timestamp'] = Yii::$app->formatter->asRelativeTime($model[$key]['timestamp']);
+            unset($model[$key]['station']);
         }
 
         return $this->render('market', [
             'model' => $model,
-            'station_name' => $name,
+            'station_name' => $station_name,
          ]);
     }
 

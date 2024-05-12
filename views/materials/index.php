@@ -5,7 +5,6 @@
  * @var ActiveDataProvider $dataProvider
  */
 
-use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
@@ -21,7 +20,6 @@ $this->title = "Materials";
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'columns' => [
-                            //                        ['class' => 'yii\grid\CheckboxColumn'],
                             ['attribute' => 'name', 'label' => 'Material'],
                             ['attribute' => 'category', 'label' => 'Category'],
                             [

@@ -46,7 +46,6 @@ $this->title = 'Material Traders';
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'columns' => [
-                            //                        ['class' => 'yii\grid\CheckboxColumn'],
                             [
                                 'attribute' => 'material_type',
                                 'filter' => ['Encoded' => 'Encoded', 'Manufactured' => 'Manufactured', 'Raw' => 'Raw'],
@@ -74,7 +73,6 @@ $this->title = 'Material Traders';
                         ],
                     ]) ?>
                 </div>
-
             </div>
         </div>
     </div>

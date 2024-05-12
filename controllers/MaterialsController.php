@@ -17,6 +17,7 @@ class MaterialsController extends Controller
     {
         $searchModel = new MaterialsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->pagination = ['pageSize' => 50];
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -24,5 +25,3 @@ class MaterialsController extends Controller
         ]);
     }
 }
-
-

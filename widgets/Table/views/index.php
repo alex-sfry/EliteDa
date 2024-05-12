@@ -11,9 +11,9 @@
 use yii\helpers\Html;
 use yii\helpers\VarDumper;
 
-Yii::$app->view->registerJs('');
+// Yii::$app->view->registerJs('');
 
-$classes = [];
+// $classes = [];
 ?>
 
 <style>

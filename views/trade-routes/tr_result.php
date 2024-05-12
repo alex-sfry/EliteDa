@@ -6,25 +6,7 @@ use yii\bootstrap5\LinkPager;
 use yii\helpers\VarDumper;
 
 ?>
-
 <div class="tr-result-wrapper container-xxl">
-    <div class="c-pagination-cnt d-flex justify-content-center align-items-center mt-3 mb-2 flex-wrap">
-        <?php
-        if (isset($pagination)) {
-            echo $page_count_info ?? null;
-            echo LinkPager::widget([
-                'id' => 'pgr01',
-                'pagination' => $pagination,
-                'disableCurrentPageButton' => false,
-                'maxButtonCount' => 7,
-                'firstPageLabel' => 'first',
-                'lastPageLabel' => 'last',
-                'prevPageCssClass' => 'prev-page',
-                'nextPageCssClass' => 'next-page',
-            ]);
-        }
-        ?>
-    </div>
     <?php foreach ($models as $key => $value) : ?>
         <div class="tr-route d-flex flex-column row-gap-lg-1 row-gap-sm-2 border border-2 border-light-orange h-auto
                         bg-custom-white">
@@ -277,11 +259,6 @@ use yii\helpers\VarDumper;
                 'nextPageCssClass' => 'next-page',
             ]);
         }
-        ?>
-    </div>
-    <div class="bg-light mt-3">
-        <?php
-        VarDumper::dump($models, 10, true);
         ?>
     </div>
 </div>

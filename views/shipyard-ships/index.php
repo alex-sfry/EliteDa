@@ -18,8 +18,6 @@ use app\widgets\InputDropdown\InputDropdown;
 use yii\helpers\Html;
 use yii\helpers\VarDumper;
 
-// VarDumper::dump($post, 10, true);
-
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
     'sort_options' => ['Ship' => 'Ship', 'Updated_at' => 'Updated at (time)', 'Distance' => 'Distance (LY)'],
@@ -255,7 +253,6 @@ $this->title = 'Ships';
                         </div>
                     </div>
                 </div>
-
                 <?= $result ?? null; ?>
             </div>
         </div>

@@ -45,23 +45,6 @@ $table_head = [
         </div>
     </div>
 </div>
-<div class="c-pagination-cnt d-flex justify-content-center align-items-center my-0 flex-wrap">
-    <?php
-    if (isset($pagination)) {
-        echo $page_count_info ?? null;
-        echo LinkPager::widget([
-            'id' => 'pgr01',
-            'pagination' => $pagination,
-            'disableCurrentPageButton' => false,
-            'maxButtonCount' => 7,
-            'firstPageLabel' => 'first',
-            'lastPageLabel' => 'last',
-            'prevPageCssClass' => 'prev-page',
-            'nextPageCssClass' => 'next-page'
-        ]);
-    }
-    ?>
-</div>
 <div id='c-table' class="rounded-2 table-responsive">
     <table class="c-table fs-7 table table-striped mb-0 <?= count($models) > 0 ? 'overflow-x-auto' :
         'overflow-hidden' ?>">
@@ -144,8 +127,3 @@ $table_head = [
     ]);
     ?>
 </div>
-<!-- <div class="bg-light mt-3">
-    <?php
-    // VarDumper::dump(\Yii::$app->request->get(), 10, true);
-    ?>
-</div> -->

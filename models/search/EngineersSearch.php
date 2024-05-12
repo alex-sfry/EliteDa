@@ -39,7 +39,7 @@ class EngineersSearch extends Model
         $json = file_get_contents(Yii::$app->basePath . '/data/engineers.json');
         $this->load($params);
 
-        $data = array_filter(Json::decode($json)/* $arr */, function ($value) {
+        $data = array_filter(Json::decode($json), function ($value) {
             if (!empty(Yii::$app->request->queryParams['EngineersSearch']['name'])) {
                 return stripos($value['name'], Yii::$app->request->queryParams['EngineersSearch']['name']) !== false;
             }
