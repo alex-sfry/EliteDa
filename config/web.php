@@ -15,6 +15,9 @@ $config = [
     // 'language' => 'ru-RU',
     // 'sourceLanguage' => 'en-US',
     'components' => [
+        // 'errorHandler' => [
+        //     'maxSourceLines' => 20,
+        // ],
         'authManager' => [
             'class' => 'yii\rbac\PhpManager',
         ],

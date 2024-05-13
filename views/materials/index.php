@@ -11,7 +11,7 @@ use yii\helpers\Html;
 $this->title = "Materials";
 ?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
-    <div class='wrapper d-flex flex-column h-100'>
+    <div class='d-flex flex-column h-100'>
         <div class='container-xxl px-3'>
             <div class='row flex-column overflow-x-auto'>
                 <div class='col'>

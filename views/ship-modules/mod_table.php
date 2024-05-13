@@ -40,8 +40,8 @@ $table_head = [
                         'Module' => "<th class='bg-light-orange p-0 text-body hover text-nowrap' scope='col'>
                             <a
                                 href='$sort_module'
-                                class='sort text-decoration-none d-block w-100 h-100 px-1 py-2 text-primary d-flex 
-                                justify-content-between $module_sort'>
+                                class='sort text-decoration-none w-100 h-100 px-1 py-2 text-primary d-flex 
+                                justify-content-between align-items-center $module_sort'>
                                 $item
                            </a>
                         </th>",
@@ -49,8 +49,8 @@ $table_head = [
                         "<th class='bg-light-orange p-0 text-body text-nowrap' scope='col'>
                             <a
                                 href='$sort_updated'
-                                class='sort text-decoration-none d-block w-100 h-100 px-1 py-2 text-primary
-                                d-flex justify-content-between $time_sort'>
+                                class='sort text-decoration-none w-100 h-100 px-1 py-2 text-primary
+                                d-flex justify-content-between align-items-center $time_sort'>
                                 $item
                             </a>
                         </th>",
@@ -58,8 +58,8 @@ $table_head = [
                         "<th class='bg-light-orange p-0 text-body text-nowrap' scope='col'>
                             <a
                                 href='$sort_dist_ly'
-                                class='sort text-decoration-none d-block w-100 h-100 px-1 py-2 text-primary
-                                d-flex justify-content-between $d_ly_sort'>
+                                class='sort text-decoration-none w-100 h-100 px-1 py-2 text-primary
+                                d-flex justify-content-between align-items-center $d_ly_sort'>
                                 $item
                             </a>
                         </th>",

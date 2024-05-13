@@ -68,7 +68,7 @@ Table.prototype.fillTable = function (data) {
             cellIndex === 5 && $(this).text(data[rowIndex].distance_ly);
             cellIndex === 6 && $(this).text(data[rowIndex].distance_ls);
             cellIndex === 7 && $(this).text(data[rowIndex].demand);
-            cellIndex === 8 && $(this).text(data[rowIndex].sell_price || data[rowIndex].buy_price);
+            cellIndex === 8 && $(this).text(`${data[rowIndex].sell_price} Cr` || `${data[rowIndex].buy_price} Cr`);
             cellIndex === 9 && $(this).text(data[rowIndex].time_diff);
         });
     });

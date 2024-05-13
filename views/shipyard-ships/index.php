@@ -36,7 +36,7 @@ extract($select_options);
 $this->title = 'Ships';
 ?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
-    <div class='wrapper d-flex flex-column h-100'>
+    <div class='d-flex flex-column h-100'>
         <div class='container-xxl px-3 d-flex'>
             <div class='d-flex flex-column w-100 gap-3'>
                 <h1 class='mt-2 text-center fs-2 text-light-orange sintony-bold'><?= Html::encode($this->title) ?></h1>

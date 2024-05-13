@@ -79,6 +79,7 @@ class StationsController extends Controller
                 $this->commodities[strtolower($value['name'])] : $model[$key]['name'];
             $model[$key]['timestamp'] = Yii::$app->formatter->asRelativeTime($model[$key]['timestamp']);
             unset($model[$key]['station']);
+            unset($model[$key]['market_id']);
         }
 
         return $this->render('market', [
