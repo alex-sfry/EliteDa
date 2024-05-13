@@ -52,11 +52,3 @@
 .sortable thead th:not(.no-sort)[aria-sort=descending]:hover span::after {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%212529' class='bi bi-caret-down' viewBox='0 0 16 16'%3E%3Cpath d='M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659'/%3E%3C/svg%3E");
 }
-
-.w-table .hiddden-c-4 {
-    display: none;
-}
-
-.w-table .hiddden-c-2 {
-    display: none;
-}

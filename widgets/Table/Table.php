@@ -20,6 +20,8 @@ class Table extends Widget
 
     public function run(): string
     {
+        $filtered_columns = $this->getFiltersQty();
+
         return $this->render(
             'index',
             [
@@ -28,7 +30,9 @@ class Table extends Widget
                 'columns' => $this->columns,
                 'column_labels' => $this->getColumnLabels(),
                 'column_filters' => $this->getFilter(),
-                'default_sorting' => $this->default_sorting
+                'default_sorting' => $this->default_sorting,
+                'filtered_columns' => $filtered_columns,
+                'styles' => $this->getStyles($filtered_columns)
             ]
         );
     }
@@ -73,5 +77,31 @@ class Table extends Widget
         }
 
         return $filters;
+    }
+
+    private function getFiltersQty(): array
+    {
+        $filtered_columns = [];
+
+        foreach ($this->columns as $key => $value) {
+            if (isset($value['filterInputOptions'])) {
+                $filtered_columns[] = $key;
+            };
+        }
+
+        return $filtered_columns;
+    }
+
+    private function getStyles($filtered_columns): string
+    {
+        $styles = '';
+
+        foreach ($filtered_columns as $column) {
+            $styles .= ".w-table .hiddden-c-$column {
+                display: none;
+            }";
+        }
+
+        return $styles;
     }
 }

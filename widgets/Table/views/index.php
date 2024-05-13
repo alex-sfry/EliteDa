@@ -6,6 +6,7 @@
  * @var array $columns
  * @var array $column_filters
  * @var array $column_labels
+ * @var array $filtered_columns
 */
 
 use yii\helpers\Html;
@@ -18,7 +19,10 @@ Yii::$app->view->registerJs(
     ",
     View::POS_BEGIN
 );
+
+Yii::$app->view->registerCss($styles, [View::POS_BEGIN]);
 ?>
+
 <div id="<?= $container ?>" class="rounded-2 table-responsive">
     <table class="sortable <?= $default_sorting ?> w-table fs-7 table table-striped mb-0 
                 <?= count($model) > 0 ? 'overflow-x-auto' : 'overflow-hidden' ?>">
