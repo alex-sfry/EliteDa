@@ -83,7 +83,7 @@ foreach ($selected as $key => $value) {
         </p>
         <div class='dropdown bg-transparent'>
             <div class="selected-items h-100 d-flex gap-1 flex-wrap w-100 border rounded-2 mb-1 px-1 bg-transparent
-                fw-normal <?= isset($error) && $error === 'is-invalid' ?
+                sintony-reg <?= isset($error) && $error === 'is-invalid' ?
                 'is-invalid border-2 border-danger' : 'border-dark' ?>">
                 <?php foreach ($selected as $item) : ?>
                     <div class="ps-1 rounded-2 bg-info">

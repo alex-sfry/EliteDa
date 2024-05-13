@@ -51,7 +51,7 @@ $this->title = 'Trade routes';
     <div class='d-flex flex-column h-100'>
         <div class='container-xxl px-3 d-flex'>
             <div class='d-flex flex-column w-100 gap-3'>
-                <h1 class='mt-2 text-center fs-2 text-light-orange sintony-bold'><?= Html::encode($this->title) ?></h1>
+                <h1 class='mt-2 text-center fs-2 text-custom-orange sintony-bold'><?= Html::encode($this->title) ?></h1>
                 <div class="accordion" id="accordionForm">
                     <div class="accordion-item">
                         <h2 class="accordion-header">

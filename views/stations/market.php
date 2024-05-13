@@ -10,7 +10,7 @@ $this->title = $station_name . ' market';
     <div class='container-xxl'>
         <div class="row">
             <div class="col mb-3">
-                <h1 class='mt-3 text-center fs-2 text-light-orange sintony-bold'>
+                <h1 class='mt-3 text-center fs-2 text-custom-orange sintony-bold'>
                     <?= Html::encode($this->title) ?>
                 </h1>
                 <?php echo Table::widget([

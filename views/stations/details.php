@@ -15,8 +15,8 @@ $this->title = $model['station_name'];
     <div class='wrapper d-flex flex-column h-100'>
         <div class='container-xxl px-3'>
             <div class='row justify-content-center overflow-x-auto'>
-                <div class='details-cnt col-5'>
-                    <h1 class="mt-2 text-light-orange text-center sintony-bold"><?= HTML::encode($this->title) ?></h1>
+                <div class='details-cnt col-sm-10 col-lg-6'>
+                    <h1 class="mt-2 text-custom-orange text-center sintony-bold"><?= HTML::encode($this->title) ?></h1>
                     <?= DetailView::widget([
                         'model' => $model,
                         'attributes' => [

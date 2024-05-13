@@ -3,12 +3,6 @@
     width: fit-content;
 }
 
-.c-select .dropdown .dropdown-toggle,
-.c-select .dropdown .selected-items {
-    font-family: 'SintonyRegular', sans-serif;
-    font-weight: 400;
-}
-
 .c-select .dropdown .dropdown-menu .c-list {
     max-height: calc(7 * (1rem + 7px) * 2);
     background-color: var(--bs-dropdown-bg);

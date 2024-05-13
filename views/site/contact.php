@@ -16,7 +16,7 @@ $this->title = 'Contact';
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="site-contact">
-                    <h1 class="text-center text-light-orange fs-2 mt-3"><?= Html::encode($this->title) ?></h1>
+                    <h1 class="text-center text-custom-orange fs-2 mt-3"><?= Html::encode($this->title) ?></h1>
                     <?php if (Yii::$app->session->hasFlash('contactFormSubmitted')) : ?>
                     <div class="alert alert-success text-center bg-light">
                         Thank you for contacting us. We will respond to you as soon as possible.
@@ -38,7 +38,7 @@ $this->title = 'Contact';
                         Thank you.
                     </p>
                     <div class="row justify-content-center sintony-bold text-light">
-                        <div class="col-lg-5">
+                        <div class="col-md-7 col-lg-5">
                             <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
                                 <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
                                 <?= $form->field($model, 'email') ?>
@@ -46,7 +46,7 @@ $this->title = 'Contact';
                                 <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
                                 <?= $form->field($model, 'verifyCode')->widget(Captcha::class, [
                                     'template' =>
-                                        '<div class="row"><div class="col-lg-3">
+                                        '<div class="row gap-4"><div class="col-lg-3">
                                         {image}</div><div class="col-lg-6">{input}</div></div>',
                                 ]) ?>
                                 <div class="form-group text-center mt-2">

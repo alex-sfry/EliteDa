@@ -26,30 +26,6 @@
     font-weight: 400;
     font-display: swap;
 }
-.w180 {
-    width: 180px;
-}
-
-.f-ctrl-no-shadow, #w0 .filters input:focus,
-#w0 .filters select:focus, form-check-input:focus {
-    box-shadow: none;
-    border-color: #dee2e6;
-}
-
-.sort_arrow, .c-table thead th:hover a.sorted.desc::after,
-.mod-table thead th:hover a.sorted.desc::after,
-.ships-table thead th:hover a.sorted.desc::after, .c-table thead th a.sorted.desc::after,
-.mod-table thead th a.sorted.desc::after,
-.ships-table thead th a.sorted.desc::after, .c-table thead th a.sorted.asc::after,
-.mod-table thead th a.sorted.asc::after,
-.ships-table thead th a.sorted.asc::after, .c-table thead th a::after,
-.mod-table thead th a::after,
-.ships-table thead th a::after {
-    content: "";
-    padding: 0.5rem;
-    background-repeat: no-repeat;
-}
-
 select {
     cursor: pointer;
 }
@@ -73,6 +49,30 @@ input {
 
 body {
     overflow-x: hidden;
+}
+
+.w180 {
+    width: 180px;
+}
+
+.f-ctrl-no-shadow, #w0 .filters input:focus,
+#w0 .filters select:focus, form-check-input:focus {
+    box-shadow: none;
+    border-color: #dee2e6;
+}
+
+.sort_arrow, .c-table thead th:hover a.sorted.desc::after,
+.mod-table thead th:hover a.sorted.desc::after,
+.ships-table thead th:hover a.sorted.desc::after, .c-table thead th a.sorted.desc::after,
+.mod-table thead th a.sorted.desc::after,
+.ships-table thead th a.sorted.desc::after, .c-table thead th a.sorted.asc::after,
+.mod-table thead th a.sorted.asc::after,
+.ships-table thead th a.sorted.asc::after, .c-table thead th a::after,
+.mod-table thead th a::after,
+.ships-table thead th a::after {
+    content: "";
+    padding: 0.5rem;
+    background-repeat: no-repeat;
 }
 
 .sintony-reg, .c-form select,

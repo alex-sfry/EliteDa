@@ -3,21 +3,6 @@
 @import "../../../node_modules/bootstrap/scss/functions.scss";
 @import "../../../node_modules/bootstrap/scss/variables.scss"; 
 
-.w180 {
-    width: 180px;
-}
-
-.f-ctrl-no-shadow {
-    box-shadow: none;
-    border-color: $border-color;
-}
-
-.sort_arrow {
-    content: "";
-    padding: $spacer * .5;
-    background-repeat: no-repeat;
-}
-
 select {
     cursor: pointer;
 }
@@ -40,6 +25,21 @@ input {
 
 body {
     overflow-x: hidden;
+}
+
+.w180 {
+    width: 180px;
+}
+
+.f-ctrl-no-shadow {
+    box-shadow: none;
+    border-color: $border-color;
+}
+
+.sort_arrow {
+    content: "";
+    padding: $spacer * .5;
+    background-repeat: no-repeat;
 }
 
 .sintony-reg {
