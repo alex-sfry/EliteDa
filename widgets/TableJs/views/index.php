@@ -16,8 +16,9 @@ use yii\helpers\VarDumper;
 Yii::$app->view->registerJs(
     "
     let container ='$container';
+    new TableJs(container);
     ",
-    View::POS_BEGIN
+    View::POS_END
 );
 
 Yii::$app->view->registerCss($styles, [View::POS_BEGIN]);
