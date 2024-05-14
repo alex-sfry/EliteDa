@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use app\behaviors\TimeBehavior;
 use app\behaviors\StationBehavior;
 use app\behaviors\SystemBehavior;
 use Yii;

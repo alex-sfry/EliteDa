@@ -1,17 +1,17 @@
 <?php
 
-namespace app\widgets\Table;
+namespace app\widgets\TableJs;
 
 use yii\web\AssetBundle;
 use yii\web\View;
 
-class TableAsset extends AssetBundle
+class TableJsAsset extends AssetBundle
 {
-    public $sourcePath = '@app/widgets/Table/assets';
-    public $css = [YII_ENV_DEV ? 'Table.css' : 'Table.min.css'];
+    public $sourcePath = '@app/widgets/TableJs/assets';
+    public $css = [YII_ENV_DEV ? 'TableJs.css' : 'TableJs.min.css'];
     public $js = [
         'sortable.min.js',
-        YII_ENV_DEV ? 'Table.js' : 'Table.min.js'
+        YII_ENV_DEV ? 'TableJs.js' : 'TableJs.min.js'
     ];
     public $publishOptions = ['forceCopy' => true];
 

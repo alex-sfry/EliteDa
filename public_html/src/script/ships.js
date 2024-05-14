@@ -20,7 +20,7 @@ export const shipsForm = (loader, removeLoader, fetchData) => {
     const proxyHandler= {
         set(target, prop, val) {
             if (prop === "data") {
-                table.fillShipsModsTable(val.data);
+                table.fillTable(val.data, 'ships-mods');
                 return true;
             }
             return true;

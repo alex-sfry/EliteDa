@@ -1,11 +1,11 @@
 <?php
 
-namespace app\widgets\Table;
+namespace app\widgets\TableJs;
 
 use yii\base\Widget;
 use yii\helpers\VarDumper;
 
-class Table extends Widget
+class TableJs extends Widget
 {
     public string $container = '';
     public array $model = [];
@@ -14,7 +14,7 @@ class Table extends Widget
 
     public function init(): void
     {
-        TableAsset::register($this->getView());
+        TableJsAsset::register($this->getView());
         parent::init();
     }
 
@@ -32,7 +32,7 @@ class Table extends Widget
                 'column_filters' => $this->getFilter(),
                 'default_sorting' => $this->default_sorting,
                 'filtered_columns' => $filtered_columns,
-                'styles' => $this->getStyles($filtered_columns)
+                'styles' => $this->createStyles($filtered_columns)
             ]
         );
     }
@@ -92,7 +92,7 @@ class Table extends Widget
         return $filtered_columns;
     }
 
-    private function getStyles($filtered_columns): string
+    private function createStyles($filtered_columns): string
     {
         $styles = '';
 

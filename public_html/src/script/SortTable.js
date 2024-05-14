@@ -10,6 +10,7 @@ SortTable.prototype.handleClick = async function(e) {
     e.preventDefault();
     const data = await this.fetchData($(e.currentTarget).attr('href'));
     this.data = data;
+    // console.log('sort', data);
     this.pagination &&
     this.pagination.resetPagination.apply(
         this.pagination,

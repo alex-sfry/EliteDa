@@ -69,6 +69,7 @@ Pagination.prototype.handleClick = async function (e) {
   if ($(e.currentTarget).parent().is('.active')) return;
   const res = await this.fetchData($(e.currentTarget).attr('href'));
   this.data = res;
+  console.log('pagination', res);
   this.renderNewPageBtns(res.links, res.page + 1,
   // zero based next page received from backend + 1
   res.lastPage, this.getCurrentDataPage(),
@@ -116,6 +117,7 @@ SortTable.prototype.handleClick = async function (e) {
   e.preventDefault();
   const data = await this.fetchData($(e.currentTarget).attr('href'));
   this.data = data;
+  // console.log('sort', data);
   this.pagination && this.pagination.resetPagination.apply(this.pagination, [data.limit, data.totalCount, data.links, data.lastPage]);
   $('a.sort').removeClass(['asc', 'desc', 'sorted']);
   if (Object.values(data.attributeOrders)[0] === 4) {
@@ -144,7 +146,81 @@ function Table(cnt) {
 Table.prototype.getRows = function () {
   return $("#".concat(this.cnt, " tbody tr"));
 };
-Table.prototype.fillShipsModsTable = function (data) {
+
+// Table.prototype.fillShipsModsTable = function (data) {
+//     function fillCellsShipsMods(cellIndex, rowIndex) {
+//         cellIndex === 0 && $(this).text(data[rowIndex].module || data[rowIndex].ship);
+//         cellIndex === 1 && $(this)
+//             .html(
+//                 `<a href='/stations/details/${data[rowIndex].station_id}'>
+//                 ${data[rowIndex].station}</a>`
+//             );
+//         cellIndex === 2 && $(this).text(data[rowIndex].type);
+//         if (cellIndex === 2 && data[rowIndex].surface) {
+//             $(this).addClass('text-success');
+//             $(this).removeClass('text-primary');
+//         } else if (cellIndex === 2) {
+//             $(this).addClass('text-primary');
+//             $(this).removeClass('text-success');
+//         }
+//         cellIndex === 3 && $(this).text(data[rowIndex].pad);
+//         cellIndex === 4 && $(this).text(data[rowIndex].system);
+//         cellIndex === 5 && $(this).text(data[rowIndex].distance_ly);
+//         cellIndex === 6 && $(this).text(data[rowIndex].distance_ls);
+//         cellIndex === 7 && $(this).text(data[rowIndex].time_diff);
+//     }
+
+//     this.getRows().each(function (rowIndex) {
+//         if (!data[rowIndex]) {
+//             $(this).hide();
+//             return;
+//         }
+
+//         if ($(this).is(":hidden")) $(this).show();
+
+//         $(this).find('td').each(function (cellIndex) {
+//             fillCellsShipsMods.call(this, cellIndex, rowIndex);
+//         });
+//     });
+// };
+
+Table.prototype.fillTable = function (data, tblType) {
+  function fillCellsShipsMods(cellIndex, rowIndex) {
+    cellIndex === 0 && $(this).text(data[rowIndex].module || data[rowIndex].ship);
+    cellIndex === 1 && $(this).html("<a href='/stations/details/".concat(data[rowIndex].station_id, "'>\n                ").concat(data[rowIndex].station, "</a>"));
+    cellIndex === 2 && $(this).text(data[rowIndex].type);
+    if (cellIndex === 2 && data[rowIndex].surface) {
+      $(this).addClass('text-success');
+      $(this).removeClass('text-primary');
+    } else if (cellIndex === 2) {
+      $(this).addClass('text-primary');
+      $(this).removeClass('text-success');
+    }
+    cellIndex === 3 && $(this).text(data[rowIndex].pad);
+    cellIndex === 4 && $(this).text(data[rowIndex].system);
+    cellIndex === 5 && $(this).text(data[rowIndex].distance_ly);
+    cellIndex === 6 && $(this).text(data[rowIndex].distance_ls);
+    cellIndex === 7 && $(this).text(data[rowIndex].time_diff);
+  }
+  function fillCellsCommodities(cellIndex, rowIndex) {
+    cellIndex === 0 && $(this).text(data[rowIndex].commodity);
+    cellIndex === 1 && $(this).html("<a href='/stations/details/".concat(data[rowIndex].station_id, "'>\n                ").concat(data[rowIndex].station, "</a>"));
+    cellIndex === 2 && $(this).text(data[rowIndex].type);
+    if (cellIndex === 2 && data[rowIndex].surface) {
+      $(this).addClass('text-success');
+      $(this).removeClass('text-primary');
+    } else if (cellIndex === 2) {
+      $(this).addClass('text-primary');
+      $(this).removeClass('text-success');
+    }
+    cellIndex === 3 && $(this).text(data[rowIndex].pad);
+    cellIndex === 4 && $(this).text(data[rowIndex].system);
+    cellIndex === 5 && $(this).text(data[rowIndex].distance_ly);
+    cellIndex === 6 && $(this).text(data[rowIndex].distance_ls);
+    cellIndex === 7 && $(this).text(data[rowIndex].demand ? data[rowIndex].demand : data[rowIndex].stock);
+    cellIndex === 8 && $(this).text("".concat(data[rowIndex].sell_price ? data[rowIndex].sell_price : data[rowIndex].buy_price, " Cr"));
+    cellIndex === 9 && $(this).text(data[rowIndex].time_diff);
+  }
   this.getRows().each(function (rowIndex) {
     if (!data[rowIndex]) {
       $(this).hide();
@@ -152,49 +228,8 @@ Table.prototype.fillShipsModsTable = function (data) {
     }
     if ($(this).is(":hidden")) $(this).show();
     $(this).find('td').each(function (cellIndex) {
-      cellIndex === 0 && $(this).text(data[rowIndex].module || data[rowIndex].ship);
-      cellIndex === 1 && $(this).html("<a href='/stations/details/".concat(data[rowIndex].station_id, "'>\n                ").concat(data[rowIndex].station, "</a>"));
-      cellIndex === 2 && $(this).text(data[rowIndex].type);
-      if (cellIndex === 2 && data[rowIndex].surface) {
-        $(this).addClass('text-success');
-        $(this).removeClass('text-primary');
-      } else if (cellIndex === 2) {
-        $(this).addClass('text-primary');
-        $(this).removeClass('text-success');
-      }
-      cellIndex === 3 && $(this).text(data[rowIndex].pad);
-      cellIndex === 4 && $(this).text(data[rowIndex].system);
-      cellIndex === 5 && $(this).text(data[rowIndex].distance_ly);
-      cellIndex === 6 && $(this).text(data[rowIndex].distance_ls);
-      cellIndex === 7 && $(this).text(data[rowIndex].time_diff);
-    });
-  });
-};
-Table.prototype.fillTable = function (data) {
-  this.getRows().each(function (rowIndex) {
-    if (!data[rowIndex]) {
-      $(this).hide();
-      return;
-    }
-    if ($(this).is(":hidden")) $(this).show();
-    $(this).find('td').each(function (cellIndex) {
-      cellIndex === 0 && $(this).text(data[rowIndex].commodity);
-      cellIndex === 1 && $(this).html("<a href='/stations/details/".concat(data[rowIndex].station_id, "'>\n                    ").concat(data[rowIndex].station, "</a>"));
-      cellIndex === 2 && $(this).text(data[rowIndex].type);
-      if (cellIndex === 2 && data[rowIndex].surface) {
-        $(this).addClass('text-success');
-        $(this).removeClass('text-primary');
-      } else if (cellIndex === 2) {
-        $(this).addClass('text-primary');
-        $(this).removeClass('text-success');
-      }
-      cellIndex === 3 && $(this).text(data[rowIndex].pad);
-      cellIndex === 4 && $(this).text(data[rowIndex].system);
-      cellIndex === 5 && $(this).text(data[rowIndex].distance_ly);
-      cellIndex === 6 && $(this).text(data[rowIndex].distance_ls);
-      cellIndex === 7 && $(this).text(data[rowIndex].demand);
-      cellIndex === 8 && $(this).text("".concat(data[rowIndex].sell_price, " Cr") || 0);
-      cellIndex === 9 && $(this).text(data[rowIndex].time_diff);
+      tblType === 'commodities' && fillCellsCommodities.call(this, cellIndex, rowIndex);
+      tblType === 'ships-mods' && fillCellsShipsMods.call(this, cellIndex, rowIndex);
     });
   });
 };
@@ -231,7 +266,7 @@ const commoditiesForm = (loader, removeLoader, fetchData) => {
   const proxyHandler = {
     set(target, prop, val) {
       if (prop === "data") {
-        table.fillTable(val.data);
+        table.fillTable(val.data, 'commodities');
         return true;
       }
       return true;
@@ -402,7 +437,7 @@ const shipModulesForm = (loader, removeLoader, fetchData) => {
   const proxyHandler = {
     set(target, prop, val) {
       if (prop === "data") {
-        table.fillShipsModsTable(val.data);
+        table.fillTable(val.data, 'ships-mods');
         return true;
       }
       return true;
@@ -446,7 +481,7 @@ const shipsForm = (loader, removeLoader, fetchData) => {
   const proxyHandler = {
     set(target, prop, val) {
       if (prop === "data") {
-        table.fillShipsModsTable(val.data);
+        table.fillTable(val.data, 'ships-mods');
         return true;
       }
       return true;

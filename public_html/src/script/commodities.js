@@ -20,7 +20,7 @@ export const commoditiesForm = (loader, removeLoader, fetchData) => {
     const proxyHandler= {
         set(target, prop, val) {
             if (prop === "data") {
-                table.fillTable(val.data);
+                table.fillTable(val.data, 'commodities');
                 return true;
             }
             return true;
