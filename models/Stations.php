@@ -114,6 +114,16 @@ class Stations extends \yii\db\ActiveRecord
         return $this->hasMany(Markets::class, ['market_id' => 'market_id']);
     }
 
+     /**
+     * Gets query for [[Markets]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShipModules(): ActiveQuery
+    {
+        return $this->hasMany(ShipModules::class, ['market_id' => 'market_id']);
+    }
+
     /**
      * Gets query for [[MaterialTraders]].
      *

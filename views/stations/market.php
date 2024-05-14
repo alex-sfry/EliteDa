@@ -13,7 +13,7 @@ $this->title = $station_name . ' market';
                 <h1 class='mt-3 text-center fs-2 text-custom-orange sintony-bold'>
                     <?= Html::encode($this->title) ?>
                 </h1>
-                <?php echo TableJs::widget([
+                <?= TableJs::widget([
                     'container' => 'w-table',
                     'model' => $model,
                     'default_sorting' => 'asc',

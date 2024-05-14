@@ -3,8 +3,10 @@
 namespace app\controllers;
 
 use app\behaviors\CommoditiesBehavior;
+use app\behaviors\ShipModulesBehavior;
 use app\behaviors\StationBehavior;
 use app\models\Markets;
+use app\models\ShipModules;
 use app\models\Stations;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -24,7 +26,8 @@ class StationsController extends Controller
             parent::behaviors(),
             [
                 StationBehavior::class,
-                CommoditiesBehavior::class
+                CommoditiesBehavior::class,
+                ShipModulesBehavior::class
             ]
         );
     }
@@ -36,17 +39,10 @@ class StationsController extends Controller
      */
     public function actionDetails(int $id): string
     {
+        $id = (int)$id;
+
         $model = Stations::find()
-            ->select([
-                'market_id',
-                'system_id',
-                'type',
-                'distance_to_arrival',
-                'government',
-                'stations.name AS station_name',
-                'sys.name AS system_name'
-            ])
-            ->innerJoin(['sys' => 'systems'], 'system_id = sys.id')
+            ->with(['system', 'economyId1', 'economyId2', 'allegiance'])
             ->where(['stations.id' => (int)$id])
             ->asArray()
             ->one();
@@ -62,29 +58,56 @@ class StationsController extends Controller
      *
      * @return string
      */
+    public function actionShipModules(int $id): string
+    {
+        $id = (int)$id;
+
+        $model = Stations::find()
+            ->with('shipModules')
+            ->where(['market_id' => $id])
+            ->asArray()
+            ->one();
+
+        foreach ($model['shipModules'] as $key => $value) {
+            $model['shipModules'][$key]['name'] = isset($this->getShipModules()[strtolower($value['name'])]) ?
+                $this->getShipModules()[strtolower($value['name'])] : $model['shipModules'][$key]['name'];
+            $model['shipModules'][$key]['timestamp'] =
+                Yii::$app->formatter->asRelativeTime($model['shipModules'][$key]['timestamp']);
+            unset($model['shipModules'][$key]['market_id']);
+        }
+
+        return $this->render('outfitting', [
+            'model' => $model,
+            'station_name' => $model['name'],
+         ]);
+    }
+
+    /**
+     * @var int $id
+     *
+     * @return string
+     */
     public function actionMarket(int $id): string
     {
         $id = (int)$id;
 
-        $model = Markets::find()
-            ->with('station')
-            ->where(['and', "markets.market_id=$id", ['or', 'stock>0', 'demand>0']])
+        $model = Stations::find()
+            ->joinWith('markets', true, 'INNER JOIN')
+            ->where(['and', "stations.market_id=$id", ['or', 'stock>0', 'demand>0']])
             ->asArray()
-            ->all();
+            ->one();
 
-        $station_name = $model[0]['station']['name'];
-
-        foreach ($model as $key => $value) {
-            $model[$key]['name'] = isset($this->commodities[strtolower($value['name'])]) ?
-                $this->commodities[strtolower($value['name'])] : $model[$key]['name'];
-            $model[$key]['timestamp'] = Yii::$app->formatter->asRelativeTime($model[$key]['timestamp']);
-            unset($model[$key]['station']);
-            unset($model[$key]['market_id']);
+        foreach ($model['markets'] as $key => $value) {
+            $model['markets'][$key]['name'] = isset($this->commodities[strtolower($value['name'])]) ?
+                $this->commodities[strtolower($value['name'])] : $model['markets'][$key]['name'];
+            $model['markets'][$key]['timestamp'] =
+                Yii::$app->formatter->asRelativeTime($model['markets'][$key]['timestamp']);
+            unset($model['markets'][$key]['market_id']);
         }
 
         return $this->render('market', [
-            'model' => $model,
-            'station_name' => $station_name,
+            'model' => $model['markets'],
+            'station_name' => $model['name'],
          ]);
     }
 

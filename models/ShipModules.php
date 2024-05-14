@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "ship_modules".
@@ -60,7 +61,7 @@ class ShipModules extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMarket()
+    public function getStation(): ActiveQuery
     {
         return $this->hasOne(Stations::class, ['market_id' => 'market_id'])->inverseOf('shipModules');
     }

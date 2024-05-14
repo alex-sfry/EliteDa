@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\VarDumper;
 
-$this->title = $model['station_name'];
+$this->title = $model['name'];
 ?>
 
 <!-- <div class="bg-light">
@@ -22,13 +22,16 @@ $this->title = $model['station_name'];
                         'attributes' => [
                             [
                                 'label' => 'System',
-                                'value' => $model['system_name'],
-                                'captionOptions' => ['class' => 'w180']
+                                'value' => $model['system']['name'],
+                                'captionOptions' => ['class' => 'w200']
                             ],
                             ['label' => 'Station type', 'value' => $model['type']],
                             ['label' => 'Landing pad size', 'value' => $pad_size],
                             ['label' => 'Distance to arrival', 'value' => $model['distance_to_arrival']],
                             ['label' => 'Government', 'value' => $model['government']],
+                            ['label' => 'Allegiance', 'value' => $model['allegiance']['faction_name']],
+                            ['label' => 'Economy (main)', 'value' => $model['economyId1']['economy_name']],
+                            ['label' => 'Economy (secondary)', 'value' => $model['economyId2']['economy_name']],
                             [
                                 'label' => 'Market',
                                 'format' => 'raw',
@@ -36,6 +39,16 @@ $this->title = $model['station_name'];
                                     'Commodities',
                                     Url::toRoute([
                                         "stations/details/market/{$model['market_id']}"
+                                        ])
+                                )
+                            ],
+                            [
+                                'label' => 'Outfitting',
+                                'format' => 'raw',
+                                'value' => Html::a(
+                                    'Modules',
+                                    Url::toRoute([
+                                        "stations/details/ship-modules/{$model['market_id']}"
                                         ])
                                 )
                             ],

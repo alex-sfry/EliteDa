@@ -114,6 +114,7 @@ $config = [
                 'engineers' => 'engineers/index',
                 'engineers/details/<id:\w+>' => 'engineers/details',
                 'systems/index/<sys:\w+>' => 'systems/index',
+                'stations/details/ship-modules/<id:\w+>' => 'stations/ship-modules',
                 'stations/details/market/<id:\w+>' => 'stations/market',
                 'stations/details/<id:\w+>' => 'stations/details',
                 'shipyard-ships' => 'shipyard-ships/index',
