@@ -6,13 +6,17 @@ use app\behaviors\CommoditiesBehavior;
 use app\behaviors\ShipModulesBehavior;
 use app\behaviors\StationBehavior;
 use app\models\Markets;
+use app\models\ShipMods;
 use app\models\ShipModules;
+use app\models\Shipyard;
+use app\models\StationMarket;
 use app\models\Stations;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Request;
 use yii\web\Response;
 
 class StationsController extends Controller
@@ -33,7 +37,7 @@ class StationsController extends Controller
     }
 
     /**
-     * @var int $id
+     * @param int $id
      *
      * @return string
      */
@@ -47,43 +51,58 @@ class StationsController extends Controller
             ->asArray()
             ->one();
 
+        $services['market'] = Markets::find()
+            ->where(['market_id' => $model['market_id']])
+            ->asArray()
+            ->count();
+
+        $services['modules'] = ShipModules::find()
+            ->where(['market_id' => $model['market_id']])
+            ->asArray()
+            ->count();
+
+        $services['ships'] = Shipyard::find()
+            ->where(['market_id' => $model['market_id']])
+            ->asArray()
+            ->count();
+
         return $this->render('details', [
             'model' => $model,
-            'pad_size' => $this->landingPadSizes[$model['type']]
+            'pad_size' => $this->landingPadSizes[$model['type']],
+            'services' => $services
          ]);
     }
 
     /**
-     * @var int $id
+     * @param int $id
      *
      * @return string
      */
-    public function actionShipModules(int $id): string
+    public function actionShipModules(int $id, string $cat = 'hardpoint'): string
     {
         $id = (int)$id;
 
-        $model = Stations::find()
-            ->with('shipModules')
+        $station = Stations::find()
             ->where(['market_id' => $id])
-            ->asArray()
             ->one();
 
-        foreach ($model['shipModules'] as $key => $value) {
-            $model['shipModules'][$key]['name'] = isset($this->getShipModules()[strtolower($value['name'])]) ?
-                $this->getShipModules()[strtolower($value['name'])] : $model['shipModules'][$key]['name'];
-            $model['shipModules'][$key]['timestamp'] =
-                Yii::$app->formatter->asRelativeTime($model['shipModules'][$key]['timestamp']);
-            unset($model['shipModules'][$key]['market_id']);
-        }
+        $station_name = $station['name'];
+
+        $ship_modules = new ShipMods($this->getShipModules());
+        $models = $ship_modules->getStationModules($id, $cat);
+        $req = new Request();
 
         return $this->render('outfitting', [
-            'model' => $model,
-            'station_name' => $model['name'],
+            'models' => $models,
+            'station_name' => $station_name,
+            'commodities_req_arr' => $this->getCommoditiesReqArr(['Gold']),
+            'req' => $req->get(),
+            'cat' => $cat
          ]);
     }
 
     /**
-     * @var int $id
+     * @param int $id
      *
      * @return string
      */
@@ -91,23 +110,17 @@ class StationsController extends Controller
     {
         $id = (int)$id;
 
-        $model = Stations::find()
-            ->joinWith('markets', true, 'INNER JOIN')
-            ->where(['and', "stations.market_id=$id", ['or', 'stock>0', 'demand>0']])
+        $station = Stations::find()
+            ->select('name')
+            ->where(['market_id' => $id])
             ->asArray()
             ->one();
 
-        foreach ($model['markets'] as $key => $value) {
-            $model['markets'][$key]['name'] = isset($this->commodities[strtolower($value['name'])]) ?
-                $this->commodities[strtolower($value['name'])] : $model['markets'][$key]['name'];
-            $model['markets'][$key]['timestamp'] =
-                Yii::$app->formatter->asRelativeTime($model['markets'][$key]['timestamp']);
-            unset($model['markets'][$key]['market_id']);
-        }
+        $station_market = new StationMarket();
 
         return $this->render('market', [
-            'model' => $model['markets'],
-            'station_name' => $model['name'],
+            'model' => $station_market->getMarket($id),
+            'station_name' => $station['name'],
          ]);
     }
 

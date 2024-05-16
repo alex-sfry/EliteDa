@@ -63,6 +63,6 @@ class Shipyard extends \yii\db\ActiveRecord
      */
     public function getMarket()
     {
-        return $this->hasOne(Stations::class, ['market_id' => 'market_id'])->inverseOf('shipyards');
+        return $this->hasOne(Stations::class, ['market_id' => 'market_id'])/* ->inverseOf('shipyards') */;
     }
 }

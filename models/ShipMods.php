@@ -10,7 +10,6 @@ use yii\db\Expression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\base\Model;
-use yii\helpers\VarDumper;
 
 class ShipMods extends Model
 {
@@ -130,7 +129,8 @@ class ShipMods extends Model
     public function modifyModels(array $models): array
     {
         foreach ($models as $key => $value) {
-            $value['module'] = $this->mods_arr[strtolower($value['module'])];
+            $value['module'] = isset($this->mods_arr[strtolower($value['module'])]) ?
+                $this->mods_arr[strtolower($value['module'])] : $value['module'];
             $value['pad'] = $this->getLandingPadSizes()[$value['type']];
             $value['time_diff'] = Yii::$app->formatter->asRelativeTime($value['TIMESTAMP']);
             $value['surface'] = match ($value['type']) {
@@ -138,6 +138,72 @@ class ShipMods extends Model
                 default => false,
             };
             $models[$key] = $value;
+        }
+
+        return $models;
+    }
+
+    /**
+     * @param int $id
+     * @param string $cat
+     *
+     * @return array
+     */
+    public function getStationModules(int $id, string $cat): array
+    {
+        $modules = ShipModules::find()
+            ->select([
+                'ship_modules.name',
+                'ship_modules_list.symbol',
+                'category',
+                'ship',
+                'timestamp',
+                'market_id'
+            ])
+            ->innerJoin('ship_modules_list', 'ship_modules_list.symbol = ship_modules.name')
+            ->where(['market_id' => $id])
+            ->asArray();
+
+        switch ($cat) {
+            case 'armour':
+                $modules->andWhere(['category' => 'standard']);
+                $modules->andWhere(['like', 'ship_modules.name', '_Armour_']);
+                break;
+            case 'core':
+                $modules->andWhere(['category' => 'standard']);
+                $modules->andWhere(['not like', 'ship_modules.name', '_Armour_']);
+                break;
+            case 'internal':
+                $modules->andWhere(['category' => 'internal']);
+                break;
+            case 'utility':
+                $modules->andWhere(['category' => 'utility']);
+                break;
+            case 'hardpoint':
+                $modules->andWhere(['category' => 'hardpoint']);
+                break;
+            default:
+                $modules->andWhere(['category' => 'hardpoint']);
+        }
+
+        $provider = new ActiveDataProvider(config: [
+            'query' => $modules,
+            'pagination' => [
+                'pageSizeLimit' => [0, 10000],
+                'defaultPageSize' => 10000,
+            ],
+        ]);
+
+        $models = $provider->getModels();
+
+        foreach ($models as $key => $value) {
+            $models[$key]['m_name'] = isset($this->mods_arr[strtolower($value['name'])]) ?
+                $this->mods_arr[strtolower($value['name'])] : $value['name'];
+            $models[$key]['timestamp'] = Yii::$app->formatter->asRelativeTime($value['timestamp']);
+
+            if (preg_match('/^.+_Armour_.+$/', $value['symbol'])) {
+                $value['category'] = 'armour';
+            }
         }
 
         return $models;

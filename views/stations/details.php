@@ -8,9 +8,9 @@ use yii\helpers\VarDumper;
 $this->title = $model['name'];
 ?>
 
-<!-- <div class="bg-light">
-    <?php /* VarDumper::dump($model, 10, true); */ ?>
-</div> -->
+<div class="bg-light">
+    <?php VarDumper::dump($services, 10, true); ?>
+</div>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='wrapper d-flex flex-column h-100'>
         <div class='container-xxl px-3'>
@@ -22,16 +22,18 @@ $this->title = $model['name'];
                         'attributes' => [
                             [
                                 'label' => 'System',
-                                'value' => $model['system']['name'],
+                                'value' => Html::encode($model['system']['name']),
                                 'captionOptions' => ['class' => 'w200']
                             ],
-                            ['label' => 'Station type', 'value' => $model['type']],
-                            ['label' => 'Landing pad size', 'value' => $pad_size],
-                            ['label' => 'Distance to arrival', 'value' => $model['distance_to_arrival']],
-                            ['label' => 'Government', 'value' => $model['government']],
-                            ['label' => 'Allegiance', 'value' => $model['allegiance']['faction_name']],
-                            ['label' => 'Economy (main)', 'value' => $model['economyId1']['economy_name']],
-                            ['label' => 'Economy (secondary)', 'value' => $model['economyId2']['economy_name']],
+                            ['label' => 'Station type', 'value' => Html::encode($model['type'])],
+                            ['label' => 'Landing pad size', 'value' => Html::encode($pad_size)],
+                            ['label' => 'Distance to arrival', 'value' => Html::encode($model['distance_to_arrival'])],
+                            ['label' => 'Government', 'value' => Html::encode($model['government'])],
+                            ['label' => 'Allegiance', 'value' => Html::encode($model['allegiance']['faction_name'])],
+                            ['label' => 'Economy (main)', 'value' =>
+                                Html::encode($model['economyId1']['economy_name'])],
+                            ['label' => 'Economy (secondary)', 'value' =>
+                                Html::encode($model['economyId2']['economy_name'])],
                             [
                                 'label' => 'Market',
                                 'format' => 'raw',
