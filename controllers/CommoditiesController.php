@@ -52,10 +52,6 @@ class CommoditiesController extends Controller
         if ($request->get() || $session->get('c')) {
             $request->isGet && $session->remove('c_sort');
 
-            if (isset($params['get']['_csrf'])) {
-                unset($params['get']['_csrf']);
-            }
-
             $form_model->setAttributes($params['get']);
             $params['c_error'] = $form_model->validate('commodities') ? '' : 'is-invalid';
             $params['ref_error'] = $form_model->validate('refSystem', false) ? '' : 'is-invalid';

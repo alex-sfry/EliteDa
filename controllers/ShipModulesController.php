@@ -52,10 +52,6 @@ class ShipModulesController extends Controller
         if ($request->get() || $session->get('mod')) {
             $request->isGet && $session->remove('mod_sort');
 
-            if (isset($params['get']['_csrf'])) {
-                unset($params['get']['_csrf']);
-            }
-
             $form_model->setAttributes($params['get']);
             $params['mod_error'] = $form_model->validate('cMainSelect') ? '' : 'is-invalid';
             $params['ref_error'] = $form_model->validate('refSystem', false) ? '' : 'is-invalid';

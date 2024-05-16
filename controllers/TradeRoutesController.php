@@ -45,10 +45,6 @@ class TradeRoutesController extends Controller
         }
 
         if ($request->get() || $session->get('tr')) {
-            if (isset($params['get']['_csrf'])) {
-                unset($params['get']['_csrf']);
-            }
-
             $form_model->setAttributes($params['get']);
             $params['ref_error'] =  $form_model->validate('refSysStation') ? '' : 'is-invalid';
             $params['cargo_error'] =  $form_model->validate('cargo') ? '' : 'is-invalid';

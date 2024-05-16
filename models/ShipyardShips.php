@@ -130,7 +130,8 @@ class ShipyardShips extends Model
     public function modifyModels(array $models): array
     {
         foreach ($models as $key => $value) {
-            $value['ship'] = $this->ships_arr[strtolower($value['ship'])];
+            $value['ship'] = isset($this->ships_arr[strtolower($value['ship'])]) ?
+                $this->ships_arr[strtolower($value['ship'])] : $value['ship'];
             $value['pad'] = $this->getLandingPadSizes()[$value['type']];
             $value['time_diff'] = Yii::$app->formatter->asRelativeTime($value['TIMESTAMP']);
 

@@ -9,6 +9,8 @@ import { webpackBsDev } from './gulpfileWebpack.js';
 export { webpackBsDev } from './gulpfileWebpack.js';
 import { webpackBsProd } from './gulpfileWebpack.js';
 export { webpackBsProd } from './gulpfileWebpack.js';
+import { vendorJS } from './gulpfileSripts.js';
+export { vendorJS } from './gulpfileSripts.js';
 import sync from 'browser-sync';
 import { deleteAsync } from 'del';
 
@@ -64,7 +66,7 @@ export const watch = () => {
         });
 };
 
-export const dev = gulp.series(gulp.parallel(webpackBsDev, webpackDev), watch);
+export const dev = gulp.series(gulp.parallel(vendorJS, webpackBsDev, webpackDev), watch);
 export const devSync = gulp.series(enableSync, gulp.parallel(webpackBsDev, webpackDev), watch);
 
 export const bsProd = gulp.series(
@@ -73,7 +75,7 @@ export const bsProd = gulp.series(
 export const widgets = gulp.parallel(widgetsStyles, widgetsScripts);
 export const build = gulp.series(
     clean,
-    gulp.parallel(webpackBsDev, webpackDev),
+    gulp.parallel(vendorJS, webpackBsDev, webpackDev),
     bsProd,
     gulp.parallel(bsStyles, widgets, scriptsYii2, webpackProd)
 );

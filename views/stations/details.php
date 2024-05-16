@@ -38,7 +38,7 @@ $this->title = $model['name'];
                                 'value' => Html::a(
                                     'Commodities',
                                     Url::toRoute([
-                                        "stations/details/market/{$model['market_id']}"
+                                        "stations/details/{$model['market_id']}/market"
                                         ])
                                 )
                             ],
@@ -48,7 +48,7 @@ $this->title = $model['name'];
                                 'value' => Html::a(
                                     'Modules',
                                     Url::toRoute([
-                                        "stations/details/ship-modules/{$model['market_id']}"
+                                        "stations/details/{$model['market_id']}/ship-modules"
                                         ])
                                 )
                             ],

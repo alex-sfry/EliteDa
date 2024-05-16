@@ -71,6 +71,6 @@ class Markets extends \yii\db\ActiveRecord
      */
     public function getStation(): ActiveQuery
     {
-        return $this->hasOne(Stations::class, ['market_id' => 'market_id'])->inverseOf('markets');
+        return $this->hasOne(Stations::class, ['market_id' => 'market_id'])/* ->inverseOf('markets') */;
     }
 }

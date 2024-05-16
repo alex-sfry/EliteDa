@@ -25,3 +25,8 @@ export const scriptsYii2 = () => {
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('../assetsMin/'));
 };
+
+export const vendorJS = () => {
+    return gulp.src('./src/vendorJS/**/*.js')
+        .pipe(gulp.dest('./templates/js/'));
+};

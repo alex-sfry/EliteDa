@@ -52,10 +52,6 @@ class ShipyardShipsController extends Controller
         if ($request->get() || $session->get('ships')) {
             $request->isGet && $session->remove('ships_sort');
 
-            if (isset($params['get']['_csrf'])) {
-                unset($params['get']['_csrf']);
-            }
-
             $form_model->setAttributes($params['get']);
             $params['ships_error'] = $form_model->validate('cMainSelect') ? '' : 'is-invalid';
             $params['ref_error'] = $form_model->validate('refSystem', false) ? '' : 'is-invalid';

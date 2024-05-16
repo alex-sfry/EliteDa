@@ -63,6 +63,6 @@ class ShipModules extends \yii\db\ActiveRecord
      */
     public function getStation(): ActiveQuery
     {
-        return $this->hasOne(Stations::class, ['market_id' => 'market_id'])->inverseOf('shipModules');
+        return $this->hasOne(Stations::class, ['market_id' => 'market_id'])/* ->inverseOf('shipModules') */;
     }
 }

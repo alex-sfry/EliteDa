@@ -114,8 +114,6 @@ class CsvController extends Controller
             }
         }
 
-        // VarDumper::dump($ship_modules_arr);
-
         file_put_contents(
             Yii::getAlias('@app/data/shipModules.json'),
             Json::encode($ship_modules_arr, JSON_PRETTY_PRINT)
@@ -165,8 +163,6 @@ class CsvController extends Controller
             return array_values($item);
         }, $this->csv_arr);
 
-        // VarDumper::dump($this->csv_arr);
-
         Yii::$app->db->createCommand()
             ->batchInsert('ships_list', [
                 'id', 'symbol', 'name', 'entitlement'
@@ -210,8 +206,6 @@ class CsvController extends Controller
         ->asArray()
         ->all();
 
-        // VarDumper::dump($this->csv_arr[0]);
-        // VarDumper::dump($cmd_db_list[0]);
         VarDumper::dump(Json::decode(file_get_contents(Yii::$app->basePath . '/data/commodities.json')));
 
         Yii::$app->db->createCommand()

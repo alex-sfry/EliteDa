@@ -78,8 +78,7 @@ Yii::$app->view->registerCss($styles, [View::POS_BEGIN]);
                         <td 
                             class="
                                 <?= isset($columns[$index]['class']) ? $columns[$index]['class'] : null ?> text-truncate
-                            " 
-                            data-sort="<?= Html::encode($value) ?>">
+                            ">
                             <?= Html::encode($value) ?>
                             <?= $key === 'sell_price' || $key === 'buy_price' ? ' Cr' : null; ?>
                         </td>
