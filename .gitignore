@@ -37,6 +37,8 @@ tests/_support/_generated
 
 config/db.php
 config/mail_config.php
+data/modules
+data/ships
 
 cgi-bin
 logs

@@ -35,6 +35,7 @@ $this->title = $model['name'];
                             ['label' => 'Economy (secondary)', 'value' =>
                                 Html::encode($model['economyId2']['economy_name'])],
                             [
+                                'visible' => $services['market'],
                                 'label' => 'Market',
                                 'format' => 'raw',
                                 'value' => Html::a(
@@ -45,13 +46,25 @@ $this->title = $model['name'];
                                 )
                             ],
                             [
+                                'visible' => $services['modules'],
                                 'label' => 'Outfitting',
                                 'format' => 'raw',
                                 'value' => Html::a(
                                     'Modules',
                                     Url::toRoute([
                                         "stations/details/{$model['market_id']}/ship-modules"
-                                        ])
+                                    ])
+                                )
+                            ],
+                            [
+                                'visible' => $services['ships'],
+                                'label' => 'Shipyard',
+                                'format' => 'raw',
+                                'value' => Html::a(
+                                    'Ships',
+                                    Url::toRoute([
+                                        "stations/details/{$model['market_id']}/ship-modules"
+                                    ])
                                 )
                             ],
                         ],
