@@ -78,7 +78,7 @@ class StationsController extends Controller
      *
      * @return string
      */
-    public function actionShipModules(int $id, string $cat = 'hardpoint'): string
+    public function actionShipModules(int $id, ShipMods $ship_modules, string $cat = 'hardpoint'): string
     {
         $id = (int)$id;
 
@@ -88,7 +88,7 @@ class StationsController extends Controller
 
         $station_name = $station['name'];
 
-        $ship_modules = new ShipMods($this->getShipModules());
+        $ship_modules->setMods($this->getShipModules());
         $models = $ship_modules->getStationModules($id, $cat);
         $req = new Request();
 
@@ -107,7 +107,7 @@ class StationsController extends Controller
      *
      * @return string
      */
-    public function actionMarket(int $id): string
+    public function actionMarket(int $id, StationMarket $market): string
     {
         $id = (int)$id;
 
@@ -117,10 +117,8 @@ class StationsController extends Controller
             ->asArray()
             ->one();
 
-        $station_market = new StationMarket();
-
         return $this->render('market', [
-            'model' => $station_market->getMarket($id),
+            'model' => $market->getMarket($id),
             'station_name' => $station['name'],
          ]);
     }

@@ -12,6 +12,9 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'controllerMap' => [
+        'sandbox' => 'app\sandbox\SandboxController',
+    ],
     // 'language' => 'ru-RU',
     // 'sourceLanguage' => 'en-US',
     'components' => [
@@ -130,6 +133,20 @@ $config = [
         ],
     ],
     'params' => $params,
+    'container' => [
+        'definitions' => [
+            'app\sandbox\StationMarket' => [
+                'class' => 'app\sandbox\StationMarket',
+                // 'property1' => 'value1',
+            ],
+            'app\models\StationMarket' => [
+                'class' => 'app\models\StationMarket',
+            ],
+            'app\models\ShipMods' => [
+                'class' => 'app\models\ShipMods',
+            ],
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {

@@ -29,7 +29,12 @@ class ShipMods extends Model
         );
     }
 
-    public function __construct($mods)
+    public function __construct($mods = [])
+    {
+        $this->mods_arr = $mods;
+    }
+
+    public function setMods($mods)
     {
         $this->mods_arr = $mods;
     }
@@ -194,7 +199,7 @@ class ShipMods extends Model
         $provider = new ActiveDataProvider(config: [
             'query' => $modules,
             'pagination' => [
-                'pageSizeLimit' => [0, 00],
+                'pageSizeLimit' => [0, 500],
                 'defaultPageSize' => 500,
             ],
         ]);

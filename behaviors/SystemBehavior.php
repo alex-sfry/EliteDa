@@ -4,6 +4,7 @@ namespace app\behaviors;
 
 use app\models\Systems;
 use yii\base\Behavior;
+use yii\helpers\ArrayHelper;
 
 class SystemBehavior extends Behavior
 {
@@ -14,10 +15,10 @@ class SystemBehavior extends Behavior
      */
     public function getCoords($sys_name): array
     {
-        return Systems::find()
+        return ArrayHelper::htmlEncode(Systems::find()
             ->select(['x', 'y', 'z'])
             ->where(['name' => $sys_name])
             ->asArray()
-            ->one();
+            ->one());
     }
 }
