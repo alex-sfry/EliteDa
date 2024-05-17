@@ -26,7 +26,8 @@ Table.prototype.fillTable = function (data, tblType) {
         cellIndex === 4 && $(this).text(data[rowIndex].system);
         cellIndex === 5 && $(this).text(data[rowIndex].distance_ly);
         cellIndex === 6 && $(this).text(data[rowIndex].distance_ls);
-        cellIndex === 7 && $(this).text(data[rowIndex].time_diff);
+        cellIndex === 7 && $(this).text(`${data[rowIndex].price} Cr`);
+        cellIndex === 8 && $(this).text(data[rowIndex].time_diff);
     }
     
     function fillCellsCommodities (cellIndex, rowIndex) {
