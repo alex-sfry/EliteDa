@@ -88,6 +88,7 @@ class StationsController extends Controller
 
         $station_name = $station['name'];
 
+        // $ship_modules = new ShipMods($this->getShipModules());
         $ship_modules->setMods($this->getShipModules());
         $models = $ship_modules->getStationModules($id, $cat);
         $req = new Request();

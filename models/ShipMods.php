@@ -29,11 +29,6 @@ class ShipMods extends Model
         );
     }
 
-    public function __construct($mods = [])
-    {
-        $this->mods_arr = $mods;
-    }
-
     public function setMods($mods)
     {
         $this->mods_arr = $mods;
@@ -57,7 +52,7 @@ class ShipMods extends Model
             }
         }
 
-        $modules = (new Query())
+        $mod_market = (new Query())
             ->select([
                 'm.name AS module',
                 'pl.price',
@@ -76,15 +71,15 @@ class ShipMods extends Model
             ->innerJoin(['pl' => 'modules_price_list'], 'm.name = pl.symbol')
             ->where(['m.name' => $mod_symbols]);
 
-        $get['landingPadSize'] === 'L' && $modules->andWhere(['not', ['type' => 'Outpost']]);
+        $get['landingPadSize'] === 'L' && $mod_market->andWhere(['not', ['type' => 'Outpost']]);
 
         $get['includeSurface'] === 'No' &&
-        $modules->andWhere(['not in', 'type', ['Planetary Port', 'Planetary Outpost', 'Odyssey Settlement']]);
+        $mod_market->andWhere(['not in', 'type', ['Planetary Port', 'Planetary Outpost', 'Odyssey Settlement']]);
 
         $get['distanceFromStar'] !== 'Any' &&
-        $modules->andWhere(['<=', 'distance_to_arrival', $get['distanceFromStar']]);
+        $mod_market->andWhere(['<=', 'distance_to_arrival', $get['distanceFromStar']]);
 
-        $get['maxDistanceFromRefStar'] !== 'Any' && $modules->andWhere([
+        $get['maxDistanceFromRefStar'] !== 'Any' && $mod_market->andWhere([
             '<=',
             "ROUND(SQRT(POW((sys.x - $x), 2) + POW((sys.y - $y), 2) + POW((sys.z - $z), 2)), 2)",
             $get['maxDistanceFromRefStar'],
@@ -93,7 +88,7 @@ class ShipMods extends Model
         $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$get['dataAge']} HOUR)");
 
         $get['dataAge'] !== 'Any' &&
-        $modules->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
+        $mod_market->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
 
         switch ($get['sortBy']) {
             case 'Updated_at':
@@ -110,7 +105,7 @@ class ShipMods extends Model
         }
 
         return new ActiveDataProvider(config: [
-            'query' => $modules,
+            'query' => $mod_market,
             'pagination' => [
                 'pageSizeLimit' => [0, $limit],
                 'defaultPageSize' => $limit,

@@ -62,7 +62,8 @@ class ShipModulesController extends Controller
 
             $sys_name = $params['get']['refSystem'];
 
-            $mod_model = new ShipMods($params['ship_modules_arr']);
+            $mod_model = new ShipMods();
+            $mod_model->setMods($params['ship_modules_arr']);
             $limit = 50;
             $provider = $mod_model->getModules($sys_name, $params['get'], $limit, $session->get('mod_sort'));
             $params['models']  = $mod_model->modifyModels($provider->getModels(), $params['get']);
