@@ -15,14 +15,10 @@ class CsvController extends Controller
     private array $csv_arr = [];
 
     /**
-     * @param string $message the message to be echoed.
-     *
      * @return int Exit code
      */
-    public function actionIndex(string $message = 'hello world'): int
+    public function actionIndex(): int
     {
-        // echo $message . "\n";
-
         $all_methods = get_class_methods($this);
         $parent_class_methods = get_class_methods(get_parent_class($this));
         $own_methods = array_diff($all_methods, $parent_class_methods);
