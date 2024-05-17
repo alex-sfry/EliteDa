@@ -22,6 +22,8 @@ class StationMarket extends Model
     }
 
     /**
+     * @param int $id
+     *
      * @return array
      */
     public function getMarket(int $id): array

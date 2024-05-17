@@ -1,7 +1,6 @@
 <?php
 
 use app\widgets\TableJs\TableJs;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\VarDumper;
