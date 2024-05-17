@@ -71,16 +71,14 @@ Yii::$app->view->registerCss($styles, [View::POS_BEGIN]);
             </tr>
         </thead>
         <tbody class="table-group-divider">
-            <?php foreach ($model as $i => $item) : ?>
+            <?php foreach ($model as $item) : ?>
                 <tr>
-                    <?php foreach ($item as $key => $value) : ?>
-                        <?php $index = array_search($key, array_keys($item)); ?>
+                    <?php foreach ($columns as $value) : ?>
                         <td 
-                            class="
-                                <?= isset($columns[$index]['class']) ? $columns[$index]['class'] : null ?> text-truncate
-                            ">
-                            <?= Html::encode($value) ?>
-                            <?= $key === 'sell_price' || $key === 'buy_price' ? ' Cr' : null; ?>
+                            class="<?= isset($value['class']) ? $value['class'] : null ?> text-truncate">
+                            <?= isset($value['textBefore']) ? $value['textBefore'] : null; ?>
+                            <?= Html::encode($item[$value['attribute']]) ?>
+                            <?= isset($value['textAfter']) ? $value['textAfter'] : null; ?>
                         </td>
                     <?php endforeach; ?>
                 </tr>

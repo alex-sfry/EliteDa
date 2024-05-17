@@ -1,17 +1,17 @@
 <?php
 
+use app\widgets\TableJs\TableJs;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\VarDumper;
 
 $this->title = $station_name . ' outfitting';
-
 ?>
 <style>
-    .nav-pills .nav-link.active {
-        background-color: var(--bs-light-orange);
-    }
+.nav-pills .nav-link.active {
+    background-color: var(--bs-light-orange);
+}
 </style>
 <div class="bg-light">
     <?php
@@ -29,13 +29,11 @@ $this->title = $station_name . ' outfitting';
                 <h1 class='mt-3 text-center fs-2 text-custom-orange sintony-bold'>
                     <?= Html::encode($this->title) ?>
                 </h1>
-                <div class="bg-light my-0 mx-auto rounded-2" style="max-width:fit-content;">
-                    <ul class="nav nav-pills px-3 pt-2 justify-content-center">
+                <div class="bg-light my-0 mx-auto rounded-2 px-2 bg-transparent" style="max-width:fit-content;">
+                    <ul class="nav nav-pills px-3 py-2 my-2 justify-content-center bg-white rounded-2">
                         <li class="nav-item">
-                            <a 
-                                class="nav-link light-orange <?= $cat === 'armour' ? 'active' : null ?>"
-                                aria-current="page"
-                                href="<?= Url::to([
+                            <a class="nav-link light-orange <?= $cat === 'armour' ? 'active' : null ?>"
+                                aria-current="page" href="<?= Url::to([
                                     'stations/ship-modules',
                                     'id' => $market_id,
                                     'cat' => 'armour']) ?>">
@@ -43,9 +41,7 @@ $this->title = $station_name . ' outfitting';
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a
-                                class="nav-link <?= $cat === 'core' ? 'active' : null ?>"
-                                href="<?= Url::to([
+                            <a class="nav-link <?= $cat === 'core' ? 'active' : null ?>" href="<?= Url::to([
                                     'stations/ship-modules',
                                     'id' => $market_id,
                                     'cat' => 'core']) ?>">
@@ -53,9 +49,7 @@ $this->title = $station_name . ' outfitting';
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a
-                                class="nav-link <?= $cat === 'internal' ? 'active' : null ?>"
-                                href="<?= Url::to([
+                            <a class="nav-link <?= $cat === 'internal' ? 'active' : null ?>" href="<?= Url::to([
                                     'stations/ship-modules',
                                     'id' => $market_id,
                                     'cat' => 'internal']) ?>">
@@ -63,14 +57,24 @@ $this->title = $station_name . ' outfitting';
                             </a>
                         </li>
                     </ul>
-                    <ul class="list-group p-3">
-                        <?= count($models) < 1 ?
-                            '<span class="text-info"><em><strong>modules not found<strong></em></span>' :
-                                null ?>
-                        <?php foreach ($models as $item) : ?>
-                            <li class="list-group-item"><?= $item['m_name'] . ' - ' . $item['price'] . ' Cr' ?></li>
-                        <?php endforeach; ?>
-                    </ul>
+                    <?= TableJs::widget([
+                        'container' => 'w-table',
+                        'model' => $models,
+                        'default_sorting' => 'asc',
+                        'columns' => [
+                            [
+                                'attribute' => 'm_name',
+                                'label' => 'Module',
+                                'filterInputOptions' => [
+                                    'class' => 'form-control',
+                                ]
+                            ],
+                            [
+                                'attribute' => 'price',
+                                'label' => 'Price',
+                                'textAfter' => ' Cr'
+                            ],
+                        ]]); ?>
                 </div>
             </div>
         </div>

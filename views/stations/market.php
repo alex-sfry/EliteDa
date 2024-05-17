@@ -21,6 +21,7 @@ $this->title = $station_name . ' market';
                         [
                             'attribute' => 'buy_price',
                             'label' => 'buy price',
+                            'textAfter' => ' Cr'
                         ],
                         [
                             'attribute' => 'demand',
@@ -48,6 +49,7 @@ $this->title = $station_name . ' market';
                         [
                             'attribute' => 'sell_price',
                             'label' => 'sell price',
+                            'textAfter' => ' Cr'
                         ],
                         [
                             'attribute' => 'stock',
