@@ -55,6 +55,7 @@ class ShipMods extends Model
         $modules = (new Query())
             ->select([
                 'm.name AS module',
+                'pl.price',
                 'st.name AS station',
                 'st.id AS station_id',
                 'type',
@@ -67,6 +68,7 @@ class ShipMods extends Model
             ->from(['m' => 'ship_modules'])
             ->innerJoin(['st' => 'stations'], 'm.market_id = st.market_id')
             ->innerJoin(['sys' => 'systems'], 'st.system_id = sys.id')
+            ->innerJoin(['pl' => 'modules_price_list'], 'm.name = pl.symbol')
             ->where(['m.name' => $mod_symbols]);
 
         $get['landingPadSize'] === 'L' && $modules->andWhere(['not', ['type' => 'Outpost']]);
@@ -137,6 +139,7 @@ class ShipMods extends Model
                 'Planetary Outpost', 'Planetary Port', 'Odyssey Settlement' => true,
                 default => false,
             };
+
             $models[$key] = $value;
         }
 
@@ -154,13 +157,15 @@ class ShipMods extends Model
         $modules = ShipModules::find()
             ->select([
                 'ship_modules.name',
-                'ship_modules_list.symbol',
+                'mlst.symbol',
                 'category',
                 'ship',
+                'price',
                 'timestamp',
                 'market_id'
             ])
-            ->innerJoin('ship_modules_list', 'ship_modules_list.symbol = ship_modules.name')
+            ->innerJoin(['mlst' => 'ship_modules_list'], 'mlst.symbol = ship_modules.name')
+            ->innerJoin(['mprc' => 'modules_price_list'], 'mprc.symbol = ship_modules.name')
             ->where(['market_id' => $id])
             ->asArray();
 
@@ -189,8 +194,8 @@ class ShipMods extends Model
         $provider = new ActiveDataProvider(config: [
             'query' => $modules,
             'pagination' => [
-                'pageSizeLimit' => [0, 10000],
-                'defaultPageSize' => 10000,
+                'pageSizeLimit' => [0, 00],
+                'defaultPageSize' => 500,
             ],
         ]);
 
