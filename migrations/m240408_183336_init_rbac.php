@@ -18,9 +18,14 @@ class m240408_183336_init_rbac extends Migration
         $accessAddtodb->description = 'Access to AddToDb page';
         $auth->add($accessAddtodb);
 
+        $accessSandbox = $auth->createPermission('accessSandbox');
+        $accessSandbox->description = 'Access to Sandbox page';
+        $auth->add($accessSandbox);
+
         $admin = $auth->createRole('admin');
         $auth->add($admin);
         $auth->addChild($admin, $accessAddtodb);
+        $auth->addChild($admin, $accessSandbox);
 
         $auth->assign($admin, 1);
     }
@@ -41,12 +46,12 @@ class m240408_183336_init_rbac extends Migration
     {
 
     }
+    */
 
     public function down()
     {
-        echo "m240408_183336_init_rbac cannot be reverted.\n";
+        $auth = Yii::$app->authManager;
 
-        return false;
+        $auth->removeAll();
     }
-    */
 }
