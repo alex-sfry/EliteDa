@@ -68,6 +68,7 @@ class ShipyardShips extends Model
             ->from(['sh' => 'shipyard'])
             ->innerJoin(['st' => 'stations'], 'sh.market_id = st.market_id')
             ->innerJoin(['sys' => 'systems'], 'st.system_id = sys.id')
+            // ->innerJoin(['pl' => 'ships_price_list'], 'sh.name = pl.name')
             ->where(['sh.name' => $mod_symbols]);
 
         $get['landingPadSize'] === 'L' && $ships->andWhere(['not', ['type' => 'Outpost']]);
@@ -139,6 +140,9 @@ class ShipyardShips extends Model
                 'Planetary Outpost', 'Planetary Port', 'Odyssey Settlement' => true,
                 default => false,
             };
+
+            $ship_from_price_list = ShipsPriceList::findOne($value['ship']);
+            $value['price'] = $ship_from_price_list ? $ship_from_price_list->price : null;
             $models[$key] = $value;
         }
 

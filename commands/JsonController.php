@@ -63,7 +63,7 @@ class JsonController extends Controller
             } else {
                 foreach ($arr as $key => $value) {
                     $this->result[] = [
-                        'name' => $value['properties']['name'],
+                        'name' => str_replace('Mk ', 'Mk', $value['properties']['name']),
                         'price' => $value['retailCost']
                     ];
                 }

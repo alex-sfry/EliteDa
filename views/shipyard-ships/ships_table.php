@@ -13,9 +13,9 @@ $table_head = [
     'System',
     'Dist.(LY)',
     'Dist. to arr.(ls)',
+    'Price',
     'Updated'
 ];
-
 ?>
 <div class="c-result-legend bg-body text-center mt-3">
     <h2 class="fs-6 position-relative">Station's type:</h2>
@@ -86,6 +86,7 @@ $table_head = [
                     <td class="text-start text-truncate"><?= Html::encode($item['system']) ?></td>
                     <td class="text-start text-truncate"><?= (float)$item['distance_ly'] ?></td>
                     <td class="text-start text-truncate"><?= (int)$item['distance_ls'] ?></td>
+                    <td class="text-start text-truncate"><?= Html::encode($item['price']) . ' Cr' ?></td>
                     <td class="text-start text-truncate"><?= Html::encode($item['time_diff']) ?></td>
                 </tr>
             <?php endforeach; ?>
