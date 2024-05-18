@@ -429,15 +429,18 @@ const shipModulesForm = (loader, removeLoader, fetchData) => {
 
 
 
-const shipsForm = (loader, removeLoader, fetchData) => {
+const shipsForm = (isValidated, loader, removeLoader, fetchData) => {
   const $form = $('#ships-form');
   const $table = $('.ships-table');
   const $pagination = $('.pagination');
+  const shipSelectLabel = $('label[for=\'c-hiddenSelect\']').get(0);
+  const shipSelect = $('#c-hiddenSelect').get(0);
   removeLoader($table);
   const handleSubmit = e => {
     if (!$form.get(0).checkValidity()) {
       e.preventDefault();
     } else loader($form, $table);
+    isValidated(shipSelect, shipSelectLabel);
   };
   $form.on('submit', handleSubmit);
   const table = new _Table_js__WEBPACK_IMPORTED_MODULE_2__.Table('ships-table');
@@ -604,7 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFooter();
   if ($('#c-form').length) (0,_commodities_js__WEBPACK_IMPORTED_MODULE_3__.commoditiesForm)(loader, removeLoader, _fetchData_js__WEBPACK_IMPORTED_MODULE_1__.fetchData);
   if ($('#mod-form').length) (0,_shipModules_js__WEBPACK_IMPORTED_MODULE_4__.shipModulesForm)(loader, removeLoader, _fetchData_js__WEBPACK_IMPORTED_MODULE_1__.fetchData);
-  if ($('#ships-form').length) (0,_ships_js__WEBPACK_IMPORTED_MODULE_5__.shipsForm)(loader, removeLoader, _fetchData_js__WEBPACK_IMPORTED_MODULE_1__.fetchData);
+  if ($('#ships-form').length) (0,_ships_js__WEBPACK_IMPORTED_MODULE_5__.shipsForm)(_isValidated_js__WEBPACK_IMPORTED_MODULE_2__.isValidated, loader, removeLoader, _fetchData_js__WEBPACK_IMPORTED_MODULE_1__.fetchData);
   if ($('#tr-form').length) (0,_tradeRoutes_js__WEBPACK_IMPORTED_MODULE_6__.tradeRouteForm)(_isValidated_js__WEBPACK_IMPORTED_MODULE_2__.isValidated, loader, removeLoader);
   if ($('#mt-form').length) (0,_matTraders_js__WEBPACK_IMPORTED_MODULE_7__.matTraders)();
   $('#accordionForm .accordion-button').on('click', function () {

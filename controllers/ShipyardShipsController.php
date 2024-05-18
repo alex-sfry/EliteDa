@@ -54,7 +54,7 @@ class ShipyardShipsController extends Controller
 
             $form_model->setAttributes($params['get']);
             $params['ships_error'] = $form_model->validate('cMainSelect') ? '' : 'is-invalid';
-            $params['ref_error'] = $form_model->validate('refSystem', false) ? '' : 'is-invalid';
+            $params['ref_error'] = $form_model->validate('refSystem') ? '' : 'is-invalid';
 
             if ($form_model->hasErrors()) {
                 return $this->render('index', $params);

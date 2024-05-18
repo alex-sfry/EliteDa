@@ -16,7 +16,12 @@ class ShipyardShipsForm extends \yii\base\Model
     public function rules(): array
     {
         return [
-            [['refSystem', 'cMainSelect'], 'required'],
+            [['refSystem'], 'required'],
+            ['cMainSelect', function ($attribute, $params, $validator) {
+                if (!$this->cMainSelect[0]) {
+                    $this->addError($attribute, 'Field must not be empty');
+                }
+            }],
             [[
                 'landingPadSize',
                 'includeSurface',

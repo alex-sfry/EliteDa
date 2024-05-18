@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initFooter();
     if ($('#c-form').length) commoditiesForm(loader, removeLoader, fetchData);
     if ($('#mod-form').length) shipModulesForm(loader, removeLoader, fetchData);
-    if ($('#ships-form').length) shipsForm(loader, removeLoader, fetchData);
+    if ($('#ships-form').length) shipsForm(isValidated, loader, removeLoader, fetchData);
     if ($('#tr-form').length) tradeRouteForm(isValidated, loader, removeLoader);
     if ($('#mt-form').length) matTraders();
 

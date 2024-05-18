@@ -2,17 +2,23 @@ import {Pagination} from './Pagination.js';
 import {SortTable} from './SortTable.js';
 import {Table} from './Table.js';
 
-export const shipsForm = (loader, removeLoader, fetchData) => {
+export const shipsForm = (isValidated, loader, removeLoader, fetchData) => {
     const $form = $('#ships-form');
     const $table = $('.ships-table');
     const $pagination = $('.pagination');
+    const shipSelectLabel = $('label[for=\'c-hiddenSelect\']').get(0);
+    const shipSelect = $('#c-hiddenSelect').get(0);
     removeLoader($table);
 
     const handleSubmit = (e) => {
         if (!$form.get(0).checkValidity()) {
             e.preventDefault();
         } else loader($form, $table);
+
+        isValidated(shipSelect, shipSelectLabel);
     };
+
+   
 
     $form.on('submit', handleSubmit);
     const table = new Table('ships-table');

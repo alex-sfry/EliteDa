@@ -69,19 +69,33 @@ $this->title = 'Ships';
                                         <div class='row row-gap-3 justify-content-between'>
                                             <!--form column 1-->
                                             <div class='min-lett-spacing col-lg-4 row-gap-3'>
-                                                <?= CustomSelect::widget([
-                                                    'container' => 'c-custom-select',
-                                                    'error' => $ships_error,
-                                                    'selected' => $form_model->cMainSelect,
-                                                    'search' => 'c-select-search',
-                                                    'to_submit' => 'c-hiddenSelect',
-                                                    'placeholder' => 'selected ships',
-                                                    'label_main' => 'Ships:',
-                                                    'toggle_btn_text' => 'Select ships',
-                                                    'name_main' => 'cMainSelect[]',
-                                                    'list_items' => $ships_arr,
-                                                    'required' => 'required'
-                                                ]); ?>
+                                                <label class="fw-bold 
+                                                    <?= isset($ships_error) && $ships_error === 'is-invalid' ?
+                                                    'is-invalid text-danger' : '' ?>"
+                                                    for='c-hiddenSelect'>
+                                                    Ships:
+                                                </label>
+                                                <select 
+                                                    class="form-select"
+                                                    name="cMainSelect[]"
+                                                    id="c-hiddenSelect"
+                                                    required>
+                                                    <option value="" class="d-none" selected>
+                                                        Select ship
+                                                    </option>
+                                                    <?php foreach ($ships_arr as $item) : ?>
+                                                        <option
+                                                            value="<?= $item ?>"
+                                                            <?= isset($form_model->cMainSelect[0]) &&
+                                                                $item === $form_model->cMainSelect[0] ?
+                                                                    "selected" : null ?>>
+                                                            <?= $item ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                                <p class="invalid-feedback fw-bold top-100">
+                                                    Field must not be empty
+                                                </p>
                                             </div>
                                             <!--form column 2-->
                                             <div class="col-lg-4 d-flex row-gap-3 flex-column">
