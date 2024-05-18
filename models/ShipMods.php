@@ -35,15 +35,14 @@ class ShipMods extends Model
     }
 
     /**
-     * @param string $sys_name
      * @param array $get
      * @param int $limit
      *
      * @return \yii\data\ActiveDataProvider
      */
-    public function getModules(string $sys_name, array $get, int $limit): ActiveDataProvider
+    public function getModules(array $get, int $limit): ActiveDataProvider
     {
-        extract($this->getCoords($sys_name));
+        $distance_expr = $this->getDistanceToSystemExpression($get['refSystem']);
         $mod_symbols = [];
 
         foreach ($this->mods_arr as $key => $value) {
@@ -60,14 +59,14 @@ class ShipMods extends Model
                 'st.id AS station_id',
                 'type',
                 'distance_to_arrival AS distance_ls',
-                'sys.name AS system',
-                "ROUND(SQRT(POW((sys.x - $x), 2) + POW((sys.y - $y), 2) + POW((sys.z - $z), 2)), 2) AS distance_ly",
+                'systems.name AS system',
+                "$distance_expr AS distance_ly",
                 'TIMESTAMP',
                 'TIMESTAMPDIFF(MINUTE, TIMESTAMP, NOW()) as time_diff',
             ])
             ->from(['m' => 'ship_modules'])
             ->innerJoin(['st' => 'stations'], 'm.market_id = st.market_id')
-            ->innerJoin(['sys' => 'systems'], 'st.system_id = sys.id')
+            ->innerJoin('systems', 'st.system_id = systems.id')
             ->innerJoin(['pl' => 'modules_price_list'], 'm.name = pl.symbol')
             ->where(['m.name' => $mod_symbols]);
 
@@ -81,7 +80,7 @@ class ShipMods extends Model
 
         $get['maxDistanceFromRefStar'] !== 'Any' && $mod_market->andWhere([
             '<=',
-            "ROUND(SQRT(POW((sys.x - $x), 2) + POW((sys.y - $y), 2) + POW((sys.z - $z), 2)), 2)",
+            $distance_expr,
             $get['maxDistanceFromRefStar'],
         ]);
 
@@ -172,7 +171,7 @@ class ShipMods extends Model
         switch ($cat) {
             case 'armour':
                 $modules->andWhere(['category' => 'standard']);
-                $modules->andWhere(['like', 'ship_modules.name', '_Armour_']);
+                $modules->andWhere(['like', 'ship_modules.name', 'Armour']);
                 break;
             case 'core':
                 $modules->andWhere(['category' => 'standard']);

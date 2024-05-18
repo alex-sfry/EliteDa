@@ -2,42 +2,55 @@
 
 namespace app\controllers;
 
+use app\behaviors\SystemBehavior;
 use app\models\search\MaterialTradersSearch;
-use app\models\Systems;
 use Yii;
+use yii\helpers\ArrayHelper;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 
 class MaterialTradersController extends Controller
 {
+    /**
+     * @return array
+     */
+    public function behaviors(): array
+    {
+        return ArrayHelper::merge(
+            parent::behaviors(),
+            [SystemBehavior::class]
+        );
+    }
+
     public function actionIndex(): string
     {
         $session = Yii::$app->session;
         $session->open();
-//        $session->destroy();
+        $session->destroy();
         $request = Yii::$app->request;
 
-        if (count($request->post()) > 0) {
-            $session->set('mt', $request->post());
+        if (count($request->get()) > 0) {
+            if (isset($request->get()['refSysStation'])) {
+                $session->set('mt', $request->get());
+            } else {
+                $session->set('mt', ['refSysStation' => 'Sol']);
+            }
         } else {
             !isset($session->get('mt')['refSysStation']) && $session->set('mt', ['refSysStation' => 'Sol']);
         }
 
         if (isset($session->get('mt')['refSysStation'])) {
             if ($session->get('mt')['refSysStation'] !== '') {
-                $refCoords = Systems::find()
-                    -> select(['x', 'y', 'z'])
-                    ->where(['name' => $session->get('mt')['refSysStation']])
-                    ->asArray()
-                    ->one();
+                $distance_expr = $this->getDistanceToSystemExpression($session->get('mt')['refSysStation']);
             }
         }
 
-        if (!isset($refCoords)) {
-            $refCoords = ['x' => 0, 'y' => 0, 'z' => 0];
+        if (!isset($distance_expr) || !$distance_expr) {
+            $distance_expr = $this->getDistanceToSystemExpression('', ['x' => 0, 'y' => 0, 'z' => 0]);
         }
 
         $searchModel = new MaterialTradersSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams, $refCoords);
+        $dataProvider = $searchModel->search($this->request->queryParams, $distance_expr);
         $dataProvider->pagination = ['pageSize' => 50];
 
         $dataProvider->sort->attributes['system.name'] = [
@@ -55,7 +68,6 @@ class MaterialTradersController extends Controller
 
         $params['dataProvider'] = $dataProvider;
         $params['searchModel'] = $searchModel;
-        $params['refCoords'] = $refCoords;
 
         return $this->render('index', $params);
     }

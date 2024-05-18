@@ -2,7 +2,6 @@
 
 namespace app\commands;
 
-use app\models\Commodities;
 use app\models\ShipModulesList;
 use app\models\ShipsList;
 use Yii;
@@ -73,6 +72,31 @@ class JsonController extends Controller
         }
     }
 
+    private function createArrayFromJsonForCoreInt(string $json = '')
+    {
+        if (!$json) {
+            echo 'Provide path to json file' . "\n";
+            return ExitCode::OK;
+        }
+
+        $files = FileHelper::findFiles(Yii::$app->basePath . $json, ['only' => ['*.json']]);
+
+        foreach ($files as $file) {
+            $arr = Json::decode(file_get_contents($file));
+
+            foreach ($arr as $key => $value) {
+                foreach ($value['bulkheads'] as $item) {
+                    $this->result[] = [
+                    'edID' => $item['edID'],
+                    'price' => $item['cost']
+                    ];
+                }
+            }
+        }
+
+        $this->result = array_map("unserialize", array_unique(array_map("serialize", $this->result)));
+    }
+
     /**
      * @param string $json path to json file.
      *
@@ -98,10 +122,47 @@ class JsonController extends Controller
     {
         $this->createArrayFromJson($json);
 
+        Yii::$app->db->createCommand()
+            ->batchInsert('ships_price_list', ['name', 'price'], $this->result)
+            ->execute();
+
+        return ExitCode::OK;
+    }
+
+    public function actionShipscore(string $json = ''): int
+    {
+        $this->createArrayFromJsonForCoreInt($json);
+
+        $edIDs = ArrayHelper::getColumn($this->result, 'edID');
+
+        $res = ShipModulesList::find()
+            ->select(['id', 'symbol'])
+            ->where(['id' => $edIDs])
+            ->indexBy('id')
+            ->asArray()
+            ->all()
+        ;
+
+        foreach ($res as $key => $value) {
+            foreach ($this->result as $k => $val) {
+                if ($val['edID'] === $key) {
+                    $this->result[$k]['symbol'] = $value['symbol'];
+                }
+            }
+        }
+
+        foreach ($this->result as $key => $value) {
+            unset($this->result[$key]['edID']);
+
+            if (!isset($this->result[$key]['symbol'])) {
+                unset($this->result[$key]);
+            }
+        }
+
         // VarDumper::dump($this->result);
 
         Yii::$app->db->createCommand()
-            ->batchInsert('ships_price_list', ['name', 'price'], $this->result)
+            ->batchInsert('modules_price_list', ['price', 'symbol'], $this->result)
             ->execute();
 
         return ExitCode::OK;

@@ -27,15 +27,14 @@ class Commdts extends Model
     }
 
     /**
-     * @param string $sys_name
      * @param array $get
      * @param int $limit
      *
      * @return \yii\data\ActiveDataProvider
      */
-    public function getPrices(string $sys_name, array $get, int $limit): ActiveDataProvider
+    public function getPrices(array $get, int $limit): ActiveDataProvider
     {
-        extract($this->getCoords($sys_name));
+        extract($this->getCoords($get['refSystem']));
         $c_symbols = [];
 
         foreach ($this->commodities as $key => $value) {

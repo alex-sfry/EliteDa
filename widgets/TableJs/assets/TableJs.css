@@ -1,8 +1,8 @@
-.sortable thead th {
+.sortable thead th:not(.no-sort) {
     cursor: pointer;
 }
 
-.w-table thead th:hover {
+.w-table thead th:not(.no-sort):hover {
     background-color: var(--bs-warning) !important;
     color: var(--bs-light) !important;
 }

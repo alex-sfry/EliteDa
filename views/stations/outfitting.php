@@ -56,7 +56,7 @@ $this->title = $station_name . ' outfitting';
                             </a>
                         </li>
                     </ul>
-                    <?= TableJs::widget([
+                    <?php  echo TableJs::widget([
                         'container' => 'w-table',
                         'model' => $models,
                         'default_sorting' => 'asc',
@@ -71,7 +71,8 @@ $this->title = $station_name . ' outfitting';
                             [
                                 'attribute' => 'price',
                                 'label' => 'Price',
-                                'textAfter' => ' Cr'
+                                'textAfter' => ' Cr',
+                                'sort' => false
                             ],
                         ]]); ?>
                 </div>

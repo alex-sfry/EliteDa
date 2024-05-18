@@ -39,19 +39,15 @@ class MaterialTradersSearch extends MaterialTraders
      *
      * @return ActiveDataProvider
      */
-    public function search(array $params, $refCoords): ActiveDataProvider
+    public function search(array $params, $distance_expr): ActiveDataProvider
     {
-        extract($refCoords);
         $query = MaterialTraders::find();
 
         // add conditions that should always apply here
         $query
             ->select([
                 '*',
-                new Expression(
-                    "ROUND(SQRT(POW((systems.x - $x), 2) + POW((systems.y - $y), 2) +
-                    POW((systems.z - $z), 2)), 2) AS distance"
-                ),
+                "$distance_expr AS distance"
             ])
             ->innerJoinWith('system')
             ->innerJoinWith('station');

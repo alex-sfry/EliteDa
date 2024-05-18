@@ -60,12 +60,10 @@ class ShipModulesController extends Controller
                 return $this->render('index', $params);
             }
 
-            $sys_name = $params['get']['refSystem'];
-
             $mod_model = new ShipMods();
             $mod_model->setMods($params['ship_modules_arr']);
             $limit = 50;
-            $provider = $mod_model->getModules($sys_name, $params['get'], $limit, $session->get('mod_sort'));
+            $provider = $mod_model->getModules($params['get'], $limit);
             $params['models']  = $mod_model->modifyModels($provider->getModels(), $params['get']);
 
             $sort = $provider->getSort();

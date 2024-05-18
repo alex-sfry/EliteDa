@@ -62,7 +62,7 @@ class CommoditiesController extends Controller
 
             $c_model = new Commdts();
             $limit = 50;
-            $provider = $c_model->getPrices($params['get']['refSystem'], $params['get'], $limit);
+            $provider = $c_model->getPrices($params['get'], $limit);
             $params['models']  = $c_model->modifyModels($provider->getModels());
 
             $sort = $provider->getSort();

@@ -29,9 +29,12 @@ Yii::$app->view->registerCss($styles, [View::POS_BEGIN]);
                 <?= count($model) > 0 ? 'overflow-x-auto' : 'overflow-hidden' ?>">
         <thead>
             <tr>
-                <?php foreach ($column_labels as $label) : ?>
-                <th class='bg-light-orange p-2 text-body text-nowrap indicator-right' scope='col'>
-                    <span><?= $label ?></span>
+                <?php foreach ($columns as $key => $value) : ?>
+                <th 
+                    class='bg-light-orange p-2 text-body text-nowrap indicator-right
+                        <?= isset($value['sort']) && !$value['sort'] ? 'no-sort' : null ?>'
+                    scope='col'>
+                    <span><?= $value['label'] ?></span>
                 </th>
                 <?php endforeach; ?>
             </tr>
@@ -77,7 +80,8 @@ Yii::$app->view->registerCss($styles, [View::POS_BEGIN]);
                         <td 
                             class="<?= isset($value['class']) ? $value['class'] : null ?> text-truncate">
                             <?= isset($value['textBefore']) ? $value['textBefore'] : null; ?>
-                            <?= Html::encode($item[$value['attribute']]) ?>
+                            <?= isset($item[$value['attribute']]) ? Html::encode($item[$value['attribute']]) :
+                            '--' ?>
                             <?= isset($value['textAfter']) ? $value['textAfter'] : null; ?>
                         </td>
                     <?php endforeach; ?>

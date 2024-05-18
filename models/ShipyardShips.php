@@ -36,15 +36,14 @@ class ShipyardShips extends Model
     }
 
     /**
-     * @param string $sys_name
      * @param array $get
      * @param int $limit
      *
      * @return \yii\data\ActiveDataProvider
      */
-    public function getShips(string $sys_name, array $get, int $limit): ActiveDataProvider
+    public function getShips(array $get, int $limit): ActiveDataProvider
     {
-        extract($this->getCoords($sys_name));
+        $distance_expr = $this->getDistanceToSystemExpression($get['refSystem']);
         $mod_symbols = [];
 
         foreach ($this->ships_arr as $key => $value) {
@@ -60,28 +59,24 @@ class ShipyardShips extends Model
                 'st.id AS station_id',
                 'type',
                 'distance_to_arrival AS distance_ls',
-                'sys.name AS system',
-                "ROUND(SQRT(POW((sys.x - $x), 2) + POW((sys.y - $y), 2) + POW((sys.z - $z), 2)), 2) AS distance_ly",
+                'systems.name AS system',
+                "$distance_expr AS distance_ly",
                 'TIMESTAMP',
                 'TIMESTAMPDIFF(MINUTE, TIMESTAMP, NOW()) as time_diff',
             ])
             ->from(['sh' => 'shipyard'])
             ->innerJoin(['st' => 'stations'], 'sh.market_id = st.market_id')
-            ->innerJoin(['sys' => 'systems'], 'st.system_id = sys.id')
-            // ->innerJoin(['pl' => 'ships_price_list'], 'sh.name = pl.name')
+            ->innerJoin('systems', 'st.system_id = systems.id')
             ->where(['sh.name' => $mod_symbols]);
 
         $get['landingPadSize'] === 'L' && $ships->andWhere(['not', ['type' => 'Outpost']]);
-
         $get['includeSurface'] === 'No' &&
-        $ships->andWhere(['not in', 'type', ['Planetary Port', 'Planetary Outpost', 'Odyssey Settlement']]);
-
+            $ships->andWhere(['not in', 'type', ['Planetary Port', 'Planetary Outpost', 'Odyssey Settlement']]);
         $get['distanceFromStar'] !== 'Any' &&
-        $ships->andWhere(['<=', 'distance_to_arrival', $get['distanceFromStar']]);
-
+            $ships->andWhere(['<=', 'distance_to_arrival', $get['distanceFromStar']]);
         $get['maxDistanceFromRefStar'] !== 'Any' && $ships->andWhere([
             '<=',
-            "ROUND(SQRT(POW((sys.x - $x), 2) + POW((sys.y - $y), 2) + POW((sys.z - $z), 2)), 2)",
+            $distance_expr,
             $get['maxDistanceFromRefStar'],
         ]);
 

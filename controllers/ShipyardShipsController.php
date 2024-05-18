@@ -60,11 +60,9 @@ class ShipyardShipsController extends Controller
                 return $this->render('index', $params);
             }
 
-            $sys_name = $params['get']['refSystem'];
-
             $ships_model = new ShipyardShips($params['ships_arr']);
             $limit = 50;
-            $provider = $ships_model->getShips($sys_name, $params['get'], $limit, $session->get('ships_sort'));
+            $provider = $ships_model->getShips($params['get'], $limit);
             $params['models']  = $ships_model->modifyModels($provider->getModels(), $params['get']);
 
             $sort = $provider->getSort();

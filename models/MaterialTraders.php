@@ -38,8 +38,19 @@ class MaterialTraders extends ActiveRecord
             [['system_id', 'station_id'], 'required'],
             [['system_id', 'station_id'], 'integer'],
             [['material_type'], 'string', 'max' => 50],
-            [['station_id'], 'exist', 'skipOnError' => true, 'targetClass' => Stations::class, 'targetAttribute' => ['station_id' => 'id']],
-            [['system_id'], 'exist', 'skipOnError' => true, 'targetClass' => Systems::class, 'targetAttribute' => ['system_id' => 'id']],
+            [
+                ['station_id'],
+                'exist', 'skipOnError' => true,
+                'targetClass' => Stations::class,
+                'targetAttribute' => ['station_id' => 'id']
+            ],
+            [
+                ['system_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Systems::class,
+                'targetAttribute' => ['system_id' => 'id']
+            ],
         ];
     }
 

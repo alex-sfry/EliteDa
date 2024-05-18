@@ -13,7 +13,6 @@ use yii\helpers\VarDumper;
 
 $this->title = 'Material Traders';
 ?>
-
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='d-flex flex-column h-100'>
         <div class='container-xxl px-3'>
@@ -21,7 +20,7 @@ $this->title = 'Material Traders';
                 <div class='col'>
                     <h1 class="mt-2 text-custom-orange text-center sintony-bold"><?= Html::encode($this->title) ?></h1>
                     <div class="mt-tr-ref-idd ms-auto d-flex justify-content-end">
-                        <?= Html::beginForm(['/material-traders/index'], 'post', [
+                        <?= Html::beginForm(['/material-traders/index'], 'get', [
                             'id' => 'mt-form',
                             'class' => 'bg-custom-white p-1 rounded-2',
                             'novalidate' => true,
