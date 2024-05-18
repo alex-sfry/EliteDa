@@ -50,17 +50,23 @@ class JsonController extends Controller
 
         foreach ($files as $file) {
             $arr = Json::decode(file_get_contents($file));
-            $arr = $arr[array_key_first($arr)];
 
-            foreach ($arr as $item) {
-                $this->result[] = [
-                    'symbol' => $item['symbol'],
-                    'price' => $item['cost']
-                ];
+            if (!isset($arr[array_key_first($arr)]['retailCost'])) {
+                $arr = $arr[array_key_first($arr)];
 
-                // if ($item['symbol'] === 'Int_FuelTank_Size1_Class3') {
-                //     VarDumper::dump($item);
-                // }
+                foreach ($arr as $item) {
+                    $this->result[] = [
+                        'symbol' => $item['symbol'],
+                        'price' => $item['cost']
+                    ];
+                }
+            } else {
+                foreach ($arr as $key => $value) {
+                    $this->result[] = [
+                        'name' => $value['properties']['name'],
+                        'price' => $value['retailCost']
+                    ];
+                }
             }
 
             $this->result = array_map("unserialize", array_unique(array_map("serialize", $this->result)));
@@ -76,10 +82,26 @@ class JsonController extends Controller
     {
         $this->createArrayFromJson($json);
 
+        Yii::$app->db->createCommand()
+            ->batchInsert('modules_price_list', ['symbol', 'price'], $this->result)
+            ->execute();
+
+        return ExitCode::OK;
+    }
+
+    /**
+     * @param string $json path to json file.
+     *
+     * @return int Exit code
+     */
+    public function actionShips(string $json = ''): int
+    {
+        $this->createArrayFromJson($json);
+
         // VarDumper::dump($this->result);
 
         Yii::$app->db->createCommand()
-            ->batchInsert('modules_price_list', ['symbol', 'price'], $this->result)
+            ->batchInsert('ships_price_list', ['name', 'price'], $this->result)
             ->execute();
 
         return ExitCode::OK;
