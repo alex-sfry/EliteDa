@@ -51,6 +51,10 @@ class StationsController extends Controller
             ->asArray()
             ->one();
 
+        if (!$id || !$model) {
+            return $this->render('details', []);
+        }
+
         $services['market'] = Markets::find()
             ->where(['market_id' => $model['market_id']])
             ->asArray()
@@ -80,6 +84,10 @@ class StationsController extends Controller
      */
     public function actionShipModules(int $id, ShipMods $ship_modules, string $cat = 'hardpoint'): string
     {
+        if (!$id) {
+            return $this->render('outfitting', []);
+        }
+
         $id = (int)$id;
 
         $station = Stations::find()
@@ -88,7 +96,6 @@ class StationsController extends Controller
 
         $station_name = $station['name'];
 
-        // $ship_modules = new ShipMods($this->getShipModules());
         $ship_modules->setMods($this->getShipModules());
         $models = $ship_modules->getStationModules($id, $cat);
         $req = new Request();
@@ -110,6 +117,10 @@ class StationsController extends Controller
      */
     public function actionMarket(int $id, StationMarket $market): string
     {
+        if (!$id) {
+            return $this->render('market', []);
+        }
+
         $id = (int)$id;
 
         $station = Stations::find()

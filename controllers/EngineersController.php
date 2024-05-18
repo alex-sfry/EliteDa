@@ -23,6 +23,12 @@ class EngineersController extends Controller
 
     public function actionDetails(int $id): string
     {
+        if (!$id) {
+            return $this->render('details', []);
+        }
+
+        $id = (int)$id;
+
         $engineers = Json::decode(file_get_contents(Yii::$app->basePath . '/data/engineers.json'));
         $filtered_item = array_filter($engineers, function ($value) use ($id) {
             return $value['id'] === $id;

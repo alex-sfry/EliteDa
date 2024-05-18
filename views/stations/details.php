@@ -5,19 +5,19 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\VarDumper;
 
-$this->title = $model['name'];
+$this->title = isset($model['name']) ? $model['name'] : '';
 ?>
 
-<div class="bg-light">
-    <?php VarDumper::dump($services, 10, true); ?>
-</div>
+<!-- <div class="bg-light">
+    <?php /* VarDumper::dump($services, 10, true); */ ?>
+</div> -->
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='wrapper d-flex flex-column h-100'>
         <div class='container-xxl px-3'>
             <div class='row justify-content-center overflow-x-auto'>
                 <div class='details-cnt col-sm-10 col-lg-6'>
                     <h1 class="mt-2 text-custom-orange text-center sintony-bold"><?= HTML::encode($this->title) ?></h1>
-                    <?= DetailView::widget([
+                    <?= isset($model) ? DetailView::widget([
                         'model' => $model,
                         'attributes' => [
                             [
@@ -35,7 +35,7 @@ $this->title = $model['name'];
                             ['label' => 'Economy (secondary)', 'value' =>
                                 Html::encode($model['economyId2']['economy_name'])],
                             [
-                                'visible' => $services['market'],
+                                'visible' => isset($services) ? $services['market'] : false,
                                 'label' => 'Market',
                                 'format' => 'raw',
                                 'value' => Html::a(
@@ -46,7 +46,7 @@ $this->title = $model['name'];
                                 )
                             ],
                             [
-                                'visible' => $services['modules'],
+                                'visible' => isset($services) ? $services['modules'] : false,
                                 'label' => 'Outfitting',
                                 'format' => 'raw',
                                 'value' => Html::a(
@@ -57,7 +57,7 @@ $this->title = $model['name'];
                                 )
                             ],
                             [
-                                'visible' => $services['ships'],
+                                'visible' => isset($services) ? $services['ships'] : false,
                                 'label' => 'Shipyard',
                                 'format' => 'raw',
                                 'value' => Html::a(
@@ -69,7 +69,7 @@ $this->title = $model['name'];
                             ],
                         ],
                         'options' => ['class' => 'table table-striped detail-view']
-                    ])?>
+                    ]) : null ?>
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@
 use yii\helpers\VarDumper;
 use yii\widgets\DetailView;
 
-$this->title = $model['name'];
+$this->title = isset($model['name']) ? $model['name'] : '';
 ?>
 
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
@@ -16,7 +16,7 @@ $this->title = $model['name'];
             <div class='row justify-content-center overflow-x-auto'>
                 <div class='details-cnt col-md-10 col-lg-8'>
                     <h1 class="mt-2 text-custom-orange text-center sintony-bold"><?= $this->title ?></h1>
-                    <?= DetailView::widget([
+                    <?= isset($model) ? DetailView::widget([
                         'model' => $model,
                         'attributes' => [
                             ['label' => 'Station', 'value' => $model['station']],
@@ -39,7 +39,7 @@ $this->title = $model['name'];
                             ]
                         ],
                         'options' => ['class' => 'table table-striped detail-view']
-                    ])?>
+                    ]) : null ?>
                 </div>
             </div>
         </div>
