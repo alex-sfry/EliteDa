@@ -64,6 +64,7 @@ class UserController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'User account created.');
+            return $this->render('@app/views/site/user/signup_success', []);
         }
 
         return $this->render('@app/views/site/user/signup', [
