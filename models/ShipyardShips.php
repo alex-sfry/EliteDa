@@ -83,7 +83,7 @@ class ShipyardShips extends Model
         $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$get['dataAge']} HOUR)");
 
         $get['dataAge'] !== 'Any' &&
-        $ships->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
+            $ships->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
 
         switch ($get['sortBy']) {
             case 'Updated_at':
