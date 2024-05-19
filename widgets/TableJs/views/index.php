@@ -34,7 +34,10 @@ Yii::$app->view->registerCss($styles, [View::POS_BEGIN]);
                     class='bg-light-orange p-2 text-body text-nowrap indicator-right
                         <?= isset($value['sort']) && !$value['sort'] ? 'no-sort' : null ?>'
                     scope='col'>
-                    <span><?= $value['label'] ?></span>
+                    <span>
+                        <?= isset($value['label']) ?
+                            Html::encode($value['label']) : Html::encode($value['attribute']) ?>
+                    </span>
                 </th>
                 <?php endforeach; ?>
             </tr>
