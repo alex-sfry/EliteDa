@@ -106,7 +106,7 @@ class StationsController extends Controller
             'commodities_req_arr' => $this->getCommoditiesReqArr(['Gold']),
             'req' => $req->get(),
             'cat' => $cat,
-            'market_id' => $id
+            'market_id' => (int)$id
          ]);
     }
 

@@ -123,7 +123,7 @@ class TradeRoutes extends Model
      */
     private function getTargetMarkets(): Query
     {
-        extract($this->getCoords($this->sys_name));
+        $distance_expr = $this->getDistanceToSystemExpression($this->sys_name);
         $cargo = (int)$this->get['cargo'];
 
         foreach ($this->source_market as $item) {
@@ -135,52 +135,39 @@ class TradeRoutes extends Model
                     new Expression("{$item['buy_price']} AS source_buy_price"),
                     new Expression(':type AS source_type', [':type' => $item['type']]),
                     new Expression("{$item['source_distance_ls']} AS source_distance_ls"),
+                    new Expression("{$item['market_id']} AS source_market_id"),
                     'm.name AS commodity',
                     'st.name AS target_station',
                     'type AS target_type',
                     'distance_to_arrival AS target_distance_ls',
-                    'sys.name AS target_system',
+                    'systems.name AS target_system',
                     'sell_price AS target_sell_price',
                     'demand as target_demand',
                     'm.market_id AS target_market_id',
                     "(sell_price - {$item['buy_price']}) * $cargo AS dir_profit",
-                    "ROUND(SQRT(POW((sys.x-$x), 2)+POW((sys.y-$y), 2)+POW((sys.z-$z), 2)), 2) as distance_ly",
+                    "$distance_expr as distance_ly",
                     'TIMESTAMP as target_timestamp',
                     'TIMESTAMPDIFF(MINUTE, TIMESTAMP, NOW()) AS target_time_diff',
                 ])
                 ->from(['m' => 'markets'])
                 ->innerJoin(['st' => 'stations'], 'm.market_id = st.market_id')
-                ->innerJoin(['sys' => 'systems'], 'st.system_id = sys.id')
+                ->innerJoin('systems', 'st.system_id = systems.id')
                 ->where(['m.name' => $item['commodity']])
                 ->andWhere(['>', 'demand', (int)$this->get['minSupplyDemand']])
                 ->andWhere([
                     '>', "(sell_price - {$item['buy_price']}) * $cargo", $this->get['profit']
                 ]);
 
-            $this->get['landingPadSize'] === 'L' && $query->andWhere(['not', ['type' => 'Outpost']]);
-
-            $this->get['includeSurface'] === 'No' &&
-            $query->andWhere(['not in', 'type', ['Planetary Port', 'Planetary Outpost', 'Odyssey Settlement']]);
-
-            $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$this->get['dataAge']} HOUR)");
-
-            $this->get['dataAge'] !== 'Any' &&
-            $query->andWhere(['>', 'timestamp', $date_sub_expr]);
-
             if (isset($this->get['targetSysStationName']) && $this->get['targetSysStation'] !== '') {
-                $this->get['targetSysStationName'] === 'station' &&
-                $query->andWhere(['st.name' => $this->target_st, 'sys.name' => $this->target_sys]);
-                $this->get['targetSysStationName'] === 'system' &&
-                $query->andWhere(['sys.name' => $this->target_sys]);
+                if ($this->get['targetSysStationName'] === 'station') {
+                    $query->andWhere(['st.name' => $this->target_st, 'systems.name' => $this->target_sys]);
+                }
+                if ($this->get['targetSysStationName'] === 'system') {
+                    $query->andWhere(['systems.name' => $this->target_sys]);
+                    $this->addQueryParamsTargetSystem($query, $distance_expr, 'system');
+                }
             } else {
-                $this->get['maxDistanceFromRefStar'] !== 'Any' && $query->andWhere([
-                    '<=',
-                    "ROUND(SQRT(POW((sys.x - $x), 2) + POW((sys.y - $y), 2) + POW((sys.z - $z), 2)), 2)",
-                    $this->get['maxDistanceFromRefStar'],
-                ]);
-
-                $this->get['distanceFromStar'] !== 'Any' &&
-                $query->andWhere(['<=', 'distance_to_arrival', $this->get['distanceFromStar']]);
+                $this->addQueryParamsTargetSystem($query, $distance_expr);
             }
 
             $this->dir_route_queries[] = $query;
@@ -195,6 +182,31 @@ class TradeRoutes extends Model
         return (new Query())
             ->select('*')
             ->from($query1);
+    }
+
+    private function addQueryParamsTargetSystem(Query $query, $distance_expr = null, string $target = ''): void
+    {
+        $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$this->get['dataAge']} HOUR)");
+        $this->get['dataAge'] !== 'Any' &&
+            $query->andWhere(['>', 'timestamp', $date_sub_expr]);
+
+        if ($target === 'system' || !$target) {
+            $this->get['landingPadSize'] === 'L' && $query->andWhere(['not', ['type' => 'Outpost']]);
+
+            $this->get['includeSurface'] === 'No' &&
+                $query->andWhere(['not in', 'type', ['Planetary Port', 'Planetary Outpost', 'Odyssey Settlement']]);
+
+            $this->get['distanceFromStar'] !== 'Any' &&
+                $query->andWhere(['<=', 'distance_to_arrival', $this->get['distanceFromStar']]);
+        }
+
+        if (!$target) {
+            $this->get['maxDistanceFromRefStar'] !== 'Any' && $query->andWhere([
+                '<=',
+                $distance_expr,
+                $this->get['maxDistanceFromRefStar'],
+            ]);
+        }
     }
 
     /**
@@ -313,50 +325,53 @@ class TradeRoutes extends Model
                 $this->commodities[strtolower($value['commodity'])] : $value['commodity'];
             $value['source']['buy_price'] = $value['source_buy_price'];
             $value['source']['pad'] = $this->getLandingPadSizes()[$value['source_type']];
-            $value['target']['pad'] = $this->getLandingPadSizes()[$value['target_type']];
-            $value['source']['time_diff'] = Yii::$app->formatter->asRelativeTime($value['source_timestamp']);
-            $value['target']['time_diff'] = Yii::$app->formatter->asRelativeTime($value['target_timestamp']);
             $value['source']['stock'] = $value['source_stock'];
-            $value['target']['station'] = $value['target_station'];
+            $value['source']['time_diff'] = Yii::$app->formatter->asRelativeTime($value['source_timestamp']);
             $value['source']['type'] = $value['source_type'];
-            $value['target']['type'] = $value['target_type'];
-            $value['target']['system'] = $value['target_system'];
             $value['source']['station'] = $this->st_name;
             $value['source']['system'] = $this->sys_name;
-            $value['target']['distance_ls'] = $value['target_distance_ls'];
             $value['source']['distance_ls'] = $value['source_distance_ls'];
+            $value['source']['market_id'] = $value['source_market_id'];
 
             $value['source']['surface'] = match ($value['source_type']) {
                 'Planetary Outpost', 'Planetary Port', 'Odyssey Settlement' => true,
                 default => false,
             };
+
+            $value['target']['pad'] = $this->getLandingPadSizes()[$value['target_type']];
+            $value['target']['time_diff'] = Yii::$app->formatter->asRelativeTime($value['target_timestamp']);
+            $value['target']['station'] = $value['target_station'];
+            $value['target']['type'] = $value['target_type'];
+            $value['target']['system'] = $value['target_system'];
+            $value['target']['distance_ls'] = $value['target_distance_ls'];
+            $value['target']['sell_price'] = $value['target_sell_price'];
+            $value['target']['demand'] = $value['target_demand'];
+            $value['target']['market_id'] = $value['target_market_id'];
+
             $value['target']['surface'] = match ($value['target_type']) {
                 'Planetary Outpost', 'Planetary Port', 'Odyssey Settlement' => true,
                 default => false,
             };
 
-            $value['target']['sell_price'] = $value['target_sell_price'];
-            $value['target']['demand'] = $value['target_demand'];
-            $value['target']['market_id'] = $value['target_market_id'];
-
             unset($value['source_type']);
-            unset($value['target_type']);
             unset($value['source_stock']);
+            unset($value['source_time_diff']);
+            unset($value['source_sell_price']);
+            unset($value['source_demand']);
+            unset($value['source_distance_ls']);
+            unset($value['source_buy_price']);
+            unset($value['source_type']);
+            unset($value['source_market_id']);
+            unset($value['target_type']);
             unset($value['target_station']);
             unset($value['target_system']);
             unset($value['target_distance_ls']);
             unset($value['target_sell_price']);
             unset($value['target_demand']);
             unset($value['target_market_id']);
-            unset($value['source_time_diff']);
             unset($value['target_time_diff']);
             unset($value['target_buy_price']);
             unset($value['target_stock']);
-            unset($value['source_sell_price']);
-            unset($value['source_demand']);
-            unset($value['source_distance_ls']);
-            unset($value['source_buy_price']);
-            unset($value['source_type']);
             unset($value['target_type']);
 
             $models[$key] = $value;

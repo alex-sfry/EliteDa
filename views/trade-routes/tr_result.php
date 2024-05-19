@@ -6,7 +6,7 @@ use yii\bootstrap5\LinkPager;
 use yii\helpers\VarDumper;
 
 ?>
-<div class="tr-result-wrapper container-xxl">
+<div class="tr-result-wrapper container-xxl mt-4">
     <?php foreach ($models as $key => $value) : ?>
         <div class="tr-route d-flex flex-column row-gap-lg-1 row-gap-sm-2 border border-2 border-light-orange h-auto
                         bg-custom-white">
