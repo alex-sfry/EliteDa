@@ -34,7 +34,7 @@ class Commdts extends Model
      */
     public function getPrices(array $get, int $limit): ActiveDataProvider
     {
-        extract($this->getCoords($get['refSystem']));
+        $distance_expr = $this->getDistanceToSystemExpression($get['refSystem']);
         $c_symbols = [];
 
         foreach ($this->commodities as $key => $value) {
@@ -65,14 +65,14 @@ class Commdts extends Model
                 'st.id AS station_id',
                 'type',
                 'distance_to_arrival AS distance_ls',
-                'sys.name AS system',
-                "ROUND(SQRT(POW((sys.x - $x), 2) + POW((sys.y - $y), 2) + POW((sys.z - $z), 2)), 2) AS distance_ly",
+                'systems.name AS system',
+                "$distance_expr AS distance_ly",
                 'TIMESTAMP',
                 'TIMESTAMPDIFF(MINUTE, TIMESTAMP, NOW()) as time_diff',
             ])
             ->from(['m' => 'markets'])
             ->innerJoin(['st' => 'stations'], 'm.market_id = st.market_id')
-            ->innerJoin(['sys' => 'systems'], 'st.system_id = sys.id')
+            ->innerJoin('systems', 'st.system_id = systems.id')
             ->where(['m.name' => $c_symbols])
             ->andWhere(['>', $stock_demand, 0]);
 
@@ -86,7 +86,7 @@ class Commdts extends Model
 
         $get['maxDistanceFromRefStar'] !== 'Any' && $prices->andWhere([
             '<=',
-            "ROUND(SQRT(POW((sys.x - $x), 2) + POW((sys.y - $y), 2) + POW((sys.z - $z), 2)), 2)",
+            $distance_expr,
             $get['maxDistanceFromRefStar'],
         ]);
 

@@ -9,7 +9,7 @@ use yii\helpers\VarDumper;
 <div class="tr-result-wrapper container-xxl mt-4">
     <?php foreach ($models as $key => $value) : ?>
         <div class="tr-route d-flex flex-column row-gap-lg-1 row-gap-sm-2 border border-2 border-light-orange h-auto
-                        bg-custom-white">
+                        bg-light">
             <span class="fs-5 text-center">Route #<?= $key + 1 + $pagination->pageSize * $pagination->page ?></span>
             <div class="tr-route-block h-auto w-100 px-3 pb-3">
                 <div class="tr-route-block-inner row justify-content-between my-0 mx-auto rounded-2">

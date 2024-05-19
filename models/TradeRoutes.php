@@ -56,7 +56,7 @@ class TradeRoutes extends Model
      *
      * @return \yii\data\ActiveDataProvider
      */
-    public function getData($limit): ActiveDataProvider
+    public function getData($limit): ActiveDataProvider|string
     {
         switch ($this->get['sortBy']) {
             case 'Updated_at':
@@ -73,6 +73,11 @@ class TradeRoutes extends Model
         }
 
         $this->source_market = $this->getSourceMarket()->all();
+
+        if (count($this->source_market) < 1) {
+            return 'Market in reference station not found';
+        }
+
         $tr_routes = $this->getTargetMarkets();
 
         return new ActiveDataProvider(config: [
@@ -362,6 +367,8 @@ class TradeRoutes extends Model
             unset($value['source_buy_price']);
             unset($value['source_type']);
             unset($value['source_market_id']);
+            unset($value['source_timestamp']);
+
             unset($value['target_type']);
             unset($value['target_station']);
             unset($value['target_system']);
@@ -373,6 +380,7 @@ class TradeRoutes extends Model
             unset($value['target_buy_price']);
             unset($value['target_stock']);
             unset($value['target_type']);
+            unset($value['target_timestamp']);
 
             $models[$key] = $value;
         }

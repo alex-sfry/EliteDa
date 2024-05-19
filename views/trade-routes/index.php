@@ -17,9 +17,9 @@
  * @var \app\models\forms\TradeRoutesForm $form_model
  */
 
-use app\models\forms\TradeRoutesForm;
 use app\widgets\InputDropdown\InputDropdown;
 use yii\helpers\Html;
+use yii\helpers\VarDumper;
 
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
@@ -73,7 +73,7 @@ $this->title = 'Trade routes';
                                 <?= Html::beginForm(['/trade-routes/index'], 'get', [
                                     'id' => 'tr-form',
                                     'novalidate' => true,
-                                    'class' => 'c-form fs-7 bg-custom-white py-2 px-2 rounded-2 w-100 d-flex 
+                                    'class' => 'c-form fs-7 bg-light py-2 px-2 rounded-2 w-100 d-flex 
                                     flex-column needs-validation',
                                 ]) ?>
                                 <div class='container-xxl'>
@@ -382,6 +382,13 @@ $this->title = 'Trade routes';
                 </div>
             </div>
         </div>
+        <div class="<?= !isset($model_error) ? 'd-none' : 'text-center mt-3' ?>">
+            <span class="bg-light w-50 px-2 py-1 rounded-2 fs-5 text-danger ">
+                <?= isset($model_error) ? $model_error : null ?>
+            </span>
+        </div>
     </div>
+    
     <?= $result ?? null; ?>
 </main>
+

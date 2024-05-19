@@ -67,8 +67,19 @@ class TradeRoutesController extends Controller
             $tr_model = new TradeRoutes($params['get']);
 
             $data_dir = $tr_model->getData($limit);
+
+            if (gettype($data_dir) === 'string') {
+                $params['model_error'] = $data_dir;
+                return $this->render('index', $params);
+            }
+
             $pagination = $data_dir->getPagination();
             $params['models'] = $data_dir->getModels();
+
+            if (count($params['models']) < 1) {
+                $params['model_error'] = 'Trade routes not found';
+                return $this->render('index', $params);
+            }
 
             if (isset($params['get']['roundTrip'])) {
                 $target_market_ids = ArrayHelper::getColumn($params['models'], 'target_market_id');
