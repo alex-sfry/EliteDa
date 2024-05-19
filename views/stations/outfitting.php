@@ -30,13 +30,13 @@ $this->title = $station_name . ' outfitting';
                 </h1>
                 <div class="bg-light my-0 mx-auto rounded-2 px-2 bg-transparent" style="max-width:fit-content;">
                     <ul class="nav nav-pills px-3 py-2 my-2 justify-content-center bg-white rounded-2">
-                        <li class="nav-item">
-                            <a class="nav-link light-orange <?= $cat === 'armour' ? 'active' : null ?>"
+                    <li class="nav-item">
+                            <a class="nav-link light-orange <?= $cat === 'hardpoint' ? 'active' : null ?>"
                                 aria-current="page" href="<?= Url::to([
                                     'stations/ship-modules',
                                     'id' => $market_id,
-                                    'cat' => 'armour']) ?>">
-                                Armour
+                                    'cat' => 'hardpoint']) ?>">
+                                Hardpoint
                             </a>
                         </li>
                         <li class="nav-item">
@@ -53,6 +53,15 @@ $this->title = $station_name . ' outfitting';
                                     'id' => $market_id,
                                     'cat' => 'internal']) ?>">
                                 Optional internal
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link light-orange <?= $cat === 'armour' ? 'active' : null ?>"
+                                aria-current="page" href="<?= Url::to([
+                                    'stations/ship-modules',
+                                    'id' => $market_id,
+                                    'cat' => 'armour']) ?>">
+                                Armour
                             </a>
                         </li>
                     </ul>
