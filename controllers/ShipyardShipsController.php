@@ -60,7 +60,8 @@ class ShipyardShipsController extends Controller
                 return $this->render('index', $params);
             }
 
-            $ships_model = new ShipyardShips($params['ships_arr']);
+            $ships_model = new ShipyardShips();
+            $ships_model->setShipsArr($params['ships_arr']);
             $limit = 50;
             $provider = $ships_model->getShips($params['get'], $limit);
             $params['models']  = $ships_model->modifyModels($provider->getModels(), $params['get']);

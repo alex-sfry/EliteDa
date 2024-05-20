@@ -29,7 +29,7 @@ class ShipMods extends Model
         );
     }
 
-    public function setMods($mods)
+    public function setMods(array $mods): void
     {
         $this->mods_arr = $mods;
     }
@@ -146,14 +146,16 @@ class ShipMods extends Model
     }
 
     /**
-     * @param int $id
+     * @param int $market_id
      * @param string $cat
      *
      * @return array
      */
-    public function getStationModules(int $id, string $cat): array
+    public function getStationModules(int $market_id, string $cat): array
     {
-        $modules = ShipModules::find()
+        $market_id = (int)$market_id;
+
+        $modules = (new Query())
             ->select([
                 'ship_modules.name',
                 'mlst.symbol',
@@ -163,10 +165,10 @@ class ShipMods extends Model
                 'timestamp',
                 'market_id'
             ])
+            ->from('ship_modules')
             ->innerJoin(['mlst' => 'ship_modules_list'], 'mlst.symbol = ship_modules.name')
             ->innerJoin(['mprc' => 'modules_price_list'], 'mprc.symbol = ship_modules.name')
-            ->where(['market_id' => $id])
-            ->asArray();
+            ->where(['market_id' => $market_id]);
 
         switch ($cat) {
             case 'armour':
@@ -188,17 +190,9 @@ class ShipMods extends Model
                 break;
             default:
                 $modules->andWhere(['category' => 'hardpoint']);
-        }
+        };
 
-        $provider = new ActiveDataProvider(config: [
-            'query' => $modules,
-            'pagination' => [
-                'pageSizeLimit' => [0, 500],
-                'defaultPageSize' => 500,
-            ],
-        ]);
-
-        $models = $provider->getModels();
+        $models = $modules->orderBy('ship_modules.name')->all();
 
         foreach ($models as $key => $value) {
             $models[$key]['m_name'] = isset($this->mods_arr[strtolower($value['name'])]) ?
@@ -211,5 +205,60 @@ class ShipMods extends Model
         }
 
         return $models;
+    }
+
+    /**
+     * @param int $market_id
+     *
+     * @return array
+     */
+    public function getQtyByCat(int $market_id): array
+    {
+        $market_id = (int)$market_id;
+
+        $armour = ShipModules::find()
+            ->select(['category', 'ship_modules.name'])
+            ->innerJoin(['mlst' => 'ship_modules_list'], 'mlst.symbol = ship_modules.name')
+            ->where(['market_id' => $market_id])
+            ->andWhere(['category' => 'standard'])
+            ->andWhere(['like', 'ship_modules.name', 'Armour'])
+            ->count();
+
+        $hardpoint = ShipModules::find()
+            ->select(['category'])
+            ->innerJoin(['mlst' => 'ship_modules_list'], 'mlst.symbol = ship_modules.name')
+            ->where(['market_id' => $market_id])
+            ->andWhere(['category' => 'hardpoint'])
+            ->count();
+
+        $core = ShipModules::find()
+            ->select(['category', 'ship_modules.name'])
+            ->innerJoin(['mlst' => 'ship_modules_list'], 'mlst.symbol = ship_modules.name')
+            ->where(['market_id' => $market_id])
+            ->andWhere(['category' => 'standard'])
+            ->andWhere(['not like', 'ship_modules.name', '_Armour_'])
+            ->count();
+
+        $internal = ShipModules::find()
+            ->select(['category'])
+            ->innerJoin(['mlst' => 'ship_modules_list'], 'mlst.symbol = ship_modules.name')
+            ->where(['market_id' => $market_id])
+            ->andWhere(['category' => 'internal'])
+            ->count();
+
+        $utility = ShipModules::find()
+            ->select(['category'])
+            ->innerJoin(['mlst' => 'ship_modules_list'], 'mlst.symbol = ship_modules.name')
+            ->where(['market_id' => $market_id])
+            ->andWhere(['category' => 'utility'])
+            ->count();
+
+        return [
+            'hardpoint' => $hardpoint,
+            'internal' => $internal,
+            'utility' => $utility,
+            'armour' => $armour,
+            'core' => $core,
+        ];
     }
 }

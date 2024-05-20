@@ -63,7 +63,7 @@ $this->title = $model['name'];
                                 'value' => Html::a(
                                     'Ships',
                                     Url::toRoute([
-                                        "station/ship-modules-hardpoint/$id"
+                                        "station/ships/$id"
                                     ])
                                 )
                             ],

@@ -30,9 +30,9 @@ class ShipyardShips extends Model
         );
     }
 
-    public function __construct($ships)
+    public function setShipsArr(array $ships_arr): void
     {
-        $this->ships_arr = $ships;
+        $this->ships_arr = $ships_arr;
     }
 
     /**
@@ -125,6 +125,17 @@ class ShipyardShips extends Model
      */
     public function modifyModels(array $models): array
     {
+        $sub_query = (new Query())
+            ->select('name')
+            ->from('ships_list')
+            ->where(['ships_list.symbol' => $models[0]['ship']]);
+
+        $ship_from_price_list = (new Query())
+            ->select(['price'])
+            ->from('ships_price_list')
+            ->where(['ships_price_list.name' => $sub_query])
+            ->one();
+
         foreach ($models as $key => $value) {
             $value['ship'] = isset($this->ships_arr[strtolower($value['ship'])]) ?
                 $this->ships_arr[strtolower($value['ship'])] : $value['ship'];
@@ -136,11 +147,34 @@ class ShipyardShips extends Model
                 default => false,
             };
 
-            $ship_from_price_list = ShipsPriceList::findOne($value['ship']);
-            $value['price'] = $ship_from_price_list ? $ship_from_price_list->price : null;
+            $value['price'] = $ship_from_price_list ? $ship_from_price_list['price'] : null;
             $models[$key] = $value;
         }
 
         return $models;
+    }
+
+    public function getStationShips(int $market_id): array
+    {
+        $market_id = (int)$market_id;
+
+        $ships = Shipyard::find()
+            ->select([
+                'sprc.name',
+                'price',
+                'timestamp',
+            ])
+            ->innerJoin(['slst' => 'ships_list'], 'slst.symbol = shipyard.name')
+            ->innerJoin(['sprc' => 'ships_price_list'], 'sprc.name = slst.name')
+            ->where(['market_id' => $market_id])
+            ->orderBy('sprc.name')
+            ->asArray()
+            ->all();
+
+        foreach ($ships as $key => $value) {
+            $ships[$key]['timestamp'] = Yii::$app->formatter->asRelativeTime($value['timestamp']);
+        }
+
+        return $ships;
     }
 }

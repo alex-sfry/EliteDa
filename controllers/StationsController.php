@@ -4,10 +4,12 @@ namespace app\controllers;
 
 use app\behaviors\CommoditiesBehavior;
 use app\behaviors\ShipModulesBehavior;
+use app\behaviors\ShipyardShipsBehavior;
 use app\behaviors\StationBehavior;
 use app\models\Markets;
 use app\models\ShipMods;
 use app\models\ShipModules;
+use app\models\ShipyardShips;
 use app\models\Shipyard;
 use app\models\StationMarket;
 use app\models\Stations;
@@ -15,7 +17,6 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
-use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Request;
 use yii\web\Response;
@@ -32,7 +33,8 @@ class StationsController extends Controller
             [
                 StationBehavior::class,
                 CommoditiesBehavior::class,
-                ShipModulesBehavior::class
+                ShipModulesBehavior::class,
+                ShipyardShipsBehavior::class
             ]
         );
     }
@@ -82,12 +84,42 @@ class StationsController extends Controller
 
     /**
      * @param int $id
+     * @param ShipyardShips $ships
      *
      * @return string
      *
      * @throws NotFoundHttpException
      */
-    public function actionShipModules(int $id, ShipMods $ship_modules, string $cat = 'hardpoint'): string
+    public function actionShips(int $id, ShipyardShips $ships): string
+    {
+        !$id && throw new NotFoundHttpException();
+        $id = (int)$id;
+
+        $station = Stations::findOne($id);
+        !$station && throw new NotFoundHttpException();
+
+        $ships->setShipsArr($this->getShipsList());
+        $req = new Request();
+
+        return $this->render('ships', [
+            'models' => $ships->getStationShips($station['market_id']),
+            'station_name' => $station['name'],
+            'commodities_req_arr' => $this->getCommoditiesReqArr(['Gold']),
+            'req' => $req->get(),
+            'id' => $id
+         ]);
+    }
+
+    /**
+     * @param int $id
+     * @param ShipMods $ship_modules
+     * @param string $cat
+     *
+     * @return string
+     *
+     * @throws NotFoundHttpException
+     */
+    public function actionShipModules(int $id, ShipMods $ship_modules, string $cat): string
     {
         !$id && throw new NotFoundHttpException();
         $id = (int)$id;
@@ -96,6 +128,7 @@ class StationsController extends Controller
         !$station && throw new NotFoundHttpException();
 
         $ship_modules->setMods($this->getShipModules());
+        $qty_by_cat = $ship_modules->getQtyByCat($station['market_id']);
         $req = new Request();
 
         return $this->render('outfitting', [
@@ -104,12 +137,14 @@ class StationsController extends Controller
             'commodities_req_arr' => $this->getCommoditiesReqArr(['Gold']),
             'req' => $req->get(),
             'cat' => $cat,
-            'id' => $id
+            'id' => $id,
+            'qty_by_cat' => $qty_by_cat
          ]);
     }
 
     /**
      * @param int $id
+     * @param StationMarket $market
      *
      * @return string
      *
@@ -131,10 +166,13 @@ class StationsController extends Controller
     }
 
     /**
+     * @param string $sys_st
+     *
      * @return void
+     *
      * @throws NotFoundHttpException
      */
-    public function actionSystemStation($sys_st): void
+    public function actionSystemStation(string $sys_st): void
     {
         if (!$sys_st) {
             throw new NotFoundHttpException();

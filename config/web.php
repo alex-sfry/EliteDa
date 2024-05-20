@@ -116,6 +116,7 @@ $config = [
                'contact' => 'site/contact',
                 'engineers' => 'engineers/index',
                 'engineer/<id:\w+>' => 'engineers/details',
+                'station/ships/<id:\w+>' => 'stations/ships',
                 'station/ship-modules-<cat:\w+>/<id:\w+>' => 'stations/ship-modules',
                 'station/ship-modules-hardpoint/<id:\w+>' => 'stations/ship-modules',
                 'station/market/<id:\w+>' => 'stations/market',
@@ -145,6 +146,9 @@ $config = [
             ],
             'app\models\ShipMods' => [
                 'class' => 'app\models\ShipMods',
+            ],
+            'app\models\ShipyardShips' => [
+                'class' => 'app\models\ShipyardShips',
             ],
         ],
     ],
