@@ -92,7 +92,7 @@ $this->title = 'Trade routes';
                                                             'to_submit' => 'ref-to-submit',
                                                             'placeholder' => 'Enter station name here',
                                                             'ajax' => true,
-                                                            'endpoint' => '/stations/system-station/?sys-st=',
+                                                            'endpoint' => '/system-station/',
                                                             'label_main' => 'Ref. station:',
                                                             'toggle_btn_text' => 'Get station list',
                                                             'name_main' => 'refSysStation',

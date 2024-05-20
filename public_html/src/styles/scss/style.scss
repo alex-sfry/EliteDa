@@ -150,14 +150,6 @@ body {
     }
 }
 
-@media screen and (min-width: 330px) {
-    .main-tile {
-        a {
-            font-size: 1rem;
-        }
-    }
-}
-
 /**
 * pagination styles
 */
@@ -317,6 +309,14 @@ main {
 
         a {
             font-size: 0.875rem;
+        }
+    }
+
+    @media screen and (min-width: 330px) {
+        .main-tile {
+            a {
+                font-size: 1rem;
+            }
         }
     }
 }
@@ -483,15 +483,19 @@ form {
     th {
         @extend .w-f-content;
     }
+}
 
-    .table-link {
+table {
+    .table-link,
+    .table-link-tr > a {
         transition: all 0.2s linear;
         text-decoration-style: dashed !important;
         text-underline-offset: 4px;
     }
 
-    .table-link:hover {
-        background-color: $warning;
+    .table-link:hover,
+    .table-link-tr > a:hover {
+        background-color: $warning !important;
         text-decoration-color: $dark !important;
     }
 }

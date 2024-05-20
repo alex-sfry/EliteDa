@@ -3,9 +3,14 @@
 /** @var array $models */
 
 use yii\bootstrap5\LinkPager;
+use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\helpers\VarDumper;
 
 ?>
+<div class="bg-light">
+    <?php /* d($models[0]) */ ?>
+</div>
 <div class="tr-result-wrapper container-xxl mt-4">
     <?php foreach ($models as $key => $value) : ?>
         <div class="tr-route d-flex flex-column row-gap-lg-1 row-gap-sm-2 border border-2 border-light-orange h-auto
@@ -17,11 +22,18 @@ use yii\helpers\VarDumper;
                         <span class="fs-6 sintony-bold text-primary d-inline-block">Buy</span>
                         <span class="fst-italic sintony-bold ms-3"><?= $value['commodity'] ?></span>
                         <div class="fs-7 d-flex flex-lg-column flex-sm-row column-gap-5">
-                            <table class="table table-sm mb-1 mb-lg-0 table-borderless">
+                            <table class="table table-sm mb-1 mb-lg-0 table-borderless line">
                                 <tbody>
                                     <tr>
                                         <td>Station:</td>
-                                        <td class="text-end"><?= $value['source']['station'] ?></td>
+                                        <?php $source_station_id = Html::encode($value['source']['station_id']) ?>
+                                        <td class="text-end table-link-tr">
+                                            <?= Html::a(
+                                                Html::encode($value['source']['station']),
+                                                Url::toRoute(["station/$source_station_id"]),
+                                                ['class' => ['text-decoration-underline', 'link-underline-primary']]
+                                            );?>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Station type:</td>
@@ -84,7 +96,14 @@ use yii\helpers\VarDumper;
                                 <tbody>
                                     <tr>
                                         <td>Station:</td>
-                                        <td class="text-end"><?= $value['target']['station'] ?></td>
+                                        <?php $target_station_id = Html::encode($value['target']['station_id']) ?>
+                                        <td class="text-end table-link-tr">
+                                            <?= Html::a(
+                                                Html::encode($value['target']['station']),
+                                                Url::toRoute(["station/$target_station_id"]),
+                                                ['class' => ['text-decoration-underline', 'link-underline-primary']]
+                                            );?>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Station type:</td>
