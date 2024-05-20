@@ -138,19 +138,6 @@ body {
     }
 }
 
-.col-tile,
-.main-tile {
-    max-width: 240px;
-}
-
-.main-tile {
-    height: 80px;
-
-    a {
-        font-size: 0.875rem;
-    }
-}
-
 @media screen and (min-width: 330px) {
     .main-tile {
         a {
@@ -285,15 +272,40 @@ body {
 */
 main {
     .nav-button {
-        @extend .sintony-bold;
         letter-spacing: 1.1px;
         transition: all 0.2s linear;
     }
 
-    .nav-button:hover {
+    .nav-button:hover:not(.active) {
         background-color: $warning  !important;
         color: $primary  !important;
         box-shadow: 0 0 4px 4px $light;
+    }
+
+    .nav-button.active {
+        cursor: auto;
+    }
+
+    .col-tile,
+    .main-tile {
+        max-width: 240px;
+    }
+
+    .main-tile {
+        height: 80px;
+
+        a {
+            font-size: 0.875rem;
+        }
+    }
+
+    .small-tile {
+        width: auto;
+        height: auto;
+
+        a {
+            font-size: 0.875rem;
+        }
     }
 }
 

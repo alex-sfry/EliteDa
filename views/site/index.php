@@ -12,14 +12,14 @@ $this->title = 'Elite Dangerous Assistant';
             <h1 class="text-center mb-4 text-custom-orange fs-2 mt-3"><?= Html::encode($this->title) ?></h1>
             <div class="col-tile col-6 col-sm-4 row-gap-2 d-flex flex-column align-content-end">
                 <div class="main-tile text-light gx-0 rounded-3">
-                    <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
+                    <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                             justify-content-center"
                     href="<?= Url::to(['commodities/index']) ?>">
                         Commodities
                     </a>
                 </div>
                 <div class="main-tile text-light gx-0 rounded-3">
-                    <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
+                    <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                             justify-content-center"
                     href="<?= Url::to(['trade-routes/index']) ?>">
                     Trade routes
@@ -28,21 +28,21 @@ $this->title = 'Elite Dangerous Assistant';
             </div>
             <div class="col-tile col-6 col-sm-4 row-gap-2 d-flex flex-column align-content-end">
                 <div class="main-tile text-light gx-0 rounded-3">
-                    <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
+                    <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                     justify-content-center"
                        href="<?= Url::to(['engineers/index']) ?>">
                         Engineers
                     </a>
                 </div>
                 <div class="main-tile text-light gx-0 rounded-3">
-                    <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
+                    <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                     justify-content-center"
                        href="<?= Url::to(['material-traders/index']) ?>">
                         Material traders
                     </a>
                 </div>
                 <div class="main-tile text-light gx-0 rounded-3">
-                    <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
+                    <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                     justify-content-center"
                        href="<?= Url::to(['materials/index']) ?>">
                         Materials
@@ -51,14 +51,14 @@ $this->title = 'Elite Dangerous Assistant';
             </div>
             <div class="col-tile col-6 col-sm-4 row-gap-2 d-flex flex-column align-content-end">
                 <div class="main-tile text-light gx-0 rounded-3">
-                    <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
+                    <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                             justify-content-center"
                     href="<?= Url::to(['shipyard-ships/index']) ?>">
                     Ships
                     </a>
                 </div>
                 <div class="main-tile text-light gx-0 rounded-3">
-                    <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
+                    <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                             justify-content-center"
                     href="<?= Url::to(['ship-modules/index']) ?>">
                     Ship modules

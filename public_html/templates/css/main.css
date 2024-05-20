@@ -81,7 +81,7 @@ body {
     font-weight: 400;
 }
 
-.sintony-bold, .c-form .btn-violet, .c-form, main .nav-button, .header .menu__link {
+.sintony-bold, .c-form .btn-violet, .c-form, .header .menu__link {
     font-family: "SintonyBold", sans-serif;
     font-weight: 700;
 }
@@ -162,18 +162,6 @@ body {
 }
 .content .buttons a {
     color: #fcba7f;
-}
-
-.col-tile,
-.main-tile {
-    max-width: 240px;
-}
-
-.main-tile {
-    height: 80px;
-}
-.main-tile a {
-    font-size: 0.875rem;
 }
 
 @media screen and (min-width: 330px) {
@@ -276,10 +264,30 @@ main .nav-button {
     letter-spacing: 1.1px;
     transition: all 0.2s linear;
 }
-main .nav-button:hover {
+main .nav-button:hover:not(.active) {
     background-color: #ffc107 !important;
     color: #0d6efd !important;
     box-shadow: 0 0 4px 4px #f8f9fa;
+}
+main .nav-button.active {
+    cursor: auto;
+}
+main .col-tile,
+main .main-tile {
+    max-width: 240px;
+}
+main .main-tile {
+    height: 80px;
+}
+main .main-tile a {
+    font-size: 0.875rem;
+}
+main .small-tile {
+    width: auto;
+    height: auto;
+}
+main .small-tile a {
+    font-size: 0.875rem;
 }
 
 /**

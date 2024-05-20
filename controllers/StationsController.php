@@ -126,6 +126,7 @@ class StationsController extends Controller
         return $this->render('market', [
             'model' => $market->getMarket($station['market_id']),
             'station_name' => $station['name'],
+            'id' => $id
          ]);
     }
 
