@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\helpers\VarDumper;
 
 $this->title = isset($model['name']) ? $model['name'] : '';
+$market_id = Html::encode($model['market_id']);
 ?>
 
 <!-- <div class="bg-light">
@@ -41,7 +42,7 @@ $this->title = isset($model['name']) ? $model['name'] : '';
                                 'value' => Html::a(
                                     'Commodities',
                                     Url::toRoute([
-                                        "stations/details/{$model['market_id']}/market"
+                                        "station/$market_id/market"
                                         ])
                                 )
                             ],
@@ -52,7 +53,7 @@ $this->title = isset($model['name']) ? $model['name'] : '';
                                 'value' => Html::a(
                                     'Modules',
                                     Url::toRoute([
-                                        "stations/details/{$model['market_id']}/ship-modules"
+                                        "station/$market_id/ship-modules-hardpoint"
                                     ])
                                 )
                             ],
@@ -63,7 +64,7 @@ $this->title = isset($model['name']) ? $model['name'] : '';
                                 'value' => Html::a(
                                     'Ships',
                                     Url::toRoute([
-                                        "stations/details/{$model['market_id']}/ship-modules"
+                                        "station/$market_id/ship-modules-hardpoint"
                                     ])
                                 )
                             ],

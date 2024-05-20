@@ -47,8 +47,8 @@ $this->title = 'Engineers';
                                 'value' => function ($model) {
                                     $id = (int)$model['id'];
                                     return Html::a(
-                                        $model['name'],
-                                        Url::toRoute(["engineers/details/$id"])
+                                        Html::encode($model['name']),
+                                        Url::toRoute(["engineer/$id"])
                                     );
                                 },
                                 'format' => 'raw'

@@ -141,9 +141,6 @@ class StationsController extends Controller
      */
     public function actionSystemStation($sys_st): void
     {
-        // $request = Yii::$app->request;
-        // $get_param = $request->get('sys-st');
-
         if (!$sys_st) {
             throw new NotFoundHttpException();
         } else {
