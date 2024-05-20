@@ -31,7 +31,7 @@ $this->title = 'Material Traders';
                             'to_submit' => 'ref-to-submit',
                             'placeholder' => 'Enter system',
                             'ajax' => true,
-                            'endpoint' => '/systems/system/?sys=',
+                            'endpoint' => '/system/',
                             'label_main' => 'Ref. system:',
                             'toggle_btn_text' => 'Search',
                             'name_main' => 'refSysStation',

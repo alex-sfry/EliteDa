@@ -113,8 +113,8 @@ $this->title = 'Trade routes';
                                                             'label_switch2' => 'station',
                                                             'name_radio' => 'targetSysStationName',
                                                             'selected_radio' => $form_model->targetSysStationName,
-                                                            'endpoint1' => '/systems/system/?sys=',
-                                                            'endpoint2' => '/stations/system-station/?sys-st=',
+                                                            'endpoint1' => '/system/',
+                                                            'endpoint2' => '/system-station/',
                                                         ]); ?>
                                                         <div class="mt-2 mb-3">
                                                             <?= HTML::checkbox(

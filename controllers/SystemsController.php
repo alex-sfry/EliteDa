@@ -10,17 +10,14 @@ use yii\web\Response;
 
 class SystemsController extends Controller
 {
-    public function actionSystem(): void
+    public function actionSystem($sys): void
     {
-        $request = Yii::$app->request;
-        $get_param = $request->get('sys');
-
-        if (!$get_param) {
+        if (!$sys) {
             throw new NotFoundHttpException();
         } else {
             $data = Systems::find()
                 ->select('name as system')
-                ->where(['like', 'name', "$get_param%", false])
+                ->where(['like', 'name', "$sys%", false])
                 ->orderBy('name')
                 ->asArray()
                 ->all();

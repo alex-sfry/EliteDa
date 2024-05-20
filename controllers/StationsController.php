@@ -139,18 +139,18 @@ class StationsController extends Controller
      * @return void
      * @throws NotFoundHttpException
      */
-    public function actionSystemStation(): void
+    public function actionSystemStation($sys_st): void
     {
-        $request = Yii::$app->request;
-        $get_param = $request->get('sys-st');
+        // $request = Yii::$app->request;
+        // $get_param = $request->get('sys-st');
 
-        if (!$get_param) {
+        if (!$sys_st) {
             throw new NotFoundHttpException();
         } else {
             $data = Stations::find()
                 ->select('systems.name as system, stations.name as station')
                 ->innerJoin('systems', 'stations.system_id = systems.id')
-                ->where(['like', 'stations.name', "$get_param%", false])
+                ->where(['like', 'stations.name', "$sys_st%", false])
                 ->orderBy('systems.name')
                 ->asArray()
                 ->all();

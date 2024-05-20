@@ -108,7 +108,7 @@ $this->title = 'Ships';
                                                         'to_submit' => 'ref-to-submit',
                                                         'placeholder' => 'Enter system name here',
                                                         'ajax' => true,
-                                                        'endpoint' => '/systems/system/?sys=',
+                                                        'endpoint' => '/system/',
                                                         'label_main' => 'Ref. system:',
                                                         'toggle_btn_text' => 'Get system list',
                                                         'name_main' => 'refSystem',

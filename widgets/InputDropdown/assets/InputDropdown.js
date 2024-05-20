@@ -16,10 +16,16 @@ class InputDropdown {
         this.form = this.toSubmit.closest('form');
         this.getListItems = config.ajax === '1' ? this.ddListFillFetch : null
 
-        // local state to prevent fetch on dropdown close (click to close)
+        /**
+         * // local state to prevent fetch on dropdown close (click to close)
+         *  and to force request on switch value change
+         */
         this.searchValue = '';
-        this.lastSearchValue = 'test';
-        // =========================================
+        this.lastSearchValue = '';
+        this.lastSwitchValue = '';
+        /**
+         */
+
         this.setEventListeners();
     }
 
@@ -96,7 +102,7 @@ class InputDropdown {
             return;
         }
 
-        if (this.config.ajax && this.ddSearch.value !== this.lastSearchValue) {
+        if (this.config.ajax) {
             const radioSwitch = document.querySelectorAll(`#${this.config.container} .idd-switch`);
 
             if (radioSwitch.length > 0) {
@@ -115,17 +121,15 @@ class InputDropdown {
             }
 
             if (this.config.switch && !this.endpoint) return;
+            if (this.ddSearch.value === this.lastSearchValue && this.lastSwitchValue === this.switchValue) return;
 
+            this.dropdownList.classList.add('visually-hidden');
             this.ddLisItems = await this.getListItems(this.ddSearch.value, this.endpoint);
-            if (!this.ddLisItems) {
-                this.showNotFound();
-                return;
-            }
+            if (!this.ddLisItems) return this.showNotFound();
         }
 
-        if (this.ddSearch.value !== this.lastSearchValue) {
+        if (this.ddSearch.value !== this.lastSearchValue || this.lastSwitchValue !== this.switchValue) {
             this.dropdownList.innerHTML = '';
-            this.dropdownList.classList.remove('visually-hidden');
 
             if (this.ddLisItems.length <= 1) {
                 if (this.ddLisItems.length === 0) {
@@ -146,8 +150,11 @@ class InputDropdown {
                 this.dropdownList.appendChild(listItemElem);
             });
 
-            this.lastSearchValue = this.ddSearch.value;
+            this.dropdownList.classList.remove('visually-hidden');
         } else this.dropdownList.classList.remove('visually-hidden');
+
+        this.lastSwitchValue = this.switchValue;
+        this.lastSearchValue = this.ddSearch.value;
     };
 
     setInvalid(elem, elemLabel) {
