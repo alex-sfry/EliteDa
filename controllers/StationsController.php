@@ -15,6 +15,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Request;
 use yii\web\Response;
@@ -40,10 +41,13 @@ class StationsController extends Controller
      * @param int $id
      *
      * @return string
+     *
+     * @throws NotFoundHttpException
      */
     public function actionDetails(int $id): string
     {
         $id = (int)$id;
+        !$id && throw new NotFoundHttpException();
 
         $model = Stations::find()
             ->with(['system', 'economyId1', 'economyId2', 'allegiance'])
@@ -51,9 +55,7 @@ class StationsController extends Controller
             ->asArray()
             ->one();
 
-        if (!$id || !$model) {
-            return $this->render('details', []);
-        }
+        !$model && throw new NotFoundHttpException();
 
         $services['market'] = Markets::find()
             ->where(['market_id' => $model['market_id']])
@@ -73,7 +75,8 @@ class StationsController extends Controller
         return $this->render('details', [
             'model' => $model,
             'pad_size' => $this->landingPadSizes[$model['type']],
-            'services' => $services
+            'services' => $services,
+            'id' => $id
          ]);
     }
 
@@ -81,32 +84,27 @@ class StationsController extends Controller
      * @param int $id
      *
      * @return string
+     *
+     * @throws NotFoundHttpException
      */
     public function actionShipModules(int $id, ShipMods $ship_modules, string $cat = 'hardpoint'): string
     {
-        if (!$id) {
-            return $this->render('outfitting', []);
-        }
-
+        !$id && throw new NotFoundHttpException();
         $id = (int)$id;
 
-        $station = Stations::find()
-            ->where(['market_id' => $id])
-            ->one();
-
-        $station_name = $station['name'];
+        $station = Stations::findOne($id);
+        !$station && throw new NotFoundHttpException();
 
         $ship_modules->setMods($this->getShipModules());
-        $models = $ship_modules->getStationModules($id, $cat);
         $req = new Request();
 
         return $this->render('outfitting', [
-            'models' => $models,
-            'station_name' => $station_name,
+            'models' => $ship_modules->getStationModules($station['market_id'], $cat),
+            'station_name' => $station['name'],
             'commodities_req_arr' => $this->getCommoditiesReqArr(['Gold']),
             'req' => $req->get(),
             'cat' => $cat,
-            'market_id' => (int)$id
+            'id' => $id
          ]);
     }
 
@@ -114,23 +112,19 @@ class StationsController extends Controller
      * @param int $id
      *
      * @return string
+     *
+     * @throws NotFoundHttpException
      */
     public function actionMarket(int $id, StationMarket $market): string
     {
-        if (!$id) {
-            return $this->render('market', []);
-        }
-
+        !$id && throw new NotFoundHttpException();
         $id = (int)$id;
 
-        $station = Stations::find()
-            ->select('name')
-            ->where(['market_id' => $id])
-            ->asArray()
-            ->one();
+        $station = Stations::findOne($id);
+        !$station && throw new NotFoundHttpException();
 
         return $this->render('market', [
-            'model' => $market->getMarket($id),
+            'model' => $market->getMarket($station['market_id']),
             'station_name' => $station['name'],
          ]);
     }

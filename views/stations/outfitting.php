@@ -8,9 +8,9 @@ use yii\helpers\VarDumper;
 $this->title = $station_name . ' outfitting';
 ?>
 <style>
-.nav-pills .nav-link.active {
-    background-color: var(--bs-light-orange);
-}
+    .nav-pills .nav-link.active {
+        background-color: var(--bs-light-orange);
+    }
 </style>
 <div class="bg-light">
     <?php
@@ -30,11 +30,11 @@ $this->title = $station_name . ' outfitting';
                 </h1>
                 <div class="bg-light my-0 mx-auto rounded-2 px-2 bg-transparent" style="max-width:fit-content;">
                     <ul class="nav nav-pills px-3 py-2 my-2 justify-content-center bg-white rounded-2">
-                    <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link light-orange <?= $cat === 'hardpoint' ? 'active' : null ?>"
                                 aria-current="page" href="<?= Url::to([
                                     'stations/ship-modules',
-                                    'id' => $market_id,
+                                    'id' => $id,
                                     'cat' => 'hardpoint']) ?>">
                                 Hardpoint
                             </a>
@@ -42,16 +42,18 @@ $this->title = $station_name . ' outfitting';
                         <li class="nav-item">
                             <a class="nav-link <?= $cat === 'core' ? 'active' : null ?>" href="<?= Url::to([
                                     'stations/ship-modules',
-                                    'id' => $market_id,
-                                    'cat' => 'core']) ?>">
+                                    'id' => $id,
+                                    'cat' => 'core'
+                                    ]) ?>">
                                 Core internal
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link <?= $cat === 'internal' ? 'active' : null ?>" href="<?= Url::to([
                                     'stations/ship-modules',
-                                    'id' => $market_id,
-                                    'cat' => 'internal']) ?>">
+                                    'id' => $id,
+                                    'cat' => 'internal'
+                                    ]) ?>">
                                 Optional internal
                             </a>
                         </li>
@@ -59,8 +61,9 @@ $this->title = $station_name . ' outfitting';
                             <a class="nav-link light-orange <?= $cat === 'armour' ? 'active' : null ?>"
                                 aria-current="page" href="<?= Url::to([
                                     'stations/ship-modules',
-                                    'id' => $market_id,
-                                    'cat' => 'armour']) ?>">
+                                    'id' => $id,
+                                    'cat' => 'armour'
+                                    ]) ?>">
                                 Armour
                             </a>
                         </li>
