@@ -22,7 +22,7 @@ $this->title = 'Material Traders';
                     <div class="mt-tr-ref-idd ms-auto d-flex justify-content-end">
                         <?= Html::beginForm(['/material-traders/index'], 'get', [
                             'id' => 'mt-form',
-                            'class' => 'bg-custom-white p-1 rounded-2',
+                            'class' => 'bg-light p-1 rounded-2',
                             'novalidate' => true,
                         ]) ?>
                         <?= InputDropdown::widget([

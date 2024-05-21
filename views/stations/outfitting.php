@@ -66,7 +66,7 @@ $this->title = $station_name . ' outfitting';
                         <div class="bg-light my-0 rounded-2 px-2 bg-transparent row" 
                             style="max-width:fit-content;">
                             <ul class="nav nav-pills px-1 py-1 my-2 justify-content-start justify-content-lg-evenly 
-                                    bg-white rounded-2 col-12">
+                                    bg-light rounded-2 col-12">
                                 <li class="nav-item">
                                     <a class="nav-link px-2 <?= $cat === 'hardpoint' ? 'active' : null ?>"
                                         aria-current="<?= $cat === 'hardpoint' ? 'page' : null ?>" 

@@ -4,8 +4,9 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
+// use yii\widgets\Breadcrumbs;
 use app\widgets\Alert;
-//use yii\bootstrap5\Breadcrumbs;
+use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\helpers\Url;
 
@@ -173,8 +174,28 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 </div>
             </nav>
         </header>
-
+        <?= Breadcrumbs::widget([
+            'itemTemplate' => "<li style='--bs-breadcrumb-divider-color: white;' 
+                            class='breadcrumb-item text-light'><i>{link}</i></li>\n",
+            'links' => [
+                [
+                    'label' => 'Post Category',
+                    'url' => ['post-category/view', 'id' => 10],
+                    // 'template' => "<li class='breadcrumb-item'><b>{link}</b></li>\n",
+                ],
+                ['label' => 'Sample Post', 'url' => ['post/edit', 'id' => 1]],
+                [
+                    'label' => 'Edit',
+                    'template' => "<li style='--bs-breadcrumb-divider-color: white;' 
+                                    class='breadcrumb-item text-info'><b>{link}</b></li>\n",
+                ],
+            ],
+            'navOptions' => [
+                'aria-label' => "breadcrumb"
+            ]
+        ]); ?>
         <?= Alert::widget() ?>
+
         <?= $content ?>
 
         <footer id="footer" class="footer bg-header py-2">

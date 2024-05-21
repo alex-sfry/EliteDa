@@ -8,9 +8,6 @@ use yii\helpers\VarDumper;
 $this->title = $model['name'];
 ?>
 
-<!-- <div class="bg-light">
-    <?php /* VarDumper::dump($services, 10, true); */ ?>
-</div> -->
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='wrapper d-flex flex-column h-100'>
         <div class='container-xxl px-3'>

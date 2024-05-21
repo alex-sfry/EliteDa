@@ -8,9 +8,6 @@ use yii\helpers\Url;
 use yii\helpers\VarDumper;
 
 ?>
-<div class="bg-light">
-    <?php /* d($models[0]) */ ?>
-</div>
 <div class="tr-result-wrapper container-xxl mt-4">
     <?php foreach ($models as $key => $value) : ?>
         <div class="tr-route d-flex flex-column row-gap-lg-1 row-gap-sm-2 border border-2 border-light-orange h-auto

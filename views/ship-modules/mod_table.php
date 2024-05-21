@@ -18,7 +18,7 @@ $table_head = [
 ];
 
 ?>
-<div class="c-result-legend bg-body text-center mt-3">
+<div class="c-result-legend bg-light text-center mt-3">
     <h2 class="fs-6 position-relative">Station's type:</h2>
     <div class="d-flex align-items-center py-1 ps-2 pe-1">
         <div class="c-result-legend-item d-flex justify-content-start w-100 column-gap-1 pe-1 align-items-center">

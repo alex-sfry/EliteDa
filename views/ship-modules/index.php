@@ -61,7 +61,7 @@ $this->title = 'Ship modules';
                                 <?= Html::beginForm(['/ship-modules/index'], 'get', [
                                     'id' => 'mod-form',
                                     'novalidate' => true,
-                                    'class' => 'c-form fs-7 bg-custom-white py-2 px-2 rounded-2 w-100 d-flex 
+                                    'class' => 'c-form fs-7 bg-light py-2 px-2 rounded-2 w-100 d-flex 
                                     flex-column needs-validation',
                                 ]) ?>
                                 <div class='container-xxl'>
