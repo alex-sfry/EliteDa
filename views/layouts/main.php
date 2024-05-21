@@ -177,21 +177,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <?= Breadcrumbs::widget([
             'itemTemplate' => "<li style='--bs-breadcrumb-divider-color: white;' 
                             class='breadcrumb-item text-light'><i>{link}</i></li>\n",
-            'links' => [
-                [
-                    'label' => 'Post Category',
-                    'url' => ['post-category/view', 'id' => 10],
-                    // 'template' => "<li class='breadcrumb-item'><b>{link}</b></li>\n",
-                ],
-                ['label' => 'Sample Post', 'url' => ['post/edit', 'id' => 1]],
-                [
-                    'label' => 'Edit',
-                    'template' => "<li style='--bs-breadcrumb-divider-color: white;' 
-                                    class='breadcrumb-item text-info'><b>{link}</b></li>\n",
-                ],
-            ],
+            'activeItemTemplate' => "<li style='--bs-breadcrumb-divider-color: white;'
+                                        class='breadcrumb-item text-info'><i><b>{link}</b></i></li>\n",
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             'navOptions' => [
-                'aria-label' => "breadcrumb"
+                'aria-label' => "breadcrumb",
+                'class' => 'px-4'
             ]
         ]); ?>
         <?= Alert::widget() ?>

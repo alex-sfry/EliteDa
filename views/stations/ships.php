@@ -9,7 +9,14 @@ use yii\helpers\VarDumper;
 
 use function app\helpers\d;
 
-$this->title = $station_name . ' shipyard';
+$this->title = Html::encode($station_name) . ' station shipyard';
+$this->params['breadcrumbs'] = [
+    [
+        'label' => $station_name,
+        'url' => ['stations/details', 'id' => $id],
+    ],
+    $this->title
+];
 // d($models[0]);
 ?>
 
@@ -18,7 +25,7 @@ $this->title = $station_name . ' shipyard';
         <div class="row">
             <div class="col mb-3">
                 <h1 class='mt-3 text-center fs-2 text-custom-orange sintony-bold'>
-                    <?= Html::encode($this->title) ?>
+                    <?= $this->title ?>
                 </h1>
                 <div class="text-light row flex-column flex-md-row fs-7 justify-content-md-center row-gap-2">
                     <div class="max-w-f-content mx-auto mx-md-0">

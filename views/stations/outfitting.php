@@ -4,16 +4,25 @@ use app\widgets\TableJs\TableJs;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\VarDumper;
+use yii\web\View;
 
 use function app\helpers\d;
 
-$this->title = $station_name . ' outfitting';
-?>
-<style>
-    .nav-pills .nav-link.active {
+$this->title = Html::encode($station_name) . ' station outfitting';
+Yii::$app->view->registerCss(
+    '.nav-pills .nav-link.active {
         background-color: var(--bs-light-orange);
-    }
-</style>
+    }',
+    [View::POS_BEGIN]
+);
+$this->params['breadcrumbs'] = [
+    [
+        'label' => $station_name,
+        'url' => ['stations/details', 'id' => $id],
+    ],
+    $this->title
+];
+?>
     <?php
     // echo Html::a(
     //     'Commodities',
@@ -26,7 +35,7 @@ $this->title = $station_name . ' outfitting';
         <div class="row">
             <div class="col mb-3">
                 <h1 class='mt-3 text-center fs-2 text-custom-orange sintony-bold'>
-                    <?= Html::encode($this->title) ?>
+                    <?= $this->title ?>
                 </h1>
                 <div class="text-light row flex-column flex-md-row fs-7 justify-content-lg-center">
                     <div class="max-w-f-content mx-auto mx-md-0">

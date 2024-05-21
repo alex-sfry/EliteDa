@@ -9,6 +9,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 
 $this->title = "Materials";
+$this->params['breadcrumbs'] = [$this->title];
 ?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='d-flex flex-column h-100'>

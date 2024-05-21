@@ -5,14 +5,21 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\VarDumper;
 
-$this->title = $station_name . ' market';
+$this->title = Html::encode($station_name) . ' station  market';
+$this->params['breadcrumbs'] = [
+    [
+        'label' => $station_name,
+        'url' => ['stations/details', 'id' => $id],
+    ],
+    $this->title
+];
 ?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='container-xxl'>
         <div class="row">
             <div class="col mb-3">
                 <h1 class='mt-3 text-center fs-2 text-custom-orange sintony-bold'>
-                    <?= Html::encode($this->title) ?>
+                    <?= $this->title ?>
                 </h1>
                 <div class="d-flex flex-column gap-2 justify-content-center 
                             justify-content-md-start mt-2">
