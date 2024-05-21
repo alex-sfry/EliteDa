@@ -9,9 +9,10 @@
  * @var array $filtered_columns
 */
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\View;
-use yii\helpers\VarDumper;
 
 Yii::$app->view->registerJs(
     "
@@ -82,10 +83,18 @@ Yii::$app->view->registerCss($styles, [View::POS_BEGIN]);
                     <?php foreach ($columns as $value) : ?>
                         <td 
                             class="<?= isset($value['class']) ? $value['class'] : null ?> text-truncate">
-                            <?= isset($value['textBefore']) ? $value['textBefore'] : null; ?>
-                            <?= isset($item[$value['attribute']]) ? Html::encode($item[$value['attribute']]) :
-                            '--' ?>
-                            <?= isset($value['textAfter']) ? $value['textAfter'] : null; ?>
+                            <?php
+                            $link_label = $value['textBefore'] ?? null;
+                            $link_label .= isset($item[$value['attribute']]) ?
+                                        Html::encode($item[$value['attribute']]) : '--';
+                            $link_label .= $value['textAfter'] ?? null;
+                            ?>
+                            <?= isset($item['req_url']) ? Html::a(
+                                $link_label,
+                                Url::to(ArrayHelper::merge(['commodities/index'], $item['req_url']))
+                            ) : $link_label ?>
+                            
+                            
                         </td>
                     <?php endforeach; ?>
                 </tr>

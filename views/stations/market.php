@@ -1,9 +1,11 @@
 <?php
 
 use app\widgets\TableJs\TableJs;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\helpers\VarDumper;
+
+use function app\helpers\d;
 
 $this->title = Html::encode($station_name) . ' station  market';
 $this->params['breadcrumbs'] = [
@@ -13,6 +15,11 @@ $this->params['breadcrumbs'] = [
     ],
     $this->title
 ];
+// echo Html::a(
+//     'Commodities',
+//     Url::to(ArrayHelper::merge(['commodities/index'], $commodities_req_arr))
+// ) . '<br><br>';
+// d($model);
 ?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='container-xxl'>
@@ -88,7 +95,8 @@ $this->params['breadcrumbs'] = [
                                 'label' => 'commodity',
                                 'filterInputOptions' => [
                                     'class' => 'form-control',
-                                ]
+                                ],
+                                // 'req_url' => $req_url,
                             ],
                             [
                                 'attribute' => 'sell_price',

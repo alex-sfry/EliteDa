@@ -33,37 +33,37 @@ $this->params['breadcrumbs'] = [$this->title];
                             ['label' => 'Economy (secondary)', 'value' =>
                                 Html::encode($model['economyId2']['economy_name'])],
                             [
-                                'visible' => isset($services) ? $services['market'] : false,
                                 'label' => 'Market',
                                 'format' => 'raw',
-                                'value' => Html::a(
-                                    'Commodities',
-                                    Url::toRoute([
-                                        "station/market/$id"
-                                        ])
-                                )
+                                'value' => $services['market'] ?
+                                    Html::a(
+                                        'Commodities',
+                                        Url::toRoute([
+                                            "station/market/$id"
+                                            ])
+                                    ) : '---'
                             ],
                             [
-                                'visible' => isset($services) ? $services['modules'] : false,
                                 'label' => 'Outfitting',
                                 'format' => 'raw',
-                                'value' => Html::a(
-                                    'Modules',
-                                    Url::toRoute([
-                                        "station/ship-modules-hardpoint/$id"
-                                    ])
-                                )
+                                'value' => $services['modules'] ?
+                                    Html::a(
+                                        'Modules',
+                                        Url::toRoute([
+                                            "station/ship-modules-hardpoint/$id"
+                                        ])
+                                    ) : '---'
                             ],
                             [
-                                'visible' => isset($services) ? $services['ships'] : false,
                                 'label' => 'Shipyard',
                                 'format' => 'raw',
-                                'value' => Html::a(
-                                    'Ships',
-                                    Url::toRoute([
-                                        "station/ships/$id"
-                                    ])
-                                )
+                                'value' => $services['ships'] ?
+                                    Html::a(
+                                        'Ships',
+                                        Url::toRoute([
+                                            "station/ships/$id"
+                                        ])
+                                    ) : '---'
                             ],
                         ],
                         'options' => ['class' => 'table table-striped detail-view']

@@ -20,36 +20,11 @@ class StationBehavior extends Behavior
         'Odyssey Settlement' => 'S or L',
     ];
 
-    private array $commoditiesReqArr = [
-        'commodities' => [],
-        'refSystem' => 'Sol',
-        'landingPadSize' => 'S',
-        'includeSurface' => 'Yes',
-        'sortBy' => 'Price',
-        'maxDistanceFromRefStar' => '50',
-        'distanceFromStar' => '500',
-        'minSupplyDemand' => '1000',
-        'dataAge' => 'Any',
-        'buySellSwitch' => 'buy',
-        'c-form-submit' => ''
-    ];
-
     /**
      * @return array
      */
     public function getLandingPadSizes(): array
     {
         return $this->landingPadSizes;
-    }
-
-    /**
-     * @var array $commodities
-     * @return array
-     */
-    public function getCommoditiesReqArr(array $commodities): array
-    {
-        $this->commoditiesReqArr['commodities'] = $commodities;
-
-        return $this->commoditiesReqArr;
     }
 }

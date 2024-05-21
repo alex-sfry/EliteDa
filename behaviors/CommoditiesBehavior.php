@@ -8,6 +8,20 @@ use yii\helpers\Json;
 
 class CommoditiesBehavior extends Behavior
 {
+    private array $commoditiesReqArr = [
+        'commodities' => [],
+        'refSystem' => 'Sol',
+        'landingPadSize' => 'S',
+        'includeSurface' => 'Yes',
+        'sortBy' => 'Price',
+        'maxDistanceFromRefStar' => '50',
+        'distanceFromStar' => '500',
+        'minSupplyDemand' => '1000',
+        'dataAge' => 'Any',
+        'buySellSwitch' => 'buy',
+        'c-form-submit' => ''
+    ];
+
     /**
      * @return array
      */
@@ -17,5 +31,19 @@ class CommoditiesBehavior extends Behavior
         asort($arr);
 
         return $arr;
+    }
+
+    /**
+     * @var array $commodities
+     *
+     * @return array
+     */
+    public function getCommoditiesReqArr(array $params): array
+    {
+        $this->commoditiesReqArr['buySellSwitch'] = $params['price_type'];
+        $this->commoditiesReqArr['refSystem'] = $params['system'];
+        $this->commoditiesReqArr['commodities'] = $params['commodity'];
+
+        return $this->commoditiesReqArr;
     }
 }

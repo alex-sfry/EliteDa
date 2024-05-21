@@ -13,12 +13,15 @@ use app\models\ShipyardShips;
 use app\models\Shipyard;
 use app\models\StationMarket;
 use app\models\Stations;
+use app\models\Systems;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Request;
 use yii\web\Response;
+
+use function app\helpers\d;
 
 class StationsController extends Controller
 {
@@ -87,14 +90,14 @@ class StationsController extends Controller
         !$station && throw new NotFoundHttpException();
 
         $ships->setShipsArr($this->getShipsList());
-        $this->getStatonServices($station['market_id']);
+        $this->getStatonServices($station->market_id);
         $req = new Request();
 
         return $this->render('ships', [
-            'models' => $ships->getStationShips($station['market_id']),
-            'station_name' => $station['name'],
-            'commodities_req_arr' => $this->getCommoditiesReqArr(['Gold']),
-            'req' => $req->get(),
+            'models' => $ships->getStationShips($station->market_id),
+            'station_name' => $station->name,
+            // 'commodities_req_arr' => $this->getCommoditiesReqArr(['Gold']),
+            // 'req' => $req->get(),
             'id' => $id,
             'services' => $this->services
          ]);
@@ -118,15 +121,12 @@ class StationsController extends Controller
         !$station && throw new NotFoundHttpException();
 
         $ship_modules->setMods($this->getShipModules());
-        $qty_by_cat = $ship_modules->getQtyByCat($station['market_id']);
-        $this->getStatonServices($station['market_id']);
-        $req = new Request();
+        $qty_by_cat = $ship_modules->getQtyByCat($station->market_id);
+        $this->getStatonServices($station->market_id);
 
         return $this->render('outfitting', [
-            'models' => $ship_modules->getStationModules($station['market_id'], $cat),
-            'station_name' => $station['name'],
-            'commodities_req_arr' => $this->getCommoditiesReqArr(['Gold']),
-            'req' => $req->get(),
+            'models' => $ship_modules->getStationModules($station->market_id, $cat),
+            'station_name' => $station->name,
             'cat' => $cat,
             'id' => $id,
             'qty_by_cat' => $qty_by_cat,
@@ -149,13 +149,26 @@ class StationsController extends Controller
 
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
-        $this->getStatonServices($station['market_id']);
+        $system = Systems::findOne($station->system_id);
+        $this->getStatonServices($station->market_id);
+        $model = $market->getMarket($station->market_id);
+
+        foreach ($model as $key => $value) {
+            $model[$key]['req_url'] = ArrayHelper::merge(
+                ['commodities/index'],
+                $this->getCommoditiesReqArr([
+                    'commodity' => [$value['name']],
+                    'system' => $system->name,
+                    'price_type' => $value['stock'] > 0 ? 'buy' : 'sell'
+                ])
+            );
+        };
 
         return $this->render('market', [
-            'model' => $market->getMarket($station['market_id']),
-            'station_name' => $station['name'],
+            'model' => $model,
+            'station_name' => $station->name,
             'id' => $id,
-            'services' => $this->services
+            'services' => $this->services,
          ]);
     }
 
