@@ -1,17 +1,18 @@
 <?php
 
+// namespace app\helpers;
+
 use app\widgets\TableJs\TableJs;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\VarDumper;
 
+use function app\helpers\d;
+
 $this->title = $station_name . ' shipyard';
+// d($models[0]);
 ?>
-<div class="bg-light">
-    <?php
-    // VarDumper::dump($models, 10, true);
-    ?>
-</div>
+
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='container-xxl'>
         <div class="row">

@@ -5,6 +5,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\VarDumper;
 
+use function app\helpers\d;
+
 $this->title = $station_name . ' outfitting';
 ?>
 <style>
@@ -12,15 +14,13 @@ $this->title = $station_name . ' outfitting';
         background-color: var(--bs-light-orange);
     }
 </style>
-<div class="bg-light">
     <?php
     // echo Html::a(
     //     'Commodities',
     //     Url::to(ArrayHelper::merge(['commodities/index'], $commodities_req_arr))
     // ) . '<br><br>';
-    // VarDumper::dump($models, 10, true);
+    // d($models);
     ?>
-</div>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='container-xxl'>
         <div class="row">
