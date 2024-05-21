@@ -50,8 +50,9 @@ $this->params['breadcrumbs'] = [
                             </div>
                             <div class="small-tile text-light gx-0 rounded-3">
                                 <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                        justify-content-center"
-                                    href="<?= Url::toRoute(["station/market/$id"]) ?>">
+                                        justify-content-center <?= !$services['market'] ? 'disabled' : null ?>"
+                                    href="<?= $services['market'] ?
+                                        Url::toRoute(["station/market/$id"]) : Url::to() ?>">
                                         market
                                     </a>
                             </div>
@@ -64,8 +65,9 @@ $this->params['breadcrumbs'] = [
                             </div>
                             <div class="small-tile text-light gx-0 rounded-3">
                                 <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                            justify-content-center"
-                                    href="<?= Url::toRoute(["station/ships/$id"]) ?>">
+                                            justify-content-center <?= !$services['ships'] ? 'disabled' : null ?>"
+                                    href="<?= $services['market'] ?
+                                        Url::toRoute(["station/ships/$id"]) : Url::to() ?>">
                                         ships
                                     </a>
                             </div>

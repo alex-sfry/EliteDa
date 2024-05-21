@@ -15,7 +15,6 @@ use app\models\StationMarket;
 use app\models\Stations;
 use Yii;
 use yii\helpers\ArrayHelper;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Request;
@@ -23,6 +22,8 @@ use yii\web\Response;
 
 class StationsController extends Controller
 {
+    private array $services = [];
+
     /**
      * @return array
      */
@@ -59,25 +60,12 @@ class StationsController extends Controller
 
         !$model && throw new NotFoundHttpException();
 
-        $services['market'] = Markets::find()
-            ->where(['market_id' => $model['market_id']])
-            ->asArray()
-            ->count();
-
-        $services['modules'] = ShipModules::find()
-            ->where(['market_id' => $model['market_id']])
-            ->asArray()
-            ->count();
-
-        $services['ships'] = Shipyard::find()
-            ->where(['market_id' => $model['market_id']])
-            ->asArray()
-            ->count();
+        $this->getStatonServices($model['market_id']);
 
         return $this->render('details', [
             'model' => $model,
             'pad_size' => $this->landingPadSizes[$model['type']],
-            'services' => $services,
+            'services' => $this->services,
             'id' => $id
          ]);
     }
@@ -99,6 +87,7 @@ class StationsController extends Controller
         !$station && throw new NotFoundHttpException();
 
         $ships->setShipsArr($this->getShipsList());
+        $this->getStatonServices($station['market_id']);
         $req = new Request();
 
         return $this->render('ships', [
@@ -106,7 +95,8 @@ class StationsController extends Controller
             'station_name' => $station['name'],
             'commodities_req_arr' => $this->getCommoditiesReqArr(['Gold']),
             'req' => $req->get(),
-            'id' => $id
+            'id' => $id,
+            'services' => $this->services
          ]);
     }
 
@@ -129,6 +119,7 @@ class StationsController extends Controller
 
         $ship_modules->setMods($this->getShipModules());
         $qty_by_cat = $ship_modules->getQtyByCat($station['market_id']);
+        $this->getStatonServices($station['market_id']);
         $req = new Request();
 
         return $this->render('outfitting', [
@@ -138,7 +129,8 @@ class StationsController extends Controller
             'req' => $req->get(),
             'cat' => $cat,
             'id' => $id,
-            'qty_by_cat' => $qty_by_cat
+            'qty_by_cat' => $qty_by_cat,
+            'services' => $this->services
          ]);
     }
 
@@ -157,12 +149,37 @@ class StationsController extends Controller
 
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
+        $this->getStatonServices($station['market_id']);
 
         return $this->render('market', [
             'model' => $market->getMarket($station['market_id']),
             'station_name' => $station['name'],
-            'id' => $id
+            'id' => $id,
+            'services' => $this->services
          ]);
+    }
+
+    /**
+     * @param int $market_id
+     *
+     * @return void
+     */
+    private function getStatonServices(int $market_id): void
+    {
+        $this->services['market'] = Markets::find()
+            ->where(['market_id' => $market_id])
+            ->asArray()
+            ->count();
+
+        $this->services['modules'] = ShipModules::find()
+            ->where(['market_id' => $market_id])
+            ->asArray()
+            ->count();
+
+        $this->services['ships'] = Shipyard::find()
+            ->where(['market_id' => $market_id])
+            ->asArray()
+            ->count();
     }
 
     /**

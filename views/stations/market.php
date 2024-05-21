@@ -40,15 +40,18 @@ $this->params['breadcrumbs'] = [
                         </div>
                         <div class="small-tile text-light gx-0 rounded-3 fs-7">
                             <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                    justify-content-center"
-                                href="<?= Url::toRoute(["station/ship-modules-hardpoint/$id"]) ?>">
+                                    justify-content-center <?= !$services['modules'] ? 'disabled' : null ?>"
+                                href="<?= $services['modules'] ?
+                                    Url::toRoute(["station/ship-modules-hardpoint/$id"]) :
+                                    Url::to() ?>">
                                     outfitting
                                 </a>
                         </div>
                         <div class="small-tile text-light gx-0 rounded-3 fs-7">
                             <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                    justify-content-center"
-                                href="<?= Url::toRoute(["station/ship-modules-hardpoint/$id"]) ?>">
+                                    justify-content-center <?= !$services['ships'] ? 'disabled' : null ?>"
+                                href="<?= $services['market'] ?
+                                    Url::toRoute(["station/ships/$id"]) : Url::to() ?>">
                                     ships
                                 </a>
                         </div>
@@ -108,8 +111,7 @@ $this->params['breadcrumbs'] = [
                                 'attribute' => 'timestamp',
                                 'label' => 'updated',
                             ],
-                        ]
-                    ]); ?>
+                        ]]); ?>
                 </div>
             </div>
         </div>
