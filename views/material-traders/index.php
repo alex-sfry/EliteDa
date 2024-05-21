@@ -6,10 +6,12 @@
  */
 
 use app\widgets\InputDropdown\InputDropdown;
-use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\helpers\VarDumper;
+
+use function app\helpers\d;
 
 $this->title = 'Material Traders';
 $this->params['breadcrumbs'] = [$this->title];
@@ -54,7 +56,23 @@ $this->params['breadcrumbs'] = [$this->title];
                                 ]
                             ],
                             ['attribute' => 'system.name', 'label' => 'System'],
-                            ['attribute' => 'station.name', 'label' => 'Station'],
+                            [
+                                'attribute' => 'station.name',
+                                'label' => 'Station',
+                                'value' => function ($model) {
+                                    return Html::a(
+                                        Html::encode($model->station->name),
+                                        Url::toRoute(["station/{$model->station->id}"]),
+                                        ['class' => [
+                                            'text-decoration-underline',
+                                            'link-underline-primary',
+                                            'table-link'
+                                            ]
+                                        ]
+                                    );
+                                },
+                                'format' => 'raw'
+                            ],
                             ['attribute' => 'station.type', 'label' => 'Station type'],
                             [
                                 'attribute' => 'distance',
