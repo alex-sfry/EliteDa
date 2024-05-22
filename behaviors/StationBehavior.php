@@ -3,7 +3,6 @@
 namespace app\behaviors;
 
 use yii\base\Behavior;
-use yii\helpers\ArrayHelper;
 
 class StationBehavior extends Behavior
 {

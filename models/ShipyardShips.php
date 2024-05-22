@@ -10,7 +10,7 @@ use yii\db\Expression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\base\Model;
-use yii\helpers\VarDumper;
+use app\models\ar\Shipyard;
 
 class ShipyardShips extends Model
 {

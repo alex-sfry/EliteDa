@@ -1,23 +1,23 @@
 <?php
 
-namespace app\models;
+namespace app\models\ar;
 
 use Yii;
 
 /**
- * This is the model class for table "ships_price_list".
+ * This is the model class for table "modules_price_list".
  *
- * @property string $name
+ * @property string $symbol
  * @property int|null $price
  */
-class ShipsPriceList extends \yii\db\ActiveRecord
+class ModulesPriceList extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'ships_price_list';
+        return 'modules_price_list';
     }
 
     /**
@@ -26,10 +26,10 @@ class ShipsPriceList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['symbol'], 'required'],
             [['price'], 'integer'],
-            [['name'], 'string', 'max' => 255],
-            [['name'], 'unique'],
+            [['symbol'], 'string', 'max' => 255],
+            [['symbol'], 'unique'],
         ];
     }
 
@@ -39,7 +39,7 @@ class ShipsPriceList extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'name' => 'Name',
+            'symbol' => 'Symbol',
             'price' => 'Price',
         ];
     }

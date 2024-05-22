@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\Systems;
+use app\models\ar\Systems;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -10,7 +10,12 @@ use yii\web\Response;
 
 class SystemsController extends Controller
 {
-    public function actionSystem($sys): void
+    /**
+     * @param string $sys
+     *
+     * @return void
+     */
+    public function actionSystem(string $sys): void
     {
         if (!$sys) {
             throw new NotFoundHttpException();

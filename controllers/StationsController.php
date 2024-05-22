@@ -5,14 +5,15 @@ namespace app\controllers;
 use app\behaviors\CommoditiesBehavior;
 use app\behaviors\ShipModulesBehavior;
 use app\behaviors\ShipyardShipsBehavior;
-use app\models\Markets;
+use app\behaviors\StationBehavior;
+use app\models\ar\Markets;
 use app\models\ShipMods;
-use app\models\ShipModules;
+use app\models\ar\ShipModules;
 use app\models\ShipyardShips;
-use app\models\Shipyard;
+use app\models\ar\Shipyard;
 use app\models\StationMarket;
-use app\models\Stations;
-use app\models\Systems;
+use app\models\ar\Stations;
+use app\models\ar\Systems;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -34,6 +35,7 @@ class StationsController extends Controller
         return ArrayHelper::merge(
             parent::behaviors(),
             [
+                StationBehavior::class,
                 CommoditiesBehavior::class,
                 ShipModulesBehavior::class,
                 ShipyardShipsBehavior::class

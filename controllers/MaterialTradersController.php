@@ -6,7 +6,6 @@ use app\behaviors\SystemBehavior;
 use app\models\search\MaterialTradersSearch;
 use Yii;
 use yii\helpers\ArrayHelper;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
 
 class MaterialTradersController extends Controller

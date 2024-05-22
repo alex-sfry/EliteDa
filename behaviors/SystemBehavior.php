@@ -2,7 +2,7 @@
 
 namespace app\behaviors;
 
-use app\models\Systems;
+use app\models\ar\Systems;
 use yii\base\Behavior;
 use yii\helpers\ArrayHelper;
 use yii\db\Expression;

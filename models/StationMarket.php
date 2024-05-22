@@ -7,6 +7,7 @@ use app\behaviors\StationBehavior;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\base\Model;
+use app\models\ar\Markets;
 
 class StationMarket extends Model
 {

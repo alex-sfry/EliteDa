@@ -2,7 +2,7 @@
 
 namespace app\models\search;
 
-use app\models\Materials;
+use app\models\ar\Materials;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 

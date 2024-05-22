@@ -1,11 +1,12 @@
 <?php
 
-namespace app\models;
+namespace app\models\ar;
 
 use Yii;
+use yii\db\ActiveQuery;
 
 /**
- * This is the model class for table "shipyard".
+ * This is the model class for table "ship_modules".
  *
  * @property int $market_id
  * @property string $name
@@ -13,14 +14,14 @@ use Yii;
  *
  * @property Stations $market
  */
-class Shipyard extends \yii\db\ActiveRecord
+class ShipModules extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'shipyard';
+        return 'ship_modules';
     }
 
     /**
@@ -36,8 +37,7 @@ class Shipyard extends \yii\db\ActiveRecord
             [['market_id', 'name'], 'unique', 'targetAttribute' => ['market_id', 'name']],
             [
                 ['market_id'],
-                'exist',
-                'skipOnError' => true,
+                'exist', 'skipOnError' => true,
                 'targetClass' => Stations::class,
                 'targetAttribute' => ['market_id' => 'market_id']
             ],
@@ -61,8 +61,8 @@ class Shipyard extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMarket()
+    public function getStation(): ActiveQuery
     {
-        return $this->hasOne(Stations::class, ['market_id' => 'market_id'])/* ->inverseOf('shipyards') */;
+        return $this->hasOne(Stations::class, ['market_id' => 'market_id'])/* ->inverseOf('shipModules') */;
     }
 }

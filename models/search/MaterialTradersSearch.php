@@ -2,10 +2,9 @@
 
 namespace app\models\search;
 
-use app\models\MaterialTraders;
+use app\models\ar\MaterialTraders;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use yii\db\Expression;
 
 /**
  * MaterialTradersSearch represents the model behind the search form of `app\models\MaterialTraders`.

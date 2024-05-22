@@ -10,6 +10,7 @@ use yii\db\Expression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\base\Model;
+use app\models\ar\ShipModules;
 
 class ShipMods extends Model
 {
