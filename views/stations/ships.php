@@ -1,11 +1,8 @@
 <?php
 
-// namespace app\helpers;
-
 use app\widgets\TableJs\TableJs;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\helpers\VarDumper;
 
 use function app\helpers\d;
 

@@ -3,7 +3,6 @@
 use yii\widgets\DetailView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\helpers\VarDumper;
 
 $this->title = $model['name'];
 $this->params['breadcrumbs'] = [$this->title];

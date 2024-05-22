@@ -3,7 +3,6 @@
 use app\widgets\TableJs\TableJs;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\helpers\VarDumper;
 use yii\web\View;
 
 use function app\helpers\d;
@@ -23,13 +22,9 @@ $this->params['breadcrumbs'] = [
     $this->title
 ];
 ?>
-    <?php
-    // echo Html::a(
-    //     'Commodities',
-    //     Url::to(ArrayHelper::merge(['commodities/index'], $commodities_req_arr))
-    // ) . '<br><br>';
-    // d($models);
-    ?>
+<?php
+// d($models);
+?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='container-xxl'>
         <div class="row">

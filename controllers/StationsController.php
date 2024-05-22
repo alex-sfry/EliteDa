@@ -35,7 +35,6 @@ class StationsController extends Controller
         return ArrayHelper::merge(
             parent::behaviors(),
             [
-                StationBehavior::class,
                 CommoditiesBehavior::class,
                 ShipModulesBehavior::class,
                 ShipyardShipsBehavior::class
@@ -96,8 +95,6 @@ class StationsController extends Controller
         return $this->render('ships', [
             'models' => $ships->getStationShips($station->market_id),
             'station_name' => $station->name,
-            // 'commodities_req_arr' => $this->getCommoditiesReqArr(['Gold']),
-            // 'req' => $req->get(),
             'id' => $id,
             'services' => $this->services
          ]);
