@@ -14,7 +14,7 @@ export const webpackProd = () => {
         .pipe(gulp.dest('./templates/'));
 };
 
-export const webpackDev = () => {
+export const webpackDev = (cb) => {
     const browserSync = sync.get('localServer');
     return gulp.src('./src/script/main.js')
         .pipe(
@@ -23,6 +23,9 @@ export const webpackDev = () => {
                 wpCompiler
             )
         )
+        .on('error', () => {
+            cb();
+        })
         .pipe(gulp.dest('./templates/'))
         .pipe(browserSync.stream());
 };
