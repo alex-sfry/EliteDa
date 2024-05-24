@@ -11,6 +11,31 @@ use yii\web\Response;
 class SystemsController extends Controller
 {
     /**
+     * @param int $id
+     *
+     * @return string
+     *
+     * @throws NotFoundHttpException
+     */
+    public function actionDetails(int $id): string
+    {
+        $id = (int)$id;
+        !$id && throw new NotFoundHttpException();
+
+        $model = Systems::find()
+            ->with(['stations', 'economy', 'security', 'allegiance'])
+            ->where(['systems.id' => (int)$id])
+            ->asArray()
+            ->one();
+
+        !$model && throw new NotFoundHttpException();
+
+        return $this->render('details', [
+            'model' => $model
+         ]);
+    }
+
+    /**
      * @param string $sys
      *
      * @return void

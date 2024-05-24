@@ -27,6 +27,17 @@ body {
     overflow-x: hidden;
 }
 
+.nav-warning {
+    transition: all 0.2s linear;
+    text-decoration-style: dashed !important;
+    text-underline-offset: 4px;
+}
+
+.nav-warning:hover {
+    background-color: $warning !important;
+    text-decoration-color: $dark !important;
+}
+
 .min-w-f-content {
     min-width: fit-content;
 }
@@ -486,17 +497,9 @@ form {
 }
 
 table {
-    .table-link,
+    .table-link > a,
     .table-link-tr > a {
-        transition: all 0.2s linear;
-        text-decoration-style: dashed !important;
-        text-underline-offset: 4px;
-    }
-
-    .table-link:hover,
-    .table-link-tr > a:hover {
-        background-color: $warning !important;
-        text-decoration-color: $dark !important;
+        @extend .nav-warning;
     }
 }
 

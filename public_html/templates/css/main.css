@@ -51,6 +51,19 @@ body {
     overflow-x: hidden;
 }
 
+.nav-warning, table .table-link > a,
+table .table-link-tr > a {
+    transition: all 0.2s linear;
+    text-decoration-style: dashed !important;
+    text-underline-offset: 4px;
+}
+
+.nav-warning:hover, table .table-link > a:hover,
+table .table-link-tr > a:hover {
+    background-color: #ffc107 !important;
+    text-decoration-color: #212529 !important;
+}
+
 .min-w-f-content, .details-cnt th, .engineers-cnt tbody .engineers-cnt tbody tr td:nth-child(2),
 .engineers-cnt tbody .engineers-cnt tbody tr td:nth-child(4) {
     min-width: -webkit-fit-content;
@@ -430,18 +443,6 @@ form-control.is-invalid {
     background-color: #ffc107 !important;
     color: #f8f9fa !important;
 }
-table .table-link,
-table .table-link-tr > a {
-    transition: all 0.2s linear;
-    text-decoration-style: dashed !important;
-    text-underline-offset: 4px;
-}
-table .table-link:hover,
-table .table-link-tr > a:hover {
-    background-color: #ffc107 !important;
-    text-decoration-color: #212529 !important;
-}
-
 /**
 * Trade Routes page styles
 */
