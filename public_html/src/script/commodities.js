@@ -1,6 +1,6 @@
-import {Pagination} from './Pagination.js';
-import {SortTable} from './SortTable.js';
-import {Table} from './Table.js';
+import { Pagination } from './Pagination.js';
+import { SortTable } from './SortTable.js';
+import { Table } from './Table.js';
 
 export const commoditiesForm = (loader, removeLoader, fetchData) => {
     const $form = $('#c-form');
@@ -15,11 +15,28 @@ export const commoditiesForm = (loader, removeLoader, fetchData) => {
     };
 
     $form.on('submit', handleSubmit);
-    const table = new Table('c-table');
+    const table = new Table(
+        'c-table',
+        [
+            'commodity',
+            'station',
+            'type',
+            'pad',
+            'system',
+            'distance_ly',
+            'distance_ls',
+            'stock',
+            'demand',
+            'sell_price',
+            'buy_price',
+            'time_diff'
+        ]
+    );
 
-    const proxyHandler= {
+    const proxyHandler = {
         set(target, prop, val) {
             if (prop === "data") {
+                // table.fillTable(val.data, 'commodities');
                 table.fillTable(val.data, 'commodities');
                 return true;
             }

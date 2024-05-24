@@ -11,6 +11,8 @@ use yii\db\Expression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\base\Model;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 class Commdts extends Model
 {
@@ -145,6 +147,11 @@ class Commdts extends Model
                 'Planetary Outpost', 'Planetary Port', 'Odyssey Settlement' => true,
                 default => false,
             };
+            $value['station'] = [
+                'text' => $value['station'],
+                'url' => Url::toRoute(["station/{$value['station_id']}"])
+            ];
+
             $models[$key] = $value;
         }
 

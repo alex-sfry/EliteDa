@@ -68,17 +68,17 @@ Pagination.prototype.renderNewPageBtns = function(links, next, last, current, to
 Pagination.prototype.handleClick = async function (e) {
     e.preventDefault();
     if ($(e.currentTarget).parent().is('.active')) return;
-    const res = await this.fetchData($(e.currentTarget).attr('href'));
-    this.data = res;
-    console.log('pagination', res);
+    const data = await this.fetchData($(e.currentTarget).attr('href'));
+    this.data = data;
+    console.log('pagination', data);
 
     this.renderNewPageBtns(
-        res.links,
-        res.page + 1, // zero based next page received from backend + 1
-        res.lastPage,
+        data.links,
+        data.page + 1, // zero based next page received from backend + 1
+        data.lastPage,
         this.getCurrentDataPage(), // zero based current page
-        res.totalCount,
-        res.limit, // qty per page
+        data.totalCount,
+        data.limit, // qty per page
         this.maxPageBtnQty
     );
 };

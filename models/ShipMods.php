@@ -139,6 +139,10 @@ class ShipMods extends Model
                 'Planetary Outpost', 'Planetary Port', 'Odyssey Settlement' => true,
                 default => false,
             };
+            $value['station'] = [
+                'text' => $value['station'],
+                'url' => Url::toRoute(["station/{$value['station_id']}"])
+            ];
 
             $models[$key] = $value;
         }

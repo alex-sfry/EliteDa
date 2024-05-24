@@ -67,14 +67,14 @@ Pagination.prototype.renderNewPageBtns = function (links, next, last, current, t
 Pagination.prototype.handleClick = async function (e) {
   e.preventDefault();
   if ($(e.currentTarget).parent().is('.active')) return;
-  const res = await this.fetchData($(e.currentTarget).attr('href'));
-  this.data = res;
-  console.log('pagination', res);
-  this.renderNewPageBtns(res.links, res.page + 1,
+  const data = await this.fetchData($(e.currentTarget).attr('href'));
+  this.data = data;
+  console.log('pagination', data);
+  this.renderNewPageBtns(data.links, data.page + 1,
   // zero based next page received from backend + 1
-  res.lastPage, this.getCurrentDataPage(),
+  data.lastPage, this.getCurrentDataPage(),
   // zero based current page
-  res.totalCount, res.limit,
+  data.totalCount, data.limit,
   // qty per page
   this.maxPageBtnQty);
 };
@@ -117,7 +117,6 @@ SortTable.prototype.handleClick = async function (e) {
   e.preventDefault();
   const data = await this.fetchData($(e.currentTarget).attr('href'));
   this.data = data;
-  // console.log('sort', data);
   this.pagination && this.pagination.resetPagination.apply(this.pagination, [data.limit, data.totalCount, data.links, data.lastPage]);
   $('a.sort').removeClass(['asc', 'desc', 'sorted']);
   if (Object.values(data.attributeOrders)[0] === 4) {
@@ -140,50 +139,18 @@ SortTable.prototype.setEventListeners = function () {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Table: () => (/* binding */ Table)
 /* harmony export */ });
-function Table(cnt) {
+function Table(cnt, columns) {
   this.cnt = cnt;
+  this.columns = columns;
 }
 Table.prototype.getRows = function () {
   return $("#".concat(this.cnt, " tbody tr"));
 };
-Table.prototype.fillTable = function (data, tblType) {
-  function fillCellsShipsMods(cellIndex, rowIndex) {
-    cellIndex === 0 && $(this).text(data[rowIndex].module || data[rowIndex].ship);
-    cellIndex === 1 && $(this).html("<a href='/stations/details/".concat(data[rowIndex].station_id, "'>\n                ").concat(data[rowIndex].station, "</a>"));
-    cellIndex === 2 && $(this).text(data[rowIndex].type);
-    if (cellIndex === 2 && data[rowIndex].surface) {
-      $(this).addClass('text-success');
-      $(this).removeClass('text-primary');
-    } else if (cellIndex === 2) {
-      $(this).addClass('text-primary');
-      $(this).removeClass('text-success');
-    }
-    cellIndex === 3 && $(this).text(data[rowIndex].pad);
-    cellIndex === 4 && $(this).text(data[rowIndex].system);
-    cellIndex === 5 && $(this).text(data[rowIndex].distance_ly);
-    cellIndex === 6 && $(this).text(data[rowIndex].distance_ls);
-    cellIndex === 7 && $(this).text("".concat(data[rowIndex].price, " Cr"));
-    cellIndex === 8 && $(this).text(data[rowIndex].time_diff);
-  }
-  function fillCellsCommodities(cellIndex, rowIndex) {
-    cellIndex === 0 && $(this).text(data[rowIndex].commodity);
-    cellIndex === 1 && $(this).html("<a href='/stations/details/".concat(data[rowIndex].station_id, "'>\n                ").concat(data[rowIndex].station, "</a>"));
-    cellIndex === 2 && $(this).text(data[rowIndex].type);
-    if (cellIndex === 2 && data[rowIndex].surface) {
-      $(this).addClass('text-success');
-      $(this).removeClass('text-primary');
-    } else if (cellIndex === 2) {
-      $(this).addClass('text-primary');
-      $(this).removeClass('text-success');
-    }
-    cellIndex === 3 && $(this).text(data[rowIndex].pad);
-    cellIndex === 4 && $(this).text(data[rowIndex].system);
-    cellIndex === 5 && $(this).text(data[rowIndex].distance_ly);
-    cellIndex === 6 && $(this).text(data[rowIndex].distance_ls);
-    cellIndex === 7 && $(this).text(data[rowIndex].demand ? data[rowIndex].demand : data[rowIndex].stock);
-    cellIndex === 8 && $(this).text("".concat(data[rowIndex].sell_price ? data[rowIndex].sell_price : data[rowIndex].buy_price, " Cr"));
-    cellIndex === 9 && $(this).text(data[rowIndex].time_diff);
-  }
+Table.prototype.fillTable = function (data) {
+  const actualColumns = [];
+  this.columns.forEach(item => {
+    if (item in data[0]) actualColumns.push(item);
+  });
   this.getRows().each(function (rowIndex) {
     if (!data[rowIndex]) {
       $(this).hide();
@@ -191,8 +158,12 @@ Table.prototype.fillTable = function (data, tblType) {
     }
     if ($(this).is(":hidden")) $(this).show();
     $(this).find('td').each(function (cellIndex) {
-      tblType === 'commodities' && fillCellsCommodities.call(this, cellIndex, rowIndex);
-      tblType === 'ships-mods' && fillCellsShipsMods.call(this, cellIndex, rowIndex);
+      const newRowData = data[rowIndex][actualColumns[cellIndex]];
+      if (typeof newRowData === 'object') {
+        if ('url' in newRowData) {
+          $(this).html("<a href=\"".concat(newRowData['url'], "\">\n                            ").concat(newRowData['text'], "</a>"));
+        }
+      } else $(this).text(newRowData);
     });
   });
 };
@@ -225,10 +196,11 @@ const commoditiesForm = (loader, removeLoader, fetchData) => {
     } else loader($form, $table);
   };
   $form.on('submit', handleSubmit);
-  const table = new _Table_js__WEBPACK_IMPORTED_MODULE_2__.Table('c-table');
+  const table = new _Table_js__WEBPACK_IMPORTED_MODULE_2__.Table('c-table', ['commodity', 'station', 'type', 'pad', 'system', 'distance_ly', 'distance_ls', 'stock', 'demand', 'sell_price', 'buy_price', 'time_diff']);
   const proxyHandler = {
     set(target, prop, val) {
       if (prop === "data") {
+        // table.fillTable(val.data, 'commodities');
         table.fillTable(val.data, 'commodities');
         return true;
       }

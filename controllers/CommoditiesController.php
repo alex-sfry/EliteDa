@@ -115,10 +115,7 @@ class CommoditiesController extends Controller
                     'page' => $pagination->getPage(),
                     'lastPage' => $pagination->pageCount,
                     'data' => $c_model->modifyModels($provider->getModels()),
-                    'params' => $pagination->params,
                     'totalCount' => $pagination->totalCount,
-                    'attributeOrders' => $sort->attributeOrders,
-                    'c_sort' => $session->get('c_sort')
                 ];
                 $response->send();
             }
@@ -131,7 +128,6 @@ class CommoditiesController extends Controller
                 $response->format = Response::FORMAT_JSON;
                 $response->data = [
                     'data' => $c_model->modifyModels($provider->getModels()),
-                    'sort' => $sort,
                     'attributeOrders' => $sort->attributeOrders,
                     'links' => $pagination->getLinks(),
                     'lastPage' => $pagination->pageCount,

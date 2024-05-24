@@ -141,13 +141,16 @@ class ShipyardShips extends Model
                 $this->ships_arr[strtolower($value['ship'])] : $value['ship'];
             $value['pad'] = $this->getLandingPadSizes()[$value['type']];
             $value['time_diff'] = Yii::$app->formatter->asRelativeTime($value['TIMESTAMP']);
-
             $value['surface'] = match ($value['type']) {
                 'Planetary Outpost', 'Planetary Port', 'Odyssey Settlement' => true,
                 default => false,
             };
-
             $value['price'] = $ship_from_price_list ? $ship_from_price_list['price'] : null;
+            $value['station'] = [
+                'text' => $value['station'],
+                'url' => Url::toRoute(["station/{$value['station_id']}"])
+            ];
+
             $models[$key] = $value;
         }
 
