@@ -200,8 +200,7 @@ const commoditiesForm = (loader, removeLoader, fetchData) => {
   const proxyHandler = {
     set(target, prop, val) {
       if (prop === "data") {
-        // table.fillTable(val.data, 'commodities');
-        table.fillTable(val.data, 'commodities');
+        table.fillTable(val.data);
         return true;
       }
       return true;
