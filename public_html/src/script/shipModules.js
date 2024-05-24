@@ -15,12 +15,25 @@ export const shipModulesForm = (loader, removeLoader, fetchData) => {
     };
 
     $form.on('submit', handleSubmit);
-    const table = new Table('mod-table');
+    const table = new Table(
+        'mod-table',
+        [
+            'module',
+            'station',
+            'type',
+            'pad',
+            'system',
+            'distance_ly',
+            'distance_ls',
+            'price',
+            'time_diff'
+        ]
+    );
 
     const proxyHandler= {
         set(target, prop, val) {
             if (prop === "data") {
-                table.fillTable(val.data, 'ships-mods');
+                table.fillTable(val.data);
                 return true;
             }
             return true;

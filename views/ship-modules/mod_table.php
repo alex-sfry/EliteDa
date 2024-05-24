@@ -78,7 +78,7 @@ $table_head = [
                     <td class="table-link text-start text-truncate text-decoration-underline link-underline-primary">
                         <?php $station_id = Html::encode($item['station_id']) ?>
                         <?= Html::a(
-                            Html::encode($item['station']),
+                            Html::encode($item['station']['text']),
                             Url::toRoute(["station/$station_id"])
                         );?>
                     </td>

@@ -367,11 +367,11 @@ const shipModulesForm = (loader, removeLoader, fetchData) => {
     } else loader($form, $table);
   };
   $form.on('submit', handleSubmit);
-  const table = new _Table_js__WEBPACK_IMPORTED_MODULE_2__.Table('mod-table');
+  const table = new _Table_js__WEBPACK_IMPORTED_MODULE_2__.Table('mod-table', ['module', 'station', 'type', 'pad', 'system', 'distance_ly', 'distance_ls', 'price', 'time_diff']);
   const proxyHandler = {
     set(target, prop, val) {
       if (prop === "data") {
-        table.fillTable(val.data, 'ships-mods');
+        table.fillTable(val.data);
         return true;
       }
       return true;
@@ -414,11 +414,11 @@ const shipsForm = (isValidated, loader, removeLoader, fetchData) => {
     isValidated(shipSelect, shipSelectLabel);
   };
   $form.on('submit', handleSubmit);
-  const table = new _Table_js__WEBPACK_IMPORTED_MODULE_2__.Table('ships-table');
+  const table = new _Table_js__WEBPACK_IMPORTED_MODULE_2__.Table('ships-table', ['ship', 'station', 'type', 'pad', 'system', 'distance_ly', 'distance_ls', 'price', 'time_diff']);
   const proxyHandler = {
     set(target, prop, val) {
       if (prop === "data") {
-        table.fillTable(val.data, 'ships-mods');
+        table.fillTable(val.data);
         return true;
       }
       return true;
