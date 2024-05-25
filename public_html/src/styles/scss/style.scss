@@ -386,6 +386,17 @@ form {
     @extend .sintony-bold;
     letter-spacing: 2px;
 
+    .form-select {
+        border: 1px solid $dark;
+        
+    }
+
+    .form-select:focus,
+    .form-select:active {
+        @extend .f-ctrl-no-shadow;
+        box-shadow: 0 0 4px 4px $info;
+    }
+
     .dropdown {
         .btn-outline-dark {
             @extend .font-inherit;

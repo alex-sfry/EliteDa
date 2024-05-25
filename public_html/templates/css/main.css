@@ -98,7 +98,8 @@ table .table-link-tr:hover {
 }
 
 .f-ctrl-no-shadow, #w0 .filters input:focus,
-#w0 .filters select:focus, form-check-input:focus {
+#w0 .filters select:focus, .c-form .form-select:focus,
+.c-form .form-select:active, form-check-input:focus {
     box-shadow: none;
     border-color: #dee2e6;
 }
@@ -352,6 +353,13 @@ form-control.is-invalid {
 
 .c-form {
     letter-spacing: 2px;
+}
+.c-form .form-select {
+    border: 1px solid #212529;
+}
+.c-form .form-select:focus,
+.c-form .form-select:active {
+    box-shadow: 0 0 4px 4px #0dcaf0;
 }
 .c-form .dropdown .btn-outline-dark:active,
 .c-form .dropdown .btn-outline-dark:focus,
