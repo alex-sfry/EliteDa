@@ -21,11 +21,16 @@ class EngineersController extends Controller
         return $this->render('index', $params);
     }
 
+    /**
+     * @param int $id
+     *
+     * @return string
+     *
+     * @throws NotFoundHttpException
+     */
     public function actionDetails(int $id): string
     {
-        if (!$id) {
-            return $this->render('details', []);
-        }
+        !$id && throw new NotFoundHttpException();
 
         $id = (int)$id;
 

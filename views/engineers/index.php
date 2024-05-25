@@ -1,7 +1,6 @@
 <?php
 
 /**
- * @var array $engineers
  * @var ArrayDataProvider $dataProvider
  * @var ArrayDataProvider $searchModel
  */
@@ -9,10 +8,12 @@
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\helpers\VarDumper;
+
+use function app\helpers\d;
 
 $this->title = 'Engineers';
 $this->params['breadcrumbs'] = [$this->title];
+// d($dataProvider->models);
 ?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='d-flex flex-column h-100'>
@@ -50,8 +51,30 @@ $this->params['breadcrumbs'] = [$this->title];
                                 },
                                 'format' => 'raw'
                             ],
-                            ['attribute' => 'system', 'label' => 'System'],
-                            ['attribute' => 'station', 'label' => 'Station'],
+                            [
+                                'attribute' => 'system',
+                                'label' => 'System',
+                                'value' => function ($model) {
+                                    $id = (int)$model['system_id'];
+                                    return Html::a(
+                                        Html::encode($model['system']),
+                                        Url::toRoute(["system/$id"])
+                                    );
+                                },
+                                'format' => 'raw'
+                            ],
+                            [
+                                'attribute' => 'station',
+                                'label' => 'Station',
+                                'value' => function ($model) {
+                                    $id = (int)$model['station_id'];
+                                    return Html::a(
+                                        Html::encode($model['station']),
+                                        Url::toRoute(["station/$id"])
+                                    );
+                                },
+                                'format' => 'raw'
+                            ],
                             [
                                 'attribute' => 'upgrades',
                                 'value' => function ($model) {

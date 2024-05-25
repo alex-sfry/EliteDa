@@ -161,7 +161,7 @@ Table.prototype.fillTable = function (data) {
       const newRowData = data[rowIndex][actualColumns[cellIndex]];
       if (typeof newRowData === 'object') {
         if ('url' in newRowData) {
-          $(this).html("<a href=\"".concat(newRowData['url'], "\">\n                            ").concat(newRowData['text'], "</a>"));
+          $(this).html("<a href=\"".concat(newRowData['url'], "\" \n                            class='table-link text-decoration-underline link-underline-primary'>\n                            ").concat(newRowData['text'], "</a>"));
         }
       } else $(this).text(newRowData);
     });

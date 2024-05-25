@@ -10,7 +10,7 @@ use function app\helpers\d;
 $this->title = Html::encode($station_name) . ' station outfitting';
 Yii::$app->view->registerCss(
     '.nav-pills .nav-link.active {
-        background-color: var(--bs-light-orange);
+        background-color: var(--bs-info);
     }',
     [View::POS_BEGIN]
 );
@@ -38,14 +38,15 @@ $this->params['breadcrumbs'] = [
                                     justify-content-lg-start mt-2">
                             <div class="small-tile text-light gx-0 rounded-3">
                                 <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                        justify-content-center"
+                                        justify-content-center sintony-bold"
                                     href="<?= Url::to(["station/$id"]) ?>">
                                         station info
                                     </a>
                             </div>
                             <div class="small-tile text-light gx-0 rounded-3">
                                 <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                        justify-content-center <?= !$services['market'] ? 'disabled' : null ?>"
+                                        justify-content-center  sintony-bold 
+                                        <?= !$services['market'] ? 'disabled' : null ?>"
                                     href="<?= $services['market'] ?
                                         Url::toRoute(["station/market/$id"]) : Url::to() ?>">
                                         market
@@ -53,14 +54,15 @@ $this->params['breadcrumbs'] = [
                             </div>
                             <div class="small-tile text-light gx-0 rounded-3">
                                 <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                        justify-content-center active"
+                                        justify-content-center active sintony-bold"
                                     href="<?= Url::toRoute(["station/ship-modules-hardpoint/$id"]) ?>">
                                         outfitting
                                     </a>
                             </div>
                             <div class="small-tile text-light gx-0 rounded-3">
                                 <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                            justify-content-center <?= !$services['ships'] ? 'disabled' : null ?>"
+                                            justify-content-center  sintony-bold 
+                                            <?= !$services['ships'] ? 'disabled' : null ?>"
                                     href="<?= $services['market'] ?
                                         Url::toRoute(["station/ships/$id"]) : Url::to() ?>">
                                         ships

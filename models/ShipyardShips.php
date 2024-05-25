@@ -61,6 +61,7 @@ class ShipyardShips extends Model
                 'type',
                 'distance_to_arrival AS distance_ls',
                 'systems.name AS system',
+                'systems.id AS system_id',
                 "$distance_expr AS distance_ly",
                 'TIMESTAMP',
                 'TIMESTAMPDIFF(MINUTE, TIMESTAMP, NOW()) as time_diff',
@@ -150,6 +151,10 @@ class ShipyardShips extends Model
             $value['station'] = [
                 'text' => $value['station'],
                 'url' => Url::toRoute(["station/{$value['station_id']}"])
+            ];
+            $value['system'] = [
+                'text' => $value['system'],
+                'url' => Url::toRoute(["system/{$value['system_id']}"])
             ];
 
             $models[$key] = $value;

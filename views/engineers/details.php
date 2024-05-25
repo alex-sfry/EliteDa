@@ -4,7 +4,6 @@
  * @var array $model
  */
 
-use yii\helpers\VarDumper;
 use yii\widgets\DetailView;
 
 $this->title = isset($model['name']) ? $model['name'] : '';

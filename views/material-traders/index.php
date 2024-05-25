@@ -9,12 +9,12 @@ use app\widgets\InputDropdown\InputDropdown;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\helpers\VarDumper;
 
 use function app\helpers\d;
 
 $this->title = 'Material Traders';
 $this->params['breadcrumbs'] = [$this->title];
+// d($dataProvider);
 ?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='d-flex flex-column h-100'>
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'] = [$this->title];
                             'to_submit' => 'ref-to-submit',
                             'placeholder' => 'Enter system',
                             'ajax' => true,
-                            'endpoint' => '/system/',
+                            'endpoint' => '/system/get/',
                             'label_main' => 'Ref. system:',
                             'toggle_btn_text' => 'Search',
                             'name_main' => 'refSysStation',
@@ -55,7 +55,23 @@ $this->params['breadcrumbs'] = [$this->title];
                                     'class' => 'form-select',
                                 ]
                             ],
-                            ['attribute' => 'system.name', 'label' => 'System'],
+                            [
+                                'attribute' => 'system.name',
+                                'label' => 'System',
+                                'value' => function ($model) {
+                                    return Html::a(
+                                        Html::encode($model->system->name),
+                                        Url::toRoute(["system/{$model->system->id}"]),
+                                        ['class' => [
+                                            'text-decoration-underline',
+                                            'link-underline-primary',
+                                            'table-link'
+                                            ]
+                                        ]
+                                    );
+                                },
+                                'format' => 'raw'
+                            ],
                             [
                                 'attribute' => 'station.name',
                                 'label' => 'Station',

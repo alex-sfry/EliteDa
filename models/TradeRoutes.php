@@ -110,6 +110,7 @@ class TradeRoutes extends Model
                 'buy_price',
                 'stock',
                 'st.id AS station_id',
+                'sys.id AS system_id',
                 'm.market_id',
                 'type',
                 'distance_to_arrival AS source_distance_ls',
@@ -142,15 +143,16 @@ class TradeRoutes extends Model
                     new Expression(':type AS source_type', [':type' => $item['type']]),
                     new Expression("{$item['source_distance_ls']} AS source_distance_ls"),
                     new Expression("{$item['station_id']} AS source_station_id"),
+                    new Expression("{$item['system_id']} AS source_system_id"),
                     'm.name AS commodity',
                     'st.id AS target_station_id',
+                    'systems.id AS target_system_id',
                     'st.name AS target_station',
                     'type AS target_type',
                     'distance_to_arrival AS target_distance_ls',
                     'systems.name AS target_system',
                     'sell_price AS target_sell_price',
                     'demand as target_demand',
-                    // 'm.market_id AS target_market_id',
                     "(sell_price - {$item['buy_price']}) * $cargo AS dir_profit",
                     "$distance_expr as distance_ly",
                     'TIMESTAMP as target_timestamp',
@@ -339,7 +341,7 @@ class TradeRoutes extends Model
             $value['source']['system'] = $this->sys_name;
             $value['source']['distance_ls'] = $value['source_distance_ls'];
             $value['source']['station_id'] = $value['source_station_id'];
-            // $value['source']['market_id'] = $value['source_market_id'];
+            $value['source']['system_id'] = $value['source_system_id'];
 
             $value['source']['surface'] = match ($value['source_type']) {
                 'Planetary Outpost', 'Planetary Port', 'Odyssey Settlement' => true,
@@ -355,7 +357,7 @@ class TradeRoutes extends Model
             $value['target']['sell_price'] = $value['target_sell_price'];
             $value['target']['demand'] = $value['target_demand'];
             $value['target']['station_id'] = $value['target_station_id'];
-            // $value['target']['market_id'] = $value['target_market_id'];
+            $value['target']['system_id'] = $value['target_system_id'];
 
             $value['target']['surface'] = match ($value['target_type']) {
                 'Planetary Outpost', 'Planetary Port', 'Odyssey Settlement' => true,
@@ -371,8 +373,8 @@ class TradeRoutes extends Model
             unset($value['source_buy_price']);
             unset($value['source_type']);
             unset($value['source_station_id']);
-            // unset($value['source_market_id']);
             unset($value['source_timestamp']);
+            unset($value['source_system_id']);
 
             unset($value['target_type']);
             unset($value['target_station']);
@@ -381,12 +383,12 @@ class TradeRoutes extends Model
             unset($value['target_sell_price']);
             unset($value['target_demand']);
             unset($value['target_station_id']);
-            // unset($value['target_market_id']);
             unset($value['target_time_diff']);
             unset($value['target_buy_price']);
             unset($value['target_stock']);
             unset($value['target_type']);
             unset($value['target_timestamp']);
+            unset($value['target_system_id']);
 
             $models[$key] = $value;
         }

@@ -32,7 +32,7 @@ Yii::$app->view->registerCss($styles, [View::POS_BEGIN]);
             <tr>
                 <?php foreach ($columns as $key => $value) : ?>
                 <th 
-                    class='bg-light-orange p-2 text-body text-nowrap indicator-right
+                    class='bg-secondary-subtle p-2 text-body text-nowrap indicator-right
                         <?= isset($value['sort']) && !$value['sort'] ? 'no-sort' : null ?>'
                     scope='col'>
                     <span>
@@ -89,9 +89,10 @@ Yii::$app->view->registerCss($styles, [View::POS_BEGIN]);
                                         Html::encode($item[$value['attribute']]) : '--';
                             $link_label .= $value['textAfter'] ?? null;
                             ?>
-                            <?= isset($item['req_url']) ? Html::a(
+                            <?= isset($value['req_url']) && isset($item[$value['req_url']]) ? Html::a(
                                 $link_label,
-                                Url::to(ArrayHelper::merge(['commodities/index'], $item['req_url']))
+                                Url::to(ArrayHelper::merge(['commodities/index'], $item[$value['req_url']])),
+                                ['class' => 'table-link text-decoration-underline link-underline-primary']
                             ) : $link_label ?>
                             
                             

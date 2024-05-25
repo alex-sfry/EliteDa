@@ -2,10 +2,14 @@
 
 namespace app\models\search;
 
+use app\models\ar\Stations;
+use app\models\ar\Systems;
 use Yii;
 use yii\base\Model;
 use yii\data\ArrayDataProvider;
 use yii\helpers\Json;
+
+use function app\helpers\d;
 
 class EngineersSearch extends Model
 {
@@ -65,6 +69,18 @@ class EngineersSearch extends Model
             return $value;
         });
 
+        $st_sys = $this->getSystemsStationsIds($data);
+
+        foreach ($data as $key => $value) {
+            $k = array_search(
+                $value['system'],
+                array_column($st_sys, 'system_name')
+            );
+
+            $data[$key]['system_id'] = $st_sys[$k]['system_id'];
+            $data[$key]['station_id'] = $st_sys[$k]['station_id'];
+        }
+
         return new ArrayDataProvider([
             'allModels' => $data,
             'sort' => [
@@ -74,5 +90,63 @@ class EngineersSearch extends Model
                 'pageSize' => 100,
             ],
         ]);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    private function getSystemsStationsIds(array $data): array
+    {
+        $system_names = array_map(function ($item) {
+            return $item['system'];
+        }, $data);
+
+        $station_names = array_map(function ($item) {
+            return $item['station'];
+        }, $data);
+
+        $sys = Systems::find()
+        ->select(['id'])
+        ->where(['name' => $system_names]);
+
+        return Stations::find()
+            ->alias('st')
+            ->select([
+                'st.id AS station_id',
+                'st.name AS station_name',
+                'sys.id AS system_id',
+                'sys.name AS system_name'
+            ])
+            ->innerJoin(['sys' => 'systems'], 'sys.id = st.system_id')
+            ->where(['st.name' => $station_names, 'st.system_id' => $sys])
+            ->asArray()
+            ->all();
+    }
+
+    /**
+     * @param int $system_id
+     * @param string $station_name
+     *
+     * @return array
+     */
+    public function getName(int $system_id, string $station_name): array
+    {
+        $system = Systems::findOne($system_id);
+
+        if (!$system) {
+            return ['id' => '', 'name' => ''];
+        }
+
+        $json = Json::decode(file_get_contents(Yii::$app->basePath . '/data/engineers.json'));
+
+        foreach ($json as $item) {
+            if ($item['station'] === $station_name && $item['system'] === $system->name) {
+                return ['id' => $item['id'], 'name' => $item['name']];
+            }
+        }
+
+        return ['id' => '', 'name' => ''];
     }
 }

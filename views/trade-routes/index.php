@@ -114,7 +114,7 @@ $this->params['breadcrumbs'] = [$this->title];
                                                             'label_switch2' => 'station',
                                                             'name_radio' => 'targetSysStationName',
                                                             'selected_radio' => $form_model->targetSysStationName,
-                                                            'endpoint1' => '/system/',
+                                                            'endpoint1' => '/system/get/',
                                                             'endpoint2' => '/system-station/',
                                                         ]); ?>
                                                         <div class="mt-2 mb-3">

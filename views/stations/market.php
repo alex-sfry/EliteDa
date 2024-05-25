@@ -28,21 +28,22 @@ $this->params['breadcrumbs'] = [
                     <div class="d-flex gap-2 justify-content-center">
                         <div class="small-tile text-light gx-0 rounded-3 fs-7">
                             <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex 
-                                    flex-column justify-content-center"
+                                    flex-column justify-content-center sintony-bold"
                                 href="<?= Url::to(["station/$id"]) ?>">
                                     station info
                                 </a>
                         </div>
                         <div class="small-tile text-light gx-0 rounded-3 fs-7">
                             <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                    justify-content-center active"
+                                    justify-content-center active sintony-bold"
                                 href="<?= Url::toRoute(["station/market/$id"]) ?>">
                                     market
                                 </a>
                         </div>
                         <div class="small-tile text-light gx-0 rounded-3 fs-7">
                             <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                    justify-content-center <?= !$services['modules'] ? 'disabled' : null ?>"
+                                    justify-content-center  sintony-bold 
+                                    <?= !$services['modules'] ? 'disabled' : null ?>"
                                 href="<?= $services['modules'] ?
                                     Url::toRoute(["station/ship-modules-hardpoint/$id"]) :
                                     Url::to() ?>">
@@ -51,7 +52,8 @@ $this->params['breadcrumbs'] = [
                         </div>
                         <div class="small-tile text-light gx-0 rounded-3 fs-7">
                             <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                    justify-content-center <?= !$services['ships'] ? 'disabled' : null ?>"
+                                    justify-content-center  sintony-bold
+                                    <?= !$services['ships'] ? 'disabled' : null ?>"
                                 href="<?= $services['market'] ?
                                     Url::toRoute(["station/ships/$id"]) : Url::to() ?>">
                                     ships
@@ -91,7 +93,7 @@ $this->params['breadcrumbs'] = [
                                 'filterInputOptions' => [
                                     'class' => 'form-control',
                                 ],
-                                // 'req_url' => $req_url,
+                                'req_url' => 'req_url',
                             ],
                             [
                                 'attribute' => 'sell_price',

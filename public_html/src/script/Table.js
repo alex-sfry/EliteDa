@@ -28,7 +28,8 @@ Table.prototype.fillTable = function (data) {
             if (typeof(newRowData) === 'object') {
                 if ('url' in newRowData) {
                     $(this).html(
-                        `<a href="${newRowData['url']}">
+                        `<a href="${newRowData['url']}" 
+                            class='table-link text-decoration-underline link-underline-primary'>
                             ${newRowData['text']}</a>`
                     );
                 }

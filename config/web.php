@@ -87,6 +87,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['user/login']
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -122,6 +123,7 @@ $config = [
                 'station/market/<id:\w+>' => 'stations/market',
                 'station/<id:\w+>' => 'stations/details',
                 'system-station/<sys_st:[\w\s\']+>' => 'stations/system-station',
+                'system/get/<sys:[\w\s\']+>' => 'systems/system',
                 'system/<id:\w+>' => 'systems/details',
                 'shipyard-ships' => 'shipyard-ships/index',
                 'ship-modules' => 'ship-modules/index',
@@ -129,7 +131,10 @@ $config = [
                 'trade-routes' => 'trade-routes/index',
                 'materials' => 'materials/index',
                 'material-traders' => 'material-traders/index',
-                'system/<sys:[\w\s\']+>' => 'systems/system',
+                'sandbox' => 'sandbox/index',
+                'user/login' => 'user/login',
+                'user/logout' => 'user/logout',
+                'user/signup' => 'user/signup',
                 // '<controller>/<action>' =>  '<controller>/<action>',
                 '' => 'site/index'
             ],
@@ -151,6 +156,9 @@ $config = [
             'app\models\ShipyardShips' => [
                 'class' => 'app\models\ShipyardShips',
             ],
+            'app\models\search\EngineersSearch' => [
+                'class' => 'app\models\search\EngineersSearch',
+            ]
         ],
     ],
 ];

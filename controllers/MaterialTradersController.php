@@ -25,7 +25,7 @@ class MaterialTradersController extends Controller
     {
         $session = Yii::$app->session;
         $session->open();
-        $session->destroy();
+        // $session->destroy();
         $request = Yii::$app->request;
 
         if (count($request->get()) > 0) {

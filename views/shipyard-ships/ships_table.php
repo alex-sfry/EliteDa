@@ -37,7 +37,7 @@ $table_head = [
             <tr>
                 <?php foreach ($table_head as $item) : ?>
                     <?php echo match ($item) {
-                        'Ship' => "<th class='bg-light-orange p-0 text-body hover text-nowrap' scope='col'>
+                        'Ship' => "<th class='bg-secondary-subtle p-0 text-body hover text-nowrap' scope='col'>
                             <a
                                 href='$sort_ship'
                                 class='sort text-decoration-none w-100 h-100 px-1 py-2 text-primary d-flex 
@@ -46,7 +46,7 @@ $table_head = [
                            </a>
                         </th>",
                         'Updated' =>
-                        "<th class='bg-light-orange p-0 text-body text-nowrap' scope='col'>
+                        "<th class='bg-secondary-subtle p-0 text-body text-nowrap' scope='col'>
                             <a
                                 href='$sort_updated'
                                 class='sort text-decoration-none w-100 h-100 px-1 py-2 text-primary
@@ -55,7 +55,7 @@ $table_head = [
                             </a>
                         </th>",
                         'Dist.(LY)' =>
-                        "<th class='bg-light-orange p-0 text-body text-nowrap' scope='col'>
+                        "<th class='bg-secondary-subtle p-0 text-body text-nowrap' scope='col'>
                             <a
                                 href='$sort_dist_ly'
                                 class='sort text-decoration-none w-100 h-100 px-1 py-2 text-primary
@@ -63,7 +63,7 @@ $table_head = [
                                 $item
                             </a>
                         </th>",
-                        default => "<th class='bg-light-orange text-body text-nowrap' scope='col' data-sort='asc'>
+                        default => "<th class='bg-secondary-subtle text-body text-nowrap' scope='col' data-sort='asc'>
                                         $item
                                     </th>",
                     }; ?>
@@ -74,17 +74,25 @@ $table_head = [
             <?php foreach ($models as $item) : ?>
                 <tr>
                     <td class="text-start text-truncate"><?= Html::encode($item['ship']) ?></td>
-                    <td class="table-link text-start text-truncate text-decoration-underline link-underline-primary">
+                    <td class="text-start text-truncate">
                     <?php $station_id = Html::encode($item['station_id']) ?>
                         <?= Html::a(
                             Html::encode($item['station']['text']),
-                            Url::toRoute(["station/$station_id"])
+                            Url::toRoute(["station/$station_id"]),
+                            ['class' => 'text-decoration-underline link-underline-primary table-link']
                         );?>
                     </td>
                     <td class="sintony-bold text-start text-truncate
                     <?= $item['surface'] ? 'text-success' : 'text-primary' ?>"><?= Html::encode($item['type']) ?></td>
                     <td class="text-start text-truncate"><?= Html::encode($item['pad']) ?></td>
-                    <td class="text-start text-truncate"><?= Html::encode($item['system']) ?></td>
+                    <td class="text-start text-truncate">
+                    <?php $system_id = Html::encode($item['system_id']) ?>
+                        <?= Html::a(
+                            Html::encode($item['system']['text']),
+                            Url::toRoute(["system/$system_id"]),
+                            ['class' => 'text-decoration-underline link-underline-primary table-link']
+                        );?>
+                    </td>
                     <td class="text-start text-truncate"><?= (float)$item['distance_ly'] ?></td>
                     <td class="text-start text-truncate"><?= (int)$item['distance_ls'] ?></td>
                     <td class="text-start text-truncate"><?= Html::encode($item['price']) . ' Cr' ?></td>

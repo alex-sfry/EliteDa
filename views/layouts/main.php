@@ -74,7 +74,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                             <a
                                                 href="/user/logout"
                                                 class="sintony-reg text-warning ms-2 ms-lg-0 rounded-1
-                                            text-light bg-light-orange p-1"
+                                            text-light bg-info p-1"
                                                 style=" white-space: nowrap;">
                                                 Log out
                                             </a>
