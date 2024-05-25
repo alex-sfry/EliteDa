@@ -73,7 +73,8 @@ $this->params['breadcrumbs'] = [
                                     'label' => 'Ship',
                                     'filterInputOptions' => [
                                         'class' => 'form-control',
-                                    ]
+                                    ],
+                                    'req_url' => 'req_url'
                                 ],
                                 [
                                     'attribute' => 'price',

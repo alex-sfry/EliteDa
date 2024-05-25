@@ -10,7 +10,8 @@ use yii\web\Response;
 use yii\web\Controller;
 use app\behaviors\ShipModulesBehavior;
 use app\behaviors\PageCounter;
-use yii\helpers\VarDumper;
+
+use function app\helpers\d;
 
 class ShipModulesController extends Controller
 {
@@ -27,6 +28,8 @@ class ShipModulesController extends Controller
 
     /**
      * @return string
+     *
+     * @throws InvalidArgumentException
      */
     public function actionIndex(): string
     {

@@ -91,7 +91,7 @@ Yii::$app->view->registerCss($styles, [View::POS_BEGIN]);
                             ?>
                             <?= isset($value['req_url']) && isset($item[$value['req_url']]) ? Html::a(
                                 $link_label,
-                                Url::to(ArrayHelper::merge(['commodities/index'], $item[$value['req_url']])),
+                                Url::to($item[$value['req_url']]),
                                 ['class' => 'table-link text-decoration-underline link-underline-primary']
                             ) : $link_label ?>
                             

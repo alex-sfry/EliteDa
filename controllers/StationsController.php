@@ -20,7 +20,6 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\Request;
 use yii\web\Response;
 
 use function app\helpers\d;
@@ -51,6 +50,7 @@ class StationsController extends Controller
      * @return string
      *
      * @throws NotFoundHttpException
+     * @throws InvalidArgumentException
      */
     public function actionDetails(int $id, EngineersSearch $eng_search): string
     {
@@ -69,7 +69,6 @@ class StationsController extends Controller
 
         $mat_traders = MaterialTraders::findAll(['station_id' => $id]);
         $model['mat_traders'] = $mat_traders;
-        // d($model['mat_traders']);
         return $this->render('details', [
             'model' => $model,
             'pad_size' => $this->landingPadSizes[$model['type']],
@@ -77,7 +76,6 @@ class StationsController extends Controller
             'id' => $id,
             'eng_name' => $engineer['name'],
             'eng_id' => (int)$engineer['id'],
-            // 'mat_traders' => $mat_traders
          ]);
     }
 
@@ -88,6 +86,7 @@ class StationsController extends Controller
      * @return string
      *
      * @throws NotFoundHttpException
+     * @throws InvalidArgumentException
      */
     public function actionShips(int $id, ShipyardShips $ships): string
     {
@@ -99,10 +98,22 @@ class StationsController extends Controller
 
         $ships->setShipsArr($this->getShipsList());
         $this->getStationServices($station->market_id);
-        $req = new Request();
+        $system = Systems::findOne($station->system_id);
+        !$system && throw new NotFoundHttpException();
+        $model = $ships->getStationShips($station->market_id);
+
+        foreach ($model as $key => $value) {
+            $model[$key]['req_url'] = ArrayHelper::merge(
+                ['shipyard-ships/index'],
+                $this->getShipModulesReqArr([
+                    'module' => [$value['name']],
+                    'system' => $system->name,
+                ])
+            );
+        };
 
         return $this->render('ships', [
-            'models' => $ships->getStationShips($station->market_id),
+            'models' => $model,
             'station_name' => $station->name,
             'id' => $id,
             'services' => $this->services
@@ -117,6 +128,7 @@ class StationsController extends Controller
      * @return string
      *
      * @throws NotFoundHttpException
+     * @throws InvalidArgumentException
      */
     public function actionShipModules(int $id, ShipMods $ship_modules, string $cat): string
     {
@@ -125,13 +137,26 @@ class StationsController extends Controller
 
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
+        $system = Systems::findOne($station->system_id);
+        !$system && throw new NotFoundHttpException();
 
         $ship_modules->setMods($this->getShipModules());
         $qty_by_cat = $ship_modules->getQtyByCat($station->market_id);
         $this->getStationServices($station->market_id);
+        $model = $ship_modules->getStationModules($station->market_id, $cat);
+
+        foreach ($model as $key => $value) {
+            $model[$key]['req_url'] = ArrayHelper::merge(
+                ['ship-modules/index'],
+                $this->getShipModulesReqArr([
+                    'module' => [$value['m_name']],
+                    'system' => $system->name,
+                ])
+            );
+        };
 
         return $this->render('outfitting', [
-            'models' => $ship_modules->getStationModules($station->market_id, $cat),
+            'models' => $model,
             'station_name' => $station->name,
             'cat' => $cat,
             'id' => $id,
@@ -147,6 +172,7 @@ class StationsController extends Controller
      * @return string
      *
      * @throws NotFoundHttpException
+     * @throws InvalidArgumentException
      */
     public function actionMarket(int $id, StationMarket $market): string
     {
@@ -156,6 +182,7 @@ class StationsController extends Controller
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
         $system = Systems::findOne($station->system_id);
+        !$system && throw new NotFoundHttpException();
         $this->getStationServices($station->market_id);
         $model = $market->getMarket($station->market_id);
 
@@ -165,12 +192,10 @@ class StationsController extends Controller
                 $this->getCommoditiesReqArr([
                     'commodity' => [$value['name']],
                     'system' => $system->name,
-                    'price_type' => $value['stock'] > 0 ? 'buy' : 'sell'
+                    'price_type' => $value['stock'] > $value['demand'] ? 'sell' : 'buy'
                 ])
             );
         };
-
-        // d($model);
 
         return $this->render('market', [
             'model' => $model,

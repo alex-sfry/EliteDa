@@ -16,7 +16,8 @@
 use app\widgets\CustomSelect\CustomSelect;
 use app\widgets\InputDropdown\InputDropdown;
 use yii\helpers\Html;
-use yii\helpers\VarDumper;
+
+use function app\helpers\d;
 
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
@@ -35,6 +36,7 @@ extract($select_options);
 
 $this->title = 'Ships';
 $this->params['breadcrumbs'] = [$this->title];
+// isset($get) && d($get);
 ?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='d-flex flex-column h-100'>

@@ -156,7 +156,8 @@ $this->params['breadcrumbs'] = [
                                             'label' => 'Module',
                                             'filterInputOptions' => [
                                                 'class' => 'form-control',
-                                            ]
+                                            ],
+                                            'req_url' => 'req_url'
                                         ],
                                         [
                                             'attribute' => 'price',
