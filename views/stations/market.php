@@ -20,7 +20,7 @@ $this->params['breadcrumbs'] = [
     <div class='container-xxl'>
         <div class="row">
             <div class="col mb-3">
-                <h1 class='mt-3 text-center fs-2 text-custom-orange sintony-bold'>
+                <h1 class='mt-3 text-center fs-2 sintony-bold'>
                     <?= $this->title ?>
                 </h1>
                 <div class="d-flex flex-column gap-2 justify-content-center 

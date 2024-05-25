@@ -16,7 +16,7 @@ $this->title = 'Contact';
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="site-contact">
-                    <h1 class="text-center text-custom-orange fs-2 mt-3"><?= Html::encode($this->title) ?></h1>
+                    <h1 class="text-center fs-2 mt-3"><?= Html::encode($this->title) ?></h1>
                     <?php if (Yii::$app->session->hasFlash('contactFormSubmitted')) : ?>
                     <div class="alert alert-success text-center bg-light">
                         Thank you for contacting us. We will respond to you as soon as possible.

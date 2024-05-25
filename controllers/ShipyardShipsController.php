@@ -73,7 +73,7 @@ class ShipyardShipsController extends Controller
 
             switch ($sort->attributeOrders) {
                 case ArrayHelper::keyExists('ship', $sort->attributeOrders):
-                    $params['shipe_sort'] = ($sort->attributeOrders)['ship'] === 4 ? 'sorted asc' : 'sorted desc';
+                    $params['ship_sort'] = ($sort->attributeOrders)['ship'] === 4 ? 'sorted asc' : 'sorted desc';
                     break;
                 case ArrayHelper::keyExists('time_diff', $sort->attributeOrders):
                     $params['time_sort'] = ($sort->attributeOrders)['time_diff'] === 4 ? 'sorted asc' : 'sorted desc';

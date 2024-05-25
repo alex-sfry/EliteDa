@@ -18,8 +18,8 @@ Yii::$app->formatter->thousandSeparator = ' ';
         <div class='container-xxl px-3'>
             <div class='row justify-content-center overflow-x-auto'>
                 <div class='details-cnt col-sm-10 col-lg-6'>
-                    <h1 class="mt-2 text-custom-orange text-center sintony-bold"><?= HTML::encode($this->title) ?></h1>
-                    <p class="text-custom-orange text-center sintony-bold fs-4">system info:</p>
+                    <h1 class="mt-2 text-center sintony-bold"><?= HTML::encode($this->title) ?></h1>
+                    <p class=" text-center sintony-bold fs-4">system info:</p>
                     <?= isset($model) ? DetailView::widget([
                         'model' => $model,
                         'attributes' => [
@@ -57,8 +57,8 @@ Yii::$app->formatter->thousandSeparator = ' ';
                                                     'class' => match ($item['type']) {
                                                         'Planetary Outpost',
                                                         'Planetary Port',
-                                                        'Odyssey Settlement' => 'nav-warning text-success sintony-bold',
-                                                        default => 'nav-warning text-primary sintony-bold'
+                                                        'Odyssey Settlement' => 'nav-info text-success sintony-bold',
+                                                        default => 'nav-info text-primary sintony-bold'
                                                     }
                                                 ]
                                             );

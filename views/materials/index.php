@@ -16,7 +16,7 @@ $this->params['breadcrumbs'] = [$this->title];
         <div class='container-xxl px-3'>
             <div class='row flex-column overflow-x-auto'>
                 <div class='col'>
-                    <h1 class="mt-2 text-custom-orange text-center sintony-bold"><?= Html::encode($this->title) ?></h1>
+                    <h1 class="mt-2 text-center sintony-bold"><?= Html::encode($this->title) ?></h1>
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,

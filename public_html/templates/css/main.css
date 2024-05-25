@@ -26,6 +26,10 @@
     font-weight: 400;
     font-display: swap;
 }
+h1 {
+    color: #e9ecef !important;
+}
+
 select {
     cursor: pointer;
 }
@@ -51,17 +55,18 @@ body {
     overflow-x: hidden;
 }
 
-.nav-warning, table .table-link,
+.nav-info, table .table-link,
 table .table-link-tr {
     transition: all 0.2s linear;
     text-decoration-style: dashed !important;
     text-underline-offset: 4px;
 }
 
-.nav-warning:hover, table .table-link:hover,
+.nav-info:hover, table .table-link:hover,
 table .table-link-tr:hover {
-    background-color: #ffc107 !important;
+    background-color: #0dcaf0 !important;
     text-decoration-color: #212529 !important;
+    color: #000000 !important;
 }
 
 .min-w-f-content, .details-cnt th, .engineers-cnt tbody .engineers-cnt tbody tr td:nth-child(2),
@@ -329,7 +334,7 @@ main .small-tile a {
 * generic form styles
 */
 form-check-input:checked {
-    border-color: #FC9918;
+    border-color: #0dcaf0;
 }
 form-control.is-invalid {
     background-image: none;

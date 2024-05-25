@@ -3,6 +3,10 @@
 @import "../../../node_modules/bootstrap/scss/functions.scss";
 @import "../../../node_modules/bootstrap/scss/variables.scss"; 
 
+h1 {
+    color: $gray-200 !important;
+}
+
 select {
     cursor: pointer;
 }
@@ -27,15 +31,27 @@ body {
     overflow-x: hidden;
 }
 
-.nav-warning {
+// .nav-warning {
+//     transition: all 0.2s linear;
+//     text-decoration-style: dashed !important;
+//     text-underline-offset: 4px;
+// }
+
+// .nav-warning:hover {
+//     background-color: $warning !important;
+//     text-decoration-color: $dark !important;
+// }
+
+.nav-info {
     transition: all 0.2s linear;
     text-decoration-style: dashed !important;
     text-underline-offset: 4px;
 }
 
-.nav-warning:hover {
-    background-color: $warning !important;
+.nav-info:hover {
+    background-color: $info !important;
     text-decoration-color: $dark !important;
+    color: #000000 !important;
 }
 
 .min-w-f-content {
@@ -343,7 +359,8 @@ form {
     }
 
     &-check-input:checked {
-        border-color: $custom-light-orange;
+        // border-color: $custom-light-orange;
+        border-color: $info;
     }
 
     &-control.is-invalid {
@@ -495,7 +512,7 @@ form {
 table {
     .table-link,
     .table-link-tr {
-        @extend .nav-warning;
+        @extend .nav-info;
     }
 }
 
