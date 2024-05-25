@@ -34,7 +34,7 @@ class CommoditiesBehavior extends Behavior
     }
 
     /**
-     * @var array $commodities
+     * @var array $params
      *
      * @return array
      */
