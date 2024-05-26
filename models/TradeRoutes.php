@@ -149,6 +149,7 @@ class TradeRoutes extends Model
                     'systems.id AS target_system_id',
                     'st.name AS target_station',
                     'type AS target_type',
+                    'm.market_id AS target_market_id',
                     'distance_to_arrival AS target_distance_ls',
                     'systems.name AS target_system',
                     'sell_price AS target_sell_price',
