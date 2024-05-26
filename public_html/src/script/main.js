@@ -39,7 +39,7 @@ const initFooter = () => {
 };
 
 const loader = ($insertElem, $hideElem) => {
-    $insertElem.after("<div class='c-loading my-0 mx-auto text-light bg-light-orange rounded-2 px-3 py-1 fw-bold'>" +
+    $insertElem.after("<div class='c-loading my-0 mx-auto text-light bg-info rounded-2 px-3 py-1 fw-bold'>" +
         "Loading . . .</div>");
 
     if ($hideElem.length) {

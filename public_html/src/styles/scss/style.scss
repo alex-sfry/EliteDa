@@ -31,16 +31,9 @@ body {
     overflow-x: hidden;
 }
 
-// .nav-warning {
-//     transition: all 0.2s linear;
-//     text-decoration-style: dashed !important;
-//     text-underline-offset: 4px;
-// }
-
-// .nav-warning:hover {
-//     background-color: $warning !important;
-//     text-decoration-color: $dark !important;
-// }
+.lett-spacing-2 {
+    letter-spacing: 2px;
+}
 
 .nav-info {
     transition: all 0.2s linear;
@@ -89,12 +82,6 @@ body {
 .sintony-bold {
     font-family: 'SintonyBold', sans-serif;
     font-weight: 700;
-}
-
-.font-inherit {
-    font-family: inherit;
-    font-weight: inherit;
-    font-size: inherit;
 }
 
 .body-wrapper {
@@ -298,54 +285,48 @@ body {
         }
     }
 }
+/* ========================================== */
 
-/**
-* main styles
-*/
-main {
-    .nav-button {
-        letter-spacing: 1.1px;
-        transition: all 0.2s linear;
+.nav-button {
+    letter-spacing: 1.1px;
+    transition: all 0.2s linear;
+}
+
+.nav-button:hover:not(.active) {
+    background-color: $info !important;
+    box-shadow: 0 0 4px 4px $light;
+}
+
+.nav-button.active {
+    cursor: auto;
+}
+
+.col-tile,
+.main-tile {
+    max-width: 240px;
+}
+
+.main-tile {
+    height: 80px;
+
+    a {
+        font-size: 0.875rem;
     }
+}
 
-    .nav-button:hover:not(.active) {
-        background-color: $info !important;
-        // background-color: $warning !important;
-        // color: $primary  !important;
-        box-shadow: 0 0 4px 4px $light;
+.small-tile {
+    width: auto;
+    height: auto;
+
+    a {
+        font-size: 0.875rem;
     }
+}
 
-    .nav-button.active {
-        cursor: auto;
-    }
-
-    .col-tile,
+@media screen and (min-width: 330px) {
     .main-tile {
-        max-width: 240px;
-    }
-
-    .main-tile {
-        height: 80px;
-
         a {
-            font-size: 0.875rem;
-        }
-    }
-
-    .small-tile {
-        width: auto;
-        height: auto;
-
-        a {
-            font-size: 0.875rem;
-        }
-    }
-
-    @media screen and (min-width: 330px) {
-        .main-tile {
-            a {
-                font-size: 1rem;
-            }
+            font-size: 1rem;
         }
     }
 }
@@ -368,12 +349,8 @@ form {
     }
 }
 
-/**
-* commodities form and result styles
-*/
 #accordionForm {
     .accordion-button:not(.collapsed) {
-        // background-color: $custom-light-orange;
         background-color: $secondary-bg-subtle;
     }
 
@@ -395,24 +372,6 @@ form {
     .form-select:active {
         @extend .f-ctrl-no-shadow;
         box-shadow: 0 0 4px 4px $info;
-    }
-
-    .dropdown {
-        .btn-outline-dark {
-            @extend .font-inherit;
-        }
-
-        .btn-outline-dark:active,
-        .btn-outline-dark:focus,
-        .btn-outline-dark {
-            color: $dark;
-        }
-
-        .btn-outline-dark:hover {
-            // background-color: $custom-light-orange !important;
-            background-color: $info !important;
-            color: $dark;
-        }
     }
 
     select,
@@ -440,7 +399,6 @@ form {
 
         label:hover,
         .btn-check:checked+.btn {
-            // background-color: $custom-light-orange;
             @extend .sintony-bold;
             background-color: $info;
         }
@@ -508,7 +466,6 @@ form {
         }
 
         th:hover > a.sort {
-            // background-color: $warning  !important;
             background-color: $info !important;
             color: $light  !important;
         }
@@ -665,14 +622,8 @@ table {
 
     table {
         th {
-            // background-color: $custom-light-orange;
             background-color: $secondary-bg-subtle;
         }
-    }
-
-    nav#w1 {
-        display: flex;
-        justify-content: center;
     }
 }
 
@@ -752,7 +703,6 @@ table {
     th {
         @extend .min-w-f-content;
         white-space: nowrap;
-        // background-color: $custom-light-orange;
         background-color: $body-tertiary-bg;
         border-right: 1px solid $dark;
     }
@@ -761,4 +711,14 @@ table {
 .site-contact {
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
+}
+
+.grid-view__ref-sys-divider {
+    display: none;
+}
+
+@media screen and (min-width: 449px) {
+    .grid-view__ref-sys-divider {
+        display: block;
+    }
 }

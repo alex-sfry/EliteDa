@@ -29,7 +29,7 @@ class MaterialTradersController extends Controller
         $request = Yii::$app->request;
 
         if (count($request->get()) > 0) {
-            if (isset($request->get()['refSysStation'])) {
+            if (isset($request->get()['refSysStation']) && $request->get()['refSysStation']) {
                 $session->set('mt', $request->get());
             } else {
                 $session->set('mt', ['refSysStation' => 'Sol']);

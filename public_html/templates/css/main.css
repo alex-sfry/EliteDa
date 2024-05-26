@@ -55,6 +55,10 @@ body {
     overflow-x: hidden;
 }
 
+.lett-spacing-2 {
+    letter-spacing: 2px;
+}
+
 .nav-info, table .table-link,
 table .table-link-tr {
     transition: all 0.2s linear;
@@ -126,12 +130,6 @@ table .table-link-tr:hover {
 .c-form .buy-sell-switch .btn-check:checked + .btn, .c-form .btn-violet, .c-form, .header .menu__link {
     font-family: "SintonyBold", sans-serif;
     font-weight: 700;
-}
-
-.font-inherit, .c-form .dropdown .btn-outline-dark {
-    font-family: inherit;
-    font-weight: inherit;
-    font-size: inherit;
 }
 
 .body-wrapper {
@@ -294,43 +292,46 @@ table .table-link-tr:hover {
     }
 }
 
-/**
-* main styles
-*/
-main .nav-button {
+/* ========================================== */
+.nav-button {
     letter-spacing: 1.1px;
     transition: all 0.2s linear;
 }
-main .nav-button:hover:not(.active) {
+
+.nav-button:hover:not(.active) {
     background-color: #0dcaf0 !important;
     box-shadow: 0 0 4px 4px #f8f9fa;
 }
-main .nav-button.active {
+
+.nav-button.active {
     cursor: auto;
 }
-main .col-tile,
-main .main-tile {
+
+.col-tile,
+.main-tile {
     max-width: 240px;
 }
-main .main-tile {
+
+.main-tile {
     height: 80px;
 }
-main .main-tile a {
+.main-tile a {
     font-size: 0.875rem;
 }
-main .small-tile {
+
+.small-tile {
     width: auto;
     height: auto;
 }
-main .small-tile a {
+.small-tile a {
     font-size: 0.875rem;
 }
+
 @media screen and (min-width: 330px) {
-    main .main-tile a {
+    .main-tile a {
         font-size: 1rem;
     }
 }
-
 /**
 * generic form styles
 */
@@ -341,9 +342,6 @@ form-control.is-invalid {
     background-image: none;
 }
 
-/**
-* commodities form and result styles
-*/
 #accordionForm .accordion-button:not(.collapsed) {
     background-color: #e2e3e5;
 }
@@ -360,15 +358,6 @@ form-control.is-invalid {
 .c-form .form-select:focus,
 .c-form .form-select:active {
     box-shadow: 0 0 4px 4px #0dcaf0;
-}
-.c-form .dropdown .btn-outline-dark:active,
-.c-form .dropdown .btn-outline-dark:focus,
-.c-form .dropdown .btn-outline-dark {
-    color: #212529;
-}
-.c-form .dropdown .btn-outline-dark:hover {
-    background-color: #0dcaf0 !important;
-    color: #212529;
 }
 .c-form select,
 .c-form option {
@@ -559,10 +548,6 @@ form-control.is-invalid {
 .grid-view table th {
     background-color: #e2e3e5;
 }
-.grid-view nav#w1 {
-    display: flex;
-    justify-content: center;
-}
 
 #w0 a::after {
     margin-left: 4px;
@@ -619,6 +604,16 @@ form-control.is-invalid {
 .site-contact {
     font-family: "Inter", sans-serif;
     font-size: 1rem;
+}
+
+.grid-view__ref-sys-divider {
+    display: none;
+}
+
+@media screen and (min-width: 449px) {
+    .grid-view__ref-sys-divider {
+        display: block;
+    }
 }
 
 /*# sourceMappingURL=main.css.map*/

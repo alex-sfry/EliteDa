@@ -18,7 +18,4 @@ export const tradeRouteForm = (isValidated, loader, removeLoader) => {
     };
 
     $form.on('submit', (e) => handleSubmit(e));
-
-    // const observer = new MutationObserver(handleSelectedSysChange);
-    // observer.observe(selectedSys, {childList: true});
 };

@@ -34,6 +34,23 @@
 
 .btn-right-error {
     top: 100%;
-    left: 34%;
+    left: 24%;
 
+}
+
+.dropdown .btn-outline-dark {
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+}
+
+.dropdown .btn-outline-dark:active,
+.dropdown .btn-outline-dark:focus,
+.dropdown .btn-outline-dark {
+    color: #000000;
+}
+
+.dropdown .btn-outline-dark:hover {
+    background-color: var(--bs-cyan) !important;
+    color: #000000;
 }

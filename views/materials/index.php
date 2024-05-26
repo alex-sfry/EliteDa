@@ -21,8 +21,20 @@ $this->params['breadcrumbs'] = [$this->title];
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'columns' => [
-                            ['attribute' => 'name', 'label' => 'Material'],
-                            ['attribute' => 'category', 'label' => 'Category'],
+                            [
+                                'attribute' => 'name',
+                                'label' => 'Material',
+                                'filterInputOptions' => [
+                                    'class' => 'form-control form-control-sm'
+                                ]
+                            ],
+                            [
+                                'attribute' => 'category',
+                                'label' => 'Category',
+                                'filterInputOptions' => [
+                                    'class' => 'form-control form-control-sm'
+                                ]
+                            ],
                             [
                                 'attribute' => 'grade',
                                 'label' => 'Grade',
@@ -34,16 +46,18 @@ $this->params['breadcrumbs'] = [$this->title];
                                     'Very Rare' => 'Very Rare',
                                 ],
                                 'filterInputOptions' => [
-                                    'class' => 'form-select',
-                                ],
+                                    'class' => 'form-select form-select-sm',
+                                    'id' => null
+                                ]
                             ],
                             [
                                 'attribute' => 'type',
                                 'label' => 'Type',
                                 'filter' => ['Encoded' => 'Encoded', 'Manufactured' => 'Manufactured', 'Raw' => 'Raw'],
                                 'filterInputOptions' => [
-                                    'class' => 'form-select',
-                                ],
+                                    'class' => 'form-select form-select-sm',
+                                    'id' => null
+                                ]
                             ],
                             [
                                 'attribute' => 'location',
@@ -56,6 +70,9 @@ $this->params['breadcrumbs'] = [$this->title];
                             'lastPageLabel' => 'last',
                             'prevPageCssClass' => 'prev-page',
                             'nextPageCssClass' => 'next-page',
+                            'options' => [
+                                'class' => 'd-flex justify-content-center'
+                            ]
                         ],
                     ]) ?>
                 </div>

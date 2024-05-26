@@ -36,7 +36,8 @@ $this->params['breadcrumbs'] = [$this->title];
                                 'label' => 'ship / pilot',
                                 'filter' => ['ship' => 'ship', 'pilot' => 'pilot'],
                                 'filterInputOptions' => [
-                                    'class' => 'form-select',
+                                    'class' => 'form-select form-select-sm',
+                                    'id' => null
                                 ],
                             ],
                             [
@@ -49,7 +50,10 @@ $this->params['breadcrumbs'] = [$this->title];
                                         Url::toRoute(["engineer/$id"])
                                     );
                                 },
-                                'format' => 'raw'
+                                'format' => 'raw',
+                                'filterInputOptions' => [
+                                    'class' => 'form-control form-control-sm'
+                                ]
                             ],
                             [
                                 'attribute' => 'system',
@@ -61,7 +65,10 @@ $this->params['breadcrumbs'] = [$this->title];
                                         Url::toRoute(["system/$id"])
                                     );
                                 },
-                                'format' => 'raw'
+                                'format' => 'raw',
+                                'filterInputOptions' => [
+                                    'class' => 'form-control form-control-sm'
+                                ]
                             ],
                             [
                                 'attribute' => 'station',
@@ -73,13 +80,19 @@ $this->params['breadcrumbs'] = [$this->title];
                                         Url::toRoute(["station/$id"])
                                     );
                                 },
-                                'format' => 'raw'
+                                'format' => 'raw',
+                                'filterInputOptions' => [
+                                    'class' => 'form-control form-control-sm'
+                                ]
                             ],
                             [
                                 'attribute' => 'upgrades',
                                 'value' => function ($model) {
                                     return implode(", ", $model['upgrades']);
-                                }
+                                },
+                                'filterInputOptions' => [
+                                    'class' => 'form-control form-control-sm'
+                                ]
                             ],
                             ['attribute' => 'discovery', 'label' => 'Discovery'],
                         ],

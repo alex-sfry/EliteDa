@@ -52,7 +52,8 @@ $this->params['breadcrumbs'] = [$this->title];
                                 'attribute' => 'material_type',
                                 'filter' => ['Encoded' => 'Encoded', 'Manufactured' => 'Manufactured', 'Raw' => 'Raw'],
                                 'filterInputOptions' => [
-                                    'class' => 'form-select',
+                                    'class' => 'form-select form-select-sm',
+                                    'id' => null
                                 ]
                             ],
                             [
@@ -103,7 +104,10 @@ $this->params['breadcrumbs'] = [$this->title];
                             'firstPageLabel' => 'first',
                             'lastPageLabel' => 'last',
                             'prevPageCssClass' => 'prev-page',
-                            'nextPageCssClass' => 'next-page'
+                            'nextPageCssClass' => 'next-page',
+                            'options' => [
+                                'class' => 'd-flex justify-content-center'
+                            ]
                         ],
                     ]) ?>
                 </div>
