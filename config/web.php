@@ -12,10 +12,6 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
-    'controllerMap' => [
-        'sandbox' => 'app\sandbox\SandboxController',
-    ],
-    // 'language' => 'ru-RU',
     // 'sourceLanguage' => 'en-US',
     'components' => [
         // 'errorHandler' => [
@@ -132,7 +128,6 @@ $config = [
                 'trade-routes' => 'trade-routes/index',
                 'materials' => 'materials/index',
                 'material-traders' => 'material-traders/index',
-                'sandbox' => 'sandbox/index',
                 'user/login' => 'user/login',
                 'user/logout' => 'user/logout',
                 'user/signup' => 'user/signup',
