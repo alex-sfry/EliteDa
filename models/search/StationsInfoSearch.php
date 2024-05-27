@@ -2,6 +2,7 @@
 
 namespace app\models\search;
 
+use app\behaviors\StationBehavior;
 use app\behaviors\SystemBehavior;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -102,7 +103,7 @@ class StationsInfoSearch extends StationsInfoView
             ->andFilterWhere(['like', 'station', $this->station])
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'government', $this->government])
-            ->andFilterWhere(['like', 'system', $this->getAttribute('systeme')])
+            ->andFilterWhere(['like', 'system', $this->getAttribute('system')])
             ->andFilterWhere(['like', 'economy_name', $this->getAttribute('economy_name')])
             ->andFilterWhere(['like', 'allegiance', $this->getAttribute('allegiance')]);
 
