@@ -69,7 +69,6 @@ $type_options = [
 ]
 
 // isset($get) && d($get);
-// d($refSysDist);
 ?>
 
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">

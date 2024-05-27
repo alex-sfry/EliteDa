@@ -6,8 +6,6 @@ use app\behaviors\CommoditiesBehavior;
 use app\behaviors\ShipModulesBehavior;
 use app\behaviors\ShipyardShipsBehavior;
 use app\behaviors\StationBehavior;
-use app\models\ar\Allegiance;
-use app\models\ar\Economies;
 use app\models\ar\Markets;
 use app\models\ar\MaterialTraders;
 use app\models\ShipMods;

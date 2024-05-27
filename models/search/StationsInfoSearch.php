@@ -80,8 +80,6 @@ class StationsInfoSearch extends StationsInfoView
 
         $max_distance && $query->where(['<=', $distance_expr, $max_distance]);
 
-        // d($query->one());
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
