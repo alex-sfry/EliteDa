@@ -9,6 +9,9 @@ use yii\web\Controller;
 
 class EngineersController extends Controller
 {
+    /**
+     * @return string
+     */
     public function actionIndex(): string
     {
         $searchModel = new EngineersSearch();

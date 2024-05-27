@@ -21,6 +21,9 @@ class MaterialTradersController extends Controller
         );
     }
 
+    /**
+     * @return string
+     */
     public function actionIndex(): string
     {
         $session = Yii::$app->session;

@@ -5,9 +5,6 @@ namespace app\controllers;
 use app\models\search\MaterialsSearch;
 use yii\web\Controller;
 
-/**
- * MaterialsController implements the CRUD actions for Materials model.
- */
 class MaterialsController extends Controller
 {
     /**
