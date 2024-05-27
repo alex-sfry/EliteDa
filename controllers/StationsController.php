@@ -6,7 +6,6 @@ use app\behaviors\CommoditiesBehavior;
 use app\behaviors\ShipModulesBehavior;
 use app\behaviors\ShipyardShipsBehavior;
 use app\behaviors\StationBehavior;
-use app\behaviors\SystemBehavior;
 use app\models\ar\Markets;
 use app\models\ar\MaterialTraders;
 use app\models\ShipMods;
@@ -17,7 +16,7 @@ use app\models\StationMarket;
 use app\models\ar\Stations;
 use app\models\ar\Systems;
 use app\models\search\EngineersSearch;
-use app\models\search\StationsSearch;
+use app\models\search\StationsInfoSearch;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -35,7 +34,6 @@ class StationsController extends Controller
      */
     public function actionIndex(): string
     {
-        $this->attachBehavior('SystemBehavior', SystemBehavior::class);
         $session = Yii::$app->session;
         $session->open();
         // $session->destroy();
@@ -75,13 +73,14 @@ class StationsController extends Controller
                 $maxDistance = (int)$session->get('st')['maxDistance'];
                 $system = !$system ? 'Sol' : $system;
                 $maxDistance = $maxDistance === 0 ? 1 : $maxDistance;
-                $distance_expr = $this->getDistanceToSystemExpression($session->get('st')['refSysStation']);
+                $system = $session->get('st')['refSysStation'];
             }
         }
 
-        if (!isset($distance_expr) || !$distance_expr) {
-            $distance_expr = $this->getDistanceToSystemExpression('', ['x' => 0, 'y' => 0, 'z' => 0]);
+        if (!isset($system)) {
             $system = 'Sol';
+        }
+        if (!isset($maxDistance)) {
             $maxDistance = 50;
         }
 
@@ -90,13 +89,13 @@ class StationsController extends Controller
             'max_distance' => $maxDistance
         ];
 
-        $searchModel = new StationsSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams, $maxDistance, $distance_expr);
+        $searchModel = new StationsInfoSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, $maxDistance, $system);
         $dataProvider->pagination = ['pageSize' => 50];
 
-        $dataProvider->sort->attributes['system.name'] = [
-            'asc' => ['systems.name' => SORT_ASC],
-            'desc' => ['systems.name' => SORT_DESC],
+        $dataProvider->sort->attributes['distance'] = [
+            'asc' => ['distance' => SORT_ASC],
+            'desc' => ['distance' => SORT_DESC],
         ];
 
         $params['dataProvider'] = $dataProvider;

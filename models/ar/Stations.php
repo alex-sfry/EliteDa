@@ -28,15 +28,6 @@ use yii\db\ActiveQuery;
  */
 class Stations extends \yii\db\ActiveRecord
 {
-    public function attributes()
-    {
-        // add related fields to searchable attributes
-        return array_merge(parent::attributes(), [
-            'sys_name', // for StationSearch
-            'distance' // for StationSearch
-        ]);
-    }
-
     /**
      * {@inheritdoc}
      */

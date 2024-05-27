@@ -12,7 +12,6 @@ $this->params['breadcrumbs'] = [$this->title];
 
 // isset($get) && d($get);
 // d($refSysDist);
-// d($dataProvider);
 ?>
 
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
@@ -70,7 +69,6 @@ $this->params['breadcrumbs'] = [$this->title];
                         <?php echo Html::endForm() ?>
                     </div>
                     <?= GridView::widget([
-                        // 'beforeFilter' => 'handleGridEvents',
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
                         'headerRowOptions' => [
@@ -78,7 +76,7 @@ $this->params['breadcrumbs'] = [$this->title];
                         ],
                         'columns' => [
                             [
-                                'attribute' => 'name', 'label' => 'Station',
+                                'attribute' => 'station', 'label' => 'Station',
                             // 'filter' => ['Encoded' => 'Encoded', 'Manufactured' => 'Manufactured', 'Raw' => 'Raw'],
                                 // 'filterInputOptions' => [
                                 //     'class' => 'form-select',
@@ -106,10 +104,10 @@ $this->params['breadcrumbs'] = [$this->title];
                                 }
                             ],
                             ['attribute' => 'government', 'label' => 'Government'],
-                            ['attribute' => 'economyId1.economy_name', 'label' => 'Economy (main)'],
-                            ['attribute' => 'allegiance.faction_name', 'label' => 'Allegiance'],
+                            ['attribute' => 'economy_name', 'label' => 'Economy (main)'],
+                            ['attribute' => 'allegiance', 'label' => 'Allegiance'],
                             [
-                                'attribute' => 'sys_name',
+                                'attribute' => 'system',
                                 'label' => 'System',
                                 'filterInputOptions' => [
                                     'class' => 'form-control form-control-sm',
