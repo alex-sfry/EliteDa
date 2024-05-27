@@ -432,9 +432,9 @@ form {
     h2::after {
         content: '';
         position: absolute;
-        bottom: -1px;
-        left: 29%;
-        width: 42%;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
         height: 1px;
         background-color: $dark;
     }
@@ -721,4 +721,4 @@ table {
     .grid-view__ref-sys-divider {
         display: block;
     }
-}
+} 
