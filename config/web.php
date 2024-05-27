@@ -122,6 +122,7 @@ $config = [
                 'station/ship-modules-hardpoint/<id:\w+>' => 'stations/ship-modules',
                 'station/market/<id:\w+>' => 'stations/market',
                 'station/<id:\w+>' => 'stations/details',
+                'stations' => 'stations/index',
                 'system-station/<sys_st:[\w\s\']+>' => 'stations/system-station',
                 'system/get/<sys:[\w\s\']+>' => 'systems/system',
                 'system/<id:\w+>' => 'systems/details',
@@ -143,10 +144,6 @@ $config = [
     'params' => $params,
     'container' => [
         'definitions' => [
-            'app\sandbox\StationMarket' => [
-                'class' => 'app\sandbox\StationMarket',
-                // 'property1' => 'value1',
-            ],
             'app\models\StationMarket' => [
                 'class' => 'app\models\StationMarket',
             ],

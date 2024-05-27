@@ -6,6 +6,7 @@ use app\behaviors\CommoditiesBehavior;
 use app\behaviors\ShipModulesBehavior;
 use app\behaviors\ShipyardShipsBehavior;
 use app\behaviors\StationBehavior;
+use app\behaviors\SystemBehavior;
 use app\models\ar\Markets;
 use app\models\ar\MaterialTraders;
 use app\models\ShipMods;
@@ -16,6 +17,7 @@ use app\models\StationMarket;
 use app\models\ar\Stations;
 use app\models\ar\Systems;
 use app\models\search\EngineersSearch;
+use app\models\search\StationsSearch;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -29,19 +31,78 @@ class StationsController extends Controller
     private array $services = [];
 
     /**
-     * @return array
+     * @return string
      */
-    public function behaviors(): array
+    public function actionIndex(): string
     {
-        return ArrayHelper::merge(
-            parent::behaviors(),
-            [
-                StationBehavior::class,
-                CommoditiesBehavior::class,
-                ShipModulesBehavior::class,
-                ShipyardShipsBehavior::class
-            ]
-        );
+        $this->attachBehavior('SystemBehavior', SystemBehavior::class);
+        $session = Yii::$app->session;
+        $session->open();
+        // $session->destroy();
+        $request = Yii::$app->request;
+
+        if (count($request->get()) > 0) {
+            $get = $request->get();
+
+            if (isset($request->get()['refSysStation']) && isset($request->get()['maxDistance'])) {
+                !$session->get('st') && $session->set('st', $request->get());
+
+                switch ($get['refSysStation']) {
+                    case '':
+                        $get['refSysStation'] = $session->get('st')['refSysStation'] !== '' ?
+                            $session->get('st')['refSysStation'] : 'Sol';
+                        break;
+                    default:
+                        break;
+                }
+
+                switch ($get['maxDistance']) {
+                    case '':
+                        $get['maxDistance'] = $session->get('st')['maxDistance'] !== '' ?
+                            $session->get('st')['maxDistance'] : 50;
+                        break;
+                    default:
+                        break;
+                }
+
+                $session->set('st', $get);
+            }
+        }
+
+        if (isset($session->get('st')['refSysStation']) || isset($session->get('st')['maxDistance'])) {
+            if ($session->get('st')['refSysStation'] !== '' || $session->get('st')['maxDistance'] !== '') {
+                $system = $session->get('st')['refSysStation'];
+                $maxDistance = (int)$session->get('st')['maxDistance'];
+                $system = !$system ? 'Sol' : $system;
+                $maxDistance = $maxDistance === 0 ? 1 : $maxDistance;
+                $distance_expr = $this->getDistanceToSystemExpression($session->get('st')['refSysStation']);
+            }
+        }
+
+        if (!isset($distance_expr) || !$distance_expr) {
+            $distance_expr = $this->getDistanceToSystemExpression('', ['x' => 0, 'y' => 0, 'z' => 0]);
+            $system = 'Sol';
+            $maxDistance = 50;
+        }
+
+        $params['form'] = [
+            'system' => $system,
+            'max_distance' => $maxDistance
+        ];
+
+        $searchModel = new StationsSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, $maxDistance, $distance_expr);
+        $dataProvider->pagination = ['pageSize' => 50];
+
+        $dataProvider->sort->attributes['system.name'] = [
+            'asc' => ['systems.name' => SORT_ASC],
+            'desc' => ['systems.name' => SORT_DESC],
+        ];
+
+        $params['dataProvider'] = $dataProvider;
+        $params['searchModel'] = $searchModel;
+
+        return $this->render('index', $params);
     }
 
     /**
@@ -56,6 +117,8 @@ class StationsController extends Controller
     {
         $id = (int)$id;
         !$id && throw new NotFoundHttpException();
+
+        $this->attachBehavior('StationBehavior', StationBehavior::class);
 
         $model = Stations::find()
             ->with(['system', 'economyId1', 'economyId2', 'allegiance'])
@@ -93,6 +156,7 @@ class StationsController extends Controller
         !$id && throw new NotFoundHttpException();
         $id = (int)$id;
 
+        $this->attachBehavior('ShipyardShipsBehavior', ShipyardShipsBehavior::class);
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
 
@@ -105,8 +169,8 @@ class StationsController extends Controller
         foreach ($model as $key => $value) {
             $model[$key]['req_url'] = ArrayHelper::merge(
                 ['shipyard-ships/index'],
-                $this->getShipModulesReqArr([
-                    'module' => [$value['name']],
+                $this->getShipsReqArr([
+                    'ship' => [$value['name']],
                     'system' => $system->name,
                 ])
             );
@@ -135,6 +199,7 @@ class StationsController extends Controller
         !$id && throw new NotFoundHttpException();
         $id = (int)$id;
 
+        $this->attachBehavior('ShipModulesBehavior', ShipModulesBehavior::class);
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
         $system = Systems::findOne($station->system_id);
@@ -179,6 +244,7 @@ class StationsController extends Controller
         !$id && throw new NotFoundHttpException();
         $id = (int)$id;
 
+        $this->attachBehavior('CommoditiesBehavior', CommoditiesBehavior::class);
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
         $system = Systems::findOne($station->system_id);
