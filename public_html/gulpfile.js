@@ -30,6 +30,15 @@ export const clean = async () => {
     ]);
 };
 
+export const cleanProd = async () => {
+    return await deleteAsync([
+        './templates/css/bootstrap.css*',
+        './templates/css/main.css*',
+        './templates/js/bootstrap.js*',
+        './templates/js/main.js*',
+    ]);
+};
+
 export const watch = () => {
     console.log('syncMode - ', syncMode);
     syncMode && browserSync.init({
