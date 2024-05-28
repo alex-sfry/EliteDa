@@ -78,7 +78,10 @@ $this->params['breadcrumbs'] = [$this->title];
                                         'Commodities',
                                         Url::toRoute([
                                             "station/market/$id"
-                                            ])
+                                        ]),
+                                        [
+                                            'class' => 'text-decoration-underline link-underline-primary table-link'
+                                        ]
                                     ) : '---'
                             ],
                             [
@@ -89,7 +92,10 @@ $this->params['breadcrumbs'] = [$this->title];
                                         'Modules',
                                         Url::toRoute([
                                             "station/ship-modules-hardpoint/$id"
-                                        ])
+                                        ]),
+                                        [
+                                            'class' => 'text-decoration-underline link-underline-primary table-link'
+                                        ]
                                     ) : '---'
                             ],
                             [
@@ -100,7 +106,10 @@ $this->params['breadcrumbs'] = [$this->title];
                                         'Ships',
                                         Url::toRoute([
                                             "station/ships/$id"
-                                        ])
+                                        ]),
+                                        [
+                                            'class' => 'text-decoration-underline link-underline-primary table-link'
+                                        ]
                                     ) : '---'
                             ],
                         ],
