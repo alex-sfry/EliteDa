@@ -233,7 +233,7 @@ use yii\helpers\VarDumper;
                         </div>
                         <div class="tr-info-block tr-info-block-right col-lg-5 py-1 order-lg-0 order-sm-2">
                             <span class="fs-6 sintony-bold text-primary d-inline-block">Buy</span>
-                            <span class="fst-italic sintony-bold ms-3">Advanced Catalyzers</span>
+                            <span class="fst-italic sintony-bold ms-3"><?= $value['round_commodity'] ?></span>
                             <div class="fs-7 d-flex flex-lg-column flex-sm-row column-gap-5">
                                 <table class="table table-sm mb-1 mb-lg-0 table-borderless">
                                     <tbody>
