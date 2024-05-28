@@ -176,7 +176,15 @@ use yii\helpers\VarDumper;
                                     <tbody>
                                         <tr>
                                             <td>Station:</td>
-                                            <td class="text-end"><?= $value['source']['station'] ?></td>
+                                            <td class="text-end">
+                                                <?= Html::a(
+                                                    Html::encode($value['source']['station']),
+                                                    Url::toRoute(["station/$source_station_id"]),
+                                                    ['class' => [
+                                                        'table-link-tr text-decoration-underline link-underline-primary'
+                                                    ]]
+                                                );?>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Station type:</td>
@@ -188,7 +196,15 @@ use yii\helpers\VarDumper;
                                         </tr>
                                         <tr>
                                             <td>System:</td>
-                                            <td class="text-end"><?= $value['source']['system'] ?></td>
+                                            <td class="text-end">
+                                                <?= Html::a(
+                                                    Html::encode($value['source']['system']),
+                                                    Url::toRoute(["system/$source_system_id"]),
+                                                    ['class' => [
+                                                        'table-link-tr text-decoration-underline link-underline-primary'
+                                                    ]]
+                                                );?>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Distance from star:</td>
@@ -239,7 +255,15 @@ use yii\helpers\VarDumper;
                                     <tbody>
                                         <tr>
                                             <td>Station:</td>
-                                            <td class="text-end"><?= $value['target']['station'] ?></td>
+                                            <td class="text-end">
+                                                <?= Html::a(
+                                                    Html::encode($value['target']['station']),
+                                                    Url::toRoute(["station/$target_station_id"]),
+                                                    ['class' => [
+                                                        'table-link-tr text-decoration-underline link-underline-primary'
+                                                    ]]
+                                                );?>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Station type:</td>
@@ -251,7 +275,15 @@ use yii\helpers\VarDumper;
                                         </tr>
                                         <tr>
                                             <td>System:</td>
-                                            <td class="text-end"><?= $value['target']['system'] ?></td>
+                                            <td class="text-end">
+                                                <?= Html::a(
+                                                    Html::encode($value['target']['system']),
+                                                    Url::toRoute(["system/$target_system_id"]),
+                                                    ['class' => [
+                                                        'table-link-tr text-decoration-underline link-underline-primary'
+                                                    ]]
+                                                );?>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Distance from star:</td>

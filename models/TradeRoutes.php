@@ -254,11 +254,11 @@ class TradeRoutes extends Model
                 ->from(['m' => 'markets'])
                 ->where(['m.name' => $item['commodity']])
                 ->andWhere(['>', 'stock', (int)$this->get['minSupplyDemand']])
-                ->andWhere([
-                    '>',
-                    "({$item['source_sell_price']} - buy_price) * $cargo",
-                    (int)$this->get['profit']
-                ])
+                // ->andWhere([
+                //     '>',
+                //     "({$item['source_sell_price']} - buy_price) * $cargo",
+                //     (int)$this->get['profit']
+                // ])
                 ->andWhere(['m.market_id' => $target_market_ids]);
 
             $queries[] = $query;
