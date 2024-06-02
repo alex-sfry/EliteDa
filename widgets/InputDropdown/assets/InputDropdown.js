@@ -125,7 +125,10 @@ class InputDropdown {
 
             this.dropdownList.classList.add('visually-hidden');
             this.ddLisItems = await this.getListItems(this.ddSearch.value, this.endpoint);
-            if (!this.ddLisItems) return this.showNotFound();
+            this.dropdownList.classList.remove('visually-hidden');
+            this.lastSearchValue = this.ddSearch.value;
+            this.lastSwitchValue = this.switchValue;
+            if (this.ddLisItems.length < 1) return this.showNotFound();
         }
 
         if (this.ddSearch.value !== this.lastSearchValue || this.lastSwitchValue !== this.switchValue) {
