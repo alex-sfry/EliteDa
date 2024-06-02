@@ -20,14 +20,15 @@ use yii\helpers\Url;
                             <table class="table table-sm mb-1 mb-lg-0 table-borderless line">
                                 <tbody>
                                     <tr>
-                                        <td>Station:</td>
+                                        <td class="sintony-bold">Station:</td>
                                         <?php $source_station_id = (int)$source_station['station_id'] ?>
                                         <td class="text-end">
                                             <?= Html::a(
                                                 Html::encode($source_station['station']),
                                                 Url::toRoute(["station/$source_station_id"]),
                                                 ['class' => [
-                                                    'table-link-tr text-decoration-underline link-underline-primary'
+                                                    'table-link-tr text-decoration-underline 
+                                                    link-underline-primary sintony-bold'
                                                 ]]
                                             );?>
                                         </td>
@@ -41,14 +42,21 @@ use yii\helpers\Url;
                                         <td class="text-end"><?=  Html::encode($source_station['pad']) ?></td>
                                     </tr>
                                     <tr>
-                                        <td>System:</td>
+                                        <td class="sintony-bold">System:</td>
                                         <td class="text-end">
+                                            <button 
+                                                class="btn-copy btn btn-outline-secondary me-2"
+                                                style="--bs-btn-padding-y: .06251rem; --bs-btn-padding-x: .5rem; 
+                                                    --bs-btn-font-size: .75rem;">
+                                                copy
+                                            </button>
                                         <?php $source_system_id = (int)$source_station['system_id'] ?>
                                             <?= Html::a(
                                                 Html::encode($source_station['system']),
                                                 Url::toRoute(["system/$source_system_id"]),
                                                 ['class' => [
-                                                    'table-link-tr text-decoration-underline link-underline-primary'
+                                                    'table-link-tr text-decoration-underline 
+                                                    sintony-bold ink-underline-primary'
                                                 ]]
                                             );?>
                                         </td>
@@ -101,14 +109,15 @@ use yii\helpers\Url;
                             <table class="table table-sm mb-1 mb-lg-0 table-borderless">
                                 <tbody>
                                     <tr>
-                                        <td>Station:</td>
+                                        <td class="sintony-bold">Station:</td>
                                         <td class="text-end">
                                         <?php $target_station_id = (int)$value['target_station_id'] ?>
                                             <?= Html::a(
                                                 Html::encode($value['target_station']),
                                                 Url::toRoute(["station/$target_station_id"]),
                                                 ['class' => [
-                                                    'table-link-tr text-decoration-underline link-underline-primary'
+                                                    'table-link-tr text-decoration-underline 
+                                                    sintony-bold link-underline-primary'
                                                 ]]
                                             );?>
                                         </td>
@@ -122,14 +131,21 @@ use yii\helpers\Url;
                                         <td class="text-end"><?=  Html::encode($value['target_pad']) ?></td>
                                     </tr>
                                     <tr>
-                                        <td>System:</td>
+                                        <td class="sintony-bold">System:</td>
                                         <td class="text-end">
                                         <?php $target_system_id = (int)$value['target_system_id'] ?>
+                                            <button 
+                                                class="btn-copy btn btn-outline-secondary me-2"
+                                                style="--bs-btn-padding-y: .06251rem; --bs-btn-padding-x: .5rem; 
+                                                    --bs-btn-font-size: .75rem;">
+                                                copy
+                                            </button>
                                             <?= Html::a(
                                                 Html::encode($value['target_system']),
                                                 Url::toRoute(["system/$target_system_id"]),
                                                 ['class' => [
-                                                    'table-link-tr text-decoration-underline link-underline-primary'
+                                                    'table-link-tr text-decoration-underline 
+                                                    sintony-bold link-underline-primary'
                                                 ]]
                                             );?>
                                         </td>
@@ -175,13 +191,14 @@ use yii\helpers\Url;
                                 <table class="table table-sm mb-1 mb-lg-0 table-borderless">
                                     <tbody>
                                         <tr>
-                                            <td>Station:</td>
+                                            <td class="sintony-bold">Station:</td>
                                             <td class="text-end">
                                                 <?= Html::a(
                                                     Html::encode($source_station['station']),
                                                     Url::toRoute(["station/$source_station_id"]),
                                                     ['class' => [
-                                                        'table-link-tr text-decoration-underline link-underline-primary'
+                                                        'table-link-tr text-decoration-underline sintony-bold
+                                                        link-underline-primary'
                                                     ]]
                                                 );?>
                                             </td>
@@ -195,13 +212,20 @@ use yii\helpers\Url;
                                             <td class="text-end"><?=  Html::encode($source_station['pad']) ?></td>
                                         </tr>
                                         <tr>
-                                            <td>System:</td>
+                                            <td class="sintony-bold">System:</td>
                                             <td class="text-end">
+                                                <button 
+                                                    class="btn-copy btn btn-outline-secondary me-2"
+                                                    style="--bs-btn-padding-y: .06251rem; --bs-btn-padding-x: .5rem; 
+                                                        --bs-btn-font-size: .75rem;">
+                                                    copy
+                                                </button>
                                                 <?= Html::a(
                                                     Html::encode($source_station['system']),
                                                     Url::toRoute(["system/$source_system_id"]),
                                                     ['class' => [
-                                                        'table-link-tr text-decoration-underline link-underline-primary'
+                                                        'table-link-tr text-decoration-underline 
+                                                        sintony-bold link-underline-primary'
                                                     ]]
                                                 );?>
                                             </td>
@@ -280,6 +304,12 @@ use yii\helpers\Url;
                                         <tr>
                                             <td>System:</td>
                                             <td class="text-end">
+                                                <button 
+                                                    class="btn-copy btn btn-outline-secondary me-2"
+                                                    style="--bs-btn-padding-y: .06251rem; --bs-btn-padding-x: .5rem; 
+                                                        --bs-btn-font-size: .75rem;">
+                                                    copy
+                                                </button>
                                                 <?= Html::a(
                                                     Html::encode($value['target_system']),
                                                     Url::toRoute(["system/$target_system_id"]),
