@@ -6,9 +6,12 @@ use app\behaviors\PageCounter;
 use app\models\forms\TradeRoutesForm;
 use app\models\TradeRoutes;
 use Yii;
+use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 use yii\web\Controller;
+
+use function app\helpers\d;
 
 class TradeRoutesController extends Controller
 {
@@ -63,34 +66,53 @@ class TradeRoutesController extends Controller
             )[1];
 
             $limit = 20;
-
             $tr_model = new TradeRoutes($params['get']);
+            $data = $tr_model->getTradeRoutes();
 
-            $data_dir = $tr_model->getData($limit);
-
-            if (gettype($data_dir) === 'string') {
-                $params['model_error'] = $data_dir;
+            if (gettype($data) === 'string') {
+                $params['model_error'] = $data;
                 return $this->render('index', $params);
             }
 
-            $pagination = $data_dir->getPagination();
-            $params['models'] = $data_dir->getModels();
+            $params['source_station'] = ArrayHelper::remove($data, 'source_station');
+
+            switch ($params['get']['sortBy']) {
+                case 'Updated_at':
+                    $sort_attr = 'target_time_diff';
+                    $sort_order = SORT_ASC;
+                    break;
+                case 'Distance':
+                    $sort_attr = "distance";
+                    $sort_order = SORT_ASC;
+                    break;
+                default:
+                    $sort_attr =  'profit';
+                    $sort_order = SORT_DESC;
+            }
+
+            $data_provider = new ArrayDataProvider([
+                'allModels' => $data,
+                'pagination' => [
+                    'pageSize' => $limit,
+                ],
+                'sort' => [
+                    'attributes' => [
+                        'profit',
+                        'distance',
+                        'target_time_diff'
+                    ],
+                    'defaultOrder' => [
+                        $sort_attr => $sort_order
+                    ],
+                ],
+            ]);
+
+            $pagination = $data_provider->getPagination();
+            $params['models'] = $data_provider->getModels();
 
             if (count($params['models']) < 1) {
                 $params['model_error'] = 'Trade routes not found';
                 return $this->render('index', $params);
-            }
-
-            if (isset($params['get']['roundTrip'])) {
-                $target_market_ids = ArrayHelper::getColumn($params['models'], 'target_market_id');
-                $params['models']  = $tr_model->modifyModels(
-                    $tr_model->getResultWithRoundTrip(
-                        $params['models'],
-                        $tr_model->getRoundTrip($target_market_ids)->all()
-                    )
-                );
-            } else {
-                $params['models']  = $tr_model->modifyModels($params['models']);
             }
 
             if ($pagination->getPageCount() !== 0) {
@@ -98,6 +120,7 @@ class TradeRoutesController extends Controller
             }
 
             $params['pagination'] = $pagination;
+
             $params['result'] = $this->renderPartial('tr_result', $params);
         }
 

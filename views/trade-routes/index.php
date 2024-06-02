@@ -1,30 +1,14 @@
 <?php
 
-/**
- * @var string $ref_error
- * @var string $cargo_error
- * @var string $profit_error
- * @var string $targetSys
- * @var string $cargo
- * @var string $profit
- * @var string $pad_sizes
- * @var string $incl_surface
- * @var string $sort_options
- * @var string $max_dist_from_ref
- * @var string $max_dist_from_star
- * @var string $min_supply_demand
- * @var string $max_age_of_data
- * @var \app\models\forms\TradeRoutesForm $form_model
- */
-
 use app\widgets\InputDropdown\InputDropdown;
 use yii\helpers\Html;
-use yii\helpers\VarDumper;
+
+use function app\helpers\d;
 
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
     'sort_options' => ['Profit' => 'Profit', 'Updated_at' => 'Updated at (time)', 'Distance' => 'Distance (LY)'],
-    'max_dist_from_ref' => ['Any' => 'Any', '25' => '25 LY', '50' => '50 LY', '100' => '100 LY', '250' => '250 LY'],
+    'max_dist_from_ref' => ['25' => '25 LY', '50' => '50 LY', '75' => '75 LY'],
     'max_dist_from_star' => [
         'Any' => 'Any',
         '100' => '100 ls',

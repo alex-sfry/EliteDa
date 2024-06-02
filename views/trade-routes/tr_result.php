@@ -1,32 +1,30 @@
 <?php
 
-/** @var array $models */
-
 use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\helpers\VarDumper;
 
 ?>
 <div class="tr-result-wrapper container-xxl mt-4">
     <?php foreach ($models as $key => $value) : ?>
-        <div class="tr-route d-flex flex-column row-gap-lg-1 row-gap-sm-2 border border-2 border-light-orange h-auto
-                        bg-light">
+        <div class="tr-route d-flex flex-column row-gap-lg-1 row-gap-sm-2 border-2 border-dark  h-auto bg-light 
+                    <?= $key !== 0 ? 'border-top' : null ?>
+                    <?= $key !== count($models) - 1 ? 'border-bottom' : null ?>">
             <span class="fs-5 text-center">Route #<?= $key + 1 + $pagination->pageSize * $pagination->page ?></span>
             <div class="tr-route-block h-auto w-100 px-3 pb-3">
                 <div class="tr-route-block-inner row justify-content-between my-0 mx-auto rounded-2">
                     <div class="tr-info-block col-lg-5 py-1 rounded-start-2">
                         <span class="fs-6 sintony-bold text-primary d-inline-block">Buy</span>
-                        <span class="fst-italic sintony-bold ms-3"><?= $value['commodity'] ?></span>
+                        <span class="fst-italic sintony-bold ms-3"><?= Html::encode($value['commodity']) ?></span>
                         <div class="fs-7 d-flex flex-lg-column flex-sm-row column-gap-5">
                             <table class="table table-sm mb-1 mb-lg-0 table-borderless line">
                                 <tbody>
                                     <tr>
                                         <td>Station:</td>
-                                        <?php $source_station_id = Html::encode($value['source']['station_id']) ?>
+                                        <?php $source_station_id = (int)$source_station['station_id'] ?>
                                         <td class="text-end">
                                             <?= Html::a(
-                                                Html::encode($value['source']['station']),
+                                                Html::encode($source_station['station']),
                                                 Url::toRoute(["station/$source_station_id"]),
                                                 ['class' => [
                                                     'table-link-tr text-decoration-underline link-underline-primary'
@@ -36,18 +34,18 @@ use yii\helpers\VarDumper;
                                     </tr>
                                     <tr>
                                         <td>Station type:</td>
-                                        <td class="text-end"><?= $value['source']['type']?></td>
+                                        <td class="text-end"><?=  Html::encode($source_station['type']) ?></td>
                                     </tr>
                                     <tr>
                                         <td>Landing pad:</td>
-                                        <td class="text-end"><?= $value['source']['pad'] ?></td>
+                                        <td class="text-end"><?=  Html::encode($source_station['pad']) ?></td>
                                     </tr>
                                     <tr>
                                         <td>System:</td>
                                         <td class="text-end">
-                                        <?php $source_system_id = Html::encode($value['source']['system_id']) ?>
+                                        <?php $source_system_id = (int)$source_station['system_id'] ?>
                                             <?= Html::a(
-                                                Html::encode($value['source']['system']),
+                                                Html::encode($source_station['system']),
                                                 Url::toRoute(["system/$source_system_id"]),
                                                 ['class' => [
                                                     'table-link-tr text-decoration-underline link-underline-primary'
@@ -57,7 +55,7 @@ use yii\helpers\VarDumper;
                                     </tr>
                                     <tr>
                                         <td>Distance from star:</td>
-                                        <td class="text-end"><?= $value['source']['distance_ls'] ?></td>
+                                        <td class="text-end"><?= (int)$source_station['dta'] ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -65,15 +63,15 @@ use yii\helpers\VarDumper;
                                 <tbody>
                                     <tr>
                                         <td>Price:</td>
-                                        <td class="text-end"><?= $value['source']['buy_price'] ?></td>
+                                        <td class="text-end"><?= (int)$value['source_buy_price'] ?></td>
                                     </tr>
                                     <tr>
                                         <td>Supply:</td>
-                                        <td class="text-end"><?= $value['source']['stock'] ?></td>
+                                        <td class="text-end"><?= (int)$value['source_stock']?></td>
                                     </tr>
                                     <tr>
                                         <td>Updated:</td>
-                                        <td class="text-end"><?= $value['source']['time_diff'] ?></td>
+                                        <td class="text-end"><?=  Html::encode($value['source_time_diff']) ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -90,24 +88,24 @@ use yii\helpers\VarDumper;
                         <div class="tr-info-block-mid text-lg-start text-sm-center ms-lg-0 ms-5 h-auto my-auto
                                         sintony-bold">
                             Profit per trip (Cr):
-                            <span class="text-success sintony-bold"><?= $value['dir_profit'] ?></span>
+                            <span class="text-success sintony-bold"><?= Html::encode($value['profit']) ?></span>
                             <div class="w-100 bg-dark"></div>
                             Distance (LY):
-                            <span class="text-info sintony-bold"><?= $value['distance_ly'] ?></span>
+                            <span class="text-primary sintony-bold"><?=  Html::encode($value['distance']) ?></span>
                         </div>
                     </div>
                     <div class="tr-info-block tr-info-block-right col-lg-5 py-1 rounded-end-2">
                         <span class="fs-6 sintony-bold text-success d-inline-block">Sell</span>
-                        <span class="fst-italic sintony-bold ms-3"><?= $value['commodity'] ?></span>
+                        <span class="fst-italic sintony-bold ms-3"><?=  Html::encode($value['commodity']) ?></span>
                         <div class="fs-7 d-flex flex-lg-column flex-sm-row column-gap-5">
                             <table class="table table-sm mb-1 mb-lg-0 table-borderless">
                                 <tbody>
                                     <tr>
                                         <td>Station:</td>
                                         <td class="text-end">
-                                        <?php $target_station_id = Html::encode($value['target']['station_id']) ?>
+                                        <?php $target_station_id = (int)$value['target_station_id'] ?>
                                             <?= Html::a(
-                                                Html::encode($value['target']['station']),
+                                                Html::encode($value['target_station']),
                                                 Url::toRoute(["station/$target_station_id"]),
                                                 ['class' => [
                                                     'table-link-tr text-decoration-underline link-underline-primary'
@@ -117,18 +115,18 @@ use yii\helpers\VarDumper;
                                     </tr>
                                     <tr>
                                         <td>Station type:</td>
-                                        <td class="text-end"><?= $value['target']['type']?></td>
+                                        <td class="text-end"><?=  Html::encode($value['target_type']) ?></td>
                                     </tr>
                                     <tr>
                                         <td>Landing pad:</td>
-                                        <td class="text-end"><?= $value['target']['pad'] ?></td>
+                                        <td class="text-end"><?=  Html::encode($value['target_pad']) ?></td>
                                     </tr>
                                     <tr>
                                         <td>System:</td>
                                         <td class="text-end">
-                                        <?php $target_system_id = Html::encode($value['target']['system_id']) ?>
+                                        <?php $target_system_id = (int)$value['target_system_id'] ?>
                                             <?= Html::a(
-                                                Html::encode($value['target']['system']),
+                                                Html::encode($value['target_system']),
                                                 Url::toRoute(["system/$target_system_id"]),
                                                 ['class' => [
                                                     'table-link-tr text-decoration-underline link-underline-primary'
@@ -138,7 +136,7 @@ use yii\helpers\VarDumper;
                                     </tr>
                                     <tr>
                                         <td>Distance from star:</td>
-                                        <td class="text-end"><?= $value['target']['distance_ls'] ?></td>
+                                        <td class="text-end"><?= (int)$value['target_dta'] ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -146,15 +144,15 @@ use yii\helpers\VarDumper;
                                 <tbody>
                                     <tr>
                                         <td>Price:</td>
-                                        <td class="text-end"><?= $value['target']['sell_price'] ?></td>
+                                        <td class="text-end"><?= (int)$value['target_sell_price'] ?></td>
                                     </tr>
                                     <tr>
                                         <td>Demand:</td>
-                                        <td class="text-end"><?= $value['target']['demand'] ?></td>
+                                        <td class="text-end"><?= (int)$value['target_demand'] ?></td>
                                     </tr>
                                     <tr>
                                         <td>Updated:</td>
-                                        <td class="text-end"><?= $value['target']['time_diff'] ?></td>
+                                        <td class="text-end"><?=  Html::encode($value['target_time_diff']) ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -162,15 +160,17 @@ use yii\helpers\VarDumper;
                     </div>
                 </div>
             </div>
-            <?php if ($value['round_trip']) : ?>
+            <?php if (isset($value['commodity_round'])) : ?>
                 <div class="tr-route-block h-auto w-100 px-3 pb-3">
                     <div class="tr-route-block-inner row justify-content-between my-0 mx-auto rounded-2 ">
                         <div class="text-center mb-1">
-                            <span class="fst-italic sintony-bold text-info">Return trip</span>
+                            <span class="sintony-bold text-violet">Return trip</span>
                         </div>
                         <div class="tr-info-block tr-info-block-left col-lg-5 py-1 rounded-start-2">
                             <span class="fs-6 sintony-bold text-success d-inline-block">Sell</span>
-                            <span class="fst-italic sintony-bold ms-3"><?= $value['round_commodity'] ?></span>
+                            <span class="fst-italic sintony-bold ms-3">
+                                <?=  Html::encode($value['commodity_round']) ?>
+                            </span>
                             <div class="fs-7 d-flex flex-lg-column flex-sm-row column-gap-5">
                                 <table class="table table-sm mb-1 mb-lg-0 table-borderless">
                                     <tbody>
@@ -178,7 +178,7 @@ use yii\helpers\VarDumper;
                                             <td>Station:</td>
                                             <td class="text-end">
                                                 <?= Html::a(
-                                                    Html::encode($value['source']['station']),
+                                                    Html::encode($source_station['station']),
                                                     Url::toRoute(["station/$source_station_id"]),
                                                     ['class' => [
                                                         'table-link-tr text-decoration-underline link-underline-primary'
@@ -188,17 +188,17 @@ use yii\helpers\VarDumper;
                                         </tr>
                                         <tr>
                                             <td>Station type:</td>
-                                            <td class="text-end"><?= $value['source']['type']?></td>
+                                            <td class="text-end"><?=  Html::encode($source_station['type']) ?></td>
                                         </tr>
                                         <tr>
                                             <td>Landing pad:</td>
-                                            <td class="text-end"><?= $value['source']['pad'] ?></td>
+                                            <td class="text-end"><?=  Html::encode($source_station['pad']) ?></td>
                                         </tr>
                                         <tr>
                                             <td>System:</td>
                                             <td class="text-end">
                                                 <?= Html::a(
-                                                    Html::encode($value['source']['system']),
+                                                    Html::encode($source_station['system']),
                                                     Url::toRoute(["system/$source_system_id"]),
                                                     ['class' => [
                                                         'table-link-tr text-decoration-underline link-underline-primary'
@@ -208,7 +208,7 @@ use yii\helpers\VarDumper;
                                         </tr>
                                         <tr>
                                             <td>Distance from star:</td>
-                                            <td class="text-end"><?= $value['source']['distance_ls'] ?></td>
+                                            <td class="text-end"><?= (int)$source_station['dta'] ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -216,15 +216,15 @@ use yii\helpers\VarDumper;
                                     <tbody>
                                         <tr>
                                             <td>Price:</td>
-                                            <td class="text-end"><?= $value['source']['sell_price'] ?></td>
+                                            <td class="text-end"><?= (int)$value['source_sell_price_round'] ?></td>
                                         </tr>
                                         <tr>
                                             <td>Demand:</td>
-                                            <td class="text-end"><?= $value['source']['demand'] ?></td>
+                                            <td class="text-end"><?= (int)$value['source_demand_round'] ?></td>
                                         </tr>
                                         <tr>
                                             <td>Updated:</td>
-                                            <td class="text-end"><?= $value['source']['time_diff'] ?></td>
+                                            <td class="text-end"><?=  Html::encode($value['source_time_diff']) ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -241,15 +241,19 @@ use yii\helpers\VarDumper;
                             <div class="tr-info-block-mid text-lg-start text-sm-center ms-lg-0 ms-5 h-auto my-auto
                                             sintony-bold">
                                 Profit per trip (Cr):
-                                <span class="text-success sintony-bold"><?= $value['round_profit'] ?></span>
+                                <span class="text-success sintony-bold">
+                                    <?= Html::encode($value['profit_round']) ?>
+                                </span>
                                 <div class="w-100 bg-dark"></div>
                                 Distance (LY):
-                                <span class="text-info sintony-bold"><?= $value['distance_ly'] ?></span>
+                                <span class="text-primary sintony-bold"><?=  Html::encode($value['distance']) ?></span>
                             </div>
                         </div>
                         <div class="tr-info-block tr-info-block-right col-lg-5 py-1 order-lg-0 order-sm-2">
                             <span class="fs-6 sintony-bold text-primary d-inline-block">Buy</span>
-                            <span class="fst-italic sintony-bold ms-3"><?= $value['round_commodity'] ?></span>
+                            <span class="fst-italic sintony-bold ms-3">
+                                <?=  Html::encode($value['commodity_round']) ?>
+                            </span>
                             <div class="fs-7 d-flex flex-lg-column flex-sm-row column-gap-5">
                                 <table class="table table-sm mb-1 mb-lg-0 table-borderless">
                                     <tbody>
@@ -257,7 +261,7 @@ use yii\helpers\VarDumper;
                                             <td>Station:</td>
                                             <td class="text-end">
                                                 <?= Html::a(
-                                                    Html::encode($value['target']['station']),
+                                                    Html::encode($value['target_station']),
                                                     Url::toRoute(["station/$target_station_id"]),
                                                     ['class' => [
                                                         'table-link-tr text-decoration-underline link-underline-primary'
@@ -267,17 +271,17 @@ use yii\helpers\VarDumper;
                                         </tr>
                                         <tr>
                                             <td>Station type:</td>
-                                            <td class="text-end"><?= $value['target']['type']?></td>
+                                            <td class="text-end"><?=  Html::encode($value['target_type']) ?></td>
                                         </tr>
                                         <tr>
                                             <td>Landing pad:</td>
-                                            <td class="text-end"><?= $value['target']['pad'] ?></td>
+                                            <td class="text-end"><?=  Html::encode($value['target_pad']) ?></td>
                                         </tr>
                                         <tr>
                                             <td>System:</td>
                                             <td class="text-end">
                                                 <?= Html::a(
-                                                    Html::encode($value['target']['system']),
+                                                    Html::encode($value['target_system']),
                                                     Url::toRoute(["system/$target_system_id"]),
                                                     ['class' => [
                                                         'table-link-tr text-decoration-underline link-underline-primary'
@@ -287,7 +291,7 @@ use yii\helpers\VarDumper;
                                         </tr>
                                         <tr>
                                             <td>Distance from star:</td>
-                                            <td class="text-end"><?= $value['target']['distance_ls'] ?></td>
+                                            <td class="text-end"><?= (int)$value['target_dta'] ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -295,15 +299,15 @@ use yii\helpers\VarDumper;
                                     <tbody>
                                         <tr>
                                             <td>Price:</td>
-                                            <td class="text-end"><?= $value['target']['buy_price'] ?></td>
+                                            <td class="text-end"><?= (int)$value['target_buy_price_round'] ?></td>
                                         </tr>
                                         <tr>
                                             <td>Supply:</td>
-                                            <td class="text-end"><?= $value['target']['stock'] ?></td>
+                                            <td class="text-end"><?= (int)$value['target_stock_round'] ?></td>
                                         </tr>
                                         <tr>
                                             <td>Updated:</td>
-                                            <td class="text-end"><?= $value['target']['time_diff'] ?></td>
+                                            <td class="text-end"><?=  Html::encode($value['target_time_diff']) ?></td>
                                         </tr>
                                     </tbody>
                                 </table>

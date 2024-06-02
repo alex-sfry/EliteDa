@@ -6,28 +6,47 @@ use app\behaviors\CommoditiesBehavior;
 use app\behaviors\StationBehavior;
 use app\behaviors\SystemBehavior;
 use Yii;
-use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
+use yii\base\Model;
 use yii\db\Expression;
 use yii\db\Query;
-use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
-use yii\base\Model;
+
+use function app\helpers\d;
 
 class TradeRoutes extends Model
 {
+    private $min_supply_demand;
+    private int $cargo;
+    private int $profit;
+    private int $max_distance;
+    private Expression $distance_expr;
+    private bool $check_round_trip = false;
     private string $st_name;
     private string $sys_name;
-    private array $get;
-    private array $source_market = [];
-    private array $dir_route_queries = [];
     private string $target_sys;
     private string $target_st;
+    private string $pad;
+    private string $incl_surface;
+    private $dta;
+    private string $data_age;
 
     public function __construct(array $get)
     {
         $this->st_name = $get['ref_station'];
         $this->sys_name = $get['ref_system'];
-        $this->get = $get;
+        $this->min_supply_demand = $get['minSupplyDemand'];
+        $this->cargo = $get['cargo'];
+        $this->profit = $get['profit'];
+        $this->max_distance = $get['maxDistanceFromRefStar'];
+        $this->pad = $get['landingPadSize'];
+        $this->incl_surface = $get['includeSurface'];
+        $this->dta = $get['distanceFromStar'];
+        $this->data_age = $get['dataAge'];
+
+        if (isset($get['roundTrip'])) {
+            $this->check_round_trip = true;
+        }
 
         if (isset($get['targetSysStationName']) && $get['targetSysStation'] !== '') {
             if ($get['targetSysStationName'] === 'station') {
@@ -39,357 +58,285 @@ class TradeRoutes extends Model
         }
     }
 
+    /**
+     * @return array
+     */
     public function behaviors(): array
     {
         return ArrayHelper::merge(
             parent::behaviors(),
             [
-                CommoditiesBehavior::class,
                 SystemBehavior::class,
+                CommoditiesBehavior::class,
                 StationBehavior::class
             ]
         );
     }
 
     /**
-     * @param $limit
-     *
-     * @return \yii\data\ActiveDataProvider
+     * @return array
      */
-    public function getData($limit): ActiveDataProvider|string
+    public function getTradeRoutes(): array
     {
-        switch ($this->get['sortBy']) {
-            case 'Updated_at':
-                $sort_attr = 'target_time_diff';
-                $sort_order = SORT_ASC;
-                break;
-            case 'Distance':
-                $sort_attr = "distance_ly";
-                $sort_order = SORT_ASC;
-                break;
-            default:
-                $sort_attr =  'dir_profit';
-                $sort_order = SORT_DESC;
+        $this->distance_expr = $this->getDistanceToSystemExpression($this->sys_name);
+        $source_station = $this->getSourceStation($this->sys_name, $this->st_name);
+        $source_market = $this->getSourceMarketQuery((int)$source_station['market_id']);
+        $target_markets = $this->getTargetMarkets($source_market);
+
+        if ($this->check_round_trip) {
+            $round_trips = $this->calcRoundTrip($target_markets, $source_station);
+        } else {
+            $round_trips = [];
         }
 
-        $this->source_market = $this->getSourceMarket()->all();
+        $models = $this->modifyModels($target_markets, $round_trips);
+        $source_station['pad'] = $this->getLandingPadSizes()[$source_station['type']];
+        $models['source_station'] = $source_station;
 
-        if (count($this->source_market) < 1) {
-            return 'Market in reference station not found';
-        }
-
-        $tr_routes = $this->getTargetMarkets();
-
-        return new ActiveDataProvider(config: [
-            'query' => $tr_routes,
-            'pagination' => [
-                'pageSizeLimit' => [0, $limit],
-                'defaultPageSize' => $limit,
-            ],
-            'sort' => [
-                'attributes' => [
-                    'dir_profit',
-                    'distance_ly',
-                    'target_time_diff'
-                ],
-                'defaultOrder' => [
-                    $sort_attr => $sort_order
-                ],
-            ],
-        ]);
+        return $models;
     }
 
     /**
-     * @return \yii\db\Query
+     * @param array $arr
+     * @param string $key
+     *
+     * @return array
      */
-    private function getSourceMarket(): Query
+    private function removeDuplicates(array $arr, string $key): array
+    {
+        $uniqueCommodities = [];
+        $unique_arr = [];
+
+        foreach ($arr as $item) {
+            if (!in_array(strtolower($item[$key]), $uniqueCommodities)) {
+                $uniqueCommodities[] = strtolower($item[$key]);
+                $item[$key] = strtolower($item[$key]);
+                $unique_arr[] = $item;
+            }
+        }
+
+        unset($uniqueCommodities);
+
+        return $unique_arr;
+    }
+
+    /**
+     * @return array
+     */
+    private function getSourceStation(): array
+    {
+        return (new Query())
+            ->from('stations st')
+            ->select([
+                'st.name AS station',
+                'st.type',
+                'st.distance_to_arrival as dta',
+                'st.market_id',
+                'sys.name AS system',
+                'st.id AS station_id',
+                'system_id'
+            ])
+            ->innerJoin(['sys' => 'systems'], 'sys.id = st.system_id')
+            ->where(['sys.name' => $this->sys_name, 'st.name' => $this->st_name])
+            ->one();
+    }
+
+    /**
+     * @param int $market_id
+     *
+     * @return Query
+     */
+    private function getSourceMarketQuery(int $market_id): Query
     {
         return (new Query())
             ->select([
-                'm.name AS commodity',
-                'buy_price',
-                'stock',
-                'st.id AS station_id',
-                'sys.id AS system_id',
-                'm.market_id',
-                'type',
-                'distance_to_arrival AS source_distance_ls',
-                'TIMESTAMP as source_timestamp',
-                'TIMESTAMPDIFF(MINUTE, TIMESTAMP, NOW()) as source_time_diff',
+                'm1.buy_price AS source_buy_price',
+                'm1.stock AS source_stock',
+                'm1.name AS source_commodity',
+                'm1.timestamp AS source_timestamp'
             ])
-            ->from(['m' => 'markets'])
-            ->innerJoin(['st' => 'stations'], 'm.market_id = st.market_id')
-            ->innerJoin(['sys' => 'systems'], 'st.system_id = sys.id')
-            ->where(['st.name' => $this->st_name, 'sys.name' => $this->sys_name])
-            ->andWhere(['>', 'mean_price', 'buy_price'])
-            ->andWhere(['>', 'stock', $this->get['minSupplyDemand']]);
+            ->from(['m1' => 'markets'])
+            ->where(['m1.market_id' => $market_id])
+            ->andWhere('buy_price < mean_price')
+            ->andWhere(['>', 'm1.stock', $this->min_supply_demand]);
     }
 
     /**
-     * @return \yii\db\Query
+     * @return array
      */
-    private function getTargetMarkets(): Query
+    private function getSystemsInRadius(): array
     {
-        $distance_expr = $this->getDistanceToSystemExpression($this->sys_name);
-        $cargo = (int)$this->get['cargo'];
+        return (new Query())
+            ->select(['id'])
+            ->from(['systems'])
+            ->where(['<=', $this->distance_expr, $this->max_distance])
+            ->all();
+    }
 
-        foreach ($this->source_market as $item) {
-            $query = (new Query())
+    /**
+     * @param Query $source_market
+     *
+     * @return array
+     */
+    private function getTargetMarkets(Query $source_market): array
+    {
+        $query =
+            (new Query())
                 ->select([
-                    new Expression("{$item['source_time_diff']} AS source_time_diff"),
-                    new Expression("'{$item['source_timestamp']}' AS source_timestamp"),
-                    new Expression("{$item['stock']} AS source_stock"),
-                    new Expression("{$item['buy_price']} AS source_buy_price"),
-                    new Expression(':type AS source_type', [':type' => $item['type']]),
-                    new Expression("{$item['source_distance_ls']} AS source_distance_ls"),
-                    new Expression("{$item['station_id']} AS source_station_id"),
-                    new Expression("{$item['system_id']} AS source_system_id"),
-                    'm.name AS commodity',
-                    'st.id AS target_station_id',
-                    'systems.id AS target_system_id',
+                    'm2.name AS commodity',
+                    'source_buy_price',
+                    'source_stock',
+                    'm2.sell_price AS target_sell_price',
+                    'm2.demand AS target_demand',
+                    'm2.market_id AS target_market_id',
+                    'm2.timestamp AS target_timestamp',
+                    'source_timestamp',
                     'st.name AS target_station',
+                    'st.id AS target_station_id',
                     'type AS target_type',
-                    'm.market_id AS target_market_id',
-                    'distance_to_arrival AS target_distance_ls',
+                    'distance_to_arrival AS target_dta',
                     'systems.name AS target_system',
-                    'sell_price AS target_sell_price',
-                    'demand as target_demand',
-                    "(sell_price - {$item['buy_price']}) * $cargo AS dir_profit",
-                    "$distance_expr as distance_ly",
-                    'TIMESTAMP as target_timestamp',
-                    'TIMESTAMPDIFF(MINUTE, TIMESTAMP, NOW()) AS target_time_diff',
+                    'systems.id AS target_system_id',
+                    "(m2.sell_price - sm.source_buy_price) * $this->cargo AS profit",
+                    "$this->distance_expr AS distance",
                 ])
-                ->from(['m' => 'markets'])
-                ->innerJoin(['st' => 'stations'], 'm.market_id = st.market_id')
-                ->innerJoin('systems', 'st.system_id = systems.id')
-                ->where(['m.name' => $item['commodity']])
-                ->andWhere(['>', 'demand', (int)$this->get['minSupplyDemand']])
-                ->andWhere([
-                    '>', "(sell_price - {$item['buy_price']}) * $cargo", $this->get['profit']
+                ->from(['m2' => 'markets'])
+                ->innerJoin(['sm' => $source_market], 'sm.source_commodity = m2.name')
+                ->innerJoin(['st' => 'stations'], 'st.market_id = m2.market_id')
+                ->innerJoin(['systems'], 'systems.id = st.system_id')
+                ->where(['systems.id' => ArrayHelper::getColumn($this->getSystemsInRadius(), 'id')])
+                ->andWhere('sell_price > mean_price')
+                ->andWhere(['>=', 'demand', $this->min_supply_demand])
+                ->andWhere(['>', "(m2.sell_price - sm.source_buy_price) * {$this->cargo}", $this->profit]);
+
+        $this->data_age !== 'Any' && $query->andWhere([
+            '>', 'm2.timestamp', new Expression("DATE_SUB(NOW(), INTERVAL {$this->data_age} HOUR)")
+        ]);
+
+        if (!isset($this->target_st)) {
+            $this->pad === 'L' && $query->andWhere(['not', ['type' => 'Outpost']]);
+
+            $this->incl_surface === 'No' &&  $query->andWhere([
+                    'not in', 'type', ['Planetary Port', 'Planetary Outpost', 'Odyssey Settlement']
                 ]);
 
-            if (isset($this->get['targetSysStationName']) && $this->get['targetSysStation'] !== '') {
-                if ($this->get['targetSysStationName'] === 'station') {
-                    $query->andWhere(['st.name' => $this->target_st, 'systems.name' => $this->target_sys]);
-                }
-                if ($this->get['targetSysStationName'] === 'system') {
-                    $query->andWhere(['systems.name' => $this->target_sys]);
-                    $this->addQueryParamsTargetSystem($query, $distance_expr, 'system');
-                }
-            } else {
-                $this->addQueryParamsTargetSystem($query, $distance_expr);
-            }
-
-            $this->dir_route_queries[] = $query;
-        }
-
-        $query1 = array_shift($this->dir_route_queries);
-
-        foreach ($this->dir_route_queries as $item) {
-            $query1->union($item);
-        }
-
-        return (new Query())
-            ->select('*')
-            ->from($query1);
-    }
-
-    private function addQueryParamsTargetSystem(Query $query, $distance_expr = null, string $target = ''): void
-    {
-        $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$this->get['dataAge']} HOUR)");
-        $this->get['dataAge'] !== 'Any' &&
-            $query->andWhere(['>', 'timestamp', $date_sub_expr]);
-
-        if ($target === 'system' || !$target) {
-            $this->get['landingPadSize'] === 'L' && $query->andWhere(['not', ['type' => 'Outpost']]);
-
-            $this->get['includeSurface'] === 'No' &&
-                $query->andWhere(['not in', 'type', ['Planetary Port', 'Planetary Outpost', 'Odyssey Settlement']]);
-
-            $this->get['distanceFromStar'] !== 'Any' &&
-                $query->andWhere(['<=', 'distance_to_arrival', $this->get['distanceFromStar']]);
-        }
-
-        if (!$target) {
-            $this->get['maxDistanceFromRefStar'] !== 'Any' && $query->andWhere([
-                '<=',
-                $distance_expr,
-                $this->get['maxDistanceFromRefStar'],
+            $this->dta !== 'Any' && $query->andWhere([
+                '<=', 'distance_to_arrival', $this->dta
             ]);
         }
+
+        if (isset($this->target_st) && $this->target_st) {
+            $query->andWhere(['st.name' => $this->target_st, 'systems.name' => $this->target_sys]);
+        } elseif (isset($this->target_sys) && $this->target_sys) {
+            $query->andWhere(['systems.name' => $this->target_sys]);
+        }
+
+        $target_markets = $query->all();
+        ArrayHelper::multisort($target_markets, ['profit'], [SORT_DESC]);
+        $dir_routes = $this->removeDuplicates($target_markets, 'commodity');
+
+        if (!$this->check_round_trip) {
+            unset($target_markets);
+        }
+
+        return $dir_routes;
     }
 
     /**
-     * @param $target_market_ids
+     * @param array $source_station
      *
-     * @return \yii\db\Query
+     * @return Query
      */
-    public function getRoundTrip($target_market_ids): Query
+    private function getSourceMarkeRoundQuery(array $source_station): Query
     {
-        $cargo = (int)$this->get['cargo'];
-        $minSupplyDemand = (int)$this->get['minSupplyDemand'];
-
-        $source_sell = (new Query())
-            ->select(['m.name AS commodity', 'sell_price AS source_sell_price', 'demand AS source_demand'])
-            ->from(['m' => 'markets'])
-            ->innerJoin(['st' => 'stations'], 'm.market_id = st.market_id')
-            ->innerJoin(['sys' => 'systems'], 'st.system_id = sys.id')
-            ->where(['m.market_id' => $this->source_market[0]['market_id']])
-            ->andWhere(['>', 'sell_price', 'mean_price'])
-            ->andWhere(['>', 'demand', $minSupplyDemand])
-            ->all();
-
-        $queries = [];
-        foreach ($source_sell as $item) {
-            $query = (new Query())
-                ->select([
-                    new Expression("{$item['source_sell_price']} AS source_sell_price"),
-                    new Expression("{$item['source_demand']} AS source_demand"),
-                    'm.name AS round_commodity',
-                    'buy_price AS target_buy_price',
-                    'stock AS target_stock',
-                    'm.market_id AS target_market_id',
-                    "({$item['source_sell_price']} - buy_price) * $cargo AS round_profit",
-                ])
-                ->from(['m' => 'markets'])
-                ->where(['m.name' => $item['commodity']])
-                ->andWhere(['>', 'stock', (int)$this->get['minSupplyDemand']])
-                // ->andWhere([
-                //     '>',
-                //     "({$item['source_sell_price']} - buy_price) * $cargo",
-                //     (int)$this->get['profit']
-                // ])
-                ->andWhere(['m.market_id' => $target_market_ids]);
-
-            $queries[] = $query;
-        }
-
-        $query1 = array_shift($queries);
-
-        foreach ($queries as $item) {
-            $query1->union($item, true);
-        }
-
         return (new Query())
-            ->select('*')
-            ->from($query1);
+            ->select([
+                'sell_price AS source_sell_price_round',
+                'demand AS source_demand_round',
+                'm.name AS source_commodity_round',
+            ])
+            ->from(['m' => 'markets'])
+            ->where(['m.market_id' => $source_station['market_id']])
+            ->andWhere('sell_price > mean_price')
+            ->andWhere(['>', 'm.demand', $this->min_supply_demand]);
     }
 
     /**
-     * @param array $dir_data
-     * @param array $round_trip_data
+     * @param array $target_markets
+     * @param array $source_station
      *
      * @return array
      */
-    public function getResultWithRoundTrip(array $dir_data, array $round_trip_data): array
+    private function calcRoundTrip(array $target_markets, array $source_station): array
     {
-        $temp_arr = [];
+        $ids = ArrayHelper::getColumn($target_markets, 'target_market_id');
 
-        foreach ($round_trip_data as $item) {
-            if (!ArrayHelper::keyExists($item['target_market_id'], $temp_arr)) {
-                $temp_arr[$item['target_market_id']] = [
-                    'round_profit' => $item['round_profit'],
-                    'round_commodity' => $item['round_commodity'],
-                    'source_sell_price' => $item['source_sell_price'],
-                    'source_demand' => $item['source_demand'],
-                    'target_buy_price' => $item['target_buy_price'],
-                    'target_stock' => $item['target_stock'],
-                ];
-            }
-        }
+        $source_market_round = $this->getSourceMarkeRoundQuery($source_station);
 
-        $merged_arr = [];
+        $round_markets =
+            (new Query())
+                ->select([
+                    'mr.name AS commodity_round',
+                    'mr.buy_price AS target_buy_price_round',
+                    'mr.stock AS target_stock_round',
+                    'mr.market_id AS target_market_id_round',
+                    'mr.timestamp AS target_timestamp_round',
+                    'source_sell_price_round',
+                    'source_demand_round',
+                    "(source_sell_price_round - mr.buy_price) * {$this->cargo} AS profit_round",
+                    ])
+                ->from(['mr' => 'markets'])
+                ->innerJoin(['sm' => $source_market_round], 'sm.source_commodity_round = mr.name')
+                ->where(['mr.market_id' => $ids])
+                ->andWhere('mr.buy_price < mr.mean_price')
+                ->andWhere(['>=', 'mr.stock', $this->min_supply_demand])
+                ->all();
 
-        foreach ($dir_data as $key => $value) {
-            if (ArrayHelper::keyExists($value['target_market_id'], $temp_arr)) {
-                $merged_arr[] = ArrayHelper::merge($value, $temp_arr[$value['target_market_id']]);
-            } else {
-                $merged_arr[] = $value;
-            }
-        }
+        ArrayHelper::multisort($round_markets, ['profit_round'], [SORT_DESC]);
+        unset($target_markets);
 
-        return $merged_arr;
+        return $round_markets;
     }
 
     /**
-     * @param array $models
+     * @param array $target_markets
+     * @param array $round_trips
      *
      * @return array
      */
-    public function modifyModels(array $models): array
+    private function modifyModels(array $target_markets, array $round_trips = []): array
     {
+        $models = [];
+
+        if (count($round_trips) > 0) {
+            foreach ($target_markets as $k => $market) {
+                foreach ($round_trips as $trip) {
+                    if ($market['target_market_id'] === $trip['target_market_id_round']) {
+                        $models[] = ArrayHelper::merge($market, $trip);
+                        break;
+                    }
+                }
+
+                if (!isset($models[$k])) {
+                    $models[] = $market;
+                }
+            }
+        } else {
+            $models = $target_markets;
+        }
+
         foreach ($models as $key => $value) {
-            if (isset($value['round_commodity'])) {
-                $value['round_commodity'] = isset($this->commodities[strtolower($value['round_commodity'])]) ?
-                    $this->commodities[strtolower($value['round_commodity'])] : $value['round_commodity'];
-                $value['target']['buy_price'] = $value['target_buy_price'];
-                $value['target']['stock'] = $value['target_stock'];
-                $value['source']['sell_price'] = $value['source_sell_price'];
-                $value['source']['demand'] = $value['source_demand'];
-                $value['round_trip'] = true;
-            } else {
-                $value['round_trip'] = false;
+            if (isset($value['commodity_round'])) {
+                $value['commodity_round'] = isset($this->commodities[strtolower($value['commodity_round'])]) ?
+                    $this->commodities[strtolower($value['commodity_round'])] : $value['commodity_round'];
             }
 
             $value['commodity'] = isset($this->commodities[strtolower($value['commodity'])]) ?
                 $this->commodities[strtolower($value['commodity'])] : $value['commodity'];
-            $value['source']['buy_price'] = $value['source_buy_price'];
-            $value['source']['pad'] = $this->getLandingPadSizes()[$value['source_type']];
-            $value['source']['stock'] = $value['source_stock'];
-            $value['source']['time_diff'] = Yii::$app->formatter->asRelativeTime($value['source_timestamp']);
-            $value['source']['type'] = $value['source_type'];
-            $value['source']['station'] = $this->st_name;
-            $value['source']['system'] = $this->sys_name;
-            $value['source']['distance_ls'] = $value['source_distance_ls'];
-            $value['source']['station_id'] = $value['source_station_id'];
-            $value['source']['system_id'] = $value['source_system_id'];
 
-            $value['source']['surface'] = match ($value['source_type']) {
-                'Planetary Outpost', 'Planetary Port', 'Odyssey Settlement' => true,
-                default => false,
-            };
-
-            $value['target']['pad'] = $this->getLandingPadSizes()[$value['target_type']];
-            $value['target']['time_diff'] = Yii::$app->formatter->asRelativeTime($value['target_timestamp']);
-            $value['target']['station'] = $value['target_station'];
-            $value['target']['type'] = $value['target_type'];
-            $value['target']['system'] = $value['target_system'];
-            $value['target']['distance_ls'] = $value['target_distance_ls'];
-            $value['target']['sell_price'] = $value['target_sell_price'];
-            $value['target']['demand'] = $value['target_demand'];
-            $value['target']['station_id'] = $value['target_station_id'];
-            $value['target']['system_id'] = $value['target_system_id'];
-
-            $value['target']['surface'] = match ($value['target_type']) {
-                'Planetary Outpost', 'Planetary Port', 'Odyssey Settlement' => true,
-                default => false,
-            };
-
-            unset($value['source_type']);
-            unset($value['source_stock']);
-            unset($value['source_time_diff']);
-            unset($value['source_sell_price']);
-            unset($value['source_demand']);
-            unset($value['source_distance_ls']);
-            unset($value['source_buy_price']);
-            unset($value['source_type']);
-            unset($value['source_station_id']);
-            unset($value['source_timestamp']);
-            unset($value['source_system_id']);
-
-            unset($value['target_type']);
-            unset($value['target_station']);
-            unset($value['target_system']);
-            unset($value['target_distance_ls']);
-            unset($value['target_sell_price']);
-            unset($value['target_demand']);
-            unset($value['target_station_id']);
-            unset($value['target_time_diff']);
-            unset($value['target_buy_price']);
-            unset($value['target_stock']);
-            unset($value['target_type']);
-            unset($value['target_timestamp']);
-            unset($value['target_system_id']);
+            $value['source_time_diff'] = Yii::$app->formatter->asRelativeTime($value['source_timestamp']);
+            $value['target_time_diff'] = Yii::$app->formatter->asRelativeTime($value['target_timestamp']);
+            $value['target_pad'] = $this->getLandingPadSizes()[$value['target_type']];
 
             $models[$key] = $value;
         }
