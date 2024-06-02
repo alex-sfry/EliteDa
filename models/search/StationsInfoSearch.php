@@ -99,11 +99,26 @@ class StationsInfoSearch extends StationsInfoView
 
         $query
             ->andFilterWhere(['like', 'station', $this->station])
-            ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'government', $this->government])
             ->andFilterWhere(['like', 'system', $this->getAttribute('system')])
             ->andFilterWhere(['like', 'economy_name', $this->getAttribute('economy_name')])
             ->andFilterWhere(['like', 'allegiance', $this->getAttribute('allegiance')]);
+
+        switch ($this->type) {
+            case 'S':
+            case 'M':
+            case 'Outpost':
+                $query
+                    ->andFilterWhere(['type' => 'Outpost']);
+                break;
+            case 'L':
+                $query
+                    ->andFilterWhere(['!=', 'type','Outpost']);
+                break;
+            default:
+                $query
+                    ->andFilterWhere(['like', 'type', $this->type]);
+        }
 
         return $dataProvider;
     }
