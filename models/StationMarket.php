@@ -15,19 +15,17 @@ class StationMarket extends Model
     {
         return ArrayHelper::merge(
             parent::behaviors(),
-            [
-                CommoditiesBehavior::class,
-                StationBehavior::class,
-            ]
+            [CommoditiesBehavior::class]
         );
     }
 
     /**
      * @param int $id
+     * @param string $sys_name
      *
      * @return array
      */
-    public function getMarket(int $id): array
+    public function getMarket(int $id, string $sys_name): array
     {
         $model = Markets::find()
             ->where(['and', "markets.market_id=$id", ['or', 'stock>0', 'demand>0']])
@@ -39,6 +37,15 @@ class StationMarket extends Model
                 $this->commodities[strtolower($value['name'])] : $model[$key]['name'];
             $model[$key]['timestamp'] = Yii::$app->formatter->asRelativeTime($model[$key]['timestamp']);
             unset($model[$key]['market_id']);
+
+            $model[$key]['req_url'] = ArrayHelper::merge(
+                ['commodities/index'],
+                $this->getCommoditiesReqArr([
+                    'commodity' => [$model[$key]['name']],
+                    'system' => $sys_name,
+                    'price_type' => $value['stock'] > $value['demand'] ? 'sell' : 'buy'
+                ])
+            );
         }
 
         return $model;

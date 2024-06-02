@@ -106,6 +106,7 @@ class StationsController extends Controller
 
     /**
      * @param int $id
+     * @param EngineersSearch $eng_search
      *
      * @return string
      *
@@ -128,9 +129,9 @@ class StationsController extends Controller
         !$model && throw new NotFoundHttpException();
         $this->getStationServices($model['market_id']);
         $engineer = $eng_search->getName((int)$model['system_id'], $model['name']);
-
         $mat_traders = MaterialTraders::findAll(['station_id' => $id]);
         $model['mat_traders'] = $mat_traders;
+
         return $this->render('details', [
             'model' => $model,
             'pad_size' => $this->landingPadSizes[$model['type']],
@@ -156,6 +157,7 @@ class StationsController extends Controller
         $id = (int)$id;
 
         $this->attachBehavior('ShipyardShipsBehavior', ShipyardShipsBehavior::class);
+
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
 
@@ -163,17 +165,7 @@ class StationsController extends Controller
         $this->getStationServices($station->market_id);
         $system = Systems::findOne($station->system_id);
         !$system && throw new NotFoundHttpException();
-        $model = $ships->getStationShips($station->market_id);
-
-        foreach ($model as $key => $value) {
-            $model[$key]['req_url'] = ArrayHelper::merge(
-                ['shipyard-ships/index'],
-                $this->getShipsReqArr([
-                    'ship' => [$value['name']],
-                    'system' => $system->name,
-                ])
-            );
-        };
+        $model = $ships->getStationShips($station->market_id, $system->name);
 
         return $this->render('ships', [
             'models' => $model,
@@ -199,6 +191,7 @@ class StationsController extends Controller
         $id = (int)$id;
 
         $this->attachBehavior('ShipModulesBehavior', ShipModulesBehavior::class);
+
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
         $system = Systems::findOne($station->system_id);
@@ -207,17 +200,7 @@ class StationsController extends Controller
         $ship_modules->setMods($this->getShipModules());
         $qty_by_cat = $ship_modules->getQtyByCat($station->market_id);
         $this->getStationServices($station->market_id);
-        $model = $ship_modules->getStationModules($station->market_id, $cat);
-
-        foreach ($model as $key => $value) {
-            $model[$key]['req_url'] = ArrayHelper::merge(
-                ['ship-modules/index'],
-                $this->getShipModulesReqArr([
-                    'module' => [$value['m_name']],
-                    'system' => $system->name,
-                ])
-            );
-        };
+        $model = $ship_modules->getStationModules($station->market_id, $cat, $system->name);
 
         return $this->render('outfitting', [
             'models' => $model,
@@ -243,24 +226,12 @@ class StationsController extends Controller
         !$id && throw new NotFoundHttpException();
         $id = (int)$id;
 
-        $this->attachBehavior('CommoditiesBehavior', CommoditiesBehavior::class);
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
         $system = Systems::findOne($station->system_id);
         !$system && throw new NotFoundHttpException();
         $this->getStationServices($station->market_id);
-        $model = $market->getMarket($station->market_id);
-
-        foreach ($model as $key => $value) {
-            $model[$key]['req_url'] = ArrayHelper::merge(
-                ['commodities/index'],
-                $this->getCommoditiesReqArr([
-                    'commodity' => [$value['name']],
-                    'system' => $system->name,
-                    'price_type' => $value['stock'] > $value['demand'] ? 'sell' : 'buy'
-                ])
-            );
-        };
+        $model = $market->getMarket($station->market_id, $system->name);
 
         return $this->render('market', [
             'model' => $model,

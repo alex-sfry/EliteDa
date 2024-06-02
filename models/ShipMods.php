@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\behaviors\ShipModulesBehavior;
 use app\behaviors\StationBehavior;
 use app\behaviors\SystemBehavior;
 use Yii;
@@ -159,10 +160,11 @@ class ShipMods extends Model
     /**
      * @param int $market_id
      * @param string $cat
+     * @param string $sys_name
      *
      * @return array
      */
-    public function getStationModules(int $market_id, string $cat): array
+    public function getStationModules(int $market_id, string $cat, string $sys_name): array
     {
         $market_id = (int)$market_id;
 
@@ -205,6 +207,8 @@ class ShipMods extends Model
 
         $models = $modules->orderBy('ship_modules.name')->all();
 
+        $this->attachBehavior('ShipModulesBehavior', ShipModulesBehavior::class);
+
         foreach ($models as $key => $value) {
             $models[$key]['m_name'] = isset($this->mods_arr[strtolower($value['name'])]) ?
                 $this->mods_arr[strtolower($value['name'])] : $value['name'];
@@ -213,6 +217,14 @@ class ShipMods extends Model
             if (preg_match('/^.+_Armour_.+$/', $value['symbol'])) {
                 $value['category'] = 'armour';
             }
+
+            $models[$key]['req_url'] = ArrayHelper::merge(
+                ['ship-modules/index'],
+                $this->getShipModulesReqArr([
+                    'module' => [$models[$key]['m_name']],
+                    'system' => $sys_name,
+                ])
+            );
         }
 
         return $models;

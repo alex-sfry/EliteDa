@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\behaviors\ShipyardShipsBehavior;
 use app\behaviors\StationBehavior;
 use app\behaviors\SystemBehavior;
 use Yii;
@@ -17,20 +18,6 @@ class ShipyardShips extends Model
 {
     private array $ships_arr = [];
 
-    /**
-     * @return array
-     */
-    public function behaviors(): array
-    {
-        return ArrayHelper::merge(
-            parent::behaviors(),
-            [
-                SystemBehavior::class,
-                StationBehavior::class,
-            ]
-        );
-    }
-
     public function setShipsArr(array $ships_arr): void
     {
         $this->ships_arr = $ships_arr;
@@ -44,6 +31,8 @@ class ShipyardShips extends Model
      */
     public function getShips(array $get, int $limit): ActiveDataProvider
     {
+        $this->attachBehavior('SystemBehavior', SystemBehavior::class);
+        $this->attachBehavior('StationBehavior', StationBehavior::class);
         $distance_expr = $this->getDistanceToSystemExpression($get['refSystem']);
         $mod_symbols = [];
 
@@ -163,7 +152,13 @@ class ShipyardShips extends Model
         return $models;
     }
 
-    public function getStationShips(int $market_id): array
+    /**
+     * @param int $market_id
+     * @param string $sys_name
+     *
+     * @return array
+     */
+    public function getStationShips(int $market_id, string $sys_name): array
     {
         $market_id = (int)$market_id;
 
@@ -180,8 +175,17 @@ class ShipyardShips extends Model
             ->asArray()
             ->all();
 
+        $this->attachBehavior('ShipyardShipsBehavior', ShipyardShipsBehavior::class);
+
         foreach ($ships as $key => $value) {
             $ships[$key]['timestamp'] = Yii::$app->formatter->asRelativeTime($value['timestamp']);
+            $ships[$key]['req_url'] = ArrayHelper::merge(
+                ['shipyard-ships/index'],
+                $this->getShipsReqArr([
+                    'ship' => [$ships[$key]['name']],
+                    'system' => $sys_name,
+                ])
+            );
         }
 
         return $ships;
