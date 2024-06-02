@@ -7,14 +7,22 @@ export const isValidated = (elem, elemLabel) => {
 };
 
 const setInvalid = (elem, elemLabel) => {
-    elemLabel.classList.add('text-danger', 'is-invalid');
-    elem.classList.remove('border-dark');
-    elem.classList.add('is-invalid', 'border-2', 'border-danger');
+    if ($(elem).attr('pattern') === "[0-9]+") {
+        if (elem.validationMessage === 'Please match the requested format.') {
+            $(`#${$(elem).attr('id')} ~ .invalid-feedback`).text('Only numeric values are allowed');
+        } else {
+            $(`#${$(elem).attr('id')} ~ .invalid-feedback`).text('Field must not be empty');
+        }
+    }
+    
+    $(elemLabel).addClass('text-danger is-invalid');
+    $(elem).removeClass('border-dark');
+    $(elem).addClass('is-invalid border-2 border-danger');
 };
 
 const setValid = (elem, elemLabel) => {
-    elemLabel.classList.remove('text-danger', 'is-invalid');
-    elem.classList.add('border-dark');
-    elem.classList.remove('is-invalid', 'border-2', 'border-danger');
+    $(elemLabel).removeClass('text-danger is-invalid');
+    $(elem).addClass('border-dark');
+    $(elem).removeClass('is-invalid border-2 border-danger');
 };
 

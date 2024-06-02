@@ -120,8 +120,9 @@ $this->params['breadcrumbs'] = [$this->title];
                                                     <div class="col-lg-6 d-flex gap-3 flex-column">
                                                         <div>
                                                             <label class="min-lett-spacing fw-bold
-                                                    <?= $cargo_error === 'is-invalid' ? 'text-danger is-invalid' :
-                                                                null ?>" for='cargo'>
+                                                                <?= $cargo_error === 'is-invalid' ?
+                                                                'text-danger is-invalid' : null ?>" for='cargo'
+                                                                for="cargo">
                                                                 Cargo capacity (t):
                                                             </label>
                                                             <?php

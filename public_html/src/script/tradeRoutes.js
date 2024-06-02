@@ -17,5 +17,9 @@ export const tradeRouteForm = (isValidated, loader, removeLoader) => {
         isValidated(profit, profitLabel);
     };
 
+    $('.btn-copy').on('click', function () {
+        navigator.clipboard.writeText($(this).siblings('.table-link-tr').text());
+    });
+
     $form.on('submit', (e) => handleSubmit(e));
 };

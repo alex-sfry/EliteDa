@@ -308,14 +308,21 @@ const isValidated = (elem, elemLabel) => {
   }
 };
 const setInvalid = (elem, elemLabel) => {
-  elemLabel.classList.add('text-danger', 'is-invalid');
-  elem.classList.remove('border-dark');
-  elem.classList.add('is-invalid', 'border-2', 'border-danger');
+  if ($(elem).attr('pattern') === "[0-9]+") {
+    if (elem.validationMessage === 'Please match the requested format.') {
+      $("#".concat($(elem).attr('id'), " ~ .invalid-feedback")).text('Only numeric values are allowed');
+    } else {
+      $("#".concat($(elem).attr('id'), " ~ .invalid-feedback")).text('Field must not be empty');
+    }
+  }
+  $(elemLabel).addClass('text-danger is-invalid');
+  $(elem).removeClass('border-dark');
+  $(elem).addClass('is-invalid border-2 border-danger');
 };
 const setValid = (elem, elemLabel) => {
-  elemLabel.classList.remove('text-danger', 'is-invalid');
-  elem.classList.add('border-dark');
-  elem.classList.remove('is-invalid', 'border-2', 'border-danger');
+  $(elemLabel).removeClass('text-danger is-invalid');
+  $(elem).addClass('border-dark');
+  $(elem).removeClass('is-invalid border-2 border-danger');
 };
 
 /***/ }),
@@ -456,6 +463,9 @@ const tradeRouteForm = (isValidated, loader, removeLoader) => {
     isValidated(cargoSpace, cargoSpaceLabel);
     isValidated(profit, profitLabel);
   };
+  $('.btn-copy').on('click', function () {
+    navigator.clipboard.writeText($(this).siblings('.table-link-tr').text());
+  });
   $form.on('submit', e => handleSubmit(e));
 };
 
@@ -549,10 +559,8 @@ const initFooter = () => {
   $('.footer__link').each(function () {
     if ($(this).attr('href') === window.location.pathname || window.location.pathname.includes($(this).attr('href'))) {
       $(this).addClass('active');
-      // $(this).closest('.menu__item').children('.menu__link').addClass('active');
     } else {
       $(this).removeClass('active');
-      // $(this).closest('.menu__link').removeClass('active');
     }
   });
 };
