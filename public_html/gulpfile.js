@@ -14,6 +14,8 @@ export { vendorJS } from './gulpfileSripts.js';
 import sync from 'browser-sync';
 import { deleteAsync } from 'del';
 
+/* run cleanProd after build to remove non-minified files */
+
 const browserSync = sync.create('localServer');
 let syncMode = false;
 
@@ -75,18 +77,44 @@ export const watch = () => {
         });
 };
 
+/* dev mode w/o browserSync */
 export const dev = gulp.series(gulp.parallel(vendorJS, webpackBsDev, webpackDev), watch);
+
+/* dev mode with browserSync */
 export const devSync = gulp.series(enableSync, gulp.parallel(webpackBsDev, webpackDev), watch);
 
-export const bsProd = gulp.series(
+/* compile and minify Bootstrap with purgeCCC */
+export const bsProdPurge = gulp.series(
     gulp.parallel(webpackBsDev, webpackDev), gulp.parallel(bsStyles, webpackBsProd), purgeCSS, bsStylesMin
 );
+
+/* compile and minify Bootstrap w/o purgeCCC */
+export const bsProd = gulp.series(
+    gulp.parallel(webpackBsDev, webpackDev), gulp.parallel(bsStyles, webpackBsProd), bsStylesMin
+);
+
 export const widgets = gulp.parallel(widgetsStyles, widgetsScripts);
+
+/* minify all w/o purgeCSS */
+export const minAll = gulp.series(
+    clean,
+    gulp.series(
+        vendorJS,
+        bsProd,
+        gulp.parallel(bsStyles, widgets, scriptsYii2, webpackProd)
+    ),
+);
+
+/* minify all with purgeCSS */
 export const build = gulp.series(
     clean,
-    gulp.parallel(vendorJS, webpackBsDev, webpackDev),
-    bsProd,
-    gulp.parallel(bsStyles, widgets, scriptsYii2, webpackProd)
+    gulp.series(
+        vendorJS,
+        bsProdPurge,
+        gulp.parallel(widgets, scriptsYii2, webpackProd)
+    )
 );
+
+/* run cleanProd after build to remove non-minified files */
 
 export default dev;
