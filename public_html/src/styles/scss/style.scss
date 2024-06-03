@@ -31,6 +31,12 @@ body {
     overflow-x: hidden;
 }
 
+.btn-copy-active {
+    background-color: $gray-600;
+    border-color: $gray-600;
+    color: $white;
+}
+
 .lett-spacing-2 {
     letter-spacing: 2px;
 }

@@ -55,6 +55,12 @@ body {
     overflow-x: hidden;
 }
 
+.btn-copy-active {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: #fff;
+}
+
 .lett-spacing-2 {
     letter-spacing: 2px;
 }

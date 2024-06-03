@@ -465,6 +465,8 @@ const tradeRouteForm = (isValidated, loader, removeLoader) => {
   };
   $('.btn-copy').on('click', function () {
     navigator.clipboard.writeText($(this).siblings('.table-link-tr').text());
+    $(this).text('copied').addClass('btn-copy-active');
+    $(".btn-copy:contains('copied')").not(this).text('copy').removeClass('btn-copy-active');
   });
   $form.on('submit', e => handleSubmit(e));
 };
