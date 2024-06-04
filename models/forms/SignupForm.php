@@ -4,7 +4,7 @@ namespace app\models\forms;
 
 use Yii;
 use yii\base\Model;
-use app\models\User;
+use app\models\ar\User;
 
 /**
  * Signup form
@@ -25,7 +25,7 @@ class SignupForm extends Model
             ['username', 'required'],
             ['username',
                 'unique',
-                'targetClass' => '\app\models\User',
+                'targetClass' => '\app\models\ar\User',
                 'message' => 'This username has already been taken.'
             ],
             ['username', 'string', 'min' => 2, 'max' => 255],
@@ -37,7 +37,7 @@ class SignupForm extends Model
             [
                 'email',
                 'unique',
-                'targetClass' => '\app\models\User',
+                'targetClass' => '\app\models\ar\User',
                 'message' => 'This email address has already been taken.'
             ],
             ['password', 'required'],
