@@ -88,8 +88,6 @@ class SiteController extends Controller
 
     /**
      * Displays contact page.
-     *
-     * @return Response|string
      */
     public function actionContact(): Response|string
     {

@@ -4,12 +4,13 @@
  * @var string $container
  * @var array $model
  * @var array $columns
+ * @var array column_labels
  * @var array $column_filters
- * @var array $column_labels
+ * @var array $default_sorting
  * @var array $filtered_columns
+ * @var string styles
 */
 
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;

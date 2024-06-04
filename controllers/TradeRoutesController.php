@@ -23,11 +23,10 @@ class TradeRoutesController extends Controller
         );
     }
 
-    /**
-     * @return string
-     */
     public function actionIndex(): string
     {
+        /** @var PageCounter|TradeRoutesController $this */
+
         $session = Yii::$app->session;
         $session->open();
         // $session->destroy();

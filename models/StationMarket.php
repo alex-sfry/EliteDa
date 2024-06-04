@@ -3,7 +3,6 @@
 namespace app\models;
 
 use app\behaviors\CommoditiesBehavior;
-use app\behaviors\StationBehavior;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\base\Model;
@@ -19,14 +18,10 @@ class StationMarket extends Model
         );
     }
 
-    /**
-     * @param int $id
-     * @param string $sys_name
-     *
-     * @return array
-     */
     public function getMarket(int $id, string $sys_name): array
     {
+        /** @var CommoditiesBehavior|StationMarket $this */
+
         $model = Markets::find()
             ->where(['and', "markets.market_id=$id", ['or', 'stock>0', 'demand>0']])
             ->asArray()

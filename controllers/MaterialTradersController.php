@@ -10,9 +10,6 @@ use yii\web\Controller;
 
 class MaterialTradersController extends Controller
 {
-    /**
-     * @return array
-     */
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -21,11 +18,10 @@ class MaterialTradersController extends Controller
         );
     }
 
-    /**
-     * @return string
-     */
     public function actionIndex(): string
     {
+        /** @var SystemBehavior|MaterialTradersController $this */
+
         $session = Yii::$app->session;
         $session->open();
         // $session->destroy();

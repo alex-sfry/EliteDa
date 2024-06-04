@@ -11,7 +11,6 @@ use yii\db\Expression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\base\Model;
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 class Commdts extends Model
@@ -28,14 +27,10 @@ class Commdts extends Model
         );
     }
 
-    /**
-     * @param array $get
-     * @param int $limit
-     *
-     * @return \yii\data\ActiveDataProvider
-     */
     public function getPrices(array $get, int $limit): ActiveDataProvider
     {
+        /** @var SystemBehavior|CommoditiesBehavior|Commdts $this */
+
         $distance_expr = $this->getDistanceToSystemExpression($get['refSystem']);
         $c_symbols = [];
 
@@ -132,13 +127,10 @@ class Commdts extends Model
         ]);
     }
 
-    /**
-     * @param array $models
-     *
-     * @return array
-     */
     public function modifyModels(array $models): array
     {
+        /** @var StationBehavior|CommoditiesBehavior|Commdts $this */
+
         foreach ($models as $key => $value) {
             $value['commodity'] = isset($this->commodities[strtolower($value['commodity'])]) ?
                 $this->commodities[strtolower($value['commodity'])] : $value['commodity'];

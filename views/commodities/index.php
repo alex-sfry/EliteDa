@@ -2,15 +2,15 @@
 
 /**
  * @var string $ref_error
- * @var string $cargo_error
- * @var string $cargo
- * @var string $pad_sizes
- * @var string $incl_surface
- * @var string $sort_options
- * @var string $max_dist_from_ref
- * @var string $max_dist_from_star
- * @var string $min_supply_demand
- * @var string $max_age_of_data
+ * @var string $c_error
+ * @var array $pad_sizes
+ * @var array $incl_surface
+ * @var array $sort_options
+ * @var array $max_dist_from_ref
+ * @var array $max_dist_from_star
+ * @var array $min_supply_demand
+ * @var array $max_age_of_data
+ * @var string $result
  * @var \app\models\forms\CommoditiesForm $form_model
  */
 

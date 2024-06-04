@@ -59,6 +59,8 @@ class StationsInfoSearch extends StationsInfoView
      */
     public function search(array $params, int|null $max_distance, string $ref_sys_name): ActiveDataProvider
     {
+        /** @var SystemBehavior|StationsInfoSearch $this */
+
         extract($this->getCoords($ref_sys_name));
         $distance_expr = new Expression(
             "ROUND(SQRT(POW((x - $x), 2) + POW((y - $y), 2) + POW((z - $z), 2)), 2)"

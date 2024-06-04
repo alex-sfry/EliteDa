@@ -13,9 +13,6 @@ use yii\web\Response;
 
 class CommoditiesController extends Controller
 {
-    /**
-     * @return array
-     */
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -24,12 +21,10 @@ class CommoditiesController extends Controller
         );
     }
 
-    /**
-     * @return string
-     * @throws \yii\base\InvalidConfigException
-     */
     public function actionIndex(): string
     {
+        /** @var PageCounter|CommoditiesBehavior|CommoditiesController $this */
+
         $session = Yii::$app->session;
         $session->open();
         // $session->destroy();

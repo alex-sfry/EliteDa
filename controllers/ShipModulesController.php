@@ -15,9 +15,6 @@ use function app\helpers\d;
 
 class ShipModulesController extends Controller
 {
-    /**
-     * @return array
-     */
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -27,12 +24,12 @@ class ShipModulesController extends Controller
     }
 
     /**
-     * @return string
-     *
      * @throws InvalidArgumentException
      */
     public function actionIndex(): string
     {
+        /** @var PageCounter|ShipModulesBehavior|ShipModulesController $this */
+
         $session = Yii::$app->session;
         $session->open();
         // $session->destroy();

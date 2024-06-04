@@ -22,9 +22,6 @@ class CommoditiesBehavior extends Behavior
         'c-form-submit' => ''
     ];
 
-    /**
-     * @return array
-     */
     public function getCommodities(): array
     {
         $arr = Json::decode(file_get_contents(Yii::$app->basePath . '/data/commodities.json'));
@@ -33,11 +30,6 @@ class CommoditiesBehavior extends Behavior
         return $arr;
     }
 
-    /**
-     * @var array $params
-     *
-     * @return array
-     */
     public function getCommoditiesReqArr(array $params): array
     {
         $this->commoditiesReqArr['buySellSwitch'] = $params['price_type'];

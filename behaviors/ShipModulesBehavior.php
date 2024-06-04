@@ -20,19 +20,11 @@ class ShipModulesBehavior extends Behavior
         'c-form-submit' => ''
     ];
 
-    /**
-     * @return array
-     */
     public function getShipModules(): array
     {
         return array_change_key_case(Json::decode(file_get_contents(Yii::$app->basePath . '/data/shipModules.json')));
     }
 
-    /**
-     * @var array $params
-     *
-     * @return array
-     */
     public function getShipModulesReqArr(array $params): array
     {
         $this->shipModulesReqArr['refSystem'] = $params['system'];

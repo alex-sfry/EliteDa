@@ -7,11 +7,6 @@ use yii\data\Pagination;
 
 class PageCounter extends Behavior
 {
-    /**
-     * @param \yii\data\Pagination $pagination
-     *
-     * @return string
-     */
     public function getPageCounter(Pagination $pagination): string
     {
         /*calculations for pages info near pagination buttons*/

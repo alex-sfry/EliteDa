@@ -10,19 +10,16 @@ class ShipyardShipsBehavior extends Behavior
 {
     private array $shipsReqArr = [
         'cMainSelect' => [],
-    'refSystem' => 'Sol',
-    'landingPadSize' => 'L',
-    'includeSurface' => 'No',
-    'maxDistanceFromRefStar' => '50',
-    'distanceFromStar' => '500',
-    'dataAge' => 'Any',
-    'sortBy' => 'Distance',
-    'c-form-submit' => ''
-    ];
+        'refSystem' => 'Sol',
+        'landingPadSize' => 'L',
+        'includeSurface' => 'No',
+        'maxDistanceFromRefStar' => '50',
+        'distanceFromStar' => '500',
+        'dataAge' => 'Any',
+        'sortBy' => 'Distance',
+        'c-form-submit' => ''
+        ];
 
-    /**
-     * @return array
-     */
     public function getShipsList(): array
     {
         $arr = Json::decode(file_get_contents(Yii::$app->basePath . '/data/ships.json'));
@@ -31,11 +28,6 @@ class ShipyardShipsBehavior extends Behavior
         return $arr;
     }
 
-    /**
-     * @var array $params
-     *
-     * @return array
-     */
     public function getShipsReqArr(array $params): array
     {
         $this->shipsReqArr['refSystem'] = $params['system'];

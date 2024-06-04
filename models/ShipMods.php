@@ -18,9 +18,6 @@ class ShipMods extends Model
 {
     private array $mods_arr = [];
 
-    /**
-     * @return array
-     */
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -37,14 +34,10 @@ class ShipMods extends Model
         $this->mods_arr = $mods;
     }
 
-    /**
-     * @param array $get
-     * @param int $limit
-     *
-     * @return \yii\data\ActiveDataProvider
-     */
     public function getModules(array $get, int $limit): ActiveDataProvider
     {
+        /** @var SystemBehavior|ShipMods $this */
+
         $distance_expr = $this->getDistanceToSystemExpression($get['refSystem']);
         $mod_symbols = [];
 
@@ -126,13 +119,10 @@ class ShipMods extends Model
         ]);
     }
 
-    /**
-     * @param array $models
-     *
-     * @return array
-     */
     public function modifyModels(array $models): array
     {
+        /** @var StationBehavior|ShipMods $this */
+
         foreach ($models as $key => $value) {
             $value['module'] = isset($this->mods_arr[strtolower($value['module'])]) ?
                 $this->mods_arr[strtolower($value['module'])] : $value['module'];
@@ -157,13 +147,6 @@ class ShipMods extends Model
         return $models;
     }
 
-    /**
-     * @param int $market_id
-     * @param string $cat
-     * @param string $sys_name
-     *
-     * @return array
-     */
     public function getStationModules(int $market_id, string $cat, string $sys_name): array
     {
         $market_id = (int)$market_id;
@@ -208,6 +191,8 @@ class ShipMods extends Model
         $models = $modules->orderBy('ship_modules.name')->all();
 
         $this->attachBehavior('ShipModulesBehavior', ShipModulesBehavior::class);
+
+        /** @var ShipModulesBehavior|ShipMods $this */
 
         foreach ($models as $key => $value) {
             $models[$key]['m_name'] = isset($this->mods_arr[strtolower($value['name'])]) ?

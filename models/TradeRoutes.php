@@ -58,9 +58,6 @@ class TradeRoutes extends Model
         }
     }
 
-    /**
-     * @return array
-     */
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -73,11 +70,10 @@ class TradeRoutes extends Model
         );
     }
 
-    /**
-     * @return array
-     */
     public function getTradeRoutes(): array
     {
+        /** @var SystemBehavior|StationBehavior|TradeRoutes $this */
+
         $this->distance_expr = $this->getDistanceToSystemExpression($this->sys_name);
         $source_station = $this->getSourceStation($this->sys_name, $this->st_name);
         $source_market = $this->getSourceMarketQuery((int)$source_station['market_id']);
@@ -96,12 +92,6 @@ class TradeRoutes extends Model
         return $models;
     }
 
-    /**
-     * @param array $arr
-     * @param string $key
-     *
-     * @return array
-     */
     private function removeDuplicates(array $arr, string $key): array
     {
         $uniqueCommodities = [];
@@ -120,9 +110,6 @@ class TradeRoutes extends Model
         return $unique_arr;
     }
 
-    /**
-     * @return array
-     */
     private function getSourceStation(): array
     {
         return (new Query())
@@ -141,11 +128,6 @@ class TradeRoutes extends Model
             ->one();
     }
 
-    /**
-     * @param int $market_id
-     *
-     * @return Query
-     */
     private function getSourceMarketQuery(int $market_id): Query
     {
         return (new Query())
@@ -161,9 +143,6 @@ class TradeRoutes extends Model
             ->andWhere(['>', 'm1.stock', $this->min_supply_demand]);
     }
 
-    /**
-     * @return array
-     */
     private function getSystemsInRadius(): array
     {
         return (new Query())
@@ -173,11 +152,6 @@ class TradeRoutes extends Model
             ->all();
     }
 
-    /**
-     * @param Query $source_market
-     *
-     * @return array
-     */
     private function getTargetMarkets(Query $source_market): array
     {
         $query =
@@ -242,11 +216,6 @@ class TradeRoutes extends Model
         return $dir_routes;
     }
 
-    /**
-     * @param array $source_station
-     *
-     * @return Query
-     */
     private function getSourceMarkeRoundQuery(array $source_station): Query
     {
         return (new Query())
@@ -261,12 +230,6 @@ class TradeRoutes extends Model
             ->andWhere(['>', 'm.demand', $this->min_supply_demand]);
     }
 
-    /**
-     * @param array $target_markets
-     * @param array $source_station
-     *
-     * @return array
-     */
     private function calcRoundTrip(array $target_markets, array $source_station): array
     {
         $ids = ArrayHelper::getColumn($target_markets, 'target_market_id');
@@ -298,14 +261,10 @@ class TradeRoutes extends Model
         return $round_markets;
     }
 
-    /**
-     * @param array $target_markets
-     * @param array $round_trips
-     *
-     * @return array
-     */
     private function modifyModels(array $target_markets, array $round_trips = []): array
     {
+        /** @var CommoditiesBehavior|StationBehavior|TradeRoutes $this */
+
         $models = [];
 
         if (count($round_trips) > 0) {

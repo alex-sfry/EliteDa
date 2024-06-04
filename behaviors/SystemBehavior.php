@@ -9,11 +9,6 @@ use yii\db\Expression;
 
 class SystemBehavior extends Behavior
 {
-    /**
-     * @param $sys_name
-     *
-     * @return array
-     */
     public function getCoords(string $sys_name): array
     {
         return ArrayHelper::htmlEncode(Systems::find()

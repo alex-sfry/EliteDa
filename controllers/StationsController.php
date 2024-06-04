@@ -17,7 +17,6 @@ use app\models\ar\Systems;
 use app\models\search\EngineersSearch;
 use app\models\search\StationsInfoSearch;
 use Yii;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -150,6 +149,8 @@ class StationsController extends Controller
      */
     public function actionShips(int $id, ShipyardShips $ships): string
     {
+        /** @var ShipyardShipsBehavior|StationsController $this */
+
         !$id && throw new NotFoundHttpException();
         $id = (int)$id;
 
@@ -178,6 +179,8 @@ class StationsController extends Controller
      */
     public function actionShipModules(int $id, ShipMods $ship_modules, string $cat): string
     {
+        /** @var ShipModulesBehavior|StationsController $this */
+
         !$id && throw new NotFoundHttpException();
         $id = (int)$id;
 

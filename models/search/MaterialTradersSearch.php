@@ -33,10 +33,6 @@ class MaterialTradersSearch extends MaterialTraders
 
     /**
      * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
      */
     public function search(array $params, $distance_expr): ActiveDataProvider
     {

@@ -11,10 +11,6 @@ use yii\web\Response;
 class SystemsController extends Controller
 {
     /**
-     * @param int $id
-     *
-     * @return string
-     *
      * @throws NotFoundHttpException
      */
     public function actionDetails(int $id): string
@@ -35,11 +31,6 @@ class SystemsController extends Controller
          ]);
     }
 
-    /**
-     * @param string $sys
-     *
-     * @return void
-     */
     public function actionSystem(string $sys): void
     {
         if (!$sys) {

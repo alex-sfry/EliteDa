@@ -10,13 +10,9 @@ use yii\web\Response;
 use yii\web\Controller;
 use app\behaviors\ShipyardShipsBehavior;
 use app\behaviors\PageCounter;
-use yii\helpers\VarDumper;
 
 class ShipyardShipsController extends Controller
 {
-    /**
-     * @return array
-     */
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -25,11 +21,10 @@ class ShipyardShipsController extends Controller
         );
     }
 
-    /**
-     * @return string
-     */
     public function actionIndex(): string
     {
+        /** @var PageCounter|ShipyardShipsBehavior|ShipyardShipsController $this */
+
         $session = Yii::$app->session;
         $session->open();
         // $session->destroy();
