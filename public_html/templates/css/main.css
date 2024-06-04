@@ -586,6 +586,9 @@ form-control.is-invalid {
     color: #ffc107;
 }
 
+.details-cnt h1 ~ p {
+    color: #e9ecef;
+}
 .details-cnt th, .details-cnt td {
     border: 0;
 }

@@ -686,6 +686,11 @@ table {
 }
 
 .details-cnt {
+    h1 ~ p {
+        color: $gray-200;
+    }
+    
+
     th, td {
         border: 0;
     }
