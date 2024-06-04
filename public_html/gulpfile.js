@@ -41,11 +41,27 @@ export const cleanProd = async () => {
     ]);
 };
 
+export const images = async () => {
+    await deleteAsync(['./templates/images/*']);
+    return gulp.src('./src/images/**/*')
+        .pipe(gulp.dest('./templates/images/'));
+};
+
 export const watch = () => {
     console.log('syncMode - ', syncMode);
     syncMode && browserSync.init({
         proxy: "elida:8080"
     });
+
+    gulp.watch('./src/images/**/*', () => images())
+        .on('change', (path) => console.log(`File ${path} was changed`))
+        .on('unlink', (path) => console.log(`File ${path} was removed`))
+        .on('add', (path) => console.log(`File ${path} was added`));
+    
+    gulp.watch('./src/vendorJS/**/*.js', () => vendorJS())
+        .on('change', (path) => console.log(`File ${path} was changed`))
+        .on('unlink', (path) => console.log(`File ${path} was removed`))
+        .on('add', (path) => console.log(`File ${path} was added`));
 
     gulp.watch('./src/script/*.js', () => webpackDev())
         .on('change', (path) => console.log(`File ${path} was changed`))
@@ -78,10 +94,10 @@ export const watch = () => {
 };
 
 /* dev mode w/o browserSync */
-export const dev = gulp.series(gulp.parallel(vendorJS, webpackBsDev, webpackDev), watch);
+export const dev = gulp.series(gulp.parallel(vendorJS, images, webpackBsDev, webpackDev), watch);
 
 /* dev mode with browserSync */
-export const devSync = gulp.series(enableSync, gulp.parallel(webpackBsDev, webpackDev), watch);
+export const devSync = gulp.series(enableSync, gulp.parallel(vendorJS, images, webpackBsDev, webpackDev), watch);
 
 /* compile and minify Bootstrap with purgeCCC */
 export const bsProdPurge = gulp.series(
@@ -99,7 +115,7 @@ export const widgets = gulp.parallel(widgetsStyles, widgetsScripts);
 export const minAll = gulp.series(
     clean,
     gulp.series(
-        vendorJS,
+        gulp.parallel(vendorJS, images),
         bsProd,
         gulp.parallel(bsStyles, widgets, scriptsYii2, webpackProd)
     ),
@@ -109,7 +125,7 @@ export const minAll = gulp.series(
 export const build = gulp.series(
     clean,
     gulp.series(
-        vendorJS,
+        gulp.parallel(vendorJS, images),
         bsProdPurge,
         gulp.parallel(widgets, scriptsYii2, webpackProd)
     )
