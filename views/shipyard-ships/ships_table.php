@@ -1,9 +1,15 @@
 <?php
 
-use yii\helpers\VarDumper;
 use yii\bootstrap5\LinkPager;
+use yii\data\Pagination;
 use yii\helpers\Html;
 use yii\helpers\Url;
+
+/**
+ * @var array $models
+ * @var string|null $page_count_info
+ * @var Pagination|false $pagination
+ */
 
 $table_head = [
     'Ship',
@@ -73,11 +79,11 @@ $table_head = [
         <tbody class="table-group-divider">
             <?php foreach ($models as $item) : ?>
                 <tr>
-                    <td class="text-start text-truncate"><?= Html::encode($item['ship']) ?></td>
+                    <td class="text-start text-truncate"><?= $item['ship'] ?></td>
                     <td class="text-start text-truncate">
-                    <?php $station_id = Html::encode($item['station_id']) ?>
+                    <?php $station_id = (int)$item['station_id'] ?>
                         <?= Html::a(
-                            Html::encode($item['station']['text']),
+                            $item['station']['text'],
                             Url::toRoute(["station/$station_id"]),
                             ['class' => 'text-decoration-underline link-underline-primary table-link']
                         );?>
@@ -86,17 +92,17 @@ $table_head = [
                     <?= $item['surface'] ? 'text-success' : 'text-primary' ?>"><?= Html::encode($item['type']) ?></td>
                     <td class="text-start text-truncate"><?= Html::encode($item['pad']) ?></td>
                     <td class="text-start text-truncate">
-                    <?php $system_id = Html::encode($item['system_id']) ?>
+                    <?php $system_id = (int)$item['system_id'] ?>
                         <?= Html::a(
-                            Html::encode($item['system']['text']),
+                            $item['system']['text'],
                             Url::toRoute(["system/$system_id"]),
                             ['class' => 'text-decoration-underline link-underline-primary table-link']
                         );?>
                     </td>
                     <td class="text-start text-truncate"><?= (float)$item['distance_ly'] ?></td>
                     <td class="text-start text-truncate"><?= (int)$item['distance_ls'] ?></td>
-                    <td class="text-start text-truncate"><?= Html::encode($item['price']) . ' Cr' ?></td>
-                    <td class="text-start text-truncate"><?= Html::encode($item['time_diff']) ?></td>
+                    <td class="text-start text-truncate"><?= (int)$item['price'] . ' Cr' ?></td>
+                    <td class="text-start text-truncate"><?= $item['time_diff'] ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

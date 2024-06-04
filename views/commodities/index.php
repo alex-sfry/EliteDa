@@ -1,5 +1,10 @@
 <?php
 
+use app\models\forms\CommoditiesForm;
+use app\widgets\CustomSelect\CustomSelect;
+use app\widgets\InputDropdown\InputDropdown;
+use yii\helpers\Html;
+
 /**
  * @var string $ref_error
  * @var string $c_error
@@ -11,12 +16,8 @@
  * @var array $min_supply_demand
  * @var array $max_age_of_data
  * @var string $result
- * @var \app\models\forms\CommoditiesForm $form_model
+ * @var CommoditiesForm $form_model
  */
-
-use app\widgets\CustomSelect\CustomSelect;
-use app\widgets\InputDropdown\InputDropdown;
-use yii\helpers\Html;
 
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
@@ -49,7 +50,7 @@ $this->params['breadcrumbs'] = [$this->title];
     <div class='d-flex flex-column h-100'>
         <div class='container-xxl px-3 d-flex'>
             <div class='d-flex flex-column w-100 gap-3'>
-                <h1 class='mt-2 text-center fs-2 sintony-bold'><?= Html::encode($this->title) ?></h1>
+                <h1 class='mt-2 text-center fs-2 sintony-bold'><?= $this->title ?></h1>
                 <div class="accordion" id="accordionForm">
                     <div class="accordion-item">
                         <h2 class="accordion-header">

@@ -1,8 +1,24 @@
 <?php
 
 use yii\bootstrap5\LinkPager;
+use yii\data\Pagination;
 use yii\helpers\Html;
 use yii\helpers\Url;
+
+/**
+ * @var array $models
+ * @var string|null $page_count_info
+ * @var string $sort_price
+ * @var string $sort_updated
+ * @var string $sort_dist_ly
+ * @var string $price_sort
+ * @var string $time_sort
+ * @var string $d_ly_sort
+ * @var string $buy_sell_switch
+ * @var int $station_id
+ * @var int $system_id
+ * @var Pagination|false $pagination
+ */
 
 ?>
 <div class="tr-result-wrapper container-xxl mt-4">
@@ -15,7 +31,7 @@ use yii\helpers\Url;
                 <div class="tr-route-block-inner row justify-content-between my-0 mx-auto rounded-2">
                     <div class="tr-info-block col-lg-5 py-1 rounded-start-2">
                         <span class="fs-6 sintony-bold text-primary d-inline-block">Buy</span>
-                        <span class="fst-italic sintony-bold ms-3"><?= Html::encode($value['commodity']) ?></span>
+                        <span class="fst-italic sintony-bold ms-3"><?= $value['commodity'] ?></span>
                         <div class="fs-7 d-flex flex-lg-column flex-sm-row column-gap-5">
                             <table class="table table-sm mb-1 mb-lg-0 table-borderless line">
                                 <tbody>
@@ -24,7 +40,7 @@ use yii\helpers\Url;
                                         <?php $source_station_id = (int)$source_station['station_id'] ?>
                                         <td class="text-end">
                                             <?= Html::a(
-                                                Html::encode($source_station['station']),
+                                                $source_station['station'],
                                                 Url::toRoute(["station/$source_station_id"]),
                                                 ['class' => [
                                                     'table-link-tr text-decoration-underline 
@@ -35,11 +51,11 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr>
                                         <td>Station type:</td>
-                                        <td class="text-end"><?=  Html::encode($source_station['type']) ?></td>
+                                        <td class="text-end"><?= $source_station['type'] ?></td>
                                     </tr>
                                     <tr>
                                         <td>Landing pad:</td>
-                                        <td class="text-end"><?=  Html::encode($source_station['pad']) ?></td>
+                                        <td class="text-end"><?= $source_station['pad'] ?></td>
                                     </tr>
                                     <tr>
                                         <td class="sintony-bold">System:</td>
@@ -52,7 +68,7 @@ use yii\helpers\Url;
                                             </button>
                                         <?php $source_system_id = (int)$source_station['system_id'] ?>
                                             <?= Html::a(
-                                                Html::encode($source_station['system']),
+                                                $source_station['system'],
                                                 Url::toRoute(["system/$source_system_id"]),
                                                 ['class' => [
                                                     'table-link-tr text-decoration-underline 
@@ -79,7 +95,7 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr>
                                         <td>Updated:</td>
-                                        <td class="text-end"><?=  Html::encode($value['source_time_diff']) ?></td>
+                                        <td class="text-end"><?= $value['source_time_diff'] ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -96,15 +112,15 @@ use yii\helpers\Url;
                         <div class="tr-info-block-mid text-lg-start text-sm-center ms-lg-0 ms-5 h-auto my-auto
                                         sintony-bold">
                             Profit per trip (Cr):
-                            <span class="text-success sintony-bold"><?= Html::encode($value['profit']) ?></span>
+                            <span class="text-success sintony-bold"><?= (int)$value['profit'] ?></span>
                             <div class="w-100 bg-dark"></div>
                             Distance (LY):
-                            <span class="text-primary sintony-bold"><?=  Html::encode($value['distance']) ?></span>
+                            <span class="text-primary sintony-bold"><?= (float)$value['distance'] ?></span>
                         </div>
                     </div>
                     <div class="tr-info-block tr-info-block-right col-lg-5 py-1 rounded-end-2">
                         <span class="fs-6 sintony-bold text-success d-inline-block">Sell</span>
-                        <span class="fst-italic sintony-bold ms-3"><?=  Html::encode($value['commodity']) ?></span>
+                        <span class="fst-italic sintony-bold ms-3"><?=  $value['commodity'] ?></span>
                         <div class="fs-7 d-flex flex-lg-column flex-sm-row column-gap-5">
                             <table class="table table-sm mb-1 mb-lg-0 table-borderless">
                                 <tbody>
@@ -113,7 +129,7 @@ use yii\helpers\Url;
                                         <td class="text-end">
                                         <?php $target_station_id = (int)$value['target_station_id'] ?>
                                             <?= Html::a(
-                                                Html::encode($value['target_station']),
+                                                $value['target_station'],
                                                 Url::toRoute(["station/$target_station_id"]),
                                                 ['class' => [
                                                     'table-link-tr text-decoration-underline 
@@ -124,11 +140,11 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr>
                                         <td>Station type:</td>
-                                        <td class="text-end"><?=  Html::encode($value['target_type']) ?></td>
+                                        <td class="text-end"><?= $value['target_type'] ?></td>
                                     </tr>
                                     <tr>
                                         <td>Landing pad:</td>
-                                        <td class="text-end"><?=  Html::encode($value['target_pad']) ?></td>
+                                        <td class="text-end"><?= $value['target_pad'] ?></td>
                                     </tr>
                                     <tr>
                                         <td class="sintony-bold">System:</td>
@@ -141,7 +157,7 @@ use yii\helpers\Url;
                                                 copy
                                             </button>
                                             <?= Html::a(
-                                                Html::encode($value['target_system']),
+                                                $value['target_system'],
                                                 Url::toRoute(["system/$target_system_id"]),
                                                 ['class' => [
                                                     'table-link-tr text-decoration-underline 
@@ -168,7 +184,7 @@ use yii\helpers\Url;
                                     </tr>
                                     <tr>
                                         <td>Updated:</td>
-                                        <td class="text-end"><?=  Html::encode($value['target_time_diff']) ?></td>
+                                        <td class="text-end"><?= $value['target_time_diff'] ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -185,7 +201,7 @@ use yii\helpers\Url;
                         <div class="tr-info-block tr-info-block-left col-lg-5 py-1 rounded-start-2">
                             <span class="fs-6 sintony-bold text-success d-inline-block">Sell</span>
                             <span class="fst-italic sintony-bold ms-3">
-                                <?=  Html::encode($value['commodity_round']) ?>
+                                <?= $value['commodity_round'] ?>
                             </span>
                             <div class="fs-7 d-flex flex-lg-column flex-sm-row column-gap-5">
                                 <table class="table table-sm mb-1 mb-lg-0 table-borderless">
@@ -194,7 +210,7 @@ use yii\helpers\Url;
                                             <td class="sintony-bold">Station:</td>
                                             <td class="text-end">
                                                 <?= Html::a(
-                                                    Html::encode($source_station['station']),
+                                                    $source_station['station'],
                                                     Url::toRoute(["station/$source_station_id"]),
                                                     ['class' => [
                                                         'table-link-tr text-decoration-underline sintony-bold
@@ -205,11 +221,11 @@ use yii\helpers\Url;
                                         </tr>
                                         <tr>
                                             <td>Station type:</td>
-                                            <td class="text-end"><?=  Html::encode($source_station['type']) ?></td>
+                                            <td class="text-end"><?= $source_station['type'] ?></td>
                                         </tr>
                                         <tr>
                                             <td>Landing pad:</td>
-                                            <td class="text-end"><?=  Html::encode($source_station['pad']) ?></td>
+                                            <td class="text-end"><?= $source_station['pad'] ?></td>
                                         </tr>
                                         <tr>
                                             <td class="sintony-bold">System:</td>
@@ -221,7 +237,7 @@ use yii\helpers\Url;
                                                     copy
                                                 </button>
                                                 <?= Html::a(
-                                                    Html::encode($source_station['system']),
+                                                    $source_station['system'],
                                                     Url::toRoute(["system/$source_system_id"]),
                                                     ['class' => [
                                                         'table-link-tr text-decoration-underline 
@@ -248,7 +264,7 @@ use yii\helpers\Url;
                                         </tr>
                                         <tr>
                                             <td>Updated:</td>
-                                            <td class="text-end"><?=  Html::encode($value['source_time_diff']) ?></td>
+                                            <td class="text-end"><?= $value['source_time_diff'] ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -266,17 +282,17 @@ use yii\helpers\Url;
                                             sintony-bold">
                                 Profit per trip (Cr):
                                 <span class="text-success sintony-bold">
-                                    <?= Html::encode($value['profit_round']) ?>
+                                    <?= (int)$value['profit_round'] ?>
                                 </span>
                                 <div class="w-100 bg-dark"></div>
                                 Distance (LY):
-                                <span class="text-primary sintony-bold"><?=  Html::encode($value['distance']) ?></span>
+                                <span class="text-primary sintony-bold"><?= (float)$value['distance'] ?></span>
                             </div>
                         </div>
                         <div class="tr-info-block tr-info-block-right col-lg-5 py-1 order-lg-0 order-sm-2">
                             <span class="fs-6 sintony-bold text-primary d-inline-block">Buy</span>
                             <span class="fst-italic sintony-bold ms-3">
-                                <?=  Html::encode($value['commodity_round']) ?>
+                                <?= $value['commodity_round'] ?>
                             </span>
                             <div class="fs-7 d-flex flex-lg-column flex-sm-row column-gap-5">
                                 <table class="table table-sm mb-1 mb-lg-0 table-borderless">
@@ -285,7 +301,7 @@ use yii\helpers\Url;
                                             <td>Station:</td>
                                             <td class="text-end">
                                                 <?= Html::a(
-                                                    Html::encode($value['target_station']),
+                                                    $value['target_station'],
                                                     Url::toRoute(["station/$target_station_id"]),
                                                     ['class' => [
                                                         'table-link-tr text-decoration-underline link-underline-primary'
@@ -295,11 +311,11 @@ use yii\helpers\Url;
                                         </tr>
                                         <tr>
                                             <td>Station type:</td>
-                                            <td class="text-end"><?=  Html::encode($value['target_type']) ?></td>
+                                            <td class="text-end"><?= $value['target_type'] ?></td>
                                         </tr>
                                         <tr>
                                             <td>Landing pad:</td>
-                                            <td class="text-end"><?=  Html::encode($value['target_pad']) ?></td>
+                                            <td class="text-end"><?= $value['target_pad'] ?></td>
                                         </tr>
                                         <tr>
                                             <td>System:</td>
@@ -311,7 +327,7 @@ use yii\helpers\Url;
                                                     copy
                                                 </button>
                                                 <?= Html::a(
-                                                    Html::encode($value['target_system']),
+                                                    $value['target_system'],
                                                     Url::toRoute(["system/$target_system_id"]),
                                                     ['class' => [
                                                         'table-link-tr text-decoration-underline link-underline-primary'
@@ -337,7 +353,7 @@ use yii\helpers\Url;
                                         </tr>
                                         <tr>
                                             <td>Updated:</td>
-                                            <td class="text-end"><?=  Html::encode($value['target_time_diff']) ?></td>
+                                            <td class="text-end"><?=  $value['target_time_diff'] ?></td>
                                         </tr>
                                     </tbody>
                                 </table>

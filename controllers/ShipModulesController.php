@@ -64,7 +64,9 @@ class ShipModulesController extends Controller
             $mod_model->setMods($params['ship_modules_arr']);
             $limit = 50;
             $provider = $mod_model->getModules($params['get'], $limit);
-            $params['models']  = $mod_model->modifyModels($provider->getModels(), $params['get']);
+            $params['models']  = ArrayHelper::htmlEncode(
+                $mod_model->modifyModels($provider->getModels(), $params['get'])
+            );
 
             $sort = $provider->getSort();
             $params['module_sort'] = null;

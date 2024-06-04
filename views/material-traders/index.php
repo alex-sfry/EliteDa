@@ -1,16 +1,18 @@
 <?php
 
-/**
- * @var ActiveDataProvider $searchModel
- * @var ActiveDataProvider $dataProvider
- */
-
+use app\models\search\MaterialsSearch;
 use app\widgets\InputDropdown\InputDropdown;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\data\ActiveDataProvider;
 
 use function app\helpers\d;
+
+/**
+ * @var MaterialTradersSearch $searchModel
+ * @var ActiveDataProvider $dataProvider
+ */
 
 $this->title = 'Material Traders';
 $this->params['breadcrumbs'] = [$this->title];
@@ -21,7 +23,7 @@ $this->params['breadcrumbs'] = [$this->title];
         <div class='container-xxl px-3'>
             <div class='row flex-column overflow-x-auto'>
                 <div class='col'>
-                    <h1 class="mt-2 text-center sintony-bold"><?= Html::encode($this->title) ?></h1>
+                    <h1 class="mt-2 text-center sintony-bold"><?= $this->title ?></h1>
                     <div class="mt-tr-ref-idd ms-auto d-flex justify-content-end">
                         <?= Html::beginForm(['/material-traders/index'], 'get', [
                             'id' => 'mt-form',

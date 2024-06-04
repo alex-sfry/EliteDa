@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\ar\Systems;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -27,7 +28,7 @@ class SystemsController extends Controller
         !$model && throw new NotFoundHttpException();
 
         return $this->render('details', [
-            'model' => $model
+            'model' => ArrayHelper::htmlEncode($model)
          ]);
     }
 
@@ -45,7 +46,7 @@ class SystemsController extends Controller
 
             $response = Yii::$app->response;
             $response->format = Response::FORMAT_JSON;
-            $response->data = $data;
+            $response->data = ArrayHelper::htmlEncode($data);
 
             $response->send();
         }

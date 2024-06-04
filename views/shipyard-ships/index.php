@@ -1,23 +1,23 @@
 <?php
 
-/**
- * @var string $ref_error
- * @var string $ships_error
- * @var string $cargo
- * @var string $pad_sizes
- * @var string $incl_surface
- * @var string $sort_options
- * @var string $max_dist_from_ref
- * @var string $max_dist_from_star
- * @var string $max_age_of_data
- * @var \app\models\forms\ShipyarShipsForm $form_model
- */
-
-use app\widgets\CustomSelect\CustomSelect;
+use app\models\forms\ShipyardShipsForm;
 use app\widgets\InputDropdown\InputDropdown;
 use yii\helpers\Html;
 
 use function app\helpers\d;
+
+/**
+ * @var string $ref_error
+ * @var string $ships_error
+ * @var string $result
+ * @var array $pad_sizes
+ * @var array $incl_surface
+ * @var array $sort_options
+ * @var array $max_dist_from_ref
+ * @var array $max_dist_from_star
+ * @var array $max_age_of_data
+ * @var ShipyarShipsForm $form_model
+ */
 
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'] = [$this->title];
     <div class='d-flex flex-column h-100'>
         <div class='container-xxl px-3 d-flex'>
             <div class='d-flex flex-column w-100 gap-3'>
-                <h1 class='mt-2 text-center fs-2 sintony-bold'><?= Html::encode($this->title) ?></h1>
+                <h1 class='mt-2 text-center fs-2 sintony-bold'><?= $this->title ?></h1>
                 <div class="accordion" id="accordionForm">
                     <div class="accordion-item">
                         <h2 class="accordion-header">

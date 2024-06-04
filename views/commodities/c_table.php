@@ -1,24 +1,24 @@
 <?php
 
+use yii\bootstrap5\LinkPager;
+use yii\data\Pagination;
+use yii\helpers\Html;
+use yii\helpers\Url;
+
 /**
  * @var array $models
  * @var string|null $page_count_info
- * @var string $pager
- * @var array $get
  * @var string $sort_price
  * @var string $sort_updated
  * @var string $sort_dist_ly
  * @var string $price_sort
  * @var string $time_sort
  * @var string $d_ly_sort
+ * @var string $buy_sell_switch
  * @var int $station_id
  * @var int $system_id
- * @var \yii\data\Pagination $pagination
+ * @var Pagination|false $pagination
  */
-
-use yii\bootstrap5\LinkPager;
-use yii\helpers\Html;
-use yii\helpers\Url;
 
 $table_head = [
     'Commodity',
@@ -28,7 +28,7 @@ $table_head = [
     'System',
     'Dist.(LY)',
     'Dist. to arr.(ls)',
-    $get['buySellSwitch'] === 'buy' ? 'Supply' : 'Demand',
+    $buy_sell_switch === 'buy' ? 'Supply' : 'Demand',
     'Price',
     'Updated'
 ];
@@ -89,22 +89,22 @@ $table_head = [
         <tbody class="table-group-divider">
             <?php foreach ($models as $item) : ?>
                 <tr>
-                    <td class="text-start text-truncate"><?= Html::encode($item['commodity']) ?></td>
+                    <td class="text-start text-truncate"><?= $item['commodity'] ?></td>
                     <td class="text-start text-truncate">
                     <?php $station_id = (int)$item['station_id'] ?>
                         <?= Html::a(
-                            Html::encode($item['station']['text']),
+                            $item['station']['text'],
                             Url::toRoute(["station/$station_id"]),
                             ['class' => 'text-decoration-underline link-underline-primary table-link']
                         );?>
                     </td>
                     <td class="sintony-bold text-start text-truncate
-                    <?= $item['surface'] ? 'text-success' : 'text-primary' ?>"><?= Html::encode($item['type']) ?></td>
-                    <td class="text-start text-truncate"><?= Html::encode($item['pad']) ?></td>
+                    <?= $item['surface'] ? 'text-success' : 'text-primary' ?>"><?= $item['type'] ?></td>
+                    <td class="text-start text-truncate"><?= $item['pad'] ?></td>
                     <td class="text-start text-truncate">
                     <?php $system_id = (int)$item['system_id'] ?>
                         <?= Html::a(
-                            Html::encode($item['system']['text']),
+                            $item['system']['text'],
                             Url::toRoute(["system/$system_id"]),
                             ['class' => 'text-decoration-underline link-underline-primary table-link']
                         );?>
@@ -116,7 +116,7 @@ $table_head = [
                     <td class="sintony-bold text-start text-truncate text-success">
                         <?= isset($item['sell_price'])  ? (int)$item['sell_price'] : (int)$item['buy_price'] ?> Cr
                     </td>
-                    <td class="text-start text-truncate"><?= Html::encode($item['time_diff']) ?></td>
+                    <td class="text-start text-truncate"><?= $item['time_diff'] ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

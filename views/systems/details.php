@@ -7,6 +7,11 @@ use yii\helpers\Url;
 
 use function app\helpers\d;
 
+/**
+ * @var array $models
+ * @var array $model
+ */
+
 $this->title = $model['name'];
 $this->params['breadcrumbs'] = [$this->title];
 Yii::$app->formatter->thousandSeparator = ' ';
@@ -29,10 +34,10 @@ Yii::$app->formatter->thousandSeparator = ' ';
                             ],
                             [
                                 'label' => 'Security',
-                                'value' => Html::encode($model['security']['security_level'])
+                                'value' => $model['security']['security_level']
                             ],
-                            ['label' => 'Economy', 'value' => Html::encode($model['economy']['economy_name'])],
-                            ['label' => 'Allegiance', 'value' => Html::encode($model['allegiance']['faction_name'])],
+                            ['label' => 'Economy', 'value' => $model['economy']['economy_name']],
+                            ['label' => 'Allegiance', 'value' => $model['allegiance']['faction_name']],
                             [
                                 'label' => 'Stations',
                                 'value' => function ($model) {
@@ -49,7 +54,7 @@ Yii::$app->formatter->thousandSeparator = ' ';
                                     foreach ($model['stations'] as $item) {
                                         $stations_str .= '<li class="list-group-item">' .
                                             Html::a(
-                                                Html::encode($item['name']),
+                                                $item['name'],
                                                 Url::toRoute([
                                                     "station/{$item['id']}"
                                                 ]),

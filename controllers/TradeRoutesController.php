@@ -107,7 +107,7 @@ class TradeRoutesController extends Controller
             ]);
 
             $pagination = $data_provider->getPagination();
-            $params['models'] = $data_provider->getModels();
+            $params['models'] = ArrayHelper::htmlEncode($data_provider->getModels());
 
             if (count($params['models']) < 1) {
                 $params['model_error'] = 'Trade routes not found';

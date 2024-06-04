@@ -38,16 +38,16 @@ class CommoditiesController extends Controller
         $params['commodities_arr'] = $this->getCommodities();
 
         if (count($request->get()) > 2) {
-            $params['get'] = $request->get();
+            $get = $request->get();
             $session->set('c', $request->get());
         } elseif ($session->get('c')) {
-            $params['get'] = $session->get('c');
+            $get = $session->get('c');
         }
 
         if ($request->get() || $session->get('c')) {
             $request->isGet && $session->remove('c_sort');
 
-            $form_model->setAttributes($params['get']);
+            $form_model->setAttributes($get);
             $params['c_error'] = $form_model->validate('commodities') ? '' : 'is-invalid';
             $params['ref_error'] = $form_model->validate('refSystem', false) ? '' : 'is-invalid';
 
@@ -57,8 +57,8 @@ class CommoditiesController extends Controller
 
             $c_model = new Commdts();
             $limit = 50;
-            $provider = $c_model->getPrices($params['get'], $limit);
-            $params['models']  = $c_model->modifyModels($provider->getModels());
+            $provider = $c_model->getPrices($get, $limit);
+            $params['models']  = ArrayHelper::htmlEncode($c_model->modifyModels($provider->getModels()));
 
             $sort = $provider->getSort();
             $params['price_sort'] = null;
@@ -83,7 +83,7 @@ class CommoditiesController extends Controller
             }
 
             $params['sort'] = $sort;
-            $price =  $params['get']['buySellSwitch'] === 'sell' ? 'sell_price' : 'buy_price';
+            $price =  $get['buySellSwitch'] === 'sell' ? 'sell_price' : 'buy_price';
             $params['sort_price'] = $sort->createUrl($price);
             $params['sort_updated'] = $sort->createUrl('time_diff');
             $params['sort_dist_ly'] = $sort->createUrl('distance_ly');
@@ -135,6 +135,7 @@ class CommoditiesController extends Controller
                 $response->send();
             }
 
+            $params['buy_sell_switch'] =  $get['buySellSwitch'];
             $params['result'] = $this->renderPartial('c_table', $params);
 
             return $this->render('index', $params);

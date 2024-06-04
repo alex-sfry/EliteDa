@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\search\EngineersSearch;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -23,7 +24,7 @@ class EngineersController extends Controller
                 null
             );
         } else {
-            $params['queryParams'] = $this->request->queryParams;
+            $params['queryParams'] = ArrayHelper::htmlEncode($this->request->queryParams);
         }
 
         $params['dataProvider'] = $dataProvider;
@@ -46,7 +47,7 @@ class EngineersController extends Controller
             return $value['id'] === $id;
         });
 
-        $params['model'] = $filtered_item[$id - 1];
+        $params['model'] = ArrayHelper::htmlEncode($filtered_item[$id - 1]) ;
 
         return $this->render('details', $params);
     }

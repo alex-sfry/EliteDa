@@ -1,11 +1,13 @@
 <?php
 
+use app\models\ar\Materials;
+use app\models\search\MaterialsSearch;
+use yii\data\ActiveDataProvider;
 use yii\grid\GridView;
-use yii\helpers\Html;
 
-/** @var app\models\ar\Materials $model */
-/** @var app\models\search\MaterialsSearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var Materials $model */
+/** @var MaterialsSearch $searchModel */
+/** @var ActiveDataProvider $dataProvider */
 /** @var View $this */
 
 $this->title = "Materials";
@@ -16,7 +18,7 @@ $this->params['breadcrumbs'] = [$this->title];
         <div class='container-xxl px-3'>
             <div class='row flex-column overflow-x-auto'>
                 <div class='col'>
-                    <h1 class="mt-2 text-center sintony-bold"><?= Html::encode($this->title) ?></h1>
+                    <h1 class="mt-2 text-center sintony-bold"><?= $this->title ?></h1>
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,

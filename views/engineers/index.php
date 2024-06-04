@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use function app\helpers\d;
 
 /** @var array $model */
+/** @var array $queryParams */
 /** @var app\models\search\EngineersSearch $searchModel */
 /** @var yii\data\ArrayDataProvider $dataProvider */
 /** @var View $this */
@@ -150,9 +151,6 @@ $this->params['breadcrumbs'] = [$this->title];
                                 'value' => function ($model) {
                                     return implode(", ", $model['upgrades']);
                                 },
-                                // 'filterInputOptions' => [
-                                //     'class' => 'form-control form-control-sm'
-                                // ]
                                 'filter' => "
                                     <div class='input-group input-group-sm'>
                                         <input 

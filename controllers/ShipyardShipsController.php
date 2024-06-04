@@ -59,7 +59,9 @@ class ShipyardShipsController extends Controller
             $ships_model->setShipsArr($params['ships_arr']);
             $limit = 50;
             $provider = $ships_model->getShips($params['get'], $limit);
-            $params['models']  = $ships_model->modifyModels($provider->getModels(), $params['get']);
+            $params['models'] = ArrayHelper::htmlEncode(
+                $ships_model->modifyModels($provider->getModels(), $params['get'])
+            );
 
             $sort = $provider->getSort();
             $params['ship_sort'] = null;

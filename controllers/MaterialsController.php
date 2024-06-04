@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\search\MaterialsSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 
 use function app\helpers\d;
@@ -21,7 +22,7 @@ class MaterialsController extends Controller
                 null
             );
         } else {
-            $params['queryParams'] = $this->request->queryParams;
+            $params['queryParams'] = ArrayHelper::htmlEncode($this->request->queryParams);
         }
 
         $params['searchModel'] = $searchModel;
