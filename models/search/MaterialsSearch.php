@@ -33,10 +33,6 @@ class MaterialsSearch extends Materials
 
     /**
      * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
      */
     public function search(array $params): ActiveDataProvider
     {
@@ -63,7 +59,7 @@ class MaterialsSearch extends Materials
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'category', $this->category])
-            ->andFilterWhere(['like', 'grade', $this->grade])
+            ->andFilterWhere(['like', 'grade', "{$this->grade}%", false])
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'location', $this->location]);
 

@@ -71,12 +71,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    if ($("[role='tablist']").length) {
-        $('.nav-link').on('click', function () {
-            $('.nav-link.active').removeClass('active');
-            $(this).addClass('active');
-            $('.tab-pane.active').removeClass('active');
-            $(`#${$(this).attr('data-bs-toggle')}`).addClass('active');
+    if ($('#w0'.length > 0)) {
+        const $filterBtns = $('.filters .btn');
+
+        $filterBtns.on('click', function() {
+            $filterBtns.prev().trigger('change.yiiGridView');
+        });
+ 
+        $('.filters input').on('change', function() {
+            return false;
         });
     }
 

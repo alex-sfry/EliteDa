@@ -11,6 +11,17 @@ use yii\helpers\Json;
 
 use function app\helpers\d;
 
+/**
+ * This is the search model class for Engineers json data".
+ *
+ * @property string|null $name
+ * @property string|null $station
+ * @property string|null $target
+ * @property string|null $discovery
+ * @property string|null $system
+ * @property array|null $upgrades
+ */
+
 class EngineersSearch extends Model
 {
     public $name;
@@ -33,10 +44,6 @@ class EngineersSearch extends Model
 
     /**
      * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return \yii\data\ArrayDataProvider
      */
     public function search(array $params): ArrayDataProvider
     {
@@ -92,11 +99,6 @@ class EngineersSearch extends Model
         ]);
     }
 
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
     private function getSystemsStationsIds(array $data): array
     {
         $system_names = array_map(function ($item) {
@@ -125,12 +127,6 @@ class EngineersSearch extends Model
             ->all();
     }
 
-    /**
-     * @param int $system_id
-     * @param string $station_name
-     *
-     * @return array
-     */
     public function getName(int $system_id, string $station_name): array
     {
         $system = Systems::findOne($system_id);

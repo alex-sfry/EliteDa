@@ -6,29 +6,33 @@ use app\models\search\EngineersSearch;
 use Yii;
 use yii\helpers\Json;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+
+use function app\helpers\d;
 
 class EngineersController extends Controller
 {
-    /**
-     * @return string
-     */
     public function actionIndex(): string
     {
         $searchModel = new EngineersSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+        if (empty($this->request->queryParams)) {
+            $params['queryParams']['EngineersSearch'] = array_fill_keys(
+                array_values($searchModel->activeAttributes()),
+                null
+            );
+        } else {
+            $params['queryParams'] = $this->request->queryParams;
+        }
+
         $params['dataProvider'] = $dataProvider;
         $params['searchModel'] = $searchModel;
-        $params['queryParams'] = $this->request->queryParams;
 
         return $this->render('index', $params);
     }
 
     /**
-     * @param int $id
-     *
-     * @return string
-     *
      * @throws NotFoundHttpException
      */
     public function actionDetails(int $id): string

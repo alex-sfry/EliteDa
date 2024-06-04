@@ -4,8 +4,14 @@ use app\widgets\InputDropdown\InputDropdown;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\View;
 
 use function app\helpers\d;
+
+/** @var app\models\views\StationsInfoView $model */
+/** @var app\models\search\StationsInfoSearch $searchModel */
+/** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var View $this */
 
 $this->title = 'Search for stations';
 $this->params['breadcrumbs'] = [$this->title];
@@ -69,7 +75,7 @@ $type_options = [
     'Outpost' => 'Outpost',
     'Planetary Outpost' => 'Planetary Outpost',
     'Planetary Port' => 'Planetary Port',
-]
+];
 
 // isset($get) && d($get);
 ?>
@@ -167,9 +173,26 @@ $type_options = [
                                     );
                                 },
                                 'format' => 'raw',
-                                'filterInputOptions' => [
-                                    'class' => 'form-control form-control-sm',
-                                ]
+                                'filter' => "
+                                    <div class='input-group input-group-sm'>
+                                        <input 
+                                            type='text' 
+                                            class='form-control form-control-sm' 
+                                            id='stationsinfosearch-station'
+                                            name='StationsInfoSearch[station]'
+                                            value='{$queryParams['StationsInfoSearch']['station']}'>
+                                        <button class='btn btn-secondary text-light'>
+                                            <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' 
+                                                fill='currentColor' class='bi bi-funnel' viewBox='0 0 16 16'>
+                                                <path d='M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 
+                                                    1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 
+                                                    14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5zm1 .5v1.308l4.372 
+                                                    4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 
+                                                    3.308V2z'/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                ",
                             ],
                             [
                                 'attribute' => 'type',
@@ -254,6 +277,26 @@ $type_options = [
                                     );
                                 },
                                 'format' => 'raw',
+                                'filter' => "
+                                    <div class='input-group input-group-sm'>
+                                        <input 
+                                            type='text' 
+                                            class='form-control form-control-sm' 
+                                            id='stationsinfosearch-system'
+                                            name='StationsInfoSearch[system]'
+                                            value='{$queryParams['StationsInfoSearch']['system']}'>
+                                        <button class='btn btn-secondary text-light'>
+                                            <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' 
+                                                fill='currentColor' class='bi bi-funnel' viewBox='0 0 16 16'>
+                                                <path d='M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 
+                                                    1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 
+                                                    14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5zm1 .5v1.308l4.372 
+                                                    4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 
+                                                    3.308V2z'/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                ",
                                 'filterInputOptions' => [
                                     'class' => 'form-control form-control-sm',
                                 ]

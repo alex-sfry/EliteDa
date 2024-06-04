@@ -19,9 +19,6 @@ class StationBehavior extends Behavior
         'Odyssey Settlement' => 'S or L',
     ];
 
-    /**
-     * @return array
-     */
     public function getLandingPadSizes(): array
     {
         return $this->landingPadSizes;

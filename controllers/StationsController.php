@@ -2,7 +2,6 @@
 
 namespace app\controllers;
 
-use app\behaviors\CommoditiesBehavior;
 use app\behaviors\ShipModulesBehavior;
 use app\behaviors\ShipyardShipsBehavior;
 use app\behaviors\StationBehavior;
@@ -29,9 +28,6 @@ class StationsController extends Controller
 {
     private array $services = [];
 
-    /**
-     * @return string
-     */
     public function actionIndex(): string
     {
         $session = Yii::$app->session;
@@ -98,6 +94,15 @@ class StationsController extends Controller
             'desc' => ['distance' => SORT_DESC],
         ];
 
+        if (empty($this->request->queryParams)) {
+            $params['queryParams']['StationsInfoSearch'] = array_fill_keys(
+                array_values($searchModel->activeAttributes()),
+                null
+            );
+        } else {
+            $params['queryParams'] = $this->request->queryParams;
+        }
+
         $params['dataProvider'] = $dataProvider;
         $params['searchModel'] = $searchModel;
 
@@ -105,16 +110,13 @@ class StationsController extends Controller
     }
 
     /**
-     * @param int $id
-     * @param EngineersSearch $eng_search
-     *
-     * @return string
-     *
      * @throws NotFoundHttpException
      * @throws InvalidArgumentException
      */
     public function actionDetails(int $id, EngineersSearch $eng_search): string
     {
+        /** @var StationBehavior|StationsController $this */
+
         $id = (int)$id;
         !$id && throw new NotFoundHttpException();
 
@@ -134,7 +136,7 @@ class StationsController extends Controller
 
         return $this->render('details', [
             'model' => $model,
-            'pad_size' => $this->landingPadSizes[$model['type']],
+            'pad_size' => $this->getLandingPadSizes()[$model['type']],
             'services' => $this->services,
             'id' => $id,
             'eng_name' => $engineer['name'],
@@ -143,11 +145,6 @@ class StationsController extends Controller
     }
 
     /**
-     * @param int $id
-     * @param ShipyardShips $ships
-     *
-     * @return string
-     *
      * @throws NotFoundHttpException
      * @throws InvalidArgumentException
      */
@@ -176,12 +173,6 @@ class StationsController extends Controller
     }
 
     /**
-     * @param int $id
-     * @param ShipMods $ship_modules
-     * @param string $cat
-     *
-     * @return string
-     *
      * @throws NotFoundHttpException
      * @throws InvalidArgumentException
      */
@@ -213,11 +204,6 @@ class StationsController extends Controller
     }
 
     /**
-     * @param int $id
-     * @param StationMarket $market
-     *
-     * @return string
-     *
      * @throws NotFoundHttpException
      * @throws InvalidArgumentException
      */
@@ -241,11 +227,6 @@ class StationsController extends Controller
          ]);
     }
 
-    /**
-     * @param int $market_id
-     *
-     * @return void
-     */
     private function getStationServices(int $market_id): void
     {
         $this->services['market'] = Markets::find()
@@ -265,10 +246,6 @@ class StationsController extends Controller
     }
 
     /**
-     * @param string $sys_st
-     *
-     * @return void
-     *
      * @throws NotFoundHttpException
      */
     public function actionSystemStation(string $sys_st): void

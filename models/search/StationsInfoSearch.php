@@ -2,7 +2,6 @@
 
 namespace app\models\search;
 
-use app\behaviors\StationBehavior;
 use app\behaviors\SystemBehavior;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -17,9 +16,6 @@ use function app\helpers\d;
  */
 class StationsInfoSearch extends StationsInfoView
 {
-    /**
-     * @return array
-     */
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -60,12 +56,8 @@ class StationsInfoSearch extends StationsInfoView
 
     /**
      * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
      */
-    public function search(array $params, int|null $max_distance, string $ref_sys_name)
+    public function search(array $params, int|null $max_distance, string $ref_sys_name): ActiveDataProvider
     {
         extract($this->getCoords($ref_sys_name));
         $distance_expr = new Expression(
@@ -88,7 +80,7 @@ class StationsInfoSearch extends StationsInfoView
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            $query->where('0=1');
+            // $query->where('0=1');
             return $dataProvider;
         }
 
