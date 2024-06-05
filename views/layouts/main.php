@@ -169,23 +169,51 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                     </li>
                                 </ul>
                             </li>
+                            <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative dropdown">
+                                <a
+                                    class="menu__link nav-link text-uppercase text-light"
+                                    href="#"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    galaxy
+                                </a>
+                                <ul class="dropdown-menu border-light-orange rounded-2 bg-header mt-0 py-0">
+                                    <li class="dropdown-item py-0 rounded-2">
+                                        <a
+                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item"
+                                            href="<?= Url::to(['systems/index']) ?>">
+                                            systems
+                                        </a>
+                                        <a
+                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item"
+                                            href="<?= Url::to(['stations/index']) ?>">
+                                            stations
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
         </header>
-        <?= Breadcrumbs::widget([
-            'itemTemplate' => "<li style='--bs-breadcrumb-divider-color: white;' 
-                            class='breadcrumb-item text-light'><i>{link}</i></li>\n",
-            'activeItemTemplate' => "<li style='--bs-breadcrumb-divider-color: white;'
-                                        class='breadcrumb-item text-info'><i><b>{link}</b></i></li>\n",
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            'navOptions' => [
-                'aria-label' => "breadcrumb",
-                'class' => 'px-4'
-            ]
-        ]); ?>
-        <?= Alert::widget() ?>
+        <div class="container-xxl">
+            <?= Breadcrumbs::widget([
+                'itemTemplate' => "<li style='--bs-breadcrumb-divider-color: white;' 
+                                class='breadcrumb-item text-light'><i>{link}</i></li>\n",
+                'activeItemTemplate' => "<li style='--bs-breadcrumb-divider-color: white;'
+                                            class='breadcrumb-item text-info'><i><b>{link}</b></i></li>\n",
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                'navOptions' => [
+                    'aria-label' => "breadcrumb",
+                    'class' => 'px-4'
+                ]
+            ]); ?>
+            <?= Alert::widget() ?>
+        </div>
 
         <?= $content ?>
 
