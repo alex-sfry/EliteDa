@@ -16,7 +16,7 @@ class MaterialsController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams);
         $dataProvider->pagination = ['pageSize' => 50];
 
-        if (empty($this->request->queryParams) || !isset($this->request->queryParams['?MaterialsSearch'])) {
+        if (empty($this->request->queryParams) || !isset($this->request->queryParams['MaterialsSearch'])) {
             $params['queryParams']['MaterialsSearch'] = array_fill_keys(
                 array_values($searchModel->activeAttributes()),
                 null
