@@ -16,7 +16,7 @@ $this->title = 'Engineers';
 $this->params['breadcrumbs'] = [$this->title];
 // d($queryParams);
 ?>
-<main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
+<main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg fs-7">
     <div class='d-flex flex-column h-100'>
         <div class='container-xxl px-3'>
             <div class='row flex-column overflow-x-auto'>
