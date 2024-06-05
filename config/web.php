@@ -122,6 +122,7 @@ $config = [
                 'system-station/<sys_st:[\w\s\']+>' => 'stations/system-station',
                 'system/get/<sys:[\w\s\']+>' => 'systems/system',
                 'system/<id:\w+>' => 'systems/details',
+                'systems' => 'systems/index',
                 'shipyard-ships' => 'shipyard-ships/index',
                 'ship-modules' => 'ship-modules/index',
                 'commodities' => 'commodities/index',

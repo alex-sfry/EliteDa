@@ -3,19 +3,18 @@
 namespace app\models\search;
 
 use app\behaviors\SystemBehavior;
-use app\models\ar\Systems;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\db\Expression;
-// use app\models\views\SystemsInfoView;
+use app\models\views\SystemsInfoView;
 use yii\helpers\ArrayHelper;
 
 use function app\helpers\d;
 
 /**
- * SystemsInfoSearch represents the model behind the search form of `app\models\ar\SystemsInfoView`.
+ * SystemsInfoSearch represents the model behind the search form of `app\models\views\SystemsInfoView`.
  */
-class SystemsInfoSearch extends Systems /* SystemsInfoView */
+class SystemsInfoSearch extends SystemsInfoView
 {
     public function behaviors(): array
     {
@@ -31,9 +30,9 @@ class SystemsInfoSearch extends Systems /* SystemsInfoView */
     public function rules(): array
     {
         return [
-            [['id', 'population', 'security_id', 'allegiance_id', 'economy_id'], 'integer'],
-            [['name'], 'string'],
-            [['distance'], 'safe']
+            [['id', 'population'], 'integer'],
+            [['system', 'security', 'allegiance', 'economy'], 'string'],
+            // [['distance'], 'number']
         ];
     }
 
@@ -58,20 +57,16 @@ class SystemsInfoSearch extends Systems /* SystemsInfoView */
             "ROUND(SQRT(POW((x - $x), 2) + POW((y - $y), 2) + POW((z - $z), 2)), 2)"
         );
 
-        $query = Systems::find()
+        $query = SystemsInfoView::find()
             ->select([
                 '*',
                 "$distance_expr as distance",
-            ])
-            ->with(['security', 'allegiance', 'economy'])
-            ;
+            ]);
 
         $max_distance && $query->where(['<=', $distance_expr, $max_distance]);
 
-        // d($query->one());
-
         $dataProvider = new ActiveDataProvider([
-            'query' => Systems::find(),
+            'query' => $query,
         ]);
 
         $this->load($params);
@@ -83,32 +78,12 @@ class SystemsInfoSearch extends Systems /* SystemsInfoView */
         }
 
         /* grid filtering conditions */
-        // $query->andFilterWhere([
-        //     'distance_to_arrival' => $this->distance_to_arrival,
-        // ]);
-
-        // $query
-        //     ->andFilterWhere(['like', 'station', $this->station])
-        //     ->andFilterWhere(['like', 'government', $this->government])
-        //     ->andFilterWhere(['like', 'system', $this->getAttribute('system')])
-        //     ->andFilterWhere(['like', 'economy_name', $this->getAttribute('economy_name')])
-        //     ->andFilterWhere(['like', 'allegiance', $this->getAttribute('allegiance')]);
-
-        // switch ($this->type) {
-        //     case 'S':
-        //     case 'M':
-        //     case 'Outpost':
-        //         $query
-        //             ->andFilterWhere(['type' => 'Outpost']);
-        //         break;
-        //     case 'L':
-        //         $query
-        //             ->andFilterWhere(['!=', 'type','Outpost']);
-        //         break;
-        //     default:
-        //         $query
-        //             ->andFilterWhere(['like', 'type', $this->type]);
-        // }
+        $query
+            ->andFilterWhere(['>=','population', $this->getAttribute('population')])
+            ->andFilterWhere(['like', 'system', $this->getAttribute('system')])
+            ->andFilterWhere(['like', 'security', $this->getAttribute('security')])
+            ->andFilterWhere(['like', 'economy', $this->getAttribute('economy')])
+            ->andFilterWhere(['like', 'allegiance', $this->getAttribute('allegiance')]);
 
         return $dataProvider;
     }
