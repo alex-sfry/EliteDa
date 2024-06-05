@@ -43,7 +43,6 @@ $this->params['breadcrumbs'] = [$this->title];
                             ],
                             [
                                 'attribute' => 'name',
-                                'label' => 'Name',
                                 'value' => function ($model) {
                                     $id = (int)$model['id'];
                                     return Html::a(
@@ -78,7 +77,6 @@ $this->params['breadcrumbs'] = [$this->title];
                             ],
                             [
                                 'attribute' => 'system',
-                                'label' => 'System',
                                 'value' => function ($model) {
                                     $id = (int)$model['system_id'];
                                     return Html::a(
@@ -87,9 +85,6 @@ $this->params['breadcrumbs'] = [$this->title];
                                     );
                                 },
                                 'format' => 'raw',
-                                // 'filterInputOptions' => [
-                                //     'class' => 'form-control form-control-sm'
-                                // ]
                                 'filter' => "
                                     <div class='input-group input-group-sm'>
                                         <input 
@@ -113,7 +108,6 @@ $this->params['breadcrumbs'] = [$this->title];
                             ],
                             [
                                 'attribute' => 'station',
-                                'label' => 'Station',
                                 'value' => function ($model) {
                                     $id = (int)$model['station_id'];
                                     return Html::a(
@@ -122,9 +116,6 @@ $this->params['breadcrumbs'] = [$this->title];
                                     );
                                 },
                                 'format' => 'raw',
-                                // 'filterInputOptions' => [
-                                //     'class' => 'form-control form-control-sm'
-                                // ]
                                 'filter' => "
                                     <div class='input-group input-group-sm'>
                                         <input 
@@ -172,7 +163,7 @@ $this->params['breadcrumbs'] = [$this->title];
                                     </div>
                                 ",
                             ],
-                            ['attribute' => 'discovery', 'label' => 'Discovery'],
+                            ['attribute' => 'discovery'],
                         ],
                         'pager' => [
                             'class' => 'yii\bootstrap5\LinkPager',

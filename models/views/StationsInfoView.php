@@ -13,6 +13,7 @@ namespace app\models\views;
  * @property string|null $government
  * @property string|null $allegiance
  * @property string|null $economy_name
+ * @property int|null $population
  * @property string|null $system
  * @property float|null $x
  * @property float|null $y

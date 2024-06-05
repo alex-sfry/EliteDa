@@ -59,13 +59,6 @@ class MaterialTradersSearch extends MaterialTraders
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'system_id' => $this->system_id,
-            'station_id' => $this->station_id,
-            'distance' => $this->distance,
-        ]);
-
         $query->andFilterWhere(['like', 'material_type', $this->material_type]);
 
         return $dataProvider;

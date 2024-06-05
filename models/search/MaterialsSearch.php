@@ -17,8 +17,7 @@ class MaterialsSearch extends Materials
     public function rules(): array
     {
         return [
-            [['id'], 'integer'],
-            [['name', 'category', 'grade', 'type'/*, 'location'*/], 'safe'],
+            [['name', 'category', 'grade', 'type'], 'string'],
         ];
     }
 
@@ -57,11 +56,10 @@ class MaterialsSearch extends Materials
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'category', $this->category])
-            ->andFilterWhere(['like', 'grade', "{$this->grade}%", false])
-            ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'location', $this->location]);
+        $query->andFilterWhere(['like', 'name', $this->getAttribute('name')])
+            ->andFilterWhere(['like', 'category', $this->getAttribute('category')])
+            ->andFilterWhere(['like', 'grade', "{$this->getAttribute('grade')}%", false])
+            ->andFilterWhere(['like', 'type', $this->getAttribute('type')]);
 
         return $dataProvider;
     }

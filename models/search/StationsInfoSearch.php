@@ -88,9 +88,9 @@ class StationsInfoSearch extends StationsInfoView
 
         /* grid filtering conditions */
         $query
-            ->andFilterWhere(['>=','population', $this->population])
-            ->andFilterWhere(['like', 'station', $this->station])
-            ->andFilterWhere(['like', 'government', $this->government])
+            ->andFilterWhere(['>=','population', $this->getAttribute('population')])
+            ->andFilterWhere(['like', 'station', $this->getAttribute('station')])
+            ->andFilterWhere(['like', 'government', $this->getAttribute('government')])
             ->andFilterWhere(['like', 'system', $this->getAttribute('system')])
             ->andFilterWhere(['like', 'economy_name', $this->getAttribute('economy_name')])
             ->andFilterWhere(['like', 'allegiance', $this->getAttribute('allegiance')]);

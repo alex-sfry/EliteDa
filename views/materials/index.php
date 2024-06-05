@@ -49,7 +49,6 @@ $this->params['breadcrumbs'] = [$this->title];
                             ],
                             [
                                 'attribute' => 'category',
-                                'label' => 'Category',
                                 'filter' => "
                                     <div class='input-group input-group-sm'>
                                         <input 
@@ -73,7 +72,6 @@ $this->params['breadcrumbs'] = [$this->title];
                             ],
                             [
                                 'attribute' => 'grade',
-                                'label' => 'Grade',
                                 'filter' => [
                                     'Very Common' => 'Very Common',
                                     'Common' => 'Common',
@@ -88,7 +86,6 @@ $this->params['breadcrumbs'] = [$this->title];
                             ],
                             [
                                 'attribute' => 'type',
-                                'label' => 'Type',
                                 'filter' => ['Encoded' => 'Encoded', 'Manufactured' => 'Manufactured', 'Raw' => 'Raw'],
                                 'filterInputOptions' => [
                                     'class' => 'form-select form-select-sm',
@@ -97,7 +94,6 @@ $this->params['breadcrumbs'] = [$this->title];
                             ],
                             [
                                 'attribute' => 'location',
-                                'label' => 'Location',
                             ],
                         ],
                         'pager' => [

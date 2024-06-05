@@ -93,7 +93,10 @@ $this->params['breadcrumbs'] = [$this->title];
                                 },
                                 'format' => 'raw'
                             ],
-                            ['attribute' => 'station.type', 'label' => 'Station type'],
+                            [
+                                'attribute' => 'station.type',
+                                'label' => 'Station type'
+                            ],
                             [
                                 'attribute' => 'distance',
                                 'value' => function ($model) {
