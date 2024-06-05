@@ -564,6 +564,10 @@ form-control.is-invalid {
 #w0 a.desc::after {
     content: "🔽";
 }
+#w0 .filters .input-group {
+    min-width: 100px;
+}
+
 .engineers-header th:first-child {
     min-width: 120px;
     white-space: nowrap;

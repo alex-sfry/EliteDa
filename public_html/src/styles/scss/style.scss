@@ -650,6 +650,10 @@ table {
     .filters select:focus {
         @extend .f-ctrl-no-shadow;
     }
+
+    .filters .input-group {
+        min-width: 100px;
+    }
 }
 
 .engineers-header {

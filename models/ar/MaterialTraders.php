@@ -51,6 +51,7 @@ class MaterialTraders extends ActiveRecord
                 'targetClass' => Systems::class,
                 'targetAttribute' => ['system_id' => 'id']
             ],
+            [['distance'], 'safe']
         ];
     }
 

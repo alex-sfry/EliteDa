@@ -6,6 +6,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 
 use function app\helpers\d;
 
@@ -25,11 +26,11 @@ $this->params['breadcrumbs'] = [$this->title];
                 <div class='col'>
                     <h1 class="mt-2 text-center sintony-bold"><?= $this->title ?></h1>
                     <div class="mt-tr-ref-idd ms-auto d-flex justify-content-end">
-                        <?= Html::beginForm(['/material-traders/index'], 'get', [
-                            'id' => 'mt-form',
-                            'class' => 'bg-light p-1 rounded-2',
-                            'novalidate' => true,
-                        ]) ?>
+                        <?= Html::beginForm(
+                            [Url::to(ArrayHelper::merge(['/material-traders/index'], $queryParams))],
+                            'get',
+                            ['id' => 'mt-form', 'class' => 'bg-light p-1 rounded-2', 'novalidate' => true]
+                        ) ?>
                         <?= InputDropdown::widget([
                             'container' => 'mt-tr-ref-idd',
                             'search' => 'ref-idd-search',

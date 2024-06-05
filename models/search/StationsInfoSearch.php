@@ -30,7 +30,7 @@ class StationsInfoSearch extends StationsInfoView
     public function rules(): array
     {
         return [
-            // [['distance_to_arrival'], 'integer'],
+            [['population'], 'integer'],
             [
                 [
                     'station',
@@ -38,9 +38,9 @@ class StationsInfoSearch extends StationsInfoView
                     'type',
                     'government',
                     'economy_name',
-                    'allegiance'
+                    'allegiance',
                 ],
-                'safe'
+                'string'
             ],
         ];
     }
@@ -87,11 +87,8 @@ class StationsInfoSearch extends StationsInfoView
         }
 
         /* grid filtering conditions */
-        // $query->andFilterWhere([
-        //     'distance_to_arrival' => $this->distance_to_arrival,
-        // ]);
-
         $query
+            ->andFilterWhere(['>=','population', $this->population])
             ->andFilterWhere(['like', 'station', $this->station])
             ->andFilterWhere(['like', 'government', $this->government])
             ->andFilterWhere(['like', 'system', $this->getAttribute('system')])

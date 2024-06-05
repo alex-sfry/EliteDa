@@ -27,6 +27,8 @@ use yii\db\ActiveRecord;
  */
 class Systems extends ActiveRecord
 {
+    public $distance;
+
     /**
      * {@inheritdoc}
      */
@@ -47,9 +49,30 @@ class Systems extends ActiveRecord
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
             [['id'], 'unique'],
-            [['allegiance_id'], 'exist', 'skipOnError' => true, 'targetClass' => Allegiance::class, 'targetAttribute' => ['allegiance_id' => 'id']],
-            [['economy_id'], 'exist', 'skipOnError' => true, 'targetClass' => Economies::class, 'targetAttribute' => ['economy_id' => 'id']],
-            [['security_id'], 'exist', 'skipOnError' => true, 'targetClass' => Security::class, 'targetAttribute' => ['security_id' => 'id']],
+            [
+                ['allegiance_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Allegiance::class,
+                'targetAttribute' => ['allegiance_id' => 'id']
+            ],
+            [
+                ['economy_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Economies::class,
+                'targetAttribute' =>
+                ['economy_id' => 'id']
+            ],
+            [
+                ['security_id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => Security::class,
+                'targetAttribute' =>
+                ['security_id' => 'id']
+            ],
+            [['distance'], 'safe']
         ];
     }
 
@@ -67,7 +90,8 @@ class Systems extends ActiveRecord
             'population' => 'Population',
             'security_id' => 'Security ID',
             'allegiance_id' => 'Allegiance ID',
-            'economy_id' => 'Economy ID'
+            'economy_id' => 'Economy ID',
+            'distance' => 'Distance'
         ];
     }
 

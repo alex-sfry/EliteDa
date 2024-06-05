@@ -60,7 +60,6 @@ class Markets extends \yii\db\ActiveRecord
             'stock_bracket' => 'Stock Bracket',
             'market_id' => 'Market ID',
             'timestamp' => 'Timestamp',
-            'distance' => 'dist'
         ];
     }
 

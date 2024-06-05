@@ -51,6 +51,8 @@ class MaterialTradersController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams, $distance_expr);
         $dataProvider->pagination = ['pageSize' => 50];
 
+        $params['queryParams'] = $this->request->queryParams;
+
         $dataProvider->sort->attributes['system.name'] = [
             'asc' => ['systems.name' => SORT_ASC],
             'desc' => ['systems.name' => SORT_DESC],

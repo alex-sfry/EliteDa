@@ -18,7 +18,7 @@ class EngineersController extends Controller
         $searchModel = new EngineersSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        if (empty($this->request->queryParams)) {
+        if (empty($this->request->queryParams) || !isset($this->request->queryParams['EngineersSearch'])) {
             $params['queryParams']['EngineersSearch'] = array_fill_keys(
                 array_values($searchModel->activeAttributes()),
                 null
