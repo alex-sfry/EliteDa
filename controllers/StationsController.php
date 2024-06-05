@@ -93,7 +93,7 @@ class StationsController extends Controller
             'desc' => ['distance' => SORT_DESC],
         ];
 
-        if (empty($this->request->queryParams)) {
+        if (empty($this->request->queryParams) || !isset($this->request->queryParams['StationsInfoSearch'])) {
             $params['queryParams']['StationsInfoSearch'] = array_fill_keys(
                 array_values($searchModel->activeAttributes()),
                 null

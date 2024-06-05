@@ -2,6 +2,7 @@
 
 use app\widgets\InputDropdown\InputDropdown;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
@@ -77,18 +78,26 @@ $type_options = [
     'Planetary Port' => 'Planetary Port',
 ];
 
+$population_options = [
+    '10000000' => '>= 10Mil',
+    '100000000' => '>= 100Mil',
+    '1000000000' => '>= 1Bil',
+    '10000000000' => '>= 10Bil',
+    '20000000000' => '>= 20Bil',
+];
+
 // isset($get) && d($get);
 ?>
 
-<main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
+<main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg fs-7">
     <div class='d-flex flex-column h-100'>
         <div class='container-xxl px-3'>
             <div class='row flex-column overflow-x-auto'>
                 <div class='col'>
-                    <h1 class="mt-2 text-center sintony-bold"><?= Html::encode($this->title) ?></h1>
+                    <h1 class="mt-2 text-center sintony-bold"><?= $this->title ?></h1>
                     <div class="mt-tr-ref-idd d-flex justify-content-end gap-2 flex-column flex-sm-row">
                         <div class="c-result-legend bg-light text-center rounded-2 py-1 h-50">
-                            <h2 class="fs-6 position-relative d-inline-block">Station's type:</h2>
+                            <h2 class="fs-6 position-relative d-inline-block sintony-bold">Station's type:</h2>
                             <div class="d-flex flex-column flex-sm-row align-items-center py-1 ps-2 pe-1 row-gap-1">
                                 <div class="c-result-legend-item d-flex justify-content-start w-100 column-gap-1 
                                             pe-1 align-items-center text-nowrap">
@@ -102,11 +111,11 @@ $type_options = [
                                 </div>
                             </div>
                         </div>
-                        <?= Html::beginForm(['/stations/index'], 'get', [
-                            'id' => 'mt-form',
-                            'class' => 'bg-light p-1 rounded-2',
-                            'novalidate' => true,
-                        ]) ?>
+                        <?= Html::beginForm(
+                            [Url::to(ArrayHelper::merge(['/stations/index'], $queryParams))],
+                            'get',
+                            ['id' => 'mt-form', 'class' => 'bg-light p-1 rounded-2', 'novalidate' => true]
+                        ) ?>
                         <div class="row gx-2">
                             <div class="col-6" style='max-width: 160px;'>
                                 <?= Html::label(
@@ -174,7 +183,7 @@ $type_options = [
                                 },
                                 'format' => 'raw',
                                 'filter' => "
-                                    <div class='input-group input-group-sm'>
+                                    <div class='input-group input-group-sm flex-nowrap'>
                                         <input 
                                             type='text' 
                                             class='form-control form-control-sm' 
@@ -278,7 +287,7 @@ $type_options = [
                                 },
                                 'format' => 'raw',
                                 'filter' => "
-                                    <div class='input-group input-group-sm'>
+                                    <div class='input-group input-group-sm min flex-nowrap'>
                                         <input 
                                             type='text' 
                                             class='form-control form-control-sm' 
@@ -297,8 +306,13 @@ $type_options = [
                                         </button>
                                     </div>
                                 ",
+                            ],
+                            [
+                                'attribute' => 'population',
+                                'label' => 'system population',
+                                'filter' => $population_options,
                                 'filterInputOptions' => [
-                                    'class' => 'form-control form-control-sm',
+                                    'class' => 'form-select form-select-sm',
                                 ]
                             ],
                         ],

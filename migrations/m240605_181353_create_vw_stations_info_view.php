@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m240527_042423_vw_stations_info_view
+ * Class m240605_181353_create_vw_stations_info_view
  */
-class m240527_042423_vw_stations_info_view extends Migration
+class m240605_181353_create_vw_stations_info_view extends Migration
 {
     /**
      * {@inheritdoc}
@@ -24,6 +24,7 @@ class m240527_042423_vw_stations_info_view extends Migration
             ec.economy_name,
             al.faction_name AS allegiance,
             sys.name AS system,
+            sys.population,
             sys.x,
             sys.y,
             sys.z
@@ -39,7 +40,7 @@ class m240527_042423_vw_stations_info_view extends Migration
      */
     public function safeDown()
     {
-        echo "m240527_042423_vw_stations_info_view cannot be reverted.\n";
+        echo "m240605_181353_create_vw_stations_info_view cannot be reverted.\n";
 
         return false;
     }
@@ -53,7 +54,7 @@ class m240527_042423_vw_stations_info_view extends Migration
 
     public function down()
     {
-        echo "m240527_042423_vw_stations_info_view cannot be reverted.\n";
+        echo "m240605_181353_create_vw_stations_info_view cannot be reverted.\n";
 
         return false;
     }
