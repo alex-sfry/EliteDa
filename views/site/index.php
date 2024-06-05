@@ -16,7 +16,6 @@ $this->title = 'Elite Dangerous Assistant';
                     </h1>
                 </div>
             </div>
-            
             <div class="col-tile col-6 col-sm-4 row-gap-2 d-flex flex-column align-content-end">
                 <div class="main-tile gx-0 rounded-3">
                     <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
@@ -69,6 +68,22 @@ $this->title = 'Elite Dangerous Assistant';
                             justify-content-center"
                     href="<?= Url::to(['ship-modules/index']) ?>">
                     Ship modules
+                    </a>
+                </div>
+            </div>
+            <div class="col-tile col-6 col-sm-4 row-gap-2 d-flex flex-column align-content-end">
+                <div class="main-tile gx-0 rounded-3">
+                    <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
+                            justify-content-center"
+                    href="<?= Url::to(['systems/index']) ?>">
+                        Systems
+                    </a>
+                </div>
+                <div class="main-tile gx-0 rounded-3">
+                    <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
+                            justify-content-center"
+                    href="<?= Url::to(['stations/index']) ?>">
+                    Stations
                     </a>
                 </div>
             </div>
