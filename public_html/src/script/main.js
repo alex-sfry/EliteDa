@@ -14,8 +14,7 @@ cookiesConsent();
 
 const initHeader = () => {
     $('.menu__link').each(function () {
-        if ($(this).attr('href') === window.location.pathname ||
-            window.location.pathname.includes($(this).attr('href'))) {
+        if ($(this).attr('href') === window.location.pathname) {
             $(this).addClass('active');
             $(this).closest('.menu__item').children('.menu__link').addClass('active');
         } else {
