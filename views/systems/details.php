@@ -6,6 +6,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 use function app\helpers\d;
+use function app\helpers\ksq;
 
 /**
  * @var array $models
@@ -23,7 +24,7 @@ Yii::$app->formatter->thousandSeparator = ' ';
         <div class='container-xxl px-3'>
             <div class='row justify-content-center overflow-x-auto'>
                 <div class='details-cnt col-sm-10 col-lg-6'>
-                    <h1 class="mt-2 text-center sintony-bold"><?= HTML::encode($this->title) ?></h1>
+                    <h1 class="mt-2 text-center sintony-bold"><?= ksq($this->title) ?></h1>
                     <p class=" text-center sintony-bold fs-4">system info:</p>
                     <?= isset($model) ? DetailView::widget([
                         'model' => $model,

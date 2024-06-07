@@ -4,6 +4,8 @@ use yii\widgets\DetailView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+use function app\helpers\ksq;
+
 $this->title = $model['name'];
 $this->params['breadcrumbs'] = [$this->title];
 ?>
@@ -13,7 +15,7 @@ $this->params['breadcrumbs'] = [$this->title];
         <div class='container-xxl px-3'>
             <div class='row justify-content-center overflow-x-auto'>
                 <div class='details-cnt col-sm-10 col-lg-6'>
-                    <h1 class="mt-2 text-center sintony-bold"><?= HTML::encode($this->title) ?></h1>
+                    <h1 class="mt-2 text-center sintony-bold"><?= ksq($this->title) ?></h1>
                     <?php $system_id = Html::encode($model['system_id']) ?>
                     <?= isset($model) ? DetailView::widget([
                         'model' => $model,
