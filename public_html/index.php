@@ -10,5 +10,6 @@ require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
 $config = require __DIR__ . '/../config/web.php';
 
 require __DIR__ . '/../helpers/debug.php';
+require __DIR__ . '/../helpers/keep_single_quote.php';
 
 (new yii\web\Application($config))->run();
