@@ -136,7 +136,6 @@ class CommoditiesController extends Controller
             }
 
             $params['buy_sell_switch'] =  $get['buySellSwitch'];
-            $params['result'] = $this->renderPartial('c_table', $params);
 
             return $this->render('index', $params);
         }

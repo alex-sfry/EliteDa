@@ -1,6 +1,6 @@
 import '../styles/scss/style.scss';
 // import '../styles/bootstrapSCSS/bootstrap.scss';
-import { fetchData } from './fetchData.js';
+// import { fetchData } from './fetchData.js';
 import { isValidated } from './isValidated.js';
 import { commoditiesForm } from './commodities.js';
 import { shipModulesForm } from './shipModules.js';
@@ -57,9 +57,9 @@ const removeLoader = ($elem) => {
 document.addEventListener('DOMContentLoaded', () => {
     initHeader();
     initFooter();
-    if ($('#c-form').length) commoditiesForm(loader, removeLoader, fetchData);
-    if ($('#mod-form').length) shipModulesForm(loader, removeLoader, fetchData);
-    if ($('#ships-form').length) shipsForm(isValidated, loader, removeLoader, fetchData);
+    if ($('#c-form').length) commoditiesForm(loader, removeLoader);
+    if ($('#mod-form').length) shipModulesForm(loader, removeLoader);
+    if ($('#ships-form').length) shipsForm(isValidated, loader, removeLoader);
     if ($('#tr-form').length) tradeRouteForm(isValidated, loader, removeLoader);
     if ($('#mt-form').length) matTraders();
 

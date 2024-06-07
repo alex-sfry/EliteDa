@@ -270,7 +270,17 @@ $this->params['breadcrumbs'] = [$this->title];
                         </div>
                     </div>
                 </div>
-                <?= $result ?? null; ?>
+                <?php if (isset($models)) {
+                    echo $this->render(
+                        'ships_table',
+                        [
+                            'models' => $models,
+                            'page_count_info' => $page_count_info,
+                            'pagination' => $pagination,
+                            'sort' => $sort
+                        ]
+                    );
+                } ?>
             </div>
         </div>
     </div>

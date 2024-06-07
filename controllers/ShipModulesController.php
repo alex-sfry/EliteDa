@@ -143,8 +143,6 @@ class ShipModulesController extends Controller
                 $response->send();
             }
 
-            $params['result'] = $this->renderPartial('mod_table', $params);
-
             return $this->render('index', $params);
         }
 

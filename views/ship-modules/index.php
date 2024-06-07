@@ -15,6 +15,7 @@ use yii\helpers\Html;
  * @var array $max_dist_from_star
  * @var array $max_age_of_data
  * @var ShipModulesForm $form_model
+ * @var View $this
  */
 
 use function app\helpers\d;
@@ -257,7 +258,17 @@ $this->params['breadcrumbs'] = [$this->title];
                         </div>
                     </div>
                 </div>
-                <?= $result ?? null; ?>
+                <?php if (isset($models)) {
+                    echo $this->render(
+                        'mod_table',
+                        [
+                            'models' => $models,
+                            'page_count_info' => $page_count_info,
+                            'pagination' => $pagination,
+                            'sort' => $sort
+                        ]
+                    );
+                } ?>
             </div>
         </div>
     </div>

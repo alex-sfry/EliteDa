@@ -92,12 +92,7 @@ table .table-link-tr:hover {
     max-width: fit-content;
 }
 
-.w-f-content, .c-table td,
-.c-table th,
-.mod-table td,
-.mod-table th,
-.ships-table td,
-.ships-table th, .c-loading {
+.w-f-content, .c-loading {
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
@@ -114,13 +109,7 @@ table .table-link-tr:hover {
     border-color: #dee2e6;
 }
 
-.sort_arrow, .c-table thead th a.sorted.desc::after,
-.mod-table thead th a.sorted.desc::after,
-.ships-table thead th a.sorted.desc::after, .c-table thead th a.sorted.asc::after,
-.mod-table thead th a.sorted.asc::after,
-.ships-table thead th a.sorted.asc::after, .c-table thead th a::after,
-.mod-table thead th a::after,
-.ships-table thead th a::after {
+.sort_arrow {
     content: "";
     padding: 0.5rem;
     background-repeat: no-repeat;
@@ -414,31 +403,6 @@ form-control.is-invalid {
     background-color: #212529;
 }
 
-.c-table thead th a::after,
-.mod-table thead th a::after,
-.ships-table thead th a::after {
-    visibility: hidden;
-}
-.c-table thead th a.sorted.asc::after,
-.mod-table thead th a.sorted.asc::after,
-.ships-table thead th a.sorted.asc::after {
-    background-image: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" fill=\"%212529\" class=\"bi bi-caret-up\" viewBox=\"0 0 16 16\"><path d=\"M3.204 11h9.592L8 5.519zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659\"  /></svg>");
-    visibility: visible;
-    background-position: bottom;
-}
-.c-table thead th a.sorted.desc::after,
-.mod-table thead th a.sorted.desc::after,
-.ships-table thead th a.sorted.desc::after {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2720%27 height=%2720%27 fill=%27%212529%27 class=%27bi bi-caret-down%27 viewBox=%270 0 16 16%27%3E%3Cpath d=%27M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659%27/%3E%3C/svg%3E");
-    visibility: visible;
-    background-position: top;
-}
-.c-table thead th:hover > a.sort,
-.mod-table thead th:hover > a.sort,
-.ships-table thead th:hover > a.sort {
-    background-color: #0dcaf0 !important;
-    color: #f8f9fa !important;
-}
 /**
 * Trade Routes page styles
 */

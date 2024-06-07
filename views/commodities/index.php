@@ -17,6 +17,7 @@ use yii\helpers\Html;
  * @var array $max_age_of_data
  * @var string $result
  * @var CommoditiesForm $form_model
+ * @var yii\base\View $this
  */
 
 $select_options = [
@@ -314,7 +315,18 @@ $this->params['breadcrumbs'] = [$this->title];
                     </div>
                 </div>
 
-                <?= $result ?? null; ?>
+                <?php if (isset($models)) {
+                    echo $this->render(
+                        'c_table',
+                        [
+                            'models' => $models,
+                            'buy_sell_switch' => $buy_sell_switch,
+                            'page_count_info' => $page_count_info,
+                            'pagination' => $pagination,
+                            'sort' => $sort
+                        ]
+                    );
+                } ?>
             </div>
         </div>
     </div>

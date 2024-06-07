@@ -70,7 +70,6 @@ Pagination.prototype.handleClick = async function (e) {
     if ($(e.currentTarget).parent().is('.active')) return;
     const data = await this.fetchData($(e.currentTarget).attr('href'));
     this.data = data;
-    console.log('pagination', data);
 
     this.renderNewPageBtns(
         data.links,

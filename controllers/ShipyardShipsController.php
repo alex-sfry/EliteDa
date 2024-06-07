@@ -138,7 +138,7 @@ class ShipyardShipsController extends Controller
                 $response->send();
             }
 
-            $params['result'] = $this->renderPartial('ships_table', $params);
+            // $params['result'] = $this->renderPartial('ships_table', $params);
 
             return $this->render('index', $params);
         }

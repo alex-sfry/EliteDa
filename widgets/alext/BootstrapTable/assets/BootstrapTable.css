@@ -1,0 +1,100 @@
+.prev-page {
+    margin-left: 4px;
+}
+
+.next-page {
+    margin-right: 4px;
+}
+
+.prev-page,
+.c-pagination-cnt .pagination {
+    margin-left: 4px;
+}
+
+.next-page,
+.c-pagination-cnt .pagination {
+    margin-right: 4px;
+}
+
+.c-pagination-cnt .pagination {
+    margin-right: 16px;
+    margin-bottom: 0;
+}
+
+.c-pagination-cnt .pagination li > a {
+    font-size: 0.875rem;
+}
+
+.c-pagination-cnt .pagination .page-item.first,
+.c-pagination-cnt .pagination .page-item.last {
+    max-width: 38px;
+}
+
+.c-pagination-cnt .pagination .page-item.first a,
+.c-pagination-cnt .pagination .page-item.last a {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.nav-info,
+table .table-link {
+    transition: all 0.2s linear;
+    text-decoration-style: dashed !important;
+    text-underline-offset: 4px;
+}
+
+.nav-info:hover,
+table .table-link:hover {
+    background-color: var(--bs-light) !important;
+    text-decoration-color: var(--bs-dark) !important;
+    color: #000 !important;
+}
+
+.w-f-content,
+.bs-table td,
+.bs-table th {
+    width: fit-content;
+}
+
+.sort_arrow,
+.bs-table thead th a::after,
+.bs-table thead th a.sorted.asc::after,
+.bs-table thead th a.sorted.desc::after {
+    content: "";
+    padding: 0.5rem;
+    background-repeat: no-repeat;
+}
+
+.bs-table thead th a::after {
+    visibility: hidden;
+}
+
+.bs-table thead th a.sorted.asc::after {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="%212529" class="bi bi-caret-up" viewBox="0 0 16 16"><path d="M3.204 11h9.592L8 5.519zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659" /></svg>');
+    visibility: visible;
+    background-position: bottom;
+}
+
+.bs-table thead th a.sorted.desc::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%212529' class='bi bi-caret-down' viewBox='0 0 16 16'%3E%3Cpath d='M3.204 5h9.592L8 10.481zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659'/%3E%3C/svg%3E");
+    visibility: visible;
+    background-position: top;
+}
+
+.bs-table thead th:hover > a.sort {
+    background-color: var(--bs-info) !important;
+    color: var(--bs-light) !important;
+}
+
+@media screen and (min-width: 464px) {
+    .c-pagination-cnt .pagination .page-item.first,
+    .c-pagination-cnt .pagination .page-item.last {
+        max-width: 100%;
+    }
+
+    .c-pagination-cnt .pagination .page-item.first a,
+    .c-pagination-cnt .pagination .page-item.last a {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
