@@ -2,7 +2,6 @@
 
 namespace app\widgets\alext\BootstrapTable;
 
-use app\behaviors\PageCounter;
 use Exception;
 use yii\base\Widget;
 use yii\bootstrap5\LinkPager;
@@ -22,14 +21,6 @@ class BootstrapTable extends Widget
     public string $table_cls = 'c-table';
     public string $cnt_id = 'c-table';
     public string $pagination_id = 'pgr01';
-
-    public function behaviors(): array
-    {
-        return ArrayHelper::merge(
-            parent::behaviors(),
-            [PageCounter::class]
-        );
-    }
 
     /**
      * @throws Exception
@@ -135,9 +126,13 @@ class BootstrapTable extends Widget
 
     private function renderPagination(): string
     {
+        if ($this->pagination->getPageCount() !== 0) {
+            $page_count_info = $this->getPageCounter($this->pagination);
+        }
+
         return Html::tag(
             'div',
-            $this->getPageCounter($this->pagination) .
+            $page_count_info .
             LinkPager::widget([
                 'id' => $this->pagination_id,
                 'pagination' => $this->pagination,
@@ -152,5 +147,19 @@ class BootstrapTable extends Widget
                 'class' => 'c-pagination-cnt d-flex justify-content-center align-items-center pb-4'
             ]
         );
+    }
+
+    private function getPageCounter(): string
+    {
+        /*calculations for pages info near pagination buttons*/
+        $current_page = $this->pagination->getPage() + 1;
+        $page_size = $this->pagination->getPageSize();
+        $first_in_range = $page_size * $current_page - $page_size + 1;
+        $last_in_range = $this->pagination->totalCount - ($current_page - 1) * $page_size <= $page_size - 1 ?
+        $this->pagination->totalCount : $page_size * $current_page;
+
+        return "<div class='page-counter text-light me-2 fs-7'>
+                    $first_in_range - $last_in_range / {$this->pagination->totalCount}
+                </div>";
     }
 }

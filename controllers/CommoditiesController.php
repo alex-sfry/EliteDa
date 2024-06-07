@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use app\behaviors\CommoditiesBehavior;
-use app\behaviors\PageCounter;
 use app\models\Commdts;
 use app\models\forms\CommoditiesForm;
 use Yii;
@@ -17,13 +16,13 @@ class CommoditiesController extends Controller
     {
         return ArrayHelper::merge(
             parent::behaviors(),
-            [PageCounter::class, CommoditiesBehavior::class]
+            [CommoditiesBehavior::class]
         );
     }
 
     public function actionIndex(): string
     {
-        /** @var PageCounter|CommoditiesBehavior|CommoditiesController $this */
+        /** @var CommoditiesBehavior|CommoditiesController $this */
 
         $session = Yii::$app->session;
         $session->open();
@@ -89,11 +88,6 @@ class CommoditiesController extends Controller
             $params['sort_dist_ly'] = $sort->createUrl('distance_ly');
 
             $pagination = $provider->getPagination();
-
-            if ($pagination->getPageCount() !== 0) {
-                $params['page_count_info'] = $this->getPageCounter($pagination);
-            }
-
             $params['pagination'] = $pagination;
 
             if ($request->get('page')) {

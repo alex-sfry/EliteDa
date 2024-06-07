@@ -9,7 +9,6 @@ use yii\helpers\ArrayHelper;
 use yii\web\Response;
 use yii\web\Controller;
 use app\behaviors\ShipyardShipsBehavior;
-use app\behaviors\PageCounter;
 
 class ShipyardShipsController extends Controller
 {
@@ -17,13 +16,13 @@ class ShipyardShipsController extends Controller
     {
         return ArrayHelper::merge(
             parent::behaviors(),
-            [PageCounter::class, ShipyardShipsBehavior::class]
+            [ShipyardShipsBehavior::class]
         );
     }
 
     public function actionIndex(): string
     {
-        /** @var PageCounter|ShipyardShipsBehavior|ShipyardShipsController $this */
+        /** @var ShipyardShipsBehavior|ShipyardShipsController $this */
 
         $session = Yii::$app->session;
         $session->open();
@@ -88,11 +87,6 @@ class ShipyardShipsController extends Controller
             $params['sort_dist_ly'] = $sort->createUrl('distance_ly');
 
             $pagination = $provider->getPagination();
-
-            if ($pagination->getPageCount() !== 0) {
-                $params['page_count_info'] = $this->getPageCounter($pagination);
-            }
-
             $params['pagination'] = $pagination;
 
             if ($request->get('page')) {

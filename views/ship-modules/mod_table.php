@@ -8,7 +8,6 @@ use yii\data\Sort;
 
 /**
  * @var array $models
- * @var string|null $page_count_info
  * @var Pagination|false $pagination
  * @var Sort $sort
  * @var View $this

@@ -321,7 +321,6 @@ $this->params['breadcrumbs'] = [$this->title];
                         [
                             'models' => $models,
                             'buy_sell_switch' => $buy_sell_switch,
-                            'page_count_info' => $page_count_info,
                             'pagination' => $pagination,
                             'sort' => $sort
                         ]

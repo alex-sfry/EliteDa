@@ -16,7 +16,7 @@ use function app\helpers\d;
  * @var array $max_dist_from_ref
  * @var array $max_dist_from_star
  * @var array $max_age_of_data
- * @var ShipyarShipsForm $form_model
+ * @var ShipyardShipsForm $form_model
  */
 
 $select_options = [
@@ -275,7 +275,6 @@ $this->params['breadcrumbs'] = [$this->title];
                         'ships_table',
                         [
                             'models' => $models,
-                            'page_count_info' => $page_count_info,
                             'pagination' => $pagination,
                             'sort' => $sort
                         ]

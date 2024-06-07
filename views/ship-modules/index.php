@@ -263,7 +263,6 @@ $this->params['breadcrumbs'] = [$this->title];
                         'mod_table',
                         [
                             'models' => $models,
-                            'page_count_info' => $page_count_info,
                             'pagination' => $pagination,
                             'sort' => $sort
                         ]

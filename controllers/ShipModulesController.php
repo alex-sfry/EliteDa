@@ -9,7 +9,6 @@ use yii\helpers\ArrayHelper;
 use yii\web\Response;
 use yii\web\Controller;
 use app\behaviors\ShipModulesBehavior;
-use app\behaviors\PageCounter;
 
 use function app\helpers\d;
 
@@ -19,7 +18,7 @@ class ShipModulesController extends Controller
     {
         return ArrayHelper::merge(
             parent::behaviors(),
-            [PageCounter::class, ShipModulesBehavior::class]
+            [ShipModulesBehavior::class]
         );
     }
 
@@ -28,7 +27,7 @@ class ShipModulesController extends Controller
      */
     public function actionIndex(): string
     {
-        /** @var PageCounter|ShipModulesBehavior|ShipModulesController $this */
+        /** @var ShipModulesBehavior|ShipModulesController $this */
 
         $session = Yii::$app->session;
         $session->open();
@@ -93,11 +92,6 @@ class ShipModulesController extends Controller
             $params['sort_dist_ly'] = $sort->createUrl('distance_ly');
 
             $pagination = $provider->getPagination();
-
-            if ($pagination->getPageCount() !== 0) {
-                $params['page_count_info'] = $this->getPageCounter($pagination);
-            }
-
             $params['pagination'] = $pagination;
 
             if ($request->get('page')) {
