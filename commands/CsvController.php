@@ -2,8 +2,8 @@
 
 namespace app\commands;
 
-use app\models\Commodities;
-use app\models\ShipsList;
+use app\models\ar\Commodities;
+use app\models\ar\ShipsList;
 use Yii;
 use yii\console\Controller;
 use yii\console\ExitCode;
@@ -14,9 +14,6 @@ class CsvController extends Controller
 {
     private array $csv_arr = [];
 
-    /**
-     * @return int Exit code
-     */
     public function actionIndex(): int
     {
         $all_methods = get_class_methods($this);
@@ -35,8 +32,6 @@ class CsvController extends Controller
 
     /**
      * @param string $csv path to csv file.
-     *
-     * @return int Exit code
      */
     public function createArrayFromCsv(string $csv = ''): int
     {
@@ -57,8 +52,6 @@ class CsvController extends Controller
 
     /**
      * @param string $csv path to csv file.
-     *
-     * @return int Exit code
      */
     public function actionOutfitting(string $csv = ''): int
     {
@@ -130,8 +123,6 @@ class CsvController extends Controller
 
     /**
      * @param string $csv path to csv file.
-     *
-     * @return int Exit code
      */
     public function actionShipyard(string $csv = ''): int
     {
@@ -170,8 +161,6 @@ class CsvController extends Controller
 
     /**
      * @param string $csv path to csv file.
-     *
-     * @return int Exit code
      */
     public function actionCommodities(string $csv = ''): int
     {
@@ -202,7 +191,7 @@ class CsvController extends Controller
         ->asArray()
         ->all();
 
-        VarDumper::dump(Json::decode(file_get_contents(Yii::$app->basePath . '/data/commodities.json')));
+        // VarDumper::dump(Json::decode(file_get_contents(Yii::$app->basePath . '/data/commodities.json')));
 
         Yii::$app->db->createCommand()
         ->batchInsert('commodities', [

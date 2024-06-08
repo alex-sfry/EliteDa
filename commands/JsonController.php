@@ -2,8 +2,7 @@
 
 namespace app\commands;
 
-use app\models\ShipModulesList;
-use app\models\ShipsList;
+use app\models\ar\ShipModulesList;
 use Yii;
 use yii\console\Controller;
 use yii\console\ExitCode;
@@ -16,9 +15,6 @@ class JsonController extends Controller
 {
     private array $result = [];
 
-    /**
-     * @return int Exit code
-     */
     public function actionIndex(): int
     {
         $all_methods = get_class_methods($this);
@@ -72,6 +68,9 @@ class JsonController extends Controller
         }
     }
 
+    /**
+     * @param string $json path to json file.
+     */
     private function createArrayFromJsonForCoreInt(string $json = '')
     {
         if (!$json) {
@@ -99,8 +98,6 @@ class JsonController extends Controller
 
     /**
      * @param string $json path to json file.
-     *
-     * @return int Exit code
      */
     public function actionModules(string $json = ''): int
     {
@@ -115,8 +112,6 @@ class JsonController extends Controller
 
     /**
      * @param string $json path to json file.
-     *
-     * @return int Exit code
      */
     public function actionShips(string $json = ''): int
     {
@@ -129,6 +124,9 @@ class JsonController extends Controller
         return ExitCode::OK;
     }
 
+    /**
+     * @param string $json path to json file.
+     */
     public function actionShipscore(string $json = ''): int
     {
         $this->createArrayFromJsonForCoreInt($json);
