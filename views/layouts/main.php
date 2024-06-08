@@ -18,6 +18,14 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+// $this->registerJsFile(
+//     'https://cloud.umami.is/script.js',
+//     [
+//         'defer' => '',
+//         'data-website-id' => '19dbe218-72e5-42d7-b778-f0d6c6c65bf9',
+//         'position' => $this::POS_HEAD
+//     ]
+// )
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
