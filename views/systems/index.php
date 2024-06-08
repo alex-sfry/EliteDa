@@ -65,6 +65,7 @@ $population_options = [
     '20000000000' => '>= 20Bil',
 ];
 
+Yii::$app->formatter->thousandSeparator = ' ';
 ?>
 
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg fs-7">
@@ -173,7 +174,8 @@ $population_options = [
                                 'filter' => $population_options,
                                 'filterInputOptions' => [
                                     'class' => 'form-select form-select-sm',
-                                ]
+                                ],
+                                'format' => 'integer'
                             ],
                             [
                                 'attribute' => 'security',

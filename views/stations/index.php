@@ -86,6 +86,7 @@ $population_options = [
     '20000000000' => '>= 20Bil',
 ];
 
+Yii::$app->formatter->thousandSeparator = ' ';
 // isset($get) && d($get);
 ?>
 
@@ -313,7 +314,8 @@ $population_options = [
                                 'filter' => $population_options,
                                 'filterInputOptions' => [
                                     'class' => 'form-select form-select-sm',
-                                ]
+                                ],
+                                'format' => 'integer'
                             ],
                         ],
                         'pager' => [
