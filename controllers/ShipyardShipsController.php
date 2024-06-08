@@ -2,9 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\ShipyardShips;
 use Yii;
-use app\models\forms\ShipyardShipsForm;
 use yii\helpers\ArrayHelper;
 use yii\web\Response;
 use yii\web\Controller;
@@ -12,6 +10,16 @@ use app\behaviors\ShipyardShipsBehavior;
 
 class ShipyardShipsController extends Controller
 {
+    public function __construct(
+        $id,
+        $module,
+        private \app\models\forms\ShipyardShipsForm $form_model,
+        private \app\models\ShipyardShips $ships_model,
+        $config = []
+    ) {
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -32,8 +40,8 @@ class ShipyardShipsController extends Controller
 
         $params['ships_error'] = '';
         $params['ref_error'] = '';
-        $form_model = new ShipyardShipsForm();
-        $params['form_model'] = $form_model;
+
+        $params['form_model'] = $this->form_model;
         $params['ships_arr'] = $this->getShipsList();
 
         if (count($request->get()) > 2) {
@@ -46,20 +54,19 @@ class ShipyardShipsController extends Controller
         if ($request->get() || $session->get('ships')) {
             $request->isGet && $session->remove('ships_sort');
 
-            $form_model->setAttributes($params['get']);
-            $params['ships_error'] = $form_model->validate('cMainSelect') ? '' : 'is-invalid';
-            $params['ref_error'] = $form_model->validate('refSystem') ? '' : 'is-invalid';
+            $this->form_model->setAttributes($params['get']);
+            $params['ships_error'] = $this->form_model->validate('cMainSelect') ? '' : 'is-invalid';
+            $params['ref_error'] = $this->form_model->validate('refSystem') ? '' : 'is-invalid';
 
-            if ($form_model->hasErrors()) {
+            if ($this->form_model->hasErrors()) {
                 return $this->render('index', $params);
             }
 
-            $ships_model = new ShipyardShips();
-            $ships_model->setShipsArr($params['ships_arr']);
+            $this->ships_model->setShipsArr($params['ships_arr']);
             $limit = 50;
-            $provider = $ships_model->getShips($params['get'], $limit);
+            $provider = $this->ships_model->getShips($params['get'], $limit);
             $params['models'] = ArrayHelper::htmlEncode(
-                $ships_model->modifyModels($provider->getModels(), $params['get'])
+                $this->ships_model->modifyModels($provider->getModels(), $params['get'])
             );
 
             $sort = $provider->getSort();
@@ -102,7 +109,7 @@ class ShipyardShipsController extends Controller
                     'links' => $pagination->getLinks(),
                     'page' => $pagination->getPage(),
                     'lastPage' => $pagination->pageCount,
-                    'data' => $ships_model->modifyModels($provider->getModels()),
+                    'data' => $this->ships_model->modifyModels($provider->getModels()),
                     'params' => $pagination->params,
                     'totalCount' => $pagination->totalCount,
                     'attributeOrders' => $sort->attributeOrders,
@@ -118,7 +125,7 @@ class ShipyardShipsController extends Controller
                 $response = Yii::$app->response;
                 $response->format = Response::FORMAT_JSON;
                 $response->data = [
-                    'data' => $ships_model->modifyModels($provider->getModels()),
+                    'data' => $this->ships_model->modifyModels($provider->getModels()),
                     'sort' => $sort,
                     'attributeOrders' => $sort->attributeOrders,
                     'links' => $pagination->getLinks(),

@@ -7,15 +7,10 @@ use app\behaviors\ShipyardShipsBehavior;
 use app\behaviors\StationBehavior;
 use app\models\ar\Markets;
 use app\models\ar\MaterialTraders;
-use app\models\ShipMods;
 use app\models\ar\ShipModules;
-use app\models\ShipyardShips;
 use app\models\ar\Shipyard;
-use app\models\StationMarket;
 use app\models\ar\Stations;
 use app\models\ar\Systems;
-use app\models\search\EngineersSearch;
-use app\models\search\StationsInfoSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -27,7 +22,7 @@ class StationsController extends Controller
 {
     private array $services = [];
 
-    public function actionIndex(): string
+    public function actionIndex(\app\models\search\StationsInfoSearch $searchModel): string
     {
         $session = Yii::$app->session;
         $session->open();
@@ -84,7 +79,6 @@ class StationsController extends Controller
             'max_distance' => $maxDistance
         ];
 
-        $searchModel = new StationsInfoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, $maxDistance, $system);
         $dataProvider->pagination = ['pageSize' => 50];
 
@@ -112,7 +106,7 @@ class StationsController extends Controller
      * @throws NotFoundHttpException
      * @throws InvalidArgumentException
      */
-    public function actionDetails(int $id, EngineersSearch $eng_search): string
+    public function actionDetails(int $id, \app\models\search\EngineersSearch $eng_search): string
     {
         /** @var StationBehavior|StationsController $this */
 
@@ -147,7 +141,7 @@ class StationsController extends Controller
      * @throws NotFoundHttpException
      * @throws InvalidArgumentException
      */
-    public function actionShips(int $id, ShipyardShips $ships): string
+    public function actionShips(int $id, \app\models\ShipyardShips $ships): string
     {
         /** @var ShipyardShipsBehavior|StationsController $this */
 
@@ -177,7 +171,7 @@ class StationsController extends Controller
      * @throws NotFoundHttpException
      * @throws InvalidArgumentException
      */
-    public function actionShipModules(int $id, ShipMods $ship_modules, string $cat): string
+    public function actionShipModules(int $id, \app\models\ShipMods $ship_modules, string $cat): string
     {
         /** @var ShipModulesBehavior|StationsController $this */
 
@@ -210,7 +204,7 @@ class StationsController extends Controller
      * @throws NotFoundHttpException
      * @throws InvalidArgumentException
      */
-    public function actionMarket(int $id, StationMarket $market): string
+    public function actionMarket(int $id, \app\models\StationMarket $market): string
     {
         !$id && throw new NotFoundHttpException();
         $id = (int)$id;

@@ -2,7 +2,6 @@
 
 namespace app\controllers;
 
-use app\models\search\EngineersSearch;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
@@ -13,14 +12,18 @@ use function app\helpers\d;
 
 class EngineersController extends Controller
 {
+    public function __construct($id, $module, private \app\models\search\EngineersSearch $searchModel, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+    }
+
     public function actionIndex(): string
     {
-        $searchModel = new EngineersSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $this->searchModel->search($this->request->queryParams);
 
         if (empty($this->request->queryParams) || !isset($this->request->queryParams['EngineersSearch'])) {
             $params['queryParams']['EngineersSearch'] = array_fill_keys(
-                array_values($searchModel->activeAttributes()),
+                array_values($this->searchModel->activeAttributes()),
                 null
             );
         } else {
@@ -28,7 +31,7 @@ class EngineersController extends Controller
         }
 
         $params['dataProvider'] = $dataProvider;
-        $params['searchModel'] = $searchModel;
+        $params['searchModel'] = $this->searchModel;
 
         return $this->render('index', $params);
     }

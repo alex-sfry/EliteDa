@@ -44,12 +44,10 @@ class Commdts extends Model
         if ($get['buySellSwitch'] === 'buy') {
             $price_type = 'buy_price';
             $stock_demand = 'stock';
-            // $price_sort_direction = 'asc';
             $price_sort_direction = SORT_ASC;
         } else {
             $price_type = 'sell_price';
             $stock_demand = 'demand';
-            // $price_sort_direction = 'desc';
             $price_sort_direction = SORT_DESC;
         }
 

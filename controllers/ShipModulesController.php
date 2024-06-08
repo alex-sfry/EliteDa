@@ -2,9 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\ShipMods;
 use Yii;
-use app\models\forms\ShipModulesForm;
 use yii\helpers\ArrayHelper;
 use yii\web\Response;
 use yii\web\Controller;
@@ -14,6 +12,16 @@ use function app\helpers\d;
 
 class ShipModulesController extends Controller
 {
+    public function __construct(
+        $id,
+        $module,
+        private \app\models\forms\ShipModulesForm $form_model,
+        private \app\models\ShipMods $mod_model,
+        $config = []
+    ) {
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -22,9 +30,6 @@ class ShipModulesController extends Controller
         );
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
     public function actionIndex(): string
     {
         /** @var ShipModulesBehavior|ShipModulesController $this */
@@ -37,8 +42,8 @@ class ShipModulesController extends Controller
 
         $params['mod_error'] = '';
         $params['ref_error'] = '';
-        $form_model = new ShipModulesForm();
-        $params['form_model'] = $form_model;
+
+        $params['form_model'] = $this->form_model;
         $params['ship_modules_arr'] = $this->getShipModules();
 
         if (count($request->get()) > 2) {
@@ -51,20 +56,19 @@ class ShipModulesController extends Controller
         if ($request->get() || $session->get('mod')) {
             $request->isGet && $session->remove('mod_sort');
 
-            $form_model->setAttributes($params['get']);
-            $params['mod_error'] = $form_model->validate('cMainSelect') ? '' : 'is-invalid';
-            $params['ref_error'] = $form_model->validate('refSystem', false) ? '' : 'is-invalid';
+            $this->form_model->setAttributes($params['get']);
+            $params['mod_error'] = $this->form_model->validate('cMainSelect') ? '' : 'is-invalid';
+            $params['ref_error'] = $this->form_model->validate('refSystem', false) ? '' : 'is-invalid';
 
-            if ($form_model->hasErrors()) {
+            if ($this->form_model->hasErrors()) {
                 return $this->render('index', $params);
             }
 
-            $mod_model = new ShipMods();
-            $mod_model->setMods($params['ship_modules_arr']);
+            $this->mod_model->setMods($params['ship_modules_arr']);
             $limit = 50;
-            $provider = $mod_model->getModules($params['get'], $limit);
+            $provider = $this->mod_model->getModules($params['get'], $limit);
             $params['models']  = ArrayHelper::htmlEncode(
-                $mod_model->modifyModels($provider->getModels(), $params['get'])
+                $this->mod_model->modifyModels($provider->getModels(), $params['get'])
             );
 
             $sort = $provider->getSort();
@@ -107,7 +111,7 @@ class ShipModulesController extends Controller
                     'links' => $pagination->getLinks(),
                     'page' => $pagination->getPage(),
                     'lastPage' => $pagination->pageCount,
-                    'data' => $mod_model->modifyModels($provider->getModels()),
+                    'data' => $this->mod_model->modifyModels($provider->getModels()),
                     'params' => $pagination->params,
                     'totalCount' => $pagination->totalCount,
                     'attributeOrders' => $sort->attributeOrders,
@@ -123,7 +127,7 @@ class ShipModulesController extends Controller
                 $response = Yii::$app->response;
                 $response->format = Response::FORMAT_JSON;
                 $response->data = [
-                    'data' => $mod_model->modifyModels($provider->getModels()),
+                    'data' => $this->mod_model->modifyModels($provider->getModels()),
                     'sort' => $sort,
                     'attributeOrders' => $sort->attributeOrders,
                     'links' => $pagination->getLinks(),

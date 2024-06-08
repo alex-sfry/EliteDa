@@ -2,8 +2,6 @@
 
 namespace app\controllers;
 
-use app\models\forms\ContactForm;
-use app\models\forms\EntryForm;
 use Yii;
 use yii\captcha\CaptchaAction;
 use yii\filters\AccessControl;
@@ -57,29 +55,8 @@ class SiteController extends Controller
         ];
     }
 
-    // /**
-    //  * @return string
-    //  */
-    // public function actionEntry(): string
-    // {
-    //     $model = new EntryForm();
-
-    //     if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-    //         // valid data received in $model
-
-    //         // do something meaningful here about $model ...
-
-    //         return $this->render('entry-confirm', ['model' => $model]);
-    //     } else {
-    //         // either the page is initially displayed or there is some validation error
-    //         return $this->render('entry', ['model' => $model]);
-    //     }
-    // }
-
     /**
      * Displays homepage.
-     *
-     * @return string
      */
     public function actionIndex(): string
     {
@@ -89,9 +66,8 @@ class SiteController extends Controller
     /**
      * Displays contact page.
      */
-    public function actionContact(): Response|string
+    public function actionContact(\app\models\forms\ContactForm $model): Response|string
     {
-        $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
 

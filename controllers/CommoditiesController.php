@@ -3,8 +3,6 @@
 namespace app\controllers;
 
 use app\behaviors\CommoditiesBehavior;
-use app\models\Commdts;
-use app\models\forms\CommoditiesForm;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -12,6 +10,16 @@ use yii\web\Response;
 
 class CommoditiesController extends Controller
 {
+    public function __construct(
+        $id,
+        $module,
+        private \app\models\forms\CommoditiesForm $form_model,
+        private \app\models\Commdts $c_model,
+        $config = []
+    ) {
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -32,8 +40,8 @@ class CommoditiesController extends Controller
         $params = [];
         $params['c_error'] = '';
         $params['ref_error'] = '';
-        $form_model = new CommoditiesForm();
-        $params['form_model'] = $form_model;
+
+        $params['form_model'] = $this->form_model;
         $params['commodities_arr'] = $this->getCommodities();
 
         if (count($request->get()) > 2) {
@@ -46,18 +54,17 @@ class CommoditiesController extends Controller
         if ($request->get() || $session->get('c')) {
             $request->isGet && $session->remove('c_sort');
 
-            $form_model->setAttributes($get);
-            $params['c_error'] = $form_model->validate('commodities') ? '' : 'is-invalid';
-            $params['ref_error'] = $form_model->validate('refSystem', false) ? '' : 'is-invalid';
+            $this->form_model->setAttributes($get);
+            $params['c_error'] = $this->form_model->validate('commodities') ? '' : 'is-invalid';
+            $params['ref_error'] = $this->form_model->validate('refSystem', false) ? '' : 'is-invalid';
 
-            if ($form_model->hasErrors()) {
+            if ($this->form_model->hasErrors()) {
                 return $this->render('index', $params);
             }
 
-            $c_model = new Commdts();
             $limit = 50;
-            $provider = $c_model->getPrices($get, $limit);
-            $params['models']  = ArrayHelper::htmlEncode($c_model->modifyModels($provider->getModels()));
+            $provider = $this->c_model->getPrices($get, $limit);
+            $params['models']  = ArrayHelper::htmlEncode($this->c_model->modifyModels($provider->getModels()));
 
             $sort = $provider->getSort();
             $params['price_sort'] = null;
@@ -103,7 +110,7 @@ class CommoditiesController extends Controller
                     'links' => $pagination->getLinks(),
                     'page' => $pagination->getPage(),
                     'lastPage' => $pagination->pageCount,
-                    'data' => $c_model->modifyModels($provider->getModels()),
+                    'data' => $this->c_model->modifyModels($provider->getModels()),
                     'totalCount' => $pagination->totalCount,
                 ];
                 $response->send();
@@ -116,7 +123,7 @@ class CommoditiesController extends Controller
                 $response = Yii::$app->response;
                 $response->format = Response::FORMAT_JSON;
                 $response->data = [
-                    'data' => $c_model->modifyModels($provider->getModels()),
+                    'data' => $this->c_model->modifyModels($provider->getModels()),
                     'attributeOrders' => $sort->attributeOrders,
                     'links' => $pagination->getLinks(),
                     'lastPage' => $pagination->pageCount,

@@ -3,13 +3,21 @@
 namespace app\controllers;
 
 use app\behaviors\SystemBehavior;
-use app\models\search\MaterialTradersSearch;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 
 class MaterialTradersController extends Controller
 {
+    public function __construct(
+        $id,
+        $module,
+        private \app\models\search\MaterialTradersSearch $searchModel,
+        $config = []
+    ) {
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -47,8 +55,7 @@ class MaterialTradersController extends Controller
             $distance_expr = $this->getDistanceToSystemExpression('', ['x' => 0, 'y' => 0, 'z' => 0]);
         }
 
-        $searchModel = new MaterialTradersSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams, $distance_expr);
+        $dataProvider = $this->searchModel->search($this->request->queryParams, $distance_expr);
         $dataProvider->pagination = ['pageSize' => 50];
 
         $params['queryParams'] = $this->request->queryParams;
@@ -67,7 +74,7 @@ class MaterialTradersController extends Controller
         ];
 
         $params['dataProvider'] = $dataProvider;
-        $params['searchModel'] = $searchModel;
+        $params['searchModel'] = $this->searchModel;
 
         return $this->render('index', $params);
     }

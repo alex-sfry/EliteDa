@@ -3,8 +3,6 @@
 namespace app\controllers;
 
 use app\behaviors\PageCounterBehavior;
-use app\models\forms\TradeRoutesForm;
-use app\models\TradeRoutes;
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
@@ -15,6 +13,11 @@ use function app\helpers\d;
 
 class TradeRoutesController extends Controller
 {
+    public function __construct($id, $module, private \app\models\forms\TradeRoutesForm $form_model, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+    }
+
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -36,8 +39,8 @@ class TradeRoutesController extends Controller
         $params['ref_error'] = '';
         $params['cargo_error'] = '';
         $params['profit_error'] = '';
-        $form_model = new TradeRoutesForm();
-        $params['form_model'] = $form_model;
+
+        $params['form_model'] = $this->form_model;
 
         if (count($request->get()) > 0) {
             $params['get'] = $request->get();
@@ -47,13 +50,13 @@ class TradeRoutesController extends Controller
         }
 
         if ($request->get() || $session->get('tr')) {
-            $form_model->setAttributes($params['get']);
-            $params['ref_error'] =  $form_model->validate('refSysStation') ? '' : 'is-invalid';
-            $params['cargo_error'] =  $form_model->validate('cargo') ? '' : 'is-invalid';
-            $params['profit_error'] =  $form_model->validate('profit') ? '' : 'is-invalid';
+            $this->form_model->setAttributes($params['get']);
+            $params['ref_error'] =  $this->form_model->validate('refSysStation') ? '' : 'is-invalid';
+            $params['cargo_error'] =  $this->form_model->validate('cargo') ? '' : 'is-invalid';
+            $params['profit_error'] =  $this->form_model->validate('profit') ? '' : 'is-invalid';
 
-            if ($form_model->hasErrors()) {
-                $params['errors'] = $form_model;
+            if ($this->form_model->hasErrors()) {
+                $params['errors'] = $this->form_model;
                 return $this->render('index', $params);
             }
 
@@ -67,6 +70,7 @@ class TradeRoutesController extends Controller
             $limit = 20;
 
             $tr_model = Yii::$container->get('app\models\TradeRoutes', [$params['get']]);
+
             $data = $tr_model->getTradeRoutes();
 
             if (gettype($data) === 'string') {
