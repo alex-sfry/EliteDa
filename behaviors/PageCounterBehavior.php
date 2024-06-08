@@ -5,7 +5,7 @@ namespace app\behaviors;
 use yii\base\Behavior;
 use yii\data\Pagination;
 
-class PageCounter extends Behavior
+class PageCounterBehavior extends Behavior
 {
     public function getPageCounter(Pagination $pagination): string
     {

@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\behaviors\PageCounter;
+use app\behaviors\PageCounterBehavior;
 use app\models\forms\TradeRoutesForm;
 use app\models\TradeRoutes;
 use Yii;
@@ -19,13 +19,13 @@ class TradeRoutesController extends Controller
     {
         return ArrayHelper::merge(
             parent::behaviors(),
-            [PageCounter::class]
+            [PageCounterBehavior::class]
         );
     }
 
     public function actionIndex(): string
     {
-        /** @var PageCounter|TradeRoutesController $this */
+        /** @var PageCounterBehavior|TradeRoutesController $this */
 
         $session = Yii::$app->session;
         $session->open();
@@ -65,7 +65,8 @@ class TradeRoutesController extends Controller
             )[1];
 
             $limit = 20;
-            $tr_model = new TradeRoutes($params['get']);
+
+            $tr_model = Yii::$container->get('app\models\TradeRoutes', [$params['get']]);
             $data = $tr_model->getTradeRoutes();
 
             if (gettype($data) === 'string') {
