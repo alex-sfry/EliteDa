@@ -13,7 +13,7 @@ class TableJsAsset extends AssetBundle
         'sortable.min.js',
         YII_ENV_DEV ? 'TableJs.js' : 'TableJs.min.js'
     ];
-    public $publishOptions = ['forceCopy' => true];
+    public $publishOptions = ['forceCopy' => YII_ENV_DEV ? true : false];
 
     public $depends = [
         'app\assets\BootstrapAssetMin',

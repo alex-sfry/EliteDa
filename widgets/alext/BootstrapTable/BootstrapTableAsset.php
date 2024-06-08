@@ -10,7 +10,7 @@ class BootstrapTableAsset extends AssetBundle
     public $sourcePath = '@app/widgets/alext/BootstrapTable/assets';
     public $css = [YII_ENV_DEV ? 'BootstrapTable.css' : 'BootstrapTable.min.css'];
     public $js = [YII_ENV_DEV ? 'BootstrapTable.js' : 'BootstrapTable.min.js'];
-    public $publishOptions = ['forceCopy' => true];
+    public $publishOptions = ['forceCopy' => YII_ENV_DEV ? true : false];
 
     public $depends = [
         'app\assets\BootstrapAssetMin',
