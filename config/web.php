@@ -132,6 +132,7 @@ $config = [
                 'user/login' => 'user/login',
                 'user/logout' => 'user/logout',
                 'user/signup' => 'user/signup',
+                '<action:(captcha)>'  => 'site/<action>',
                 // '<controller>/<action>' =>  '<controller>/<action>',
                 '' => 'site/index'
             ],
