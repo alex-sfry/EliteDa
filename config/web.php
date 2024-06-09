@@ -1,10 +1,6 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
-$db = require __DIR__ . '/db.php';
-$mail = require __DIR__ . '/mail_config.php';
-
-require __DIR__ . '/cvk.php';
 
 $config = [
     'id' => 'basic',
@@ -74,7 +70,7 @@ $config = [
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => $cvk,
+            'cookieValidationKey' => CSFR_VALIDATION_KEY,
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
             ],
@@ -93,7 +89,7 @@ $config = [
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
             'viewPath' => '@app/mail',
-            'transport' => $mail,
+            'transport' => MAIL_TRANSPORT,
             // send all mails to a file by default.
             'useFileTransport' => false,
         ],
@@ -106,7 +102,7 @@ $config = [
                 ],
             ],
         ],
-        'db' => $db,
+        'db' => DB_CONFIG,
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,

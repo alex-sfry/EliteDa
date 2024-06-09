@@ -35,8 +35,6 @@ tests/_support/_generated
 #vagrant folder
 /.vagrant
 
-config/db.php
-config/mail_config.php
 data/modules
 data/ships
 
@@ -50,4 +48,4 @@ shipyard.csv
 commodity.csv
 .vscode
 sandbox
-config/cvk.php
+env.php
