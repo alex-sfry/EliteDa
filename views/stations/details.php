@@ -6,9 +6,16 @@ use yii\helpers\Url;
 
 use function app\helpers\ksq;
 
-$this->params['meta_keywords'] = 'Elite: Dangerous, galaxy information, station information';
 $this->title = $model['name'];
-$this->params['breadcrumbs'] = [$this->title];
+$this->params['breadcrumbs'] = [
+    [
+        'label' => 'Search for stations',
+        'url' => Url::toRoute([
+            "stations/index"
+        ]),
+    ],
+    $this->title
+];
 ?>
 
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">

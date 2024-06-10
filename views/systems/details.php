@@ -15,7 +15,15 @@ use function app\helpers\ksq;
 
 $this->params['meta_keywords'] = 'Elite: Dangerous, galaxy information, system information';
 $this->title = $model['name'];
-$this->params['breadcrumbs'] = [$this->title];
+$this->params['breadcrumbs'] = [
+    [
+        'label' => 'Search for systems',
+        'url' => Url::toRoute([
+            "systems/index"
+        ]),
+    ],
+    $this->title
+];
 Yii::$app->formatter->thousandSeparator = ' ';
 // d($curl_res);
 ?>
