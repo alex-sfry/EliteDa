@@ -76,6 +76,11 @@ class TradeRoutes extends Model
 
         $this->distance_expr = $this->getDistanceToSystemExpression($this->sys_name);
         $source_station = $this->getSourceStation($this->sys_name, $this->st_name);
+
+        if (!$source_station) {
+            return [];
+        }
+
         $source_market = $this->getSourceMarketQuery((int)$source_station['market_id']);
         $target_markets = $this->getTargetMarkets($source_market);
 
@@ -110,7 +115,7 @@ class TradeRoutes extends Model
         return $unique_arr;
     }
 
-    private function getSourceStation(): array
+    private function getSourceStation(): array|bool
     {
         return (new Query())
             ->from('stations st')
