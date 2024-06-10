@@ -89,7 +89,7 @@ $this->params['breadcrumbs'] = [$this->title];
                                                         <?= InputDropdown::widget([
                                                             'container' => 'tr-ref-idd',
                                                             'error' => $ref_error,
-                                                            'selected' => $form_model->refSysStation,
+                                                            'selected' => HTML::decode($form_model->refSysStation),
                                                             'search' => 'ref-idd-search',
                                                             'to_submit' => 'ref-to-submit',
                                                             'placeholder' => 'Enter station name here',
@@ -102,7 +102,7 @@ $this->params['breadcrumbs'] = [$this->title];
                                                         ]); ?>
                                                         <?= InputDropdown::widget([
                                                             'container' => 'tr-target-idd',
-                                                            'selected' => $form_model->targetSysStation,
+                                                            'selected' => HTML::decode($form_model->targetSysStation),
                                                             'search' => 'target-idd-search',
                                                             'to_submit' => 'target-to-submit',
                                                             'placeholder' => 'Enter station or system name here',
