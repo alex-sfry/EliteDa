@@ -56,18 +56,20 @@ $this->params['breadcrumbs'] = [$this->title];
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button
-                                class="accordion-button fw-bold <?= isset($result) ? 'collapsed' : '' ?>"
+                                class="accordion-button fw-bold 
+                                    <?= isset($models) && count($models) > 0 ? 'collapsed' : '' ?>"
                                 type="button"
                                 data-bs-toggle="collapse"
                                 data-bs-target="#collapseOne"
-                                aria-expanded="<?= !isset($result) ? 'true' : 'false' ?>"
+                                aria-expanded="<?= !isset($models) || !count($models) > 0 ? 'true' : 'false' ?>"
                                 aria-controls="collapseOne">
-                                <?= !isset($result) ? 'Close form' : 'Open form' ?>
+                                <?= !isset($models) || !count($models) > 0 ? 'Close form' : 'Open form' ?>
                             </button>
                         </h2>
                         <div
                             id="collapseOne"
-                            class="accordion-collapse collapse <?= !isset($result) ? 'show' : '' ?>"
+                            class="accordion-collapse collapse 
+                                <?= !isset($models) || !count($models) > 0 ? 'show' : '' ?>"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 <?= Html::beginForm(['/commodities/index'], 'get', [

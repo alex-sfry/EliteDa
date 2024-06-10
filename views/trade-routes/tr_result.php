@@ -8,15 +8,6 @@ use yii\helpers\Url;
 /**
  * @var array $models
  * @var string|null $page_count_info
- * @var string $sort_price
- * @var string $sort_updated
- * @var string $sort_dist_ly
- * @var string $price_sort
- * @var string $time_sort
- * @var string $d_ly_sort
- * @var string $buy_sell_switch
- * @var int $station_id
- * @var int $system_id
  * @var Pagination|false $pagination
  */
 

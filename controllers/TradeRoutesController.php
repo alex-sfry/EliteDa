@@ -111,21 +111,16 @@ class TradeRoutesController extends Controller
                 ],
             ]);
 
-            $pagination = $data_provider->getPagination();
             $params['models'] = ArrayHelper::htmlEncode($data_provider->getModels());
+            $pagination = $data_provider->getPagination();
+            $params['pagination'] = $pagination;
+            $page_count = $pagination->getPageCount();
+            $params['page_count_info'] = $page_count !== 0 ? $page_count : null;
 
             if (count($params['models']) < 1) {
                 $params['model_error'] = 'Trade routes not found';
                 return $this->render('index', $params);
             }
-
-            if ($pagination->getPageCount() !== 0) {
-                $params['page_count_info'] = $this->getPageCounter($pagination);
-            }
-
-            $params['pagination'] = $pagination;
-
-            $params['result'] = $this->renderPartial('tr_result', $params);
         }
 
         return $this->render('index', $params);
