@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->params['meta_keywords'] = 'Elite: Dangerous, market data, trade routes, outfitting, ships, engineers, galaxy information, stations, systems, material traders';
-$this->title = 'Elite Dangerous Assistant';
+$this->title = 'ELIDA - Elite Dangerous Assistant';
 ?>
 
 <main class="flex-grow-1 mb-4 bg-main-background">
