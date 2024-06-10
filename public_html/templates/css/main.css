@@ -387,7 +387,6 @@ form-control.is-invalid {
 .c-result-legend-item-color {
     width: 28px;
 }
-
 .c-result-legend h2::after {
     content: "";
     position: absolute;
