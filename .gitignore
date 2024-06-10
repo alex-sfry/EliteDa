@@ -49,3 +49,4 @@ commodity.csv
 .vscode
 sandbox
 env.php
+config/db.php
