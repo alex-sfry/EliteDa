@@ -36,17 +36,15 @@
     padding-right: 4px;
 }
 
-.nav-info,
 table .table-link {
     transition: all 0.2s linear;
-    text-decoration-style: dashed !important;
+    text-decoration-style: dashed;
     text-underline-offset: 4px;
 }
 
-.nav-info:hover,
 table .table-link:hover {
-    background-color: var(--bs-light) !important;
-    text-decoration-color: var(--bs-dark) !important;
+    background-color: var(--bs-info);
+    text-decoration-color: var(--bs-dark);
     color: #000 !important;
 }
 
@@ -82,7 +80,7 @@ table .table-link:hover {
 }
 
 .bs-table thead th:hover > a.sort {
-    background-color: var(--bs-info) !important;
+    background-color: var(--bs-info);
     color: var(--bs-light) !important;
 }
 
