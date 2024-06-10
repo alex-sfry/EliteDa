@@ -2,10 +2,10 @@
 
 $path = __DIR__;
 $paths0777 = [
-    '/public_html/assets',
-    'runtime'
+    $path . '/public_html/assets',
+    $path . '/runtime'
 ] ;
-$paths = __DIR__ . '/public_html/assets';
+
 $permissions = 0755;
 $permissions0777 = 0777;
 
