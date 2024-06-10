@@ -4,7 +4,7 @@
 @import "../../../node_modules/bootstrap/scss/variables.scss"; 
 
 h1 {
-    color: $gray-200 !important;
+    color: $gray-200;
 }
 
 select {
@@ -443,6 +443,7 @@ form {
         background-color: $dark;
     }
 }
+
 
 table {
     .table-link,
