@@ -254,7 +254,7 @@ class StationsController extends Controller
                 ->select('systems.name as system, stations.name as station')
                 ->innerJoin('systems', 'stations.system_id = systems.id')
                 ->where(['like', 'stations.name', "$sys_st%", false])
-                ->orderBy('systems.name')
+                ->orderBy('stations.name')
                 ->asArray()
                 ->all();
 
