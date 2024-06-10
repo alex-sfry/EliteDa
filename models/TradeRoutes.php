@@ -139,8 +139,10 @@ class TradeRoutes extends Model
             ])
             ->from(['m1' => 'markets'])
             ->where(['m1.market_id' => $market_id])
-            ->andWhere('buy_price < mean_price')
-            ->andWhere(['>', 'm1.stock', $this->min_supply_demand]);
+            ->andWhere('m1.buy_price < mean_price')
+            ->andWhere('m1.buy_price > 0')
+            ->andWhere(['>=', 'm1.stock', $this->min_supply_demand])
+            ->andWhere(['>', 'm1.stock', 1]);
     }
 
     private function getSystemsInRadius(): array
@@ -181,6 +183,7 @@ class TradeRoutes extends Model
                 ->where(['systems.id' => ArrayHelper::getColumn($this->getSystemsInRadius(), 'id')])
                 ->andWhere('sell_price > mean_price')
                 ->andWhere(['>=', 'demand', $this->min_supply_demand])
+                ->andWhere(['>', 'demand', 1])
                 ->andWhere(['>', "(m2.sell_price - sm.source_buy_price) * {$this->cargo}", $this->profit]);
 
         $this->data_age !== 'Any' && $query->andWhere([
@@ -227,7 +230,8 @@ class TradeRoutes extends Model
             ->from(['m' => 'markets'])
             ->where(['m.market_id' => $source_station['market_id']])
             ->andWhere('sell_price > mean_price')
-            ->andWhere(['>', 'm.demand', $this->min_supply_demand]);
+            ->andWhere(['>=', 'm.demand', $this->min_supply_demand])
+            ->andWhere(['>', 'm.demand', 1]);
     }
 
     private function calcRoundTrip(array $target_markets, array $source_station): array
@@ -252,7 +256,9 @@ class TradeRoutes extends Model
                 ->innerJoin(['sm' => $source_market_round], 'sm.source_commodity_round = mr.name')
                 ->where(['mr.market_id' => $ids])
                 ->andWhere('mr.buy_price < mr.mean_price')
+                ->andWhere('mr.buy_price > 0')
                 ->andWhere(['>=', 'mr.stock', $this->min_supply_demand])
+                ->andWhere(['>', 'mr.stock', 1])
                 ->all();
 
         ArrayHelper::multisort($round_markets, ['profit_round'], [SORT_DESC]);
