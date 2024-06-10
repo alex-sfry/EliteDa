@@ -79,7 +79,8 @@ use function app\helpers\d;
             'attribute' => $buy_sell_switch === 'buy' ? 'buy_price' : 'sell_price',
             'label' => 'Price',
             'value' => function ($model) {
-                return isset($model['sell_price'])  ?: $model['buy_price'];
+                d($model);
+                return isset($model['sell_price']) ? $model['sell_price'] : $model['buy_price'];
             },
             'sortable' => true,
             'class' => 'text-success'
