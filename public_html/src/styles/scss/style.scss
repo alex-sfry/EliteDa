@@ -590,21 +590,29 @@ table {
     table {
         th {
             background-color: $secondary-bg-subtle;
+
+            a {
+                transition: all 0.2s linear;
+            }
+
+            a:hover {
+                color: $info;
+            }
         }
     }
-}
 
-#w0 {
     a::after {
         margin-left: 4px;
     }
 
     a.asc::after {
         content: "🔼";
+        color: #000000;
     }
 
     a.desc::after {
         content: "🔽";
+        color: #000000;
     }
 
     .filters input:focus,
@@ -615,6 +623,7 @@ table {
     .filters .input-group {
         min-width: 100px;
     }
+    
 }
 
 .engineers-header {

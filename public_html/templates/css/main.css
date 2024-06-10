@@ -100,8 +100,8 @@ body {
     width: 200px;
 }
 
-.f-ctrl-no-shadow, #w0 .filters input:focus,
-#w0 .filters select:focus, .c-form .form-select:focus,
+.f-ctrl-no-shadow, .grid-view .filters input:focus,
+.grid-view .filters select:focus, .c-form .form-select:focus,
 .c-form .form-select:active, form-check-input:focus {
     box-shadow: none;
     border-color: #dee2e6;
@@ -510,17 +510,24 @@ form-control.is-invalid {
 .grid-view table th {
     background-color: #e2e3e5;
 }
-
-#w0 a::after {
+.grid-view table th a {
+    transition: all 0.2s linear;
+}
+.grid-view table th a:hover {
+    color: #0dcaf0;
+}
+.grid-view a::after {
     margin-left: 4px;
 }
-#w0 a.asc::after {
+.grid-view a.asc::after {
     content: "🔼";
+    color: #000000;
 }
-#w0 a.desc::after {
+.grid-view a.desc::after {
     content: "🔽";
+    color: #000000;
 }
-#w0 .filters .input-group {
+.grid-view .filters .input-group {
     min-width: 100px;
 }
 

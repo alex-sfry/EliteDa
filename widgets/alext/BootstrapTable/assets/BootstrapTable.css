@@ -79,6 +79,10 @@ table .table-link:hover {
     background-position: top;
 }
 
+.bs-table thead th > a.sort {
+    transition: all 0.2s linear;
+}
+
 .bs-table thead th:hover > a.sort {
     background-color: var(--bs-info);
     color: var(--bs-light) !important;
