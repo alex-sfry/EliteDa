@@ -1,42 +1,44 @@
 <?php
 
-$directory = '/home/user/web/elida.space';
-$permissions = '755'; // Adjust permissions as needed
-
-// Folders to exclude
-$excludedFolders = [
+$path = __DIR__;
+$permissions = 0755;
+$excluded = [
     'runtime',
     'public_html/assets',
     'yii',
+    '.project',
     'cgi-bin',
     'logs',
     'stats',
     'vendor',
-    'public_html/node_modules',
-    '.git'
+    'public_html/node_modules'
 ];
 
-// Shell command with exclusion logic
-$command = "find $directory -type d ";
+// Get all files and directories inside the specified path
+$items = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
+    RecursiveIteratorIterator::SELF_FIRST
+);
 
-$first = true;
-
-foreach ($excludedFolders as $folder) {
-    if ($first) {
-        $command .= " -path '!' -prune -o ";
-        $first = false;
-    } else {
-        $command .= " -o -path ";
+foreach ($items as $item) {
+    // Skip excluded directories
+    $skip = false;
+    foreach ($excluded as $exclude) {
+        if (strpos($item->getPathname(), $exclude) !== false) {
+            $skip = true;
+            break;
+        }
     }
-    $command .= "'$directory/$folder' -prune -o ";
+
+    // Skip the current folder and excluded folders
+    if ($skip || $item->getPathname() === $path) {
+        continue;
+    }
+
+    // Apply chmod only to directories
+    if ($item->isDir()) {
+        chmod($item->getPathname(), $permissions);
+    }
 }
 
-$command .= "-exec chmod -c $permissions {} \;";
-$output = shell_exec($command);
-
-if ($output) {
-    echo "Error changing permissions: $output";
-} else {
-    echo "Permissions changed successfully for subfolders within $directory 
-        (excluding current directory and specified folders)";
-}
+echo "Permissions updated successfully!";
