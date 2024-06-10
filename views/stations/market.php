@@ -5,8 +5,11 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 use function app\helpers\d;
+use function app\helpers\ksq;
 
-$this->title = Html::encode($station_name) . ' station  market';
+$this->params['meta_keywords'] = 'Elite: Dangerous, galaxy information, station market, market information, commodities';
+
+$this->title = ksq($station_name) . ' station  market';
 $this->params['breadcrumbs'] = [
     [
         'label' => $station_name,

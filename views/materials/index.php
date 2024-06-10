@@ -10,6 +10,7 @@ use yii\grid\GridView;
 /** @var ActiveDataProvider $dataProvider */
 /** @var View $this */
 
+$this->params['meta_keywords'] = 'Elite: Dangerous, materials';
 $this->title = "Materials";
 $this->params['breadcrumbs'] = [$this->title];
 ?>

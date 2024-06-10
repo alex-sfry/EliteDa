@@ -12,6 +12,7 @@ use function app\helpers\d;
 /** @var yii\data\ArrayDataProvider $dataProvider */
 /** @var View $this */
 
+$this->params['meta_keywords'] = 'Elite: Dangerous, engineers';
 $this->title = 'Engineers';
 $this->params['breadcrumbs'] = [$this->title];
 // d($queryParams);

@@ -6,7 +6,9 @@
 
 use yii\widgets\DetailView;
 
+$this->params['meta_keywords'] = 'Elite: Dangerous, engineer information';
 $this->title = isset($model['name']) ? $model['name'] : '';
+$this->params['breadcrumbs'] = [$this->title];
 ?>
 
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">

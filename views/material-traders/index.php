@@ -15,6 +15,7 @@ use function app\helpers\d;
  * @var ActiveDataProvider $dataProvider
  */
 
+$this->params['meta_keywords'] = 'Elite: Dangerous, material traders';
 $this->title = 'Material Traders';
 $this->params['breadcrumbs'] = [$this->title];
 // d($dataProvider);

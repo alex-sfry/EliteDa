@@ -8,8 +8,10 @@ use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 use yii\captcha\Captcha;
 
+$this->params['meta_keywords'] = 'Elite: Dangerous, market data, trade routes, outfitting, ships, engineers, galaxy information, stations, systems, material traders';
+
 $this->title = 'Contact';
-// $this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <main class="flex-grow-1 mb-4 bg-main-background">
     <div class="container-xxl px-3">

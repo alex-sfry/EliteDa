@@ -12,8 +12,11 @@ use yii\helpers\Url;
 
 AppAsset::register($this);
 
+$this->params['meta_description'] = 'Helper site for Elite:Dangerous with market data, trade routes, outfitting, ships, engineers, galaxy information, material traders';
+
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
+// $this->registerMetaTag(['title' => 'ELIDA - Elite Dangerous assistant']);
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);

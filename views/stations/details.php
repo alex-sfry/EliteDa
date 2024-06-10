@@ -6,6 +6,7 @@ use yii\helpers\Url;
 
 use function app\helpers\ksq;
 
+$this->params['meta_keywords'] = 'Elite: Dangerous, galaxy information, station information';
 $this->title = $model['name'];
 $this->params['breadcrumbs'] = [$this->title];
 ?>

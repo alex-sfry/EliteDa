@@ -14,6 +14,7 @@ use function app\helpers\d;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 /** @var View $this */
 
+$this->params['meta_keywords'] = 'Elite: Dangerous, galaxy information, stations';
 $this->title = 'Search for stations';
 $this->params['breadcrumbs'] = [$this->title];
 

@@ -34,6 +34,7 @@ $select_options = [
 ];
 extract($select_options);
 
+$this->params['meta_keywords'] = 'Elite: Dangerous, shipyard, ships';
 $this->title = 'Ships';
 $this->params['breadcrumbs'] = [$this->title];
 // isset($get) && d($get);

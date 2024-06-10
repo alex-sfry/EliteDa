@@ -13,6 +13,7 @@ use function app\helpers\ksq;
  * @var array $model
  */
 
+$this->params['meta_keywords'] = 'Elite: Dangerous, galaxy information, system information';
 $this->title = $model['name'];
 $this->params['breadcrumbs'] = [$this->title];
 Yii::$app->formatter->thousandSeparator = ' ';
