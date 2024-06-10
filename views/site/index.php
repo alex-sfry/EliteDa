@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $this->params['meta_keywords'] = 'Elite: Dangerous, market data, trade routes, outfitting, ships, engineers, galaxy information, stations, systems, material traders';
-$this->title = 'ELIDA - Elite Dangerous Assistant';
+$this->title = 'Elite Dangerous Assistant';
 ?>
 
 <main class="flex-grow-1 mb-4 bg-main-background">
@@ -13,7 +13,7 @@ $this->title = 'ELIDA - Elite Dangerous Assistant';
             <div class="d-flex justify-content-center mt-3">
                 <div class="">
                     <h1 class="text-center mb-4 mt-3">
-                        <?= Html::encode($this->title) ?>
+                        <?= 'Elite Dangerous Assistant' ?>
                     </h1>
                 </div>
             </div>
