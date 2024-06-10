@@ -42,7 +42,7 @@ use yii\data\Sort;
                         <?= isset($models) && count($models) > 0 ? $models[0]['ship'] : '--' ?>
                     </td>
                     <td class="text-success sintony-bold">
-                        <?= isset($models) && count($models) > 0 ? $models[0]['ship'] : '--' ?>  Cr
+                        <?= isset($models) && count($models) > 0 ? $models[0]['price'] : '--' ?>  Cr
                     </td>
                 </tr>
             </tbody>
