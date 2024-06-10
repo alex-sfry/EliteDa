@@ -14,6 +14,8 @@ use yii\base\Model;
 use app\models\ar\Shipyard;
 use yii\helpers\Url;
 
+use function app\helpers\d;
+
 class ShipyardShips extends Model
 {
     private array $ships_arr = [];
@@ -109,6 +111,10 @@ class ShipyardShips extends Model
     public function modifyModels(array $models): array
     {
         /** @var StationBehavior|ShipyardShips $this */
+
+        if (count($models) === 0) {
+            return $models;
+        }
 
         $sub_query = (new Query())
             ->select('name')

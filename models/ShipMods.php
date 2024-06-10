@@ -123,6 +123,10 @@ class ShipMods extends Model
     {
         /** @var StationBehavior|ShipMods $this */
 
+        if (count($models) === 0) {
+            return $models;
+        }
+
         foreach ($models as $key => $value) {
             $value['module'] = isset($this->mods_arr[strtolower($value['module'])]) ?
                 $this->mods_arr[strtolower($value['module'])] : $value['module'];
