@@ -266,7 +266,7 @@ body {
     height: auto;
 }
 .footer p {
-    font-size: 0.625rem;
+    font-size: 0.75rem;
 }
 .footer__link {
     transition: color 0.2s linear;
