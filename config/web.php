@@ -28,7 +28,7 @@ $config = [
                     ],
                 ],
             ],
-            // 'appendTimestamp' => true,
+            'appendTimestamp' => true,
             // 'linkAssets' => true,
             // 'forceCopy' => YII_ENV_DEV ? true : false,
             'bundles' => [
