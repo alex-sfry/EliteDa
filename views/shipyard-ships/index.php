@@ -21,7 +21,7 @@ use function app\helpers\d;
 
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
-    'sort_options' => ['Ship' => 'Ship', 'Updated_at' => 'Updated at (time)', 'Distance' => 'Distance (LY)'],
+    'sort_options' => ['Distance' => 'Distance (LY)', 'Updated_at' => 'Updated at (time)'],
     'max_dist_from_ref' => ['Any' => 'Any', '25' => '25 LY', '50' => '50 LY', '100' => '100 LY', '250' => '250 LY'],
     'max_dist_from_star' => [
         'Any' => 'Any',
