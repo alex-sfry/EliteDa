@@ -126,8 +126,7 @@ class BootstrapTable extends Widget
 
     private function renderPagination(): string
     {
-        $page_count = $this->pagination->getPageCount();
-        $page_count_info = $page_count > 1 ? $page_count : null;
+        $page_count_info = $this->getPageCounter();
 
         return Html::tag(
             'div',
