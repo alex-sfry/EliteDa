@@ -6,7 +6,6 @@ use app\behaviors\ShipyardShipsBehavior;
 use app\behaviors\StationBehavior;
 use app\behaviors\SystemBehavior;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
@@ -25,7 +24,7 @@ class ShipyardShips extends Model
         $this->ships_arr = $ships_arr;
     }
 
-    public function getShips(array $get, int $limit): ActiveDataProvider
+    public function getShips(array $get, int $limit = 0, array $order = [], int $offset = 0): Query
     {
         $this->attachBehavior('SystemBehavior', SystemBehavior::class);
         $this->attachBehavior('StationBehavior', StationBehavior::class);
@@ -75,37 +74,11 @@ class ShipyardShips extends Model
         $get['dataAge'] !== 'Any' &&
             $ships->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
 
-        switch ($get['sortBy']) {
-            case 'Updated_at':
-                $sort_attr = 'time_diff';
-                $sort_order = SORT_ASC;
-                break;
-            case 'Distance':
-                $sort_attr = "distance_ly";
-                $sort_order = SORT_ASC;
-                break;
-            default:
-                $sort_attr = 'ship';
-                $sort_order = SORT_ASC;
-        }
+        count($order) > 0 && $ships->orderBy($order);
+        $offset !== 0 && $ships->offset($offset);
+        $limit !== 0 && $ships->limit($limit);
 
-        return new ActiveDataProvider(config: [
-            'query' => $ships,
-            'pagination' => [
-                'pageSizeLimit' => [0, $limit],
-                'defaultPageSize' => $limit,
-            ],
-            'sort' => [
-                'attributes' => [
-                    'distance_ly',
-                    'time_diff',
-                    'ship'
-                ],
-                'defaultOrder' => [
-                    $sort_attr => $sort_order
-                ],
-            ],
-        ]);
+        return $ships;
     }
 
     public function modifyModels(array $models): array

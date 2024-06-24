@@ -4,9 +4,13 @@ namespace app\controllers;
 
 use app\behaviors\CommoditiesBehavior;
 use Yii;
+use yii\data\Pagination;
+use yii\data\Sort;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\Response;
+
+use function app\helpers\d;
 
 class CommoditiesController extends Controller
 {
@@ -62,11 +66,61 @@ class CommoditiesController extends Controller
                 return $this->render('index', $params);
             }
 
-            $limit = 50;
-            $provider = $this->c_model->getPrices($get, $limit);
-            $params['models']  = ArrayHelper::htmlEncode($this->c_model->modifyModels($provider->getModels()));
+            if ($get['buySellSwitch'] === 'buy') {
+                $price_type = 'buy_price';
+                $stock_demand = 'stock';
+                $price_sort_direction = SORT_ASC;
+            } else {
+                $price_type = 'sell_price';
+                $stock_demand = 'demand';
+                $price_sort_direction = SORT_DESC;
+            }
 
-            $sort = $provider->getSort();
+            switch ($get['sortBy']) {
+                case 'Updated_at':
+                    $sort_attr = 'time_diff';
+                    $sort_order = SORT_ASC;
+                    break;
+                case 'Distance':
+                    $sort_attr = "distance_ly";
+                    $sort_order = SORT_ASC;
+                    break;
+                default:
+                    $sort_attr = $price_type;
+                    $sort_order = $price_sort_direction;
+            }
+
+            $sort = new Sort([
+                'attributes' => [
+                        'distance_ly',
+                        'time_diff',
+                        'sell_price',
+                    'buy_price'
+                ],
+                'defaultOrder' => [
+                    $sort_attr => $sort_order
+                ],
+            ]);
+
+            $query = $this->c_model->getPrices($get, $price_type, $stock_demand);
+            $total_count = $query->count();
+
+            $pagination = new Pagination([
+                'totalCount' => $total_count,
+                'pageSizeLimit' => [0, 50],
+                'defaultPageSize' => 50,
+            ]);
+
+            $query = $this->c_model->getPrices(
+                $get,
+                $price_type,
+                $stock_demand,
+                $pagination->pageSize,
+                $sort->orders,
+                $pagination->offset
+            );
+
+            $params['models']  = ArrayHelper::htmlEncode($this->c_model->modifyModels($query->all()));
             $params['price_sort'] = null;
             $params['time_sort'] = null;
             $params['d_ly_sort'] = null;
@@ -94,7 +148,6 @@ class CommoditiesController extends Controller
             $params['sort_updated'] = $sort->createUrl('time_diff');
             $params['sort_dist_ly'] = $sort->createUrl('distance_ly');
 
-            $pagination = $provider->getPagination();
             $params['pagination'] = $pagination;
 
             if ($request->get('page')) {
@@ -106,11 +159,11 @@ class CommoditiesController extends Controller
                 $response = Yii::$app->response;
                 $response->format = Response::FORMAT_JSON;
                 $response->data = [
-                    'limit' => $limit,
+                    'limit' => $pagination->pageSize,
                     'links' => $pagination->getLinks(),
                     'page' => $pagination->getPage(),
                     'lastPage' => $pagination->pageCount,
-                    'data' => $this->c_model->modifyModels($provider->getModels()),
+                    'data' => $params['models'],
                     'totalCount' => $pagination->totalCount,
                 ];
                 $response->send();
@@ -118,19 +171,18 @@ class CommoditiesController extends Controller
 
             if ($request->get('sort')) {
                 $session->set('c_sort', $sort->attributeOrders);
-                $provider->pagination->setPage(0);
-
+                $pagination->setPage(0);
                 $response = Yii::$app->response;
                 $response->format = Response::FORMAT_JSON;
                 $response->data = [
-                    'data' => $this->c_model->modifyModels($provider->getModels()),
+                    'data' => $params['models'],
                     'attributeOrders' => $sort->attributeOrders,
                     'links' => $pagination->getLinks(),
                     'lastPage' => $pagination->pageCount,
                     'totalCount' => $pagination->totalCount,
                     'sortUrl' => $sort->createUrl(ltrim($request->get('sort'), '-')),
                     'page' => $pagination->getPage(),
-                    'limit' => $limit,
+                    'limit' => $pagination->pageSize,
                     'totalCount' => $pagination->totalCount
                 ];
                 $response->send();

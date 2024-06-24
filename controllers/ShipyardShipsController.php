@@ -7,6 +7,8 @@ use yii\helpers\ArrayHelper;
 use yii\web\Response;
 use yii\web\Controller;
 use app\behaviors\ShipyardShipsBehavior;
+use yii\data\Pagination;
+use yii\data\Sort;
 
 class ShipyardShipsController extends Controller
 {
@@ -63,21 +65,56 @@ class ShipyardShipsController extends Controller
             }
 
             $this->ships_model->setShipsArr($params['ships_arr']);
-            $limit = 50;
-            $provider = $this->ships_model->getShips($params['get'], $limit);
-            $params['models'] = ArrayHelper::htmlEncode(
-                $this->ships_model->modifyModels($provider->getModels(), $params['get'])
+
+            switch ($params['get']['sortBy']) {
+                case 'Updated_at':
+                    $sort_attr = 'time_diff';
+                    $sort_order = SORT_ASC;
+                    break;
+                case 'Distance':
+                    $sort_attr = 'distance_ly';
+                    $sort_order = SORT_ASC;
+                    break;
+                default:
+                    $sort_attr = 'distance_ly';
+                    $sort_order = SORT_ASC;
+            }
+
+            $sort = new Sort([
+                'attributes' => [
+                    'distance_ly',
+                    'time_diff'
+                ],
+                'defaultOrder' => [
+                    $sort_attr => $sort_order
+                ],
+            ]);
+
+            $provider = $this->ships_model->getShips($params['get']);
+            $total_count = $provider->count();
+
+            $pagination = new Pagination([
+                'totalCount' => $total_count,
+                'pageSizeLimit' => [0, 50],
+                'defaultPageSize' => 50,
+            ]);
+
+            $provider = $this->ships_model->getShips(
+                $params['get'],
+                $pagination->pageSize,
+                $sort->orders,
+                $pagination->offset
             );
 
-            $sort = $provider->getSort();
+            $params['models'] = ArrayHelper::htmlEncode(
+                $this->ships_model->modifyModels($provider->all(), $params['get'])
+            );
+
             $params['ship_sort'] = null;
             $params['time_sort'] = null;
             $params['d_ly_sort'] = null;
 
             switch ($sort->attributeOrders) {
-                case ArrayHelper::keyExists('ship', $sort->attributeOrders):
-                    $params['ship_sort'] = ($sort->attributeOrders)['ship'] === 4 ? 'sorted asc' : 'sorted desc';
-                    break;
                 case ArrayHelper::keyExists('time_diff', $sort->attributeOrders):
                     $params['time_sort'] = ($sort->attributeOrders)['time_diff'] === 4 ? 'sorted asc' : 'sorted desc';
                     break;
@@ -85,31 +122,29 @@ class ShipyardShipsController extends Controller
                     $params['d_ly_sort'] = ($sort->attributeOrders)['distance_ly'] === 4 ? 'sorted asc' : 'sorted desc';
                     break;
                 default:
-                    $params['ship'] = null;
+                    $params['distance_ly'] = null;
             }
 
             $params['sort'] = $sort;
-            $params['sort_ship'] = $sort->createUrl('ship');
             $params['sort_updated'] = $sort->createUrl('time_diff');
             $params['sort_dist_ly'] = $sort->createUrl('distance_ly');
 
-            $pagination = $provider->getPagination();
             $params['pagination'] = $pagination;
 
             if ($request->get('page')) {
                 if ($session->get('ships_sort')) {
                     $sort->setAttributeOrders($session->get('ships_sort'));
                 }
-                $provider->setSort($sort);
+
                 $pagination->setPage($request->get('page') - 1);
                 $response = Yii::$app->response;
                 $response->format = Response::FORMAT_JSON;
                 $response->data = [
-                    'limit' => $limit,
+                    'limit' => $pagination->pageSize,
                     'links' => $pagination->getLinks(),
                     'page' => $pagination->getPage(),
                     'lastPage' => $pagination->pageCount,
-                    'data' => $this->ships_model->modifyModels($provider->getModels()),
+                    'data' => $params['models'],
                     'params' => $pagination->params,
                     'totalCount' => $pagination->totalCount,
                     'attributeOrders' => $sort->attributeOrders,
@@ -120,12 +155,12 @@ class ShipyardShipsController extends Controller
 
             if ($request->get('sort')) {
                 $session->set('ships_sort', $sort->attributeOrders);
-                $provider->pagination->setPage(0);
+                $pagination->setPage(0);
 
                 $response = Yii::$app->response;
                 $response->format = Response::FORMAT_JSON;
                 $response->data = [
-                    'data' => $this->ships_model->modifyModels($provider->getModels()),
+                    'data' => $params['models'],
                     'sort' => $sort,
                     'attributeOrders' => $sort->attributeOrders,
                     'links' => $pagination->getLinks(),
@@ -133,13 +168,11 @@ class ShipyardShipsController extends Controller
                     'totalCount' => $pagination->totalCount,
                     'sortUrl' => $sort->createUrl(ltrim($request->get('sort'), '-')),
                     'page' => $pagination->getPage(),
-                    'limit' => $limit,
+                    'limit' => $pagination->pageSize,
                     'totalCount' => $pagination->totalCount
                 ];
                 $response->send();
             }
-
-            // $params['result'] = $this->renderPartial('ships_table', $params);
 
             return $this->render('index', $params);
         }

@@ -6,7 +6,6 @@ use app\behaviors\ShipModulesBehavior;
 use app\behaviors\StationBehavior;
 use app\behaviors\SystemBehavior;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
@@ -34,7 +33,7 @@ class ShipMods extends Model
         $this->mods_arr = $mods;
     }
 
-    public function getModules(array $get, int $limit): ActiveDataProvider
+    public function getModules(array $get, int $limit = 0, array $order = [], int $offset = 0): Query
     {
         /** @var SystemBehavior|ShipMods $this */
 
@@ -85,38 +84,11 @@ class ShipMods extends Model
 
         $get['dataAge'] !== 'Any' &&
         $mod_market->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
+        count($order) > 0 && $mod_market->orderBy($order);
+        $offset !== 0 && $mod_market->offset($offset);
+        $limit !== 0 && $mod_market->limit($limit);
 
-        switch ($get['sortBy']) {
-            case 'Updated_at':
-                $sort_attr = 'time_diff';
-                $sort_order = SORT_ASC;
-                break;
-            case 'Distance':
-                $sort_attr = "distance_ly";
-                $sort_order = SORT_ASC;
-                break;
-            default:
-                $sort_attr = 'module';
-                $sort_order = SORT_ASC;
-        }
-
-        return new ActiveDataProvider(config: [
-            'query' => $mod_market,
-            'pagination' => [
-                'pageSizeLimit' => [0, $limit],
-                'defaultPageSize' => $limit,
-            ],
-            'sort' => [
-                'attributes' => [
-                    'distance_ly',
-                    'time_diff',
-                    'module'
-                ],
-                'defaultOrder' => [
-                    $sort_attr => $sort_order
-                ],
-            ],
-        ]);
+        return $mod_market;
     }
 
     public function modifyModels(array $models): array
@@ -220,8 +192,6 @@ class ShipMods extends Model
     }
 
     /**
-     * @param int $market_id
-     *
      * @return array
      */
     public function getQtyByCat(int $market_id): array

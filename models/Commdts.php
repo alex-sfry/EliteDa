@@ -6,7 +6,6 @@ use app\behaviors\CommoditiesBehavior;
 use app\behaviors\StationBehavior;
 use app\behaviors\SystemBehavior;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
@@ -27,8 +26,14 @@ class Commdts extends Model
         );
     }
 
-    public function getPrices(array $get, int $limit): ActiveDataProvider
-    {
+    public function getPrices(
+        array $get,
+        string $price_type,
+        string $stock_demand,
+        int $limit = 0,
+        array $order = [],
+        int $offset = 0
+    ): Query {
         /** @var SystemBehavior|CommoditiesBehavior|Commdts $this */
 
         $distance_expr = $this->getDistanceToSystemExpression($get['refSystem']);
@@ -38,17 +43,6 @@ class Commdts extends Model
             if (in_array($value, $get['commodities'])) {
                 $c_symbols[] = $key;
             }
-        }
-
-        // price related vars depending on form data
-        if ($get['buySellSwitch'] === 'buy') {
-            $price_type = 'buy_price';
-            $stock_demand = 'stock';
-            $price_sort_direction = SORT_ASC;
-        } else {
-            $price_type = 'sell_price';
-            $stock_demand = 'demand';
-            $price_sort_direction = SORT_DESC;
         }
 
         $prices = (new Query())
@@ -70,15 +64,15 @@ class Commdts extends Model
             ->innerJoin(['st' => 'stations'], 'm.market_id = st.market_id')
             ->innerJoin('systems', 'st.system_id = systems.id')
             ->where(['m.name' => $c_symbols])
-            ->andWhere(['>', $stock_demand, 0]);
+            ->andWhere(['>', $stock_demand, 1]);
 
         $get['landingPadSize'] === 'L' && $prices->andWhere(['not', ['type' => 'Outpost']]);
 
         $get['includeSurface'] === 'No' &&
-        $prices->andWhere(['not in', 'type', ['Planetary Port', 'Planetary Outpost', 'Odyssey Settlement']]);
+            $prices->andWhere(['not in', 'type', ['Planetary Port', 'Planetary Outpost', 'Odyssey Settlement']]);
 
         $get['distanceFromStar'] !== 'Any' &&
-        $prices->andWhere(['<=', 'distance_to_arrival', $get['distanceFromStar']]);
+            $prices->andWhere(['<=', 'distance_to_arrival', $get['distanceFromStar']]);
 
         $get['maxDistanceFromRefStar'] !== 'Any' && $prices->andWhere([
             '<=',
@@ -89,40 +83,12 @@ class Commdts extends Model
         $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$get['dataAge']} HOUR)");
 
         $get['dataAge'] !== 'Any' &&
-        $prices->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
+            $prices->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
+        count($order) > 0 && $prices->orderBy($order);
+        $offset !== 0 && $prices->offset($offset);
+        $limit !== 0 && $prices->limit($limit);
 
-        switch ($get['sortBy']) {
-            case 'Updated_at':
-                $sort_attr = 'time_diff';
-                $sort_order = SORT_ASC;
-                break;
-            case 'Distance':
-                $sort_attr = "distance_ly";
-                $sort_order = SORT_ASC;
-                break;
-            default:
-                $sort_attr = $price_type;
-                $sort_order = $price_sort_direction;
-        }
-
-        return new ActiveDataProvider(config: [
-            'query' => $prices,
-            'pagination' => [
-                'pageSizeLimit' => [0, $limit],
-                'defaultPageSize' => $limit,
-            ],
-            'sort' => [
-                'attributes' => [
-                    'distance_ly',
-                    'time_diff',
-                    'sell_price',
-                    'buy_price'
-                ],
-                'defaultOrder' => [
-                    $sort_attr => $sort_order
-                ],
-            ],
-        ]);
+        return $prices;
     }
 
     public function modifyModels(array $models): array

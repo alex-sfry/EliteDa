@@ -7,6 +7,8 @@ use yii\helpers\ArrayHelper;
 use yii\web\Response;
 use yii\web\Controller;
 use app\behaviors\ShipModulesBehavior;
+use yii\data\Pagination;
+use yii\data\Sort;
 
 use function app\helpers\d;
 
@@ -66,12 +68,52 @@ class ShipModulesController extends Controller
 
             $this->mod_model->setMods($params['ship_modules_arr']);
             $limit = 50;
-            $provider = $this->mod_model->getModules($params['get'], $limit);
-            $params['models']  = ArrayHelper::htmlEncode(
-                $this->mod_model->modifyModels($provider->getModels(), $params['get'])
+
+            switch ($params['get']['sortBy']) {
+                case 'Updated_at':
+                    $sort_attr = 'time_diff';
+                    $sort_order = SORT_ASC;
+                    break;
+                case 'Distance':
+                    $sort_attr = "distance_ly";
+                    $sort_order = SORT_ASC;
+                    break;
+                default:
+                    $sort_attr = 'module';
+                    $sort_order = SORT_ASC;
+            }
+
+            $sort = new Sort([
+                'attributes' => [
+                    'distance_ly',
+                    'time_diff',
+                    'module'
+                ],
+                'defaultOrder' => [
+                    $sort_attr => $sort_order
+                ],
+            ]);
+
+            $query = $this->mod_model->getModules($params['get']);
+            $total_count = $query->count();
+
+            $pagination = new Pagination([
+                'totalCount' => $total_count,
+                'pageSizeLimit' => [0, 50],
+                'defaultPageSize' => 50,
+            ]);
+
+            $query = $this->mod_model->getModules(
+                $params['get'],
+                $pagination->pageSize,
+                $sort->orders,
+                $pagination->offset
             );
 
-            $sort = $provider->getSort();
+            $params['models']  = ArrayHelper::htmlEncode(
+                $this->mod_model->modifyModels($query->all(), $params['get'])
+            );
+
             $params['module_sort'] = null;
             $params['time_sort'] = null;
             $params['d_ly_sort'] = null;
@@ -95,23 +137,22 @@ class ShipModulesController extends Controller
             $params['sort_updated'] = $sort->createUrl('time_diff');
             $params['sort_dist_ly'] = $sort->createUrl('distance_ly');
 
-            $pagination = $provider->getPagination();
             $params['pagination'] = $pagination;
 
             if ($request->get('page')) {
                 if ($session->get('mod_sort')) {
                     $sort->setAttributeOrders($session->get('mod_sort'));
                 }
-                $provider->setSort($sort);
+
                 $pagination->setPage($request->get('page') - 1);
                 $response = Yii::$app->response;
                 $response->format = Response::FORMAT_JSON;
                 $response->data = [
-                    'limit' => $limit,
+                    'limit' => $pagination->pageSize,
                     'links' => $pagination->getLinks(),
                     'page' => $pagination->getPage(),
                     'lastPage' => $pagination->pageCount,
-                    'data' => $this->mod_model->modifyModels($provider->getModels()),
+                    'data' => $params['models'],
                     'params' => $pagination->params,
                     'totalCount' => $pagination->totalCount,
                     'attributeOrders' => $sort->attributeOrders,
@@ -122,12 +163,12 @@ class ShipModulesController extends Controller
 
             if ($request->get('sort')) {
                 $session->set('mod_sort', $sort->attributeOrders);
-                $provider->pagination->setPage(0);
+                $pagination->setPage(0);
 
                 $response = Yii::$app->response;
                 $response->format = Response::FORMAT_JSON;
                 $response->data = [
-                    'data' => $this->mod_model->modifyModels($provider->getModels()),
+                    'data' => $params['models'],
                     'sort' => $sort,
                     'attributeOrders' => $sort->attributeOrders,
                     'links' => $pagination->getLinks(),
@@ -135,7 +176,7 @@ class ShipModulesController extends Controller
                     'totalCount' => $pagination->totalCount,
                     'sortUrl' => $sort->createUrl(ltrim($request->get('sort'), '-')),
                     'page' => $pagination->getPage(),
-                    'limit' => $limit,
+                    'limit' => $pagination->pageSize,
                     'totalCount' => $pagination->totalCount
                 ];
                 $response->send();
