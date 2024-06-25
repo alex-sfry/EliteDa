@@ -65,13 +65,15 @@ body {
     letter-spacing: 2px;
 }
 
-.nav-info, table .table-link-tr {
+.nav-info, table .table-link,
+table .table-link-tr {
     transition: all 0.2s linear;
     text-decoration-style: dashed !important;
     text-underline-offset: 4px;
 }
 
-.nav-info:hover, table .table-link-tr:hover {
+.nav-info:hover, table .table-link:hover,
+table .table-link-tr:hover {
     background-color: #0dcaf0 !important;
     text-decoration-color: #212529 !important;
     color: #000000 !important;
