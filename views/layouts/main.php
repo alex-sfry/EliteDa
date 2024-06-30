@@ -12,7 +12,7 @@ use yii\helpers\Url;
 
 AppAsset::register($this);
 
-$this->params['meta_description'] = 'Helper site for Elite:Dangerous with market data, trade routes, outfitting, ships, engineers, galaxy information, material traders';
+$this->params['meta_description'] = 'Helper site for Elite:Dangerous with market data, trade routes, outfitting, ships, engineers, galaxy information, material traders, trading';
 
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');

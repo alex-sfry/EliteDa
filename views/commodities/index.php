@@ -44,7 +44,7 @@ $select_options = [
 ];
 extract($select_options);
 
-$this->params['meta_keywords'] = 'Elite: Dangerous, market data, commodities';
+$this->params['meta_keywords'] = 'Elite: Dangerous, market data, commodities, trading';
 $this->title = 'Commodities';
 $this->params['breadcrumbs'] = [$this->title];
 ?>
