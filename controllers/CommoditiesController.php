@@ -8,7 +8,9 @@ use yii\data\Pagination;
 use yii\data\Sort;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
+use yii\web\Request;
 use yii\web\Response;
+use yii\web\Session;
 
 use function app\helpers\d;
 
@@ -50,12 +52,12 @@ class CommoditiesController extends Controller
 
         if (count($request->get()) > 2) {
             $get = $request->get();
-            $session->set('c', $request->get());
+            $session->set('c', $get);
         } elseif ($session->get('c')) {
             $get = $session->get('c');
         }
 
-        if ($request->get() || $session->get('c')) {
+        if (isset($get) || $session->get('c')) {
             $request->isGet && $session->remove('c_sort');
 
             $this->form_model->setAttributes($get);
@@ -92,9 +94,9 @@ class CommoditiesController extends Controller
 
             $sort = new Sort([
                 'attributes' => [
-                        'distance_ly',
-                        'time_diff',
-                        'sell_price',
+                    'distance_ly',
+                    'time_diff',
+                    'sell_price',
                     'buy_price'
                 ],
                 'defaultOrder' => [
@@ -151,41 +153,11 @@ class CommoditiesController extends Controller
             $params['pagination'] = $pagination;
 
             if ($request->get('page')) {
-                if ($session->get('c_sort')) {
-                    $sort->setAttributeOrders($session->get('c_sort'));
-                }
-
-                $pagination->setPage($request->get('page') - 1);
-                $response = Yii::$app->response;
-                $response->format = Response::FORMAT_JSON;
-                $response->data = [
-                    'limit' => $pagination->pageSize,
-                    'links' => $pagination->getLinks(),
-                    'page' => $pagination->getPage(),
-                    'lastPage' => $pagination->pageCount,
-                    'data' => $params['models'],
-                    'totalCount' => $pagination->totalCount,
-                ];
-                $response->send();
+                $this->handlePagination($sort, $pagination, $session, $request, $params['models']);
             }
 
             if ($request->get('sort')) {
-                $session->set('c_sort', $sort->attributeOrders);
-                $pagination->setPage(0);
-                $response = Yii::$app->response;
-                $response->format = Response::FORMAT_JSON;
-                $response->data = [
-                    'data' => $params['models'],
-                    'attributeOrders' => $sort->attributeOrders,
-                    'links' => $pagination->getLinks(),
-                    'lastPage' => $pagination->pageCount,
-                    'totalCount' => $pagination->totalCount,
-                    'sortUrl' => $sort->createUrl(ltrim($request->get('sort'), '-')),
-                    'page' => $pagination->getPage(),
-                    'limit' => $pagination->pageSize,
-                    'totalCount' => $pagination->totalCount
-                ];
-                $response->send();
+                $this->handleSort($sort, $pagination, $session, $request, $params['models']);
             }
 
             $params['buy_sell_switch'] =  $get['buySellSwitch'];
@@ -194,5 +166,57 @@ class CommoditiesController extends Controller
         }
 
         return $this->render('index', $params);
+    }
+
+    private function handlePagination(
+        Sort $sort,
+        Pagination $pagination,
+        Session $session,
+        Request $request,
+        array $models
+    ): void {
+        if ($session->get('c_sort')) {
+            $sort->setAttributeOrders($session->get('c_sort'));
+        }
+
+        $pagination->setPage($request->get('page') - 1);
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_JSON;
+        $response->data = [
+            'limit' => $pagination->pageSize,
+            'links' => $pagination->getLinks(),
+            'page' => $pagination->getPage(),
+            'lastPage' => $pagination->pageCount,
+            'data' => $models,
+            'totalCount' => $pagination->totalCount,
+        ];
+
+        $response->send();
+    }
+
+    private function handleSort(
+        Sort $sort,
+        Pagination $pagination,
+        Session $session,
+        Request $request,
+        array $models
+    ): void {
+        $session->set('c_sort', $sort->attributeOrders);
+        $pagination->setPage(0);
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_JSON;
+        $response->data = [
+            'data' => $models,
+            'attributeOrders' => $sort->attributeOrders,
+            'links' => $pagination->getLinks(),
+            'lastPage' => $pagination->pageCount,
+            'totalCount' => $pagination->totalCount,
+            'sortUrl' => $sort->createUrl(ltrim($request->get('sort'), '-')),
+            'page' => $pagination->getPage(),
+            'limit' => $pagination->pageSize,
+            'totalCount' => $pagination->totalCount
+        ];
+
+        $response->send();
     }
 }

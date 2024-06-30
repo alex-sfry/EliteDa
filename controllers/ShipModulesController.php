@@ -9,6 +9,8 @@ use yii\web\Controller;
 use app\behaviors\ShipModulesBehavior;
 use yii\data\Pagination;
 use yii\data\Sort;
+use yii\web\Request;
+use yii\web\Session;
 
 use function app\helpers\d;
 
@@ -55,7 +57,7 @@ class ShipModulesController extends Controller
             $params['get'] = $session->get('mod');
         }
 
-        if ($request->get() || $session->get('mod')) {
+        if (isset($params['get']) || $session->get('mod')) {
             $request->isGet && $session->remove('mod_sort');
 
             $this->form_model->setAttributes($params['get']);
@@ -67,7 +69,6 @@ class ShipModulesController extends Controller
             }
 
             $this->mod_model->setMods($params['ship_modules_arr']);
-            $limit = 50;
 
             switch ($params['get']['sortBy']) {
                 case 'Updated_at':
@@ -140,51 +141,68 @@ class ShipModulesController extends Controller
             $params['pagination'] = $pagination;
 
             if ($request->get('page')) {
-                if ($session->get('mod_sort')) {
-                    $sort->setAttributeOrders($session->get('mod_sort'));
-                }
-
-                $pagination->setPage($request->get('page') - 1);
-                $response = Yii::$app->response;
-                $response->format = Response::FORMAT_JSON;
-                $response->data = [
-                    'limit' => $pagination->pageSize,
-                    'links' => $pagination->getLinks(),
-                    'page' => $pagination->getPage(),
-                    'lastPage' => $pagination->pageCount,
-                    'data' => $params['models'],
-                    'params' => $pagination->params,
-                    'totalCount' => $pagination->totalCount,
-                    'attributeOrders' => $sort->attributeOrders,
-                    'mod_sort' => $session->get('mod_sort')
-                ];
-                $response->send();
+                $this->handlePagination($sort, $pagination, $session, $request, $params['models']);
             }
 
             if ($request->get('sort')) {
-                $session->set('mod_sort', $sort->attributeOrders);
-                $pagination->setPage(0);
-
-                $response = Yii::$app->response;
-                $response->format = Response::FORMAT_JSON;
-                $response->data = [
-                    'data' => $params['models'],
-                    'sort' => $sort,
-                    'attributeOrders' => $sort->attributeOrders,
-                    'links' => $pagination->getLinks(),
-                    'lastPage' => $pagination->pageCount,
-                    'totalCount' => $pagination->totalCount,
-                    'sortUrl' => $sort->createUrl(ltrim($request->get('sort'), '-')),
-                    'page' => $pagination->getPage(),
-                    'limit' => $pagination->pageSize,
-                    'totalCount' => $pagination->totalCount
-                ];
-                $response->send();
+                $this->handleSort($sort, $pagination, $session, $request, $params['models']);
             }
 
             return $this->render('index', $params);
         }
 
         return $this->render('index', $params);
+    }
+
+    private function handlePagination(
+        Sort $sort,
+        Pagination $pagination,
+        Session $session,
+        Request $request,
+        array $models
+    ): void {
+        if ($session->get('c_sort')) {
+            $sort->setAttributeOrders($session->get('c_sort'));
+        }
+
+        $pagination->setPage($request->get('page') - 1);
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_JSON;
+        $response->data = [
+            'limit' => $pagination->pageSize,
+            'links' => $pagination->getLinks(),
+            'page' => $pagination->getPage(),
+            'lastPage' => $pagination->pageCount,
+            'data' => $models,
+            'totalCount' => $pagination->totalCount,
+        ];
+
+        $response->send();
+    }
+
+    private function handleSort(
+        Sort $sort,
+        Pagination $pagination,
+        Session $session,
+        Request $request,
+        array $models
+    ): void {
+        $session->set('c_sort', $sort->attributeOrders);
+        $pagination->setPage(0);
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_JSON;
+        $response->data = [
+            'data' => $models,
+            'attributeOrders' => $sort->attributeOrders,
+            'links' => $pagination->getLinks(),
+            'lastPage' => $pagination->pageCount,
+            'totalCount' => $pagination->totalCount,
+            'sortUrl' => $sort->createUrl(ltrim($request->get('sort'), '-')),
+            'page' => $pagination->getPage(),
+            'limit' => $pagination->pageSize,
+            'totalCount' => $pagination->totalCount
+        ];
+
+        $response->send();
     }
 }
