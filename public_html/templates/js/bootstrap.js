@@ -5979,8 +5979,6 @@ class TemplateFactory extends _config_js__WEBPACK_IMPORTED_MODULE_1__["default"]
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
 /*!*********************************************!*\
   !*** ./src/script/bootstrapJS/bootstrap.js ***!
   \*********************************************/
@@ -6002,8 +6000,6 @@ var __webpack_exports__ = {};
 // import '../../../node_modules/bootstrap/js/src/tab.js';
 // import '../../../node_modules/bootstrap/js/src/toast.js';
 // import '../../../node_modules/bootstrap/js/src/tooltip.js';
-})();
-
 /******/ })()
 ;
 //# sourceMappingURL=bootstrap.js.map

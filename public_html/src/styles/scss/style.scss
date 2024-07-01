@@ -53,6 +53,10 @@ body {
     color: #000000 !important;
 }
 
+.white-space-nw {
+    white-space: nowrap;
+}
+
 .min-w-f-content {
     min-width: fit-content;
 }
@@ -630,7 +634,7 @@ table {
 .engineers-header {
     th:first-child {
         min-width: 120px;
-        white-space: nowrap;
+        @extend .white-space-nw;
     }
 }
 
@@ -643,7 +647,7 @@ table {
         .engineers-cnt tbody tr td:nth-child(2),
         .engineers-cnt tbody tr td:nth-child(4) {
             @extend .min-w-f-content;
-            white-space: nowrap;
+            @extend .white-space-nw;
         }
     }
 
@@ -688,7 +692,7 @@ table {
 
     th {
         @extend .min-w-f-content;
-        white-space: nowrap;
+        @extend .white-space-nw;
         background-color: $body-tertiary-bg;
         border-right: 1px solid $dark;
     }
