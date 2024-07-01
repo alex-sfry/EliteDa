@@ -127,6 +127,7 @@ $config = [
                 'trade-routes' => 'trade-routes/index',
                 'materials' => 'materials/index',
                 'material-traders' => 'material-traders/index',
+                'rings' => 'rings/index',
                 'user/login' => 'user/login',
                 'user/logout' => 'user/logout',
                 'user/signup' => 'user/signup',
@@ -192,6 +193,9 @@ $config = [
             ],
             'app\models\forms\ContactForm' => [
                 'class' => 'app\models\forms\ContactForm',
+            ],
+            'app\models\search\RingsSearch' => [
+                'class' => 'app\models\search\RingsSearch',
             ],
         ],
     ],

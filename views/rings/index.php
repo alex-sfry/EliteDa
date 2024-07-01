@@ -14,9 +14,18 @@ use function app\helpers\d;
  * @var ActiveDataProvider $dataProvider
  */
 
-$this->params['meta_keywords'] = 'Elite: Dangerous, material traders';
-$this->title = 'Material Traders';
+$this->params['meta_keywords'] = 'Elite: Dangerous, rings, mining, pristine rings';
+$this->title = 'Rings';
 $this->params['breadcrumbs'] = [$this->title];
+
+$dta_options = [
+    '500' => '<= 500',
+    '1000' => '<= 1000',
+    '2000' => '<= 2000',
+    '3000' => '<= 3000',
+    '4000' => '<= 4000',
+];
+
 // d($dataProvider);
 ?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg fs-7">
@@ -27,7 +36,7 @@ $this->params['breadcrumbs'] = [$this->title];
                     <h1 class="mt-2 text-center sintony-bold"><?= $this->title ?></h1>
                     <div class="mt-tr-ref-idd ms-auto d-flex justify-content-end">
                         <?= Html::beginForm(
-                            [Url::to(ArrayHelper::merge(['/material-traders/index'], $queryParams))],
+                            [Url::to(ArrayHelper::merge(['/rings/index'], $queryParams))],
                             'get',
                             ['id' => 'mt-form', 'class' => 'bg-light p-1 rounded-2', 'novalidate' => true]
                         ) ?>
@@ -50,55 +59,49 @@ $this->params['breadcrumbs'] = [$this->title];
                     <?= GridView::widget([
                         'dataProvider' => $dataProvider,
                         'filterModel' => $searchModel,
+                        'headerRowOptions' => ['class' => 'white-space-nw'],
+                        'rowOptions' => ['class' => 'white-space-nw'],
                         'columns' => [
                             [
-                                'attribute' => 'material_type',
-                                'filter' => ['Encoded' => 'Encoded', 'Manufactured' => 'Manufactured', 'Raw' => 'Raw'],
+                                'attribute' => 'name',
+                                'label' => 'Ring name',
+                            ],
+                            [
+                                'attribute' => 'type',
+                                'label' => 'Ring type',
+                                'filter' => [
+                                    'Metal Rich' => 'Metal Rich',
+                                    'Icy' => 'Icy',
+                                    'Rocky' => 'Rocky',
+                                    'Metallic' => 'Metallic',
+                                ],
                                 'filterInputOptions' => [
                                     'class' => 'form-select form-select-sm',
-                                    'id' => null
-                                ]
+                                ],
                             ],
                             [
-                                'attribute' => 'system.name',
+                                'attribute' => 'reserve',
+                                'label' => 'Reserve',
+                                'value' => function ($model) {
+                                    return str_replace('Resources', '', $model->reserve);
+                                },
+                            ],
+                            [
+                                'attribute' => 'system_name',
                                 'label' => 'System',
-                                'value' => function ($model) {
-                                    return Html::a(
-                                        Html::encode($model->system->name),
-                                        Url::toRoute(["system/{$model->system->id}"]),
-                                        ['class' => [
-                                            'text-decoration-underline',
-                                            'link-underline-primary',
-                                            'table-link'
-                                            ]
-                                        ]
-                                    );
-                                },
-                                'format' => 'raw'
+                                'contentOptions' => ['class' => 'min-w-f-content']
                             ],
                             [
-                                'attribute' => 'station.name',
-                                'label' => 'Station',
-                                'value' => function ($model) {
-                                    return Html::a(
-                                        Html::encode($model->station->name),
-                                        Url::toRoute(["station/{$model->station->id}"]),
-                                        ['class' => [
-                                            'text-decoration-underline',
-                                            'link-underline-primary',
-                                            'table-link'
-                                            ]
-                                        ]
-                                    );
-                                },
-                                'format' => 'raw'
-                            ],
-                            [
-                                'attribute' => 'station.type',
-                                'label' => 'Station type'
+                                'attribute' => 'distance_to_arrival',
+                                'label' => 'Distance from star (ls)',
+                                'filter' => $dta_options,
+                                'filterInputOptions' => [
+                                    'class' => 'form-select form-select-sm',
+                                ],
                             ],
                             [
                                 'attribute' => 'distance',
+                                'label' => 'Distance (LY)',
                                 'value' => function ($model) {
                                     return $model
                                             ->distance . ' (' . Yii::$app->session->get('mt')['refSysStation'] . ')';
