@@ -16,7 +16,7 @@ class m240613_153351_create_rings_table extends Migration
             'name' => $this->string(255),
             'type' => $this->string(50),
             'system_name' => $this->string(255),
-            'distance_to_arrival' => $this->string(50),
+            'distance_to_arrival' => $this->integer(),
             'body_name' => $this->string(255),
             'reserve' => $this->string(50),
             'timestamp' => $this->string(50),
