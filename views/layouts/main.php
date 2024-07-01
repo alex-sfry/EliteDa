@@ -49,7 +49,6 @@ if (!YII_ENV_DEV) {
             <p>This website use cookies to ensure you get the best experience on our website.</p>
             <div class="buttons">
                 <button class="item">I understand</button>
-                <!-- <a href="#" class="item">Learn more</a> -->
             </div>
         </div>
     </div>
@@ -205,6 +204,12 @@ if (!YII_ENV_DEV) {
                                                     dropdown-item"
                                             href="<?= Url::to(['stations/index']) ?>">
                                             stations
+                                        </a>
+                                        <a
+                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item"
+                                            href="<?= Url::to(['rings/index']) ?>">
+                                            rings
                                         </a>
                                     </li>
                                 </ul>
