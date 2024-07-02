@@ -12,7 +12,7 @@ class MaterialTradersController extends Controller
     public function __construct(
         $id,
         $module,
-        private \app\models\search\MaterialTradersSearch $searchModel,
+        protected \app\models\search\MaterialTradersSearch $searchModel,
         $config = []
     ) {
         parent::__construct($id, $module, $config);

@@ -15,7 +15,7 @@ use yii\helpers\Url;
 
 class ShipMods extends Model
 {
-    private array $mods_arr = [];
+    protected array $mods_arr = [];
 
     public function behaviors(): array
     {

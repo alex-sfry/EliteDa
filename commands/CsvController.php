@@ -12,7 +12,7 @@ use yii\helpers\VarDumper;
 
 class CsvController extends Controller
 {
-    private array $csv_arr = [];
+    protected array $csv_arr = [];
 
     public function actionIndex(): int
     {

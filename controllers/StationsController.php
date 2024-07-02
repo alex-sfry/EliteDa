@@ -20,7 +20,7 @@ use function app\helpers\d;
 
 class StationsController extends Controller
 {
-    private array $services = [];
+    protected array $services = [];
 
     public function actionIndex(\app\models\search\StationsInfoSearch $searchModel): string
     {
@@ -224,7 +224,7 @@ class StationsController extends Controller
          ]);
     }
 
-    private function getStationServices(int $market_id): void
+    protected function getStationServices(int $market_id): void
     {
         $this->services['market'] = Markets::find()
             ->where(['market_id' => $market_id])

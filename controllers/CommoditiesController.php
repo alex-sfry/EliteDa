@@ -19,8 +19,8 @@ class CommoditiesController extends Controller
     public function __construct(
         $id,
         $module,
-        private \app\models\forms\CommoditiesForm $form_model,
-        private \app\models\Commdts $c_model,
+        protected \app\models\forms\CommoditiesForm $form_model,
+        protected \app\models\Commdts $c_model,
         $config = []
     ) {
         parent::__construct($id, $module, $config);
@@ -168,7 +168,7 @@ class CommoditiesController extends Controller
         return $this->render('index', $params);
     }
 
-    private function handlePagination(
+    protected function handlePagination(
         Sort $sort,
         Pagination $pagination,
         Session $session,
@@ -194,7 +194,7 @@ class CommoditiesController extends Controller
         $response->send();
     }
 
-    private function handleSort(
+    protected function handleSort(
         Sort $sort,
         Pagination $pagination,
         Session $session,

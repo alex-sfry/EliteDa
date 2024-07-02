@@ -13,7 +13,7 @@ use function app\helpers\d;
 
 class TradeRoutesController extends Controller
 {
-    public function __construct($id, $module, private \app\models\forms\TradeRoutesForm $form_model, $config = [])
+    public function __construct($id, $module, protected \app\models\forms\TradeRoutesForm $form_model, $config = [])
     {
         parent::__construct($id, $module, $config);
     }

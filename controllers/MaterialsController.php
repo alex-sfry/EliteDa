@@ -9,7 +9,7 @@ use function app\helpers\d;
 
 class MaterialsController extends Controller
 {
-    public function __construct($id, $module, private \app\models\search\MaterialsSearch $searchModel, $config = [])
+    public function __construct($id, $module, protected \app\models\search\MaterialsSearch $searchModel, $config = [])
     {
         parent::__construct($id, $module, $config);
     }

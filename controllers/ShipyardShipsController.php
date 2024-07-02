@@ -17,8 +17,8 @@ class ShipyardShipsController extends Controller
     public function __construct(
         $id,
         $module,
-        private \app\models\forms\ShipyardShipsForm $form_model,
-        private \app\models\ShipyardShips $ships_model,
+        protected \app\models\forms\ShipyardShipsForm $form_model,
+        protected \app\models\ShipyardShips $ships_model,
         $config = []
     ) {
         parent::__construct($id, $module, $config);
@@ -147,7 +147,7 @@ class ShipyardShipsController extends Controller
         return $this->render('index', $params);
     }
 
-    private function handlePagination(
+    protected function handlePagination(
         Sort $sort,
         Pagination $pagination,
         Session $session,
@@ -173,7 +173,7 @@ class ShipyardShipsController extends Controller
         $response->send();
     }
 
-    private function handleSort(
+    protected function handleSort(
         Sort $sort,
         Pagination $pagination,
         Session $session,

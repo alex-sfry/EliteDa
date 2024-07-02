@@ -13,7 +13,7 @@ use yii\helpers\VarDumper;
 
 class JsonController extends Controller
 {
-    private array $result = [];
+    protected array $result = [];
 
     public function actionIndex(): int
     {
@@ -34,7 +34,7 @@ class JsonController extends Controller
     /**
      * @param string $json path to json file.
      */
-    private function createArrayFromJson(string $json = '')
+    protected function createArrayFromJson(string $json = '')
     {
         if (!$json) {
             echo 'Provide path to json file' . "\n";
@@ -71,7 +71,7 @@ class JsonController extends Controller
     /**
      * @param string $json path to json file.
      */
-    private function createArrayFromJsonForCoreInt(string $json = '')
+    protected function createArrayFromJsonForCoreInt(string $json = '')
     {
         if (!$json) {
             echo 'Provide path to json file' . "\n";

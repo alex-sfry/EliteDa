@@ -12,7 +12,7 @@ use function app\helpers\d;
 
 class EngineersController extends Controller
 {
-    public function __construct($id, $module, private \app\models\search\EngineersSearch $searchModel, $config = [])
+    public function __construct($id, $module, protected \app\models\search\EngineersSearch $searchModel, $config = [])
     {
         parent::__construct($id, $module, $config);
     }

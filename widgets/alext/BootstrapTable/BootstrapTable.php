@@ -50,7 +50,7 @@ class BootstrapTable extends Widget
     }
 
 
-    private function renderTable(): string
+    protected function renderTable(): string
     {
         $headers = '';
 
@@ -124,7 +124,7 @@ class BootstrapTable extends Widget
         );
     }
 
-    private function renderPagination(): string
+    protected function renderPagination(): string
     {
         $page_count_info = $this->getPageCounter();
 
@@ -147,7 +147,7 @@ class BootstrapTable extends Widget
         );
     }
 
-    private function getPageCounter(): string
+    protected function getPageCounter(): string
     {
         /*calculations for pages info near pagination buttons*/
         $current_page = $this->pagination->getPage() + 1;

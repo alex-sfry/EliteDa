@@ -19,8 +19,8 @@ class ShipModulesController extends Controller
     public function __construct(
         $id,
         $module,
-        private \app\models\forms\ShipModulesForm $form_model,
-        private \app\models\ShipMods $mod_model,
+        protected \app\models\forms\ShipModulesForm $form_model,
+        protected \app\models\ShipMods $mod_model,
         $config = []
     ) {
         parent::__construct($id, $module, $config);
@@ -154,7 +154,7 @@ class ShipModulesController extends Controller
         return $this->render('index', $params);
     }
 
-    private function handlePagination(
+    protected function handlePagination(
         Sort $sort,
         Pagination $pagination,
         Session $session,
@@ -180,7 +180,7 @@ class ShipModulesController extends Controller
         $response->send();
     }
 
-    private function handleSort(
+    protected function handleSort(
         Sort $sort,
         Pagination $pagination,
         Session $session,

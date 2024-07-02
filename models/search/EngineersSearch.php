@@ -99,7 +99,7 @@ class EngineersSearch extends Model
         ]);
     }
 
-    private function getSystemsStationsIds(array $data): array
+    protected function getSystemsStationsIds(array $data): array
     {
         $system_names = array_map(function ($item) {
             return $item['system'];

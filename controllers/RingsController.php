@@ -13,7 +13,7 @@ class RingsController extends Controller
     public function __construct(
         $id,
         $module,
-        private \app\models\search\RingsSearch $searchModel,
+        protected \app\models\search\RingsSearch $searchModel,
         $config = []
     ) {
         parent::__construct($id, $module, $config);

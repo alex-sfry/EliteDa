@@ -16,20 +16,20 @@ use function app\helpers\d;
 
 class TradeRoutes extends Model
 {
-    private $min_supply_demand;
-    private int $cargo;
-    private int $profit;
-    private int $max_distance;
-    private Expression $distance_expr;
-    private bool $check_round_trip = false;
-    private string $st_name;
-    private string $sys_name;
-    private string $target_sys;
-    private string $target_st;
-    private string $pad;
-    private string $incl_surface;
-    private $dta;
-    private string $data_age;
+    protected $min_supply_demand;
+    protected int $cargo;
+    protected int $profit;
+    protected int $max_distance;
+    protected Expression $distance_expr;
+    protected bool $check_round_trip = false;
+    protected string $st_name;
+    protected string $sys_name;
+    protected string $target_sys;
+    protected string $target_st;
+    protected string $pad;
+    protected string $incl_surface;
+    protected $dta;
+    protected string $data_age;
 
     public function __construct(array $get)
     {
@@ -97,7 +97,7 @@ class TradeRoutes extends Model
         return $models;
     }
 
-    private function removeDuplicates(array $arr, string $key): array
+    protected function removeDuplicates(array $arr, string $key): array
     {
         $uniqueCommodities = [];
         $unique_arr = [];
@@ -115,7 +115,7 @@ class TradeRoutes extends Model
         return $unique_arr;
     }
 
-    private function getSourceStation(): array|bool
+    protected function getSourceStation(): array|bool
     {
         return (new Query())
             ->from('stations st')
@@ -133,7 +133,7 @@ class TradeRoutes extends Model
             ->one();
     }
 
-    private function getSourceMarketQuery(int $market_id): Query
+    protected function getSourceMarketQuery(int $market_id): Query
     {
         return (new Query())
             ->select([
@@ -150,7 +150,7 @@ class TradeRoutes extends Model
             ->andWhere(['>', 'm1.stock', 1]);
     }
 
-    private function getSystemsInRadius(): array
+    protected function getSystemsInRadius(): array
     {
         return (new Query())
             ->select(['id'])
@@ -159,7 +159,7 @@ class TradeRoutes extends Model
             ->all();
     }
 
-    private function getTargetMarkets(Query $source_market): array
+    protected function getTargetMarkets(Query $source_market): array
     {
         $query =
             (new Query())
@@ -224,7 +224,7 @@ class TradeRoutes extends Model
         return $dir_routes;
     }
 
-    private function getSourceMarkeRoundQuery(array $source_station): Query
+    protected function getSourceMarkeRoundQuery(array $source_station): Query
     {
         return (new Query())
             ->select([
@@ -239,7 +239,7 @@ class TradeRoutes extends Model
             ->andWhere(['>', 'm.demand', 1]);
     }
 
-    private function calcRoundTrip(array $target_markets, array $source_station): array
+    protected function calcRoundTrip(array $target_markets, array $source_station): array
     {
         $ids = ArrayHelper::getColumn($target_markets, 'target_market_id');
 
@@ -272,7 +272,7 @@ class TradeRoutes extends Model
         return $round_markets;
     }
 
-    private function modifyModels(array $target_markets, array $round_trips = []): array
+    protected function modifyModels(array $target_markets, array $round_trips = []): array
     {
         /** @var CommoditiesBehavior|StationBehavior|TradeRoutes $this */
 

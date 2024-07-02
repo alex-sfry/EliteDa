@@ -8,7 +8,7 @@ use yii\helpers\Json;
 
 class ShipyardShipsBehavior extends Behavior
 {
-    private array $shipsReqArr = [
+    protected array $shipsReqArr = [
         'cMainSelect' => [],
         'refSystem' => 'Sol',
         'landingPadSize' => 'L',

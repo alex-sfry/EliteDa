@@ -8,7 +8,7 @@ use yii\helpers\Json;
 
 class CommoditiesBehavior extends Behavior
 {
-    private array $commoditiesReqArr = [
+    protected array $commoditiesReqArr = [
         'commodities' => [],
         'refSystem' => 'Sol',
         'landingPadSize' => 'S',

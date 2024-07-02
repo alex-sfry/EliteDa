@@ -6,7 +6,7 @@ use yii\base\Behavior;
 
 class StationBehavior extends Behavior
 {
-    private array $landingPadSizes = [
+    protected array $landingPadSizes = [
         'Coriolis Starport' => 'L',
         'Ocellus Starport' => 'L',
         'Orbis Starport' => 'L',

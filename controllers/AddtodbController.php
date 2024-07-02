@@ -102,7 +102,7 @@ class AddtodbController extends Controller
         return $this->render('engineers', $params);
     }
 
-    private function parseEngineersTable(array $table, array $sum_table, string $target): array
+    protected function parseEngineersTable(array $table, array $sum_table, string $target): array
     {
         $arr = [];
         $arr2 = [];

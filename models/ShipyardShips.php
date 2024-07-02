@@ -17,7 +17,7 @@ use function app\helpers\d;
 
 class ShipyardShips extends Model
 {
-    private array $ships_arr = [];
+    protected array $ships_arr = [];
 
     public function setShipsArr(array $ships_arr): void
     {

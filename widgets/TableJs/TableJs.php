@@ -37,7 +37,7 @@ class TableJs extends Widget
         );
     }
 
-    private function getColumnLabels(): array
+    protected function getColumnLabels(): array
     {
         $labels = [];
 
@@ -48,7 +48,7 @@ class TableJs extends Widget
         return $labels;
     }
 
-    private function getFilter(): array
+    protected function getFilter(): array
     {
         $filters = [];
 
@@ -79,7 +79,7 @@ class TableJs extends Widget
         return $filters;
     }
 
-    private function getFiltersQty(): array
+    protected function getFiltersQty(): array
     {
         $filtered_columns = [];
 
@@ -92,7 +92,7 @@ class TableJs extends Widget
         return $filtered_columns;
     }
 
-    private function createStyles($filtered_columns): string
+    protected function createStyles($filtered_columns): string
     {
         $styles = '';
 
