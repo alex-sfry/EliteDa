@@ -39,9 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'mount',
                 'category',
                 //'guidance',
-                //'ship',
-                //'class',
-                //'rating',
+                'ship',
+                'class',
+                'rating',
                 //'entitlement:ntext',
                 [
                     'class' => ActionColumn::class,

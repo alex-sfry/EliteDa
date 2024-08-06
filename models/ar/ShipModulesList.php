@@ -34,7 +34,7 @@ class ShipModulesList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'symbol', 'name', 'class', 'rating'], 'required'],
+            [['id', 'symbol', 'name'], 'required'],
             [['id', 'class'], 'integer'],
             [['entitlement'], 'string'],
             [['symbol', 'name'], 'string', 'max' => 255],
