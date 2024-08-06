@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">
+<div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form mb-3">
     <?= "<?php " ?>$form = ActiveForm::begin([
         'options' => [
         'class' => 'd-flex flex-column gap-2'

@@ -23,6 +23,7 @@ use <?= $generator->indexWidgetType === 'grid' ? "yii\\grid\\GridView" : "yii\\w
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>;
+$this->params['breadcrumbs'][] = ['label' => 'Admin', 'url' => ['admin/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between">

@@ -25,11 +25,13 @@ use yii\helpers\Html;
 /** @var <?= ltrim($generator->modelClass, '\\') ?> $model */
 
 $this->title = <?= $title ?>;
+$this->params['breadcrumbs'][] = ['label' => 'Admin', 'url' => ['admin/index']];
 $this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttribute() ?>, 'url' => ['view', <?= $urlParams ?>]];
 $this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
 ?>
-<div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-update">
+<main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between">
+    <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-update container-xxl px-5 mt-3">
 
     <h1><?= '<?= ' ?>Html::encode($this->title) ?></h1>
 
@@ -37,4 +39,6 @@ $this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
         'model' => $model,
     ]) ?>
 
-</div>
+    </div>
+</main>
+
