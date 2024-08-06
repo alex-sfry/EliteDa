@@ -17,39 +17,51 @@ $this->params['breadcrumbs'][] = $this->title;
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between">
     <div class="ship-modules-list-index container-xxl px-5 mt-3">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Ship Modules List', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+        <p>
+            <?= Html::a('Create Ship Modules List', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
 
-                    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-    
-            <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
+        <?php
+        // echo $this->render('_search', ['model' => $searchModel]);
+        ?>
 
-                    'id',
-            'symbol',
-            'name',
-            'mount',
-            'category',
-            //'guidance',
-            //'ship',
-            //'class',
-            //'rating',
-            //'entitlement:ntext',
-        [
-        'class' => ActionColumn::className(),
-        'urlCreator' => function ($action, ShipModulesList $model, $key, $index, $column) {
-        return Url::toRoute([$action, 'id' => $model->id]);
-        }
-        ],
-        ],
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+
+                'id',
+                'symbol',
+                'name',
+                'mount',
+                'category',
+                //'guidance',
+                //'ship',
+                //'class',
+                //'rating',
+                //'entitlement:ntext',
+                [
+                    'class' => ActionColumn::class,
+                    'urlCreator' => function ($action, ShipModulesList $model, $key, $index, $column) {
+                        return Url::toRoute([$action, 'id' => $model->id]);
+                    }
+                ],
+            ],
+            'pager' => [
+                'class' => 'yii\bootstrap5\LinkPager',
+                'firstPageLabel' => 'first',
+                'lastPageLabel' => 'last',
+                'prevPageCssClass' => 'prev-page',
+                'nextPageCssClass' => 'next-page',
+                'options' => [
+                    'class' => 'd-flex justify-content-center'
+                ]
+            ],
         ]); ?>
-    
-    
+
+
     </div>
 </main>
