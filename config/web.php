@@ -48,7 +48,7 @@ $config = [
                 ],
                 'yii\web\YiiAsset' => [
                     'sourcePath' => YII_ENV_DEV ? '@yii/assets' : '@app/assetsMin',
-                    'js' => [ 'yii.js']
+                    'js' => ['yii.js']
                 ],
                 'yii\grid\GridViewAsset' => [
                     'sourcePath' => YII_ENV_DEV ? '@yii/assets' : '@app/assetsMin',
@@ -108,7 +108,7 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
-               'contact' => 'site/contact',
+                'contact' => 'site/contact',
                 'engineers' => 'engineers/index',
                 'engineer/<id:\w+>' => 'engineers/details',
                 'station/ships/<id:\w+>' => 'stations/ships',
@@ -131,6 +131,16 @@ $config = [
                 'user/login' => 'user/login',
                 'user/logout' => 'user/logout',
                 'user/signup' => 'user/signup',
+                'admin/ships-list/view' => 'ships-list/view',
+                'admin/ships-list/update' => 'ships-list/update',
+                'admin/ships-list/delete' => 'ships-list/delete',
+                'admin/ships-list/create' => 'ships-list/create',
+                'admin/ships-list' => 'ships-list/index',
+                'admin/ship-modules-list/view' => 'ship-modules-list/view',
+                'admin/ship-modules-list/update' => 'ship-modules-list/update',
+                'admin/ship-modules-list/delete' => 'ship-modules-list/delete',
+                'admin/ship-modules-list/create' => 'ship-modules-list/create',
+                'admin/ship-modules-list' => 'ship-modules-list/index',
                 '<action:(captcha)>'  => 'site/<action>',
                 // '<controller>/<action>' =>  '<controller>/<action>',
                 '' => 'site/index'
@@ -216,10 +226,23 @@ if (YII_ENV_DEV) {
     ];
 
     $config['bootstrap'][] = 'gii';
+    // $config['modules']['gii'] = [
+    //     'class' => 'yii\gii\Module',
+    //     // uncomment the following to add your IP if you are not connecting from localhost.
+    //     //'allowedIPs' => ['127.0.0.1', '::1'],
+    // ];
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
         //'allowedIPs' => ['127.0.0.1', '::1'],
+        'generators' => [ //here
+            'crud' => [ // generator name
+                'class' => 'yii\gii\generators\crud\Generator', // generator class
+                'templates' => [ //setting for out templates
+                    'myCrud' => '@app/giiTemplates/crud/default', // template name => path to template
+                ]
+            ]
+        ],
     ];
 }
 
