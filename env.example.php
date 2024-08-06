@@ -12,8 +12,10 @@
  *
  */
 
-define('YII_DEBUG', true);
-define('YII_ENV', 'dev');
+defined('YII_DEBUG') or define('YII_DEBUG', true);
+defined('YII_ENV') or define('YII_ENV', 'dev');
+
+define('HOST_NAME', 'elida');
 define('CSFR_VALIDATION_KEY', 'y6-kI8DCYXsT-N2nIJALHgB291FX8bGO');
 define(
     'MAIL_TRANSPORT',

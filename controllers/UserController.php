@@ -47,8 +47,8 @@ class UserController extends Controller
         $model = new LoginForm();
         $model->referer = isset(Yii::$app->request->referrer) ? Yii::$app->request->referrer : null;
         if ($model->load(Yii::$app->request->post())) {
-            if ($model->login() && Yii::$app->request->hostName === 'elida') {
-                return $this->redirect(['admin/index']);
+            if ($model->login() && Yii::$app->request->hostName === HOST_NAME) {
+                return $this->redirect('/admin');
             }
         }
 
