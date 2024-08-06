@@ -3,6 +3,7 @@
 namespace app\commands;
 
 use app\models\ar\Commodities;
+use app\models\ar\ShipModulesList;
 use app\models\ar\ShipsList;
 use Yii;
 use yii\console\Controller;
@@ -33,7 +34,7 @@ class CsvController extends Controller
     /**
      * @param string $csv path to csv file.
      */
-    public function createArrayFromCsv(string $csv = ''): int
+    public function createArrayFromCsv(string $csv = ''): array
     {
         if (!$csv) {
             echo 'Provide path to csv file' . "\n";
@@ -42,12 +43,13 @@ class CsvController extends Controller
 
         $rows = array_map('str_getcsv', file(Yii::getAlias("@app/$csv")));
         $header = array_shift($rows);
+        $csv_arr = [];
 
         foreach ($rows as $row) {
-            $this->csv_arr[] = array_combine($header, $row);
+            $csv_arr[] = array_combine($header, $row);
         }
 
-        return ExitCode::OK;
+        return $csv_arr;
     }
 
     /**
@@ -55,14 +57,19 @@ class CsvController extends Controller
      */
     public function actionOutfitting(string $csv = ''): int
     {
+        $csv_arr = [];
+
         if (!$csv) {
-            echo 'Provide path to csv file' . "\n";
-            return ExitCode::OK;
+            $csv_arr = ShipModulesList::find()
+                ->asArray()
+                ->all();
+        } else {
+            $csv_arr = $this->createArrayFromCsv($csv);
         }
 
         $ship_names = ShipsList::find()
-        ->asArray()
-        ->all();
+            ->asArray()
+            ->all();
 
         $symbols = [];
         $ships_symb_names = [];
@@ -72,10 +79,9 @@ class CsvController extends Controller
             $ships_symb_names[$value['symbol']] = $value['name'];
         }
 
-        $this->createArrayFromCsv($csv);
         $ship_modules_arr = [];
 
-        foreach ($this->csv_arr as &$item) {
+        foreach ($csv_arr as &$item) {
             foreach ($symbols as $symbol) {
                 if (str_starts_with(strtolower($item['symbol']), $symbol)) {
                     $item['symbol'] = str_ireplace($symbol, $symbol, $item['symbol']);
@@ -108,15 +114,15 @@ class CsvController extends Controller
             Json::encode($ship_modules_arr, JSON_PRETTY_PRINT)
         );
 
-        $batch_rows = array_map(function ($item) {
-            return array_values($item);
-        }, $this->csv_arr);
+        // $batch_rows = array_map(function ($item) {
+        //     return array_values($item);
+        // }, $csv_arr);
 
-        Yii::$app->db->createCommand()
-            ->batchInsert('ship_modules_list', [
-                'id', 'symbol', 'category', 'name', 'mount', 'guidance', 'ship', 'class', 'rating', 'entitlement'
-            ], $batch_rows)
-            ->execute();
+        // Yii::$app->db->createCommand()
+        //     ->batchInsert('ship_modules_list', [
+        //         'id', 'symbol', 'category', 'name', 'mount', 'guidance', 'ship', 'class', 'rating', 'entitlement'
+        //     ], $batch_rows)
+        //     ->execute();
 
         return ExitCode::OK;
     }
@@ -126,17 +132,21 @@ class CsvController extends Controller
      */
     public function actionShipyard(string $csv = ''): int
     {
+        $csv_arr = [];
+
         if (!$csv) {
-            echo 'Provide path to csv file' . "\n";
-            return ExitCode::OK;
+            $csv_arr = ShipsList::find()
+                ->asArray()
+                ->all();
+        } else {
+            $csv_arr = $this->createArrayFromCsv($csv);
         }
 
-        $this->createArrayFromCsv($csv);
         $ships_arr = [];
 
-        foreach ($this->csv_arr as $key => $value) {
+        foreach ($csv_arr as $key => $value) {
             $ships_arr[$value['symbol']] = $value['name'];
-            $this->csv_arr[$key]['symbol'] = strtolower($value['symbol']);
+            $csv_arr[$key]['symbol'] = strtolower($value['symbol']);
         }
 
         $ships_arr = array_change_key_case($ships_arr);
@@ -146,15 +156,15 @@ class CsvController extends Controller
             Json::encode($ships_arr, JSON_PRETTY_PRINT)
         );
 
-        $batch_rows = array_map(function ($item) {
-            return array_values($item);
-        }, $this->csv_arr);
+        // $batch_rows = array_map(function ($item) {
+        //     return array_values($item);
+        // }, $csv_arr);
 
-        Yii::$app->db->createCommand()
-            ->batchInsert('ships_list', [
-                'id', 'symbol', 'name', 'entitlement'
-            ], $batch_rows)
-            ->execute();
+        // Yii::$app->db->createCommand()
+        //     ->batchInsert('ships_list', [
+        //         'id', 'symbol', 'name', 'entitlement'
+        //     ], $batch_rows)
+        //     ->execute();
 
         return ExitCode::OK;
     }
@@ -169,10 +179,10 @@ class CsvController extends Controller
             return ExitCode::OK;
         }
 
-        $this->createArrayFromCsv($csv);
+        $csv_arr = $this->createArrayFromCsv($csv);
         $commodities_arr = [];
 
-        foreach ($this->csv_arr as $key => $value) {
+        foreach ($csv_arr as $key => $value) {
             $commodities_arr[strtolower($value['symbol'])] = $value['name'];
         }
 
@@ -185,19 +195,17 @@ class CsvController extends Controller
 
         $batch_rows = array_map(function ($item) {
             return array_values($item);
-        }, $this->csv_arr);
+        }, $csv_arr);
 
         $cmd_db_list = Commodities::find()
-        ->asArray()
-        ->all();
-
-        // VarDumper::dump(Json::decode(file_get_contents(Yii::$app->basePath . '/data/commodities.json')));
+            ->asArray()
+            ->all();
 
         Yii::$app->db->createCommand()
-        ->batchInsert('commodities', [
-            'id', 'symbol', 'category', 'name'
-        ], $batch_rows)
-        ->execute();
+            ->batchInsert('commodities', [
+                'id', 'symbol', 'category', 'name'
+            ], $batch_rows)
+            ->execute();
 
         return ExitCode::OK;
     }
