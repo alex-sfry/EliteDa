@@ -7,11 +7,13 @@ use yii\widgets\DetailView;
 /** @var app\models\ar\ShipModulesList $model */
 
 $this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Admin', 'url' => ['admin/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Ship Modules Lists', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="ship-modules-list-view">
+<main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between">
+    <div class="ship-modules-list-view container-xxl px-5 mt-3">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -42,4 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
-</div>
+    </div>
+</main>
+

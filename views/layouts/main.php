@@ -36,12 +36,14 @@ if (!YII_ENV_DEV) {
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
+
 <head>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
+
 <body class="d-flex flex-column" style="height:100vh">
-<?php $this->beginBody() ?>
+    <?php $this->beginBody() ?>
     <div class="cookies-consent-wrapper hide">
         <img src="#" alt="">
         <div class="content">
@@ -58,157 +60,113 @@ if (!YII_ENV_DEV) {
             <nav class="navbar navbar-expand-lg bg-header py-0 position-relative z-3">
                 <div class="container-xxl my-0 mx-auto px-3">
                     <a class="logo navbar-brand d-block text-center" href="<?= Url::home() ?>">elida</a>
-                    <button
-                        class="navbar-toggler bg-light-orange"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
+                    <button class="navbar-toggler bg-light-orange" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                            aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <div class="d-flex nowrap justify-content-center align-items-center justify-content-lg-start
                                         align-items-lg-start order-last">
-                                <?php if (Yii::$app->user->isGuest) : ?>
-                                    <a class="sintony-reg text-light" href="<?= Url::to(['user/login']) ?>">Login</a>
-                                <?php else : ?>
-                                    <div class="row justify-content-start flex-row flex-lg-column row-gap-1 g-0">
-                                        <div class="col">
-                                            <span
-                                                class="sintony-reg nowrap text-info text-decoration-underline"
-                                                style=" white-space: nowrap;">
-                                                <?= Yii::$app->user->identity->username ?>
-                                            </span>
-                                        </div>
-                                        <div class="col col-lg-8">
-                                            <a
-                                                href="/user/logout"
-                                                class="sintony-reg text-warning ms-2 ms-lg-0 rounded-1
-                                            text-light bg-info p-1"
-                                                style=" white-space: nowrap;">
-                                                Log out
-                                            </a>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
+                            <?php if (Yii::$app->user->isGuest) : ?>
+                            <a class="sintony-reg text-light" href="<?= Url::to(['user/login']) ?>">Login</a>
+                            <?php else : ?>
+                            <div class="row justify-content-start flex-row flex-lg-column row-gap-1 g-0">
+                                <div class="col">
+                                    <a href="<?= Url::toRoute(['admin/index']) ?>"
+                                       class="sintony-reg btn btn-sm btn-success py-0"
+                                       style=" white-space: nowrap;">
+                                        <?= Yii::$app->user->identity->username ?>
+                                    </a>
+                                </div>
+                                <div class="col col-lg-8">
+                                    <a href="<?= Url::toRoute(['user/logout']) ?>"
+                                       class="sintony-reg btn btn-sm btn-danger py-0"
+                                       style=" white-space: nowrap;">
+                                        Log out
+                                    </a>
+                                </div>
+                            </div>
+                            <?php endif; ?>
                         </div>
                         <ul class="menu navbar-nav d-flex w-100 flex-md-wrap justify-content-center
                             align-content-center gap-lg-5">
                             <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative dropdown">
-                                <a
-                                    class="menu__link nav-link text-uppercase text-light"
-                                    href="#"
-                                    role="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                                <a class="menu__link nav-link text-uppercase text-light" href="#" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
                                     market
                                 </a>
                                 <ul class="dropdown-menu border-light-orange rounded-2 bg-header mt-0 py-0">
                                     <li class="dropdown-item py-0 rounded-2">
-                                        <a
-                                            class="menu__link menu__link_nested nav-link text-uppercase text-light 
-                                            dropdown-item"
-                                            aria-current="page"
-                                            href="<?= Url::to(['commodities/index']) ?>">
+                                        <a class="menu__link menu__link_nested nav-link text-uppercase text-light 
+                                            dropdown-item" aria-current="page"
+                                           href="<?= Url::to(['commodities/index']) ?>">
                                             commodities
                                         </a>
-                                        <a 
-                                            class="menu__link menu__link_nested nav-link text-uppercase text-light 
-                                            dropdown-item"
-                                            href="<?= Url::to(['trade-routes/index']) ?>">
+                                        <a class="menu__link menu__link_nested nav-link text-uppercase text-light 
+                                            dropdown-item" href="<?= Url::to(['trade-routes/index']) ?>">
                                             trade routes
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative dropdown">
-                                <a
-                                    class="menu__link nav-link text-uppercase text-light"
-                                    href="#"
-                                    role="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                                <a class="menu__link nav-link text-uppercase text-light" href="#" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
                                     engineering
                                 </a>
                                 <ul class="dropdown-menu border-light-orange rounded-2 bg-header mt-0 py-0">
                                     <li class="dropdown-item py-0 rounded-2">
-                                        <a
-                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
-                                                    dropdown-item"
-                                            href="<?= Url::to(['engineers/index']) ?>">
+                                        <a class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item" href="<?= Url::to(['engineers/index']) ?>">
                                             engineers
                                         </a>
-                                        <a
-                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
-                                                    dropdown-item"
-                                            href="<?= Url::to(['material-traders/index']) ?>">
+                                        <a class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item" href="<?= Url::to(['material-traders/index']) ?>">
                                             material traders
                                         </a>
-                                        <a
-                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
-                                                    dropdown-item"
-                                            href="<?= Url::to(['materials/index']) ?>">
+                                        <a class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item" href="<?= Url::to(['materials/index']) ?>">
                                             materials
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative dropdown">
-                                <a
-                                    class="menu__link nav-link text-uppercase text-light"
-                                    href="#"
-                                    role="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                                <a class="menu__link nav-link text-uppercase text-light" href="#" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
                                     shipyard
                                 </a>
                                 <ul class="dropdown-menu border-light-orange rounded-2 bg-header mt-0 py-0">
                                     <li class="dropdown-item py-0 rounded-2">
-                                        <a
-                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
-                                                    dropdown-item"
-                                            href="<?= Url::to(['shipyard-ships/index']) ?>">
+                                        <a class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item" href="<?= Url::to(['shipyard-ships/index']) ?>">
                                             ships
                                         </a>
-                                        <a
-                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
-                                                    dropdown-item"
-                                            href="<?= Url::to(['ship-modules/index']) ?>">
+                                        <a class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item" href="<?= Url::to(['ship-modules/index']) ?>">
                                             ship modules
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="menu__item nav-item text-center mb-2 mb-lg-0 position-relative dropdown">
-                                <a
-                                    class="menu__link nav-link text-uppercase text-light"
-                                    href="#"
-                                    role="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false">
+                                <a class="menu__link nav-link text-uppercase text-light" href="#" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
                                     galaxy
                                 </a>
                                 <ul class="dropdown-menu border-light-orange rounded-2 bg-header mt-0 py-0">
                                     <li class="dropdown-item py-0 rounded-2">
-                                        <a
-                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
-                                                    dropdown-item"
-                                            href="<?= Url::to(['systems/index']) ?>">
+                                        <a class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item" href="<?= Url::to(['systems/index']) ?>">
                                             systems
                                         </a>
-                                        <a
-                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
-                                                    dropdown-item"
-                                            href="<?= Url::to(['stations/index']) ?>">
+                                        <a class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item" href="<?= Url::to(['stations/index']) ?>">
                                             stations
                                         </a>
-                                        <a
-                                            class="menu__link menu__link_nested nav-link text-uppercase text-light
-                                                    dropdown-item"
-                                            href="<?= Url::to(['rings/index']) ?>">
+                                        <a class="menu__link menu__link_nested nav-link text-uppercase text-light
+                                                    dropdown-item" href="<?= Url::to(['rings/index']) ?>">
                                             rings
                                         </a>
                                     </li>
@@ -244,11 +202,11 @@ if (!YII_ENV_DEV) {
                         <p class="my-0 text-warning">
                             This website is not an official tool for the game Elite: Dangerous and is not affiliated
                             with Frontier Developments.
-                            All information provided is based on publicly available information and data supplied by 
-                            players, and may not be entirely accurate. 'Elite', the Elite logo, 
-                            the Elite: Dangerous logo, 'Frontier' and the Frontier logo are registered trademarks 
+                            All information provided is based on publicly available information and data supplied by
+                            players, and may not be entirely accurate. 'Elite', the Elite logo,
+                            the Elite: Dangerous logo, 'Frontier' and the Frontier logo are registered trademarks
                             of Frontier Developments plc.
-                            All rights reserved. All other trademarks and copyrights are acknowledged as the property 
+                            All rights reserved. All other trademarks and copyrights are acknowledged as the property
                             of their respective owners.
                         </p>
                     </div>
@@ -256,9 +214,8 @@ if (!YII_ENV_DEV) {
                                 align-items-sm-center">
                         <div class="d-sm-block d-none bg-light px-0 h-100" style="min-width: 2px;"></div>
                         <div class="d-inline-flex d-sm-none bg-light px-0" style="height: 2px;"></div>
-                        <a 
-                            class="footer__link nav-link text-light text-uppercase sintony-bold fs-7 mx-auto"
-                            href="<?= Url::to(['site/contact']) ?>">
+                        <a class="footer__link nav-link text-light text-uppercase sintony-bold fs-7 mx-auto"
+                           href="<?= Url::to(['site/contact']) ?>">
                             contact
                         </a>
                     </div>
@@ -266,10 +223,11 @@ if (!YII_ENV_DEV) {
             </div>
         </footer>
     </div>
-<?php
-$this->endBody();
-?>
+    <?php
+    $this->endBody();
+    ?>
 
 </body>
+
 </html>
 <?php $this->endPage() ?>

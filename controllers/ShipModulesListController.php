@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\ar\ShipModulesList;
 use app\models\search\ShipModulesListSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -13,6 +14,18 @@ use yii\filters\VerbFilter;
  */
 class ShipModulesListController extends Controller
 {
+    /**
+     * @throws \yii\web\ForbiddenHttpException
+     */
+    public function beforeAction(mixed $action): bool
+    {
+        if (!Yii::$app->user->can('accessAdmin')) {
+            throw new \yii\web\ForbiddenHttpException('You are not allowed to access this page');
+        }
+
+        return parent::beforeAction($action);
+    }
+
     /**
      * @inheritDoc
      */

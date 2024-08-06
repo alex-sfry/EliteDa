@@ -10,6 +10,8 @@ use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
 
+use function app\helpers\d;
+
 class UserController extends Controller
 {
     public function behaviors(): array
@@ -46,7 +48,8 @@ class UserController extends Controller
         $model->referer = isset(Yii::$app->request->referrer) ? Yii::$app->request->referrer : null;
         if ($model->load(Yii::$app->request->post())) {
             if ($model->login() && Yii::$app->request->hostName === 'elida') {
-                return $this->goBack((($model->referer) ? $model->referer : null));
+                d(Yii::$app->request->referrer);
+                return $this->redirect(['admin/index']);
             }
         }
 

@@ -141,6 +141,7 @@ $config = [
                 'admin/ship-modules-list/delete' => 'ship-modules-list/delete',
                 'admin/ship-modules-list/create' => 'ship-modules-list/create',
                 'admin/ship-modules-list' => 'ship-modules-list/index',
+                'admin' => 'admin/index',
                 '<action:(captcha)>'  => 'site/<action>',
                 // '<controller>/<action>' =>  '<controller>/<action>',
                 '' => 'site/index'

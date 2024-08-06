@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="ship-modules-list-form">
+<div class="ship-modules-list-form mb-3">
     <?php $form = ActiveForm::begin([
         'options' => [
         'class' => 'd-flex flex-column gap-2'
