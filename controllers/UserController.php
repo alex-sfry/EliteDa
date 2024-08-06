@@ -48,7 +48,6 @@ class UserController extends Controller
         $model->referer = isset(Yii::$app->request->referrer) ? Yii::$app->request->referrer : null;
         if ($model->load(Yii::$app->request->post())) {
             if ($model->login() && Yii::$app->request->hostName === 'elida') {
-                d(Yii::$app->request->referrer);
                 return $this->redirect(['admin/index']);
             }
         }
