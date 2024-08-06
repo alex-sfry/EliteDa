@@ -68,12 +68,22 @@ $this->params['breadcrumbs'][] = $this->title;
         }
         ?>
         [
-        'class' => ActionColumn::className(),
+        'class' => ActionColumn::class,
         'urlCreator' => function ($action, <?= $modelClass ?> $model, $key, $index, $column) {
         return Url::toRoute([$action, <?= $generator->generateUrlParams() ?>]);
         }
         ],
         ],
+        'pager' => [
+                'class' => 'yii\bootstrap5\LinkPager',
+                'firstPageLabel' => 'first',
+                'lastPageLabel' => 'last',
+                'prevPageCssClass' => 'prev-page',
+                'nextPageCssClass' => 'next-page',
+                'options' => [
+                    'class' => 'd-flex justify-content-center'
+                ]
+            ],
         ]); ?>
     <?php else : ?>
         <?= "<?= " ?>ListView::widget([
