@@ -7,6 +7,7 @@ use yii\widgets\DetailView;
 /** @var app\models\ar\ShipsList $model */
 
 $this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Admin', 'url' => ['admin-dashboard/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Ships Lists', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);

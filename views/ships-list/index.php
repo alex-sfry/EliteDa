@@ -11,6 +11,7 @@ use yii\grid\GridView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Ships Lists';
+$this->params['breadcrumbs'][] = ['label' => 'Admin', 'url' => ['admin-dashboard/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between">
@@ -19,7 +20,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
 
         <p>
-            <?= Html::a('Create Ships List', Url::to(['admin/ships-list/create']), ['class' => 'btn btn-success']) ?>
+            <?= Html::a(
+                'Create Ships List',
+                Url::to(['admin-dashboard/ships-list/create']),
+                ['class' => 'btn btn-success']
+            ) ?>
         </p>
 
         <?php
