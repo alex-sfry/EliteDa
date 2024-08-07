@@ -4,8 +4,6 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
-use function app\helpers\ksq;
-
 /**
  * @var array $model
  */
