@@ -52,6 +52,7 @@ export const purgeCSS = () => {
         .pipe(purgecss({
             content: [
                 './templates/**/*.js',
+                '../admin/assets/*.js',
                 '../views/**/*.php',
                 '../widgets/**/*.php',
                 '../widgets/**/*.js',
