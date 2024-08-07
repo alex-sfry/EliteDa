@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /** @var app\models\ar\ShipsList $model */
 
 $this->title = 'Update Ships List: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Admin', 'url' => ['admin-dashboard/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Admin', 'url' => ['admin/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Ships Lists', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'symbol' => $model->symbol]];
 $this->params['breadcrumbs'][] = 'Update';

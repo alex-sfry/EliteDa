@@ -7,7 +7,7 @@ use app\assets\AdminAsset;
 /** @var app\models\ar\ShipsList $model */
 
 $this->title = 'Create Ships List';
-$this->params['breadcrumbs'][] = ['label' => 'Admin', 'url' => ['admin-dashboard/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Admin', 'url' => ['admin/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Ships Lists', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 AdminAsset::register($this);
