@@ -74,6 +74,13 @@ class Commdts extends Model
         $get['distanceFromStar'] !== 'Any' &&
             $prices->andWhere(['<=', 'distance_to_arrival', $get['distanceFromStar']]);
 
+        if ($get['minSupplyDemand'] !== 'Any') {
+            $get['buySellSwitch'] === 'buy' &&
+                $prices->andWhere(['>=', 'stock', $get['minSupplyDemand']]);
+            $get['buySellSwitch'] === 'sell' &&
+                $prices->andWhere(['>=', 'demand', $get['minSupplyDemand']]);
+        }
+
         $get['maxDistanceFromRefStar'] !== 'Any' && $prices->andWhere([
             '<=',
             $distance_expr,
