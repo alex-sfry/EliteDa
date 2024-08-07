@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Engineers;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
@@ -51,6 +52,9 @@ class EngineersController extends Controller
         });
 
         $params['model'] = ArrayHelper::htmlEncode($filtered_item[$id - 1]) ;
+
+        // $engineers = new Engineers();
+        // d($engineers->findByName('to')->getEngineers());
 
         return $this->render('details', $params);
     }

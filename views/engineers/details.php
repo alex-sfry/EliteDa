@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 
@@ -8,7 +9,7 @@ use yii\widgets\DetailView;
  */
 
 $this->params['meta_keywords'] = 'Elite: Dangerous, engineer information';
-$this->title = isset($model['name']) ? $model['name'] : '';
+$this->title = isset($model['name']) ? Html::decode($model['name']) : '';
 $this->params['breadcrumbs'] = [
     [
         'label' => 'Engineers',

@@ -10,6 +10,7 @@ use yii\helpers\ArrayHelper;
 use yii\base\Model;
 use yii\db\Expression;
 use yii\db\Query;
+use yii\helpers\Html;
 use yii\helpers\StringHelper;
 
 use function app\helpers\d;
@@ -51,7 +52,7 @@ class TradeRoutes extends Model
         if (isset($get['targetSysStationName']) && $get['targetSysStation'] !== '') {
             if ($get['targetSysStationName'] === 'station') {
                 $this->target_sys = StringHelper::explode($get['targetSysStation'], ' / ', true)[0];
-                $this->target_st = StringHelper::explode($get['targetSysStation'], ' / ', true)[1];
+                $this->target_st = Html::decode(StringHelper::explode($get['targetSysStation'], ' / ', true)[1]);
             } else {
                 $this->target_sys = $get['targetSysStation'];
             }
