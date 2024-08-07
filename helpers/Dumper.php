@@ -2,6 +2,7 @@
 
 namespace app\helpers;
 
+use yii\base\InvalidValueException;
 use yii\helpers\BaseVarDumper;
 
 /**
@@ -16,7 +17,7 @@ class Dumper extends BaseVarDumper
     public static function dump($var, $depth = 10, $highlight = true)
     {
         echo static::dumpAsString($var, $depth, $highlight);
-        echo '===============================================' . '<br>';
+        echo '=====================End==========================' . '<br>';
     }
 
     public static function dumpAsString($var, $depth = 10, $highlight = false)
