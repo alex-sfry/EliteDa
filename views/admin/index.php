@@ -13,10 +13,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="row h-100 justify-content-center">
             <div class="col-xl-3 col-md-4 col-xs align-self-center just">
                 <div class="d-flex flex-column gap-2">
-                    <a href="<?= Url::to('admin/ships-list') ?>" class="btn btn-success">
+                    <a href="<?= Url::to('admin-dashboard/ships-list') ?>" class="btn btn-success">
                         Shipyard CRUD
                     </a>
-                    <a href="<?= Url::to('admin/ship-modules-list') ?>" class="btn btn-success">
+                    <a href="<?= Url::to('admin-dashboard/ship-modules-list') ?>" class="btn btn-success">
                         Outfitting CRUD
                     </a>
                 </div>
