@@ -4,7 +4,7 @@ use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 
 /** @var yii\web\View $this */
-/** @var yii\gii\generators\crud\Generator $generator */
+/** @var app\giiTemplates\generators\crud\Generator $generator */
 
 /* @var $model \yii\db\ActiveRecord */
 $model = new $generator->modelClass();
