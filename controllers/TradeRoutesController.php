@@ -6,6 +6,7 @@ use app\behaviors\PageCounterBehavior;
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\web\Controller;
 
@@ -61,16 +62,14 @@ class TradeRoutesController extends Controller
             }
 
             $params['get']['ref_system'] = StringHelper::explode($session->get('tr')['refSysStation'], ' / ', true)[0];
-            $params['get']['ref_station'] = StringHelper::explode(
+            $params['get']['ref_station'] = Html::decode(StringHelper::explode(
                 $session->get('tr')['refSysStation'],
                 ' / ',
                 true
-            )[1];
+            )[1]);
 
             $limit = 20;
-
             $tr_model = Yii::$container->get('app\models\TradeRoutes', [$params['get']]);
-
             $data = $tr_model->getTradeRoutes();
 
             if (gettype($data) === 'string') {
