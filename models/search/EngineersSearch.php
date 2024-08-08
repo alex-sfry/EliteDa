@@ -60,7 +60,7 @@ class EngineersSearch extends Model
             }
             if (!empty(Yii::$app->request->queryParams['EngineersSearch']['station'])) {
                 return
-                  stripos($value['station'], Yii::$app->request->queryParams['EngineersSearch']['station']) !== false;
+                    stripos($value['station'], Yii::$app->request->queryParams['EngineersSearch']['station']) !== false;
             }
             if (!empty(Yii::$app->request->queryParams['EngineersSearch']['target'])) {
                 return
@@ -110,8 +110,8 @@ class EngineersSearch extends Model
         }, $data);
 
         $sys = Systems::find()
-        ->select(['id'])
-        ->where(['name' => $system_names]);
+            ->select(['id'])
+            ->where(['name' => $system_names]);
 
         return Stations::find()
             ->alias('st')
