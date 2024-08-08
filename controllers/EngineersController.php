@@ -2,7 +2,6 @@
 
 namespace app\controllers;
 
-use app\models\Engineers;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
