@@ -16,11 +16,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     <a href="<?= Url::to('admin-dashboard/allegiance') ?>" class="btn btn-success">
                         Allegiance CRUD
                     </a>
+                    <a href="<?= Url::to('admin-dashboard/ship-modules-list') ?>" class="btn btn-success">
+                        Outfitting CRUD
+                    </a>
                     <a href="<?= Url::to('admin-dashboard/ships-list') ?>" class="btn btn-success">
                         Shipyard CRUD
                     </a>
-                    <a href="<?= Url::to('admin-dashboard/ship-modules-list') ?>" class="btn btn-success">
-                        Outfitting CRUD
+                    <a href="<?= Url::to('admin-dashboard/modules-price-list') ?>" class="btn btn-success">
+                        Modules Price List CRUD
+                    </a>
+                    <a href="<?= Url::to('admin-dashboard/ships-price-list') ?>" class="btn btn-success">
+                        Ships Price List CRUD
                     </a>
                 </div>
             </div>
