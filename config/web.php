@@ -1,6 +1,8 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
+$routes = require __DIR__ . '/routes.php';
+$container = require __DIR__ . '/container.php';
 
 $config = [
     'id' => 'basic',
@@ -107,114 +109,11 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => true,
-            'rules' => [
-                'contact' => 'site/contact',
-                'engineers' => 'engineers/index',
-                'engineer/<id:\w+>' => 'engineers/details',
-                'station/ships/<id:\w+>' => 'stations/ships',
-                'station/ship-modules-<cat:\w+>/<id:\w+>' => 'stations/ship-modules',
-                'station/ship-modules-hardpoint/<id:\w+>' => 'stations/ship-modules',
-                'station/market/<id:\w+>' => 'stations/market',
-                'station/<id:\w+>' => 'stations/details',
-                'stations' => 'stations/index',
-                'system-station/<sys_st:[\w\s\']+>' => 'stations/system-station',
-                'system/get/<sys:[\w\s\']+>' => 'systems/system',
-                'system/<id:\w+>' => 'systems/details',
-                'systems' => 'systems/index',
-                'shipyard-ships' => 'shipyard-ships/index',
-                'ship-modules' => 'ship-modules/index',
-                'commodities' => 'commodities/index',
-                'trade-routes' => 'trade-routes/index',
-                'materials' => 'materials/index',
-                'material-traders' => 'material-traders/index',
-                'rings' => 'rings/index',
-                'user/login' => 'user/login',
-                'user/logout' => 'user/logout',
-                'user/signup' => 'user/signup',
-                'admin-dashboard/allegiance/view' => 'allegiance/view',
-                'admin-dashboard/allegiance/update' => 'allegiance/update',
-                'admin-dashboard/allegiance/delete' => 'allegiance/delete',
-                'admin-dashboard/allegiance/create' => 'allegiance/create',
-                'admin-dashboard/allegiance' => 'allegiance/index',
-                'admin-dashboard/ships-list/view' => 'ships-list/view',
-                'admin-dashboard/ships-list/update' => 'ships-list/update',
-                'admin-dashboard/ships-list/delete' => 'ships-list/delete',
-                'admin-dashboard/ships-list/create' => 'ships-list/create',
-                'admin-dashboard/ships-list' => 'ships-list/index',
-                'admin-dashboard/ship-modules-list/view' => 'ship-modules-list/view',
-                'admin-dashboard/ship-modules-list/update' => 'ship-modules-list/update',
-                'admin-dashboard/ship-modules-list/delete' => 'ship-modules-list/delete',
-                'admin-dashboard/ship-modules-list/create' => 'ship-modules-list/create',
-                'admin-dashboard/ship-modules-list' => 'ship-modules-list/index',
-                'admin-dashboard' => 'admin/index',
-                '<action:(captcha)>'  => 'site/<action>',
-                // '<controller>/<action>' =>  '<controller>/<action>',
-                '' => 'site/index'
-            ],
+            'rules' => $routes
         ],
     ],
     'params' => $params,
-    'container' => [
-        'definitions' => [
-            'app\models\StationMarket' => [
-                'class' => 'app\models\StationMarket',
-            ],
-            'app\models\ShipMods' => [
-                'class' => 'app\models\ShipMods',
-            ],
-            'app\models\ShipyardShips' => [
-                'class' => 'app\models\ShipyardShips',
-            ],
-            'app\models\search\EngineersSearch' => [
-                'class' => 'app\models\search\EngineersSearch',
-            ],
-            'app\models\TradeRoutes' => [
-                'class' => 'app\models\TradeRoutes',
-            ],
-            'app\models\forms\TradeRoutesForm' => [
-                'class' => 'app\models\forms\TradeRoutesForm',
-            ],
-            'app\models\forms\CommoditiesForm' => [
-                'class' => 'app\models\forms\CommoditiesForm',
-            ],
-            'app\models\Commdts' => [
-                'class' => 'app\models\Commdts',
-            ],
-            'app\models\forms\ShipModulesForm' => [
-                'class' => 'app\models\forms\ShipModulesForm',
-            ],
-            'app\models\ShipMods' => [
-                'class' => 'app\models\ShipMods',
-            ],
-            'app\models\forms\ShipyardShipsForm' => [
-                'class' => 'app\models\forms\ShipyardShipsForm',
-            ],
-            'app\models\ShipyardShips' => [
-                'class' => 'app\models\ShipyardShips',
-            ],
-            'app\models\search\EngineersSearch' => [
-                'class' => 'app\models\search\EngineersSearch',
-            ],
-            'app\models\search\MaterialsSearchh' => [
-                'class' => 'app\models\search\MaterialsSearch',
-            ],
-            'app\models\search\MaterialTradersSearch' => [
-                'class' => 'app\models\search\MaterialTradersSearch',
-            ],
-            'app\models\search\StationsInfoSearch' => [
-                'class' => 'app\models\search\StationsInfoSearch',
-            ],
-            'app\models\search\SystemsInfoSearch' => [
-                'class' => 'app\models\search\SystemsInfoSearch',
-            ],
-            'app\models\forms\ContactForm' => [
-                'class' => 'app\models\forms\ContactForm',
-            ],
-            'app\models\search\RingsSearch' => [
-                'class' => 'app\models\search\RingsSearch',
-            ],
-        ],
-    ],
+    'container' => $container
 ];
 
 if (YII_ENV_DEV) {
@@ -239,8 +138,6 @@ if (YII_ENV_DEV) {
     // ];
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
-        // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
         'generators' => [ //here
             'crud' => [ // generator name
                 'class' => 'yii\gii\generators\crud\Generator', // generator class
