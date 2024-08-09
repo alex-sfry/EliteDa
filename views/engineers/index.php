@@ -33,15 +33,7 @@ $this->params['breadcrumbs'] = [$this->title];
                             'class' => 'engineers-body-row'
                         ],
                         'columns' => [
-                            [
-                                'attribute' => 'target',
-                                'label' => 'ship / pilot',
-                                'filter' => ['ship' => 'ship', 'pilot' => 'pilot'],
-                                'filterInputOptions' => [
-                                    'class' => 'form-select form-select-sm',
-                                    'id' => null
-                                ],
-                            ],
+                            ['attribute' => 'target', 'label' => 'ship / pilot'],
                             [
                                 'attribute' => 'name',
                                 'value' => function ($model) {

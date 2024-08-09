@@ -19,11 +19,12 @@ use function app\helpers\d;
  * @property string|null $target
  * @property string|null $discovery
  * @property string|null $system
- * @property array|null $upgrades
+ * @property string|null $upgrades
  */
 
 class EngineersSearch extends Model
 {
+    protected string $json;
     public $name;
     public $station;
     public $system;
@@ -34,10 +35,18 @@ class EngineersSearch extends Model
     /**
      * {@inheritdoc}
      */
+    public function init()
+    {
+        $this->json = file_get_contents(Yii::$app->basePath . '/data/engineers.json');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function rules(): array
     {
         return [
-            [['name', 'station', 'system', 'target'], 'string'],
+            [['name', 'station', 'system'], 'string'],
             [['upgrades'], 'safe']
         ];
     }
@@ -47,29 +56,24 @@ class EngineersSearch extends Model
      */
     public function search(array $params): ArrayDataProvider
     {
-        $json = file_get_contents(Yii::$app->basePath . '/data/engineers.json');
         $this->load($params);
 
-        $data = array_filter(Json::decode($json), function ($value) {
+        $data = array_filter(Json::decode($this->json), function ($value) {
             if (!empty(Yii::$app->request->queryParams['EngineersSearch']['name'])) {
-                return stripos($value['name'], Yii::$app->request->queryParams['EngineersSearch']['name']) !== false;
+                return stripos($value['name'], $this->name) !== false;
             }
             if (!empty(Yii::$app->request->queryParams['EngineersSearch']['system'])) {
                 return
-                    stripos($value['system'], Yii::$app->request->queryParams['EngineersSearch']['system']) !== false;
+                    stripos($value['system'], $this->system) !== false;
             }
             if (!empty(Yii::$app->request->queryParams['EngineersSearch']['station'])) {
                 return
-                    stripos($value['station'], Yii::$app->request->queryParams['EngineersSearch']['station']) !== false;
-            }
-            if (!empty(Yii::$app->request->queryParams['EngineersSearch']['target'])) {
-                return
-                    stripos($value['target'], Yii::$app->request->queryParams['EngineersSearch']['target']) !== false;
+                    stripos($value['station'], $this->station) !== false;
             }
             if (!empty(Yii::$app->request->queryParams['EngineersSearch']['upgrades'])) {
                 return stripos(
                     implode(", ", $value['upgrades']),
-                    Yii::$app->request->queryParams['EngineersSearch']['upgrades']
+                    $this->upgrades
                 ) !== false;
             }
 
@@ -135,9 +139,7 @@ class EngineersSearch extends Model
             return ['id' => '', 'name' => ''];
         }
 
-        $json = Json::decode(file_get_contents(Yii::$app->basePath . '/data/engineers.json'));
-
-        foreach ($json as $item) {
+        foreach (Json::decode($this->json) as $item) {
             if ($item['station'] === $station_name && $item['system'] === $system->name) {
                 return ['id' => $item['id'], 'name' => $item['name']];
             }
