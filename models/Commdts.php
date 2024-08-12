@@ -10,10 +10,31 @@ use yii\db\Expression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\base\Model;
+use yii\data\Pagination;
+use yii\data\Sort;
 use yii\helpers\Url;
+
+use function app\helpers\d;
 
 class Commdts extends Model
 {
+    public array $commodities_arr;
+    public string $refSystem;
+    public string $landingPadSize;
+    public string $includeSurface;
+    public string $distanceFromStar;
+    public string $minSupplyDemand;
+    public string $buySellSwitch;
+    public string $maxDistanceFromRefStar;
+    public string $dataAge;
+    public string $price_type;
+    public string $stock_demand;
+    public string $sort_attr;
+    public int $sort_order;
+    protected int $limit = 0;
+    protected array $order = [];
+    protected int $offset = 0;
+
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -26,29 +47,56 @@ class Commdts extends Model
         );
     }
 
-    public function getPrices(
-        array $get,
-        string $price_type,
-        string $stock_demand,
-        int $limit = 0,
-        array $order = [],
-        int $offset = 0
-    ): Query {
+    public function getPrices(): array
+    {
         /** @var SystemBehavior|CommoditiesBehavior|Commdts $this */
 
-        $distance_expr = $this->getDistanceToSystemExpression($get['refSystem']);
+        $query = $this->getQuery();
+        $total_count = $query->count();
+
+        $pagination = new Pagination([
+            'totalCount' => $total_count,
+            'pageSizeLimit' => [0, 50],
+            'defaultPageSize' => 50,
+        ]);
+
+        $this->limit = $pagination->pageSize;
+        $this->offset = $pagination->offset;
+
+        $sort = new Sort([
+            'attributes' => [
+                'distance_ly',
+                'time_diff',
+                'sell_price',
+                'buy_price'
+            ],
+            'defaultOrder' => [
+                $this->sort_attr => $this->sort_order
+            ],
+        ]);
+
+        $this->order = $sort->orders;
+
+        return [
+            $this->modifyModels($this->getQuery()->all()),
+            $sort,
+            $pagination
+        ];
+    }
+
+    protected function getQuery(): Query
+    {
+        $distance_expr = $this->getDistanceToSystemExpression($this->refSystem);
         $c_symbols = [];
 
-        foreach ($this->commodities as $key => $value) {
-            if (in_array($value, $get['commodities'])) {
-                $c_symbols[] = $key;
-            }
+        foreach ($this->commodities_arr as $item) {
+            $c_symbols[] = array_search($item, $this->getCommodities());
         }
 
         $prices = (new Query())
             ->select([
-                $price_type,
-                $stock_demand,
+                $this->price_type,
+                $this->stock_demand,
                 'm.name AS commodity',
                 'st.name AS station',
                 'st.id AS station_id',
@@ -64,36 +112,37 @@ class Commdts extends Model
             ->innerJoin(['st' => 'stations'], 'm.market_id = st.market_id')
             ->innerJoin('systems', 'st.system_id = systems.id')
             ->where(['m.name' => $c_symbols])
-            ->andWhere(['>', $stock_demand, 1]);
+            ->andWhere(['>', $this->stock_demand, 1]);
 
-        $get['landingPadSize'] === 'L' && $prices->andWhere(['not', ['type' => 'Outpost']]);
+        $this->landingPadSize === 'L' && $prices->andWhere(['not', ['type' => 'Outpost']]);
 
-        $get['includeSurface'] === 'No' &&
+        $this->includeSurface === 'No' &&
             $prices->andWhere(['not in', 'type', ['Planetary Port', 'Planetary Outpost', 'Odyssey Settlement']]);
 
-        $get['distanceFromStar'] !== 'Any' &&
-            $prices->andWhere(['<=', 'distance_to_arrival', $get['distanceFromStar']]);
+        $this->distanceFromStar !== 'Any' &&
+            $prices->andWhere(['<=', 'distance_to_arrival', $this->distanceFromStar]);
 
-        if ($get['minSupplyDemand'] !== 'Any') {
-            $get['buySellSwitch'] === 'buy' &&
-                $prices->andWhere(['>=', 'stock', $get['minSupplyDemand']]);
-            $get['buySellSwitch'] === 'sell' &&
-                $prices->andWhere(['>=', 'demand', $get['minSupplyDemand']]);
+        if ($this->minSupplyDemand !== 'Any') {
+            $this->buySellSwitch === 'buy' &&
+                $prices->andWhere(['>=', 'stock', $this->minSupplyDemand]);
+            $this->buySellSwitch === 'sell' &&
+                $prices->andWhere(['>=', 'demand', $this->minSupplyDemand]);
         }
 
-        $get['maxDistanceFromRefStar'] !== 'Any' && $prices->andWhere([
+        $this->maxDistanceFromRefStar !== 'Any' && $prices->andWhere([
             '<=',
             $distance_expr,
-            $get['maxDistanceFromRefStar'],
+            $this->maxDistanceFromRefStar,
         ]);
 
-        $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$get['dataAge']} HOUR)");
+        $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL $this->dataAge HOUR)");
 
-        $get['dataAge'] !== 'Any' &&
-            $prices->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
-        count($order) > 0 && $prices->orderBy($order);
-        $offset !== 0 && $prices->offset($offset);
-        $limit !== 0 && $prices->limit($limit);
+        $this->dataAge !== 'Any' && $prices->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
+        if (isset($this->order) && count($this->order) > 0) {
+            $prices->orderBy($this->order);
+        }
+        $this->offset !== 0 && $prices->offset($this->offset);
+        $this->limit !== 0 && $prices->limit($this->limit);
 
         return $prices;
     }

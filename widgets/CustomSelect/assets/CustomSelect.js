@@ -24,7 +24,6 @@ class CustomSelect {
     };
 
     handleDropdownInput(e) {
-        console.log(this.config.filterMethod)
         if (this.config.filterMethod === 'startsWith') {
             this.getDropdownListItems().forEach(item => {
                 !item.textContent.toLowerCase().trim().startsWith(e.target.value.toLowerCase().trim()) ?

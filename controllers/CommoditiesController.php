@@ -46,39 +46,34 @@ class CommoditiesController extends Controller
         $params = [];
         $params['c_error'] = '';
         $params['ref_error'] = '';
-
         $params['form_model'] = $this->form_model;
         $params['commodities_arr'] = $this->getCommodities();
 
         if (count($request->get()) > 2) {
-            $get = $request->get();
-            $session->set('c', $get);
+            $request_data = $request->get();
+            $session->set('c', $request_data);
         } elseif ($session->get('c')) {
-            $get = $session->get('c');
+            $request_data = $session->get('c');
         }
 
-        if (isset($get) || $session->get('c')) {
+        if (isset($request_data) || $session->get('c')) {
             $request->isGet && $session->remove('c_sort');
 
-            $this->form_model->setAttributes($get);
-            $params['c_error'] = $this->form_model->validate('commodities') ? '' : 'is-invalid';
-            $params['ref_error'] = $this->form_model->validate('refSystem', false) ? '' : 'is-invalid';
+            $this->form_model->load($request_data, '');
+            $this->form_model->validate();
+
+            $params['c_error'] = empty($this->form_model->getErrors('commodities_arr')) ? '' : 'is-invalid';
+            $params['ref_error'] = empty($this->form_model->getErrors('refSystem')) ? '' : 'is-invalid';
 
             if ($this->form_model->hasErrors()) {
                 return $this->render('index', $params);
             }
 
-            if ($get['buySellSwitch'] === 'buy') {
-                $price_type = 'buy_price';
-                $stock_demand = 'stock';
-                $price_sort_direction = SORT_ASC;
-            } else {
-                $price_type = 'sell_price';
-                $stock_demand = 'demand';
-                $price_sort_direction = SORT_DESC;
-            }
+            $request_data['price_type'] = $request_data['buySellSwitch'] === 'buy' ? 'buy_price' : 'sell_price';
+            $request_data['stock_demand'] = $request_data['buySellSwitch'] === 'buy' ? 'stock' : 'demand';
+            $request_data['price_sort_direction'] = $request_data['buySellSwitch'] === 'buy' ? SORT_ASC : SORT_DESC;
 
-            switch ($get['sortBy']) {
+            switch ($request_data['sortBy']) {
                 case 'Updated_at':
                     $sort_attr = 'time_diff';
                     $sort_order = SORT_ASC;
@@ -88,41 +83,17 @@ class CommoditiesController extends Controller
                     $sort_order = SORT_ASC;
                     break;
                 default:
-                    $sort_attr = $price_type;
-                    $sort_order = $price_sort_direction;
+                    $sort_attr = $request_data['price_type'];
+                    $sort_order = $request_data['price_sort_direction'];
             }
 
-            $sort = new Sort([
-                'attributes' => [
-                    'distance_ly',
-                    'time_diff',
-                    'sell_price',
-                    'buy_price'
-                ],
-                'defaultOrder' => [
-                    $sort_attr => $sort_order
-                ],
-            ]);
-
-            $query = $this->c_model->getPrices($get, $price_type, $stock_demand);
-            $total_count = $query->count();
-
-            $pagination = new Pagination([
-                'totalCount' => $total_count,
-                'pageSizeLimit' => [0, 50],
-                'defaultPageSize' => 50,
-            ]);
-
-            $query = $this->c_model->getPrices(
-                $get,
-                $price_type,
-                $stock_demand,
-                $pagination->pageSize,
-                $sort->orders,
-                $pagination->offset
+            $this->c_model->setAttributes(
+                ArrayHelper::merge($request_data, ['sort_attr' => $sort_attr, 'sort_order' => $sort_order]),
+                false
             );
 
-            $params['models']  = ArrayHelper::htmlEncode($this->c_model->modifyModels($query->all()));
+            [$params['models'], $sort, $pagination] = $this->c_model->getPrices();
+
             $params['price_sort'] = null;
             $params['time_sort'] = null;
             $params['d_ly_sort'] = null;
@@ -145,7 +116,7 @@ class CommoditiesController extends Controller
             }
 
             $params['sort'] = $sort;
-            $price =  $get['buySellSwitch'] === 'sell' ? 'sell_price' : 'buy_price';
+            $price =  $request_data['buySellSwitch'] === 'sell' ? 'sell_price' : 'buy_price';
             $params['sort_price'] = $sort->createUrl($price);
             $params['sort_updated'] = $sort->createUrl('time_diff');
             $params['sort_dist_ly'] = $sort->createUrl('distance_ly');
@@ -160,7 +131,7 @@ class CommoditiesController extends Controller
                 $this->handleSort($sort, $pagination, $session, $request, $params['models']);
             }
 
-            $params['buy_sell_switch'] =  $get['buySellSwitch'];
+            $params['buy_sell_switch'] =  $request_data['buySellSwitch'];
 
             return $this->render('index', $params);
         }

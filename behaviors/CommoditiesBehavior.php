@@ -34,7 +34,7 @@ class CommoditiesBehavior extends Behavior
     {
         $this->commoditiesReqArr['buySellSwitch'] = $params['price_type'];
         $this->commoditiesReqArr['refSystem'] = $params['system'];
-        $this->commoditiesReqArr['commodities'] = $params['commodity'];
+        $this->commoditiesReqArr['commodities_arr'] = $params['commodity'];
 
         return $this->commoditiesReqArr;
     }

@@ -87,13 +87,13 @@ $this->params['breadcrumbs'] = [$this->title];
                                                 <?= CustomSelect::widget([
                                                     'container' => 'c-custom-select',
                                                     'error' => $c_error,
-                                                    'selected' => $form_model->commodities,
+                                                    'selected' => $form_model->commodities_arr,
                                                     'search' => 'c-select-search',
                                                     'to_submit' => 'c-hiddenSelect',
                                                     'placeholder' => 'selected commodities',
                                                     'label_main' => 'Commodities:',
                                                     'toggle_btn_text' => 'Select commodities',
-                                                    'name_main' => 'commodities[]',
+                                                    'name_main' => 'commodities_arr[]',
                                                     'list_items' => $commodities_arr,
                                                     'required' => 'required'
                                                 ]); ?>
