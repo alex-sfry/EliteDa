@@ -24,8 +24,6 @@ $this->params['breadcrumbs'] = [
     ],
     $this->title
 ];
-Yii::$app->formatter->thousandSeparator = ' ';
-// d($curl_res);
 ?>
 
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">

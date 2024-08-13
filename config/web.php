@@ -17,6 +17,11 @@ $config = [
         // 'errorHandler' => [
         //     'maxSourceLines' => 20,
         // ],
+        'formatter' => [
+            'dateFormat' => 'dd.MM.yyyy',
+            'decimalSeparator' => '.',
+            'thousandSeparator' => ' '
+        ],
         'authManager' => [
             'class' => 'yii\rbac\PhpManager',
         ],

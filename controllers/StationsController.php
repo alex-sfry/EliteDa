@@ -157,7 +157,9 @@ class StationsController extends Controller
         $this->getStationServices($station->market_id);
         $system = Systems::findOne($station->system_id);
         !$system && throw new NotFoundHttpException();
-        $model = $ships->getStationShips($station->market_id, $system->name);
+
+        $ships->setAttributes(['market_id' => $station->market_id, 'sys_name' => $system->name], false);
+        $model = $ships->getStationShips();
 
         return $this->render('ships', [
             'models' => $model,
@@ -186,9 +188,13 @@ class StationsController extends Controller
         !$system && throw new NotFoundHttpException();
 
         $ship_modules->setMods($this->getShipModules());
-        $qty_by_cat = $ship_modules->getQtyByCat($station->market_id);
+        $ship_modules->setAttributes(
+            ['market_id' => $station->market_id, 'cat' => $cat, 'sys_name' => $system->name],
+            false
+        );
+        $qty_by_cat = $ship_modules->getQtyByCat();
         $this->getStationServices($station->market_id);
-        $model = $ship_modules->getStationModules($station->market_id, $cat, $system->name);
+        $model = $ship_modules->getStationModules();
 
         return $this->render('outfitting', [
             'models' => $model,

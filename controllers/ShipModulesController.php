@@ -42,35 +42,34 @@ class ShipModulesController extends Controller
         $session->open();
         // $session->destroy();
         $request = Yii::$app->request;
-        $params = [];
 
+        $params = [];
         $params['mod_error'] = '';
         $params['ref_error'] = '';
-
         $params['form_model'] = $this->form_model;
         $params['ship_modules_arr'] = $this->getShipModules();
 
         if (count($request->get()) > 2) {
-            $params['get'] = $request->get();
-            $session->set('mod', $request->get());
+            $request_data = $request->get();
+            $session->set('mod', $request_data);
         } elseif ($session->get('mod')) {
-            $params['get'] = $session->get('mod');
+            $request_data = $session->get('mod');
         }
 
-        if (isset($params['get']) || $session->get('mod')) {
+        if (isset($request_data) || $session->get('mod')) {
             $request->isGet && $session->remove('mod_sort');
 
-            $this->form_model->setAttributes($params['get']);
-            $params['mod_error'] = $this->form_model->validate('cMainSelect') ? '' : 'is-invalid';
-            $params['ref_error'] = $this->form_model->validate('refSystem', false) ? '' : 'is-invalid';
+            $this->form_model->load($request_data, '');
+            $this->form_model->validate();
+
+            $params['mod_error'] = empty($this->form_model->getErrors('cMainSelect')) ? '' : 'is-invalid';
+            $params['ref_error'] = empty($this->form_model->getErrors('refSystem')) ? '' : 'is-invalid';
 
             if ($this->form_model->hasErrors()) {
                 return $this->render('index', $params);
             }
 
-            $this->mod_model->setMods($params['ship_modules_arr']);
-
-            switch ($params['get']['sortBy']) {
+            switch ($request_data['sortBy']) {
                 case 'Updated_at':
                     $sort_attr = 'time_diff';
                     $sort_order = SORT_ASC;
@@ -84,36 +83,15 @@ class ShipModulesController extends Controller
                     $sort_order = SORT_ASC;
             }
 
-            $sort = new Sort([
-                'attributes' => [
-                    'distance_ly',
-                    'time_diff',
-                    'module'
-                ],
-                'defaultOrder' => [
-                    $sort_attr => $sort_order
-                ],
-            ]);
-
-            $query = $this->mod_model->getModules($params['get']);
-            $total_count = $query->count();
-
-            $pagination = new Pagination([
-                'totalCount' => $total_count,
-                'pageSizeLimit' => [0, 50],
-                'defaultPageSize' => 50,
-            ]);
-
-            $query = $this->mod_model->getModules(
-                $params['get'],
-                $pagination->pageSize,
-                $sort->orders,
-                $pagination->offset
+            $this->mod_model->setAttributes(
+                ArrayHelper::merge($request_data, ['sort_attr' => $sort_attr, 'sort_order' => $sort_order]),
+                false
             );
 
-            $params['models']  = ArrayHelper::htmlEncode(
-                $this->mod_model->modifyModels($query->all(), $params['get'])
-            );
+            $this->mod_model->setMods($params['ship_modules_arr']);
+
+            [$params['models'], $sort, $pagination] = $this->mod_model->getModules();
+            $params['models'] = ArrayHelper::htmlEncode($params['models']);
 
             $params['module_sort'] = null;
             $params['time_sort'] = null;

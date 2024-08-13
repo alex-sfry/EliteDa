@@ -86,9 +86,6 @@ $population_options = [
     '10000000000' => '>= 10Bil',
     '20000000000' => '>= 20Bil',
 ];
-
-Yii::$app->formatter->thousandSeparator = ' ';
-// isset($get) && d($get);
 ?>
 
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg fs-7">

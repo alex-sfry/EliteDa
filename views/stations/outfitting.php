@@ -25,9 +25,7 @@ $this->params['breadcrumbs'] = [
     $this->title
 ];
 ?>
-<?php
-// d($models);
-?>
+
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='container-xxl'>
         <div class="row">

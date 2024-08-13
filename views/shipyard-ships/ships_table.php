@@ -12,7 +12,6 @@ use yii\data\Sort;
  * @var Sort $sort
  * @var View $this
  */
-Yii::$app->formatter->thousandSeparator = ' ';
 ?>
 <div class="d-flex gap-2 flex-wrap">
     <div class="c-result-legend bg-light text-center mt-3 rounded-2 py-1">
@@ -42,7 +41,8 @@ Yii::$app->formatter->thousandSeparator = ' ';
                         <?= isset($models) && count($models) > 0 ? $models[0]['ship'] : '--' ?>
                     </td>
                     <td class="text-success sintony-bold">
-                        <?= isset($models) && count($models) > 0 ? Yii::$app->formatter->asInteger($models[0]['price']) : '--' ?>  Cr
+                        <?= isset($models) && count($models) > 0 ?
+                            $models[0]['price'] : '--' ?>  Cr
                     </td>
                 </tr>
             </tbody>

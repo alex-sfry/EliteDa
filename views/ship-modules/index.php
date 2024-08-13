@@ -38,7 +38,6 @@ extract($select_options);
 $this->params['meta_keywords'] = 'Elite: Dangerous, outfitting, modules';
 $this->title = 'Ship modules';
 $this->params['breadcrumbs'] = [$this->title];
-// isset($get) && d($get);
 ?>
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='d-flex flex-column h-100'>

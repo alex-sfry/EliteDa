@@ -49,8 +49,6 @@ class Commdts extends Model
 
     public function getPrices(): array
     {
-        /** @var SystemBehavior|CommoditiesBehavior|Commdts $this */
-
         $query = $this->getQuery();
         $total_count = $query->count();
 
@@ -86,6 +84,8 @@ class Commdts extends Model
 
     protected function getQuery(): Query
     {
+        /** @var SystemBehavior|CommoditiesBehavior|Commdts $this */
+
         $distance_expr = $this->getDistanceToSystemExpression($this->refSystem);
         $c_symbols = [];
 
@@ -135,7 +135,7 @@ class Commdts extends Model
             $this->maxDistanceFromRefStar,
         ]);
 
-        $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL $this->dataAge HOUR)");
+        $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$this->dataAge} HOUR)");
 
         $this->dataAge !== 'Any' && $prices->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
         if (isset($this->order) && count($this->order) > 0) {

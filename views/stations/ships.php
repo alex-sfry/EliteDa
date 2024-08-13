@@ -7,7 +7,8 @@ use yii\helpers\Url;
 use function app\helpers\d;
 use function app\helpers\ksq;
 
-$this->params['meta_keywords'] = 'Elite: Dangerous, galaxy information, station ships, station shipyard, ships, shipyard';
+$this->params['meta_keywords'] =
+    'Elite: Dangerous, galaxy information, station ships, station shipyard, ships, shipyard';
 $this->title = ksq($station_name) . ' station shipyard';
 $this->params['breadcrumbs'] = [
     [
@@ -16,7 +17,6 @@ $this->params['breadcrumbs'] = [
     ],
     $this->title
 ];
-// d($models[0]);
 ?>
 
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
@@ -82,7 +82,8 @@ $this->params['breadcrumbs'] = [
                                     'attribute' => 'price',
                                     'label' => 'Price',
                                     'textAfter' => ' Cr',
-                                    'sort' => false
+                                    'sort' => false,
+                                    'format' => 'integer'
                                 ],
                                 [
                                     'attribute' => 'timestamp',

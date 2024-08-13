@@ -10,23 +10,20 @@ class ShipModulesForm extends \yii\base\Model
     public string $sortBy = '';
     public string $maxDistanceFromRefStar = '';
     public string $distanceFromStar = '';
-    public string $minSupplyDemand = '';
     public string $dataAge = '';
     public array $cMainSelect = [];
 
     public function rules(): array
     {
         return [
-            [['refSystem', 'cMainSelect'], 'required'],
-            [[
-                'landingPadSize',
-                'includeSurface',
-                'sortBy',
-                'maxDistanceFromRefStar',
-                'distanceFromStar',
-                'minSupplyDemand',
-                'dataAge'
-            ], 'safe']
+            [['refSystem'], 'required'],
+            [['cMainSelect'], 'each', 'rule' => ['required', 'skipOnEmpty' => false]],
+            [['landingPadSize'], 'in', 'range' => ['L', 'M', 'S']],
+            [['includeSurface'], 'in', 'range' => ['Yes', 'No']],
+            [['sortBy'], 'in', 'range' => ['Updated_at', 'Distance', 'Module']],
+            [['maxDistanceFromRefStar'], 'in', 'range' => ['Any', '25', '50', '100', '250']],
+            [['distanceFromStar'], 'in', 'range' => ['Any', '100', '500', '1000', '2000']],
+            [['dataAge'], 'in', 'range' => ['Any', '1', '4', '10', '24']],
         ];
     }
 }

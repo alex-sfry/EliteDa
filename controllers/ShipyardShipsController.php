@@ -44,21 +44,22 @@ class ShipyardShipsController extends Controller
 
         $params['ships_error'] = '';
         $params['ref_error'] = '';
-
         $params['form_model'] = $this->form_model;
         $params['ships_arr'] = $this->getShipsList();
 
         if (count($request->get()) > 2) {
-            $params['get'] = $request->get();
-            $session->set('ships', $request->get());
+            $request_data = $request->get();
+            $session->set('ships', $request_data);
         } elseif ($session->get('ships')) {
-            $params['get'] = $session->get('ships');
+            $request_data = $session->get('ships');
         }
 
-        if (isset($params['get']) || $session->get('ships')) {
+        if (isset($request_data) || $session->get('ships')) {
             $request->isGet && $session->remove('ships_sort');
 
-            $this->form_model->setAttributes($params['get']);
+            $this->form_model->load($request_data, '');
+            $this->form_model->validate();
+
             $params['ships_error'] = $this->form_model->validate('cMainSelect') ? '' : 'is-invalid';
             $params['ref_error'] = $this->form_model->validate('refSystem') ? '' : 'is-invalid';
 
@@ -66,9 +67,7 @@ class ShipyardShipsController extends Controller
                 return $this->render('index', $params);
             }
 
-            $this->ships_model->setShipsArr($params['ships_arr']);
-
-            switch ($params['get']['sortBy']) {
+            switch ($request_data['sortBy']) {
                 case 'Updated_at':
                     $sort_attr = 'time_diff';
                     $sort_order = SORT_ASC;
@@ -82,35 +81,15 @@ class ShipyardShipsController extends Controller
                     $sort_order = SORT_ASC;
             }
 
-            $sort = new Sort([
-                'attributes' => [
-                    'distance_ly',
-                    'time_diff'
-                ],
-                'defaultOrder' => [
-                    $sort_attr => $sort_order
-                ],
-            ]);
-
-            $provider = $this->ships_model->getShips($params['get']);
-            $total_count = $provider->count();
-
-            $pagination = new Pagination([
-                'totalCount' => $total_count,
-                'pageSizeLimit' => [0, 50],
-                'defaultPageSize' => 50,
-            ]);
-
-            $provider = $this->ships_model->getShips(
-                $params['get'],
-                $pagination->pageSize,
-                $sort->orders,
-                $pagination->offset
+            $this->ships_model->setAttributes(
+                ArrayHelper::merge($request_data, ['sort_attr' => $sort_attr, 'sort_order' => $sort_order]),
+                false
             );
 
-            $params['models'] = ArrayHelper::htmlEncode(
-                $this->ships_model->modifyModels($provider->all(), $params['get'])
-            );
+            $this->ships_model->setShipsArr($params['ships_arr']);
+
+            [$params['models'], $sort, $pagination] = $this->ships_model->getShips();
+            $params['models'] = ArrayHelper::htmlEncode($params['models']);
 
             $params['ship_sort'] = null;
             $params['time_sort'] = null;

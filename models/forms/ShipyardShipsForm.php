@@ -17,19 +17,13 @@ class ShipyardShipsForm extends \yii\base\Model
     {
         return [
             [['refSystem'], 'required'],
-            ['cMainSelect', function ($attribute, $params, $validator) {
-                if (!$this->cMainSelect[0]) {
-                    $this->addError($attribute, 'Field must not be empty');
-                }
-            }],
-            [[
-                'landingPadSize',
-                'includeSurface',
-                'sortBy',
-                'maxDistanceFromRefStar',
-                'distanceFromStar',
-                'dataAge'
-            ], 'safe']
+            [['cMainSelect'], 'each', 'rule' => ['required', 'skipOnEmpty' => false]],
+            [['landingPadSize'], 'in', 'range' => ['L', 'M', 'S']],
+            [['includeSurface'], 'in', 'range' => ['Yes', 'No']],
+            [['sortBy'], 'in', 'range' => ['Updated_at', 'Distance', 'Module']],
+            [['maxDistanceFromRefStar'], 'in', 'range' => ['Any', '25', '50', '100', '250']],
+            [['distanceFromStar'], 'in', 'range' => ['Any', '100', '500', '1000', '2000']],
+            [['dataAge'], 'in', 'range' => ['Any', '1', '4', '10', '24']],
         ];
     }
 }
