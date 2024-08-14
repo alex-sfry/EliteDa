@@ -78,7 +78,7 @@ class ShipMods extends Model
         $query->limit($this->limit);
 
         return [
-            $this->modifyModels($this->getQuery()->all()),
+            $this->modifyModels($query->all()),
             $sort,
             $pagination
         ];
