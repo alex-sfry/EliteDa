@@ -49,6 +49,10 @@ class ShipyardShips extends Model
         $query = $this->getQuery();
         $total_count = $query->count();
 
+        if ($total_count === 0) {
+            return [[], null, null];
+        }
+
         $pagination = new Pagination([
             'totalCount' => $total_count,
             'pageSizeLimit' => [0, 50],
@@ -69,6 +73,10 @@ class ShipyardShips extends Model
         ]);
 
         $this->order = $sort->orders;
+
+        $query->orderBy($this->order);
+        $query->offset($this->offset);
+        $query->limit($this->limit);
 
         return [
             $this->modifyModels($this->getQuery()->all()),
@@ -125,10 +133,6 @@ class ShipyardShips extends Model
         $this->dataAge !== 'Any' &&
             $ships->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
 
-        count($this->order) > 0 && $ships->orderBy($this->order);
-        $this->offset !== 0 && $ships->offset($this->offset);
-        $this->limit !== 0 && $ships->limit($this->limit);
-
         return $ships;
     }
 
@@ -136,10 +140,6 @@ class ShipyardShips extends Model
     {
         $this->attachBehavior('StationBehavior', StationBehavior::class);
         /** @var StationBehavior|ShipyardShips $this */
-
-        if (count($models) === 0) {
-            return $models;
-        }
 
         $sub_query = (new Query())
             ->select('name')

@@ -91,6 +91,12 @@ class ShipModulesController extends Controller
             $this->mod_model->setMods($params['ship_modules_arr']);
 
             [$params['models'], $sort, $pagination] = $this->mod_model->getModules();
+
+            if (empty($params['models'])) {
+                unset($params['models']);
+                return $this->render('index', $params);
+            }
+
             $params['models'] = ArrayHelper::htmlEncode($params['models']);
 
             $params['module_sort'] = null;

@@ -52,6 +52,10 @@ class Commdts extends Model
         $query = $this->getQuery();
         $total_count = $query->count();
 
+        if ($total_count === 0) {
+            return [[], null, null];
+        }
+
         $pagination = new Pagination([
             'totalCount' => $total_count,
             'pageSizeLimit' => [0, 50],
@@ -75,8 +79,12 @@ class Commdts extends Model
 
         $this->order = $sort->orders;
 
+        $query->orderBy($this->order);
+        $query->offset($this->offset);
+        $query->limit($this->limit);
+
         return [
-            $this->modifyModels($this->getQuery()->all()),
+            $this->modifyModels($query->all()),
             $sort,
             $pagination
         ];
@@ -138,11 +146,6 @@ class Commdts extends Model
         $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$this->dataAge} HOUR)");
 
         $this->dataAge !== 'Any' && $prices->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
-        if (isset($this->order) && count($this->order) > 0) {
-            $prices->orderBy($this->order);
-        }
-        $this->offset !== 0 && $prices->offset($this->offset);
-        $this->limit !== 0 && $prices->limit($this->limit);
 
         return $prices;
     }

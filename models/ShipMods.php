@@ -37,17 +37,6 @@ class ShipMods extends Model
     public ?string $cat = null;
     public ?string $sys_name = null;
 
-    // public function behaviors(): array
-    // {
-    //     return ArrayHelper::merge(
-    //         parent::behaviors(),
-    //         [
-    //             SystemBehavior::class,
-    //             StationBehavior::class,
-    //         ]
-    //     );
-    // }
-
     public function setMods(array $mods): void
     {
         $this->mods_arr = $mods;
@@ -57,6 +46,10 @@ class ShipMods extends Model
     {
         $query = $this->getQuery();
         $total_count = $query->count();
+
+        if ($total_count === 0) {
+            return [[], null, null];
+        }
 
         $pagination = new Pagination([
             'totalCount' => $total_count,
@@ -79,6 +72,10 @@ class ShipMods extends Model
         ]);
 
         $this->order = $sort->orders;
+
+        $query->orderBy($this->order);
+        $query->offset($this->offset);
+        $query->limit($this->limit);
 
         return [
             $this->modifyModels($this->getQuery()->all()),
@@ -136,9 +133,6 @@ class ShipMods extends Model
         $date_sub_expr = new Expression("DATE_SUB(NOW(), INTERVAL {$this->dataAge} HOUR)");
 
         $this->dataAge !== 'Any' && $mod_market->andWhere(['>', 'TIMESTAMP', $date_sub_expr]);
-        count($this->order) > 0 && $mod_market->orderBy($this->order);
-        $this->offset !== 0 && $mod_market->offset($this->offset);
-        $this->limit !== 0 && $mod_market->limit($this->limit);
 
         return $mod_market;
     }
@@ -147,10 +141,6 @@ class ShipMods extends Model
     {
         $this->attachBehavior('SystemBehavior', StationBehavior::class);
         /** @var StationBehavior|ShipMods $this */
-
-        if (count($models) === 0) {
-            return $models;
-        }
 
         foreach ($models as $key => $value) {
             $value['price'] = Yii::$app->formatter->asInteger((int)$value['price']);

@@ -328,6 +328,8 @@ $this->params['breadcrumbs'] = [$this->title];
                             'sort' => $sort
                         ]
                     );
+                } else {
+                    echo '<div class="text-light text-center fw-bold">No commodities were found.</div>';
                 } ?>
             </div>
         </div>

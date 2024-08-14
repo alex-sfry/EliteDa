@@ -93,6 +93,12 @@ class CommoditiesController extends Controller
             );
 
             [$params['models'], $sort, $pagination] = $this->c_model->getPrices();
+
+            if (empty($params['models'])) {
+                unset($params['models']);
+                return $this->render('index', $params);
+            }
+
             $params['models'] = ArrayHelper::htmlEncode($params['models']);
 
             $params['price_sort'] = null;

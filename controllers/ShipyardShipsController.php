@@ -89,6 +89,12 @@ class ShipyardShipsController extends Controller
             $this->ships_model->setShipsArr($params['ships_arr']);
 
             [$params['models'], $sort, $pagination] = $this->ships_model->getShips();
+
+            if (empty($params['models'])) {
+                unset($params['models']);
+                return $this->render('index', $params);
+            }
+
             $params['models'] = ArrayHelper::htmlEncode($params['models']);
 
             $params['ship_sort'] = null;
