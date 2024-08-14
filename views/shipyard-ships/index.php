@@ -273,7 +273,7 @@ $this->params['breadcrumbs'] = [$this->title];
                         </div>
                     </div>
                 </div>
-                <?php if (isset($models)) {
+                <?php if (isset($models) && count($models) > 0) {
                     echo $this->render(
                         'ships_table',
                         [
@@ -282,7 +282,7 @@ $this->params['breadcrumbs'] = [$this->title];
                             'sort' => $sort
                         ]
                     );
-                } else {
+                } elseif (isset($models) && count($models) === 0) {
                     echo '<div class="text-light text-center fw-bold">No ships were found.</div>';
                 } ?>
             </div>

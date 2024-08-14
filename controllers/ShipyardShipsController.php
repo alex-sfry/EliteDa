@@ -91,7 +91,6 @@ class ShipyardShipsController extends Controller
             [$params['models'], $sort, $pagination] = $this->ships_model->getShips();
 
             if (empty($params['models'])) {
-                unset($params['models']);
                 return $this->render('index', $params);
             }
 

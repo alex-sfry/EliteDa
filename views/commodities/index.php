@@ -318,7 +318,7 @@ $this->params['breadcrumbs'] = [$this->title];
                     </div>
                 </div>
 
-                <?php if (isset($models)) {
+                <?php if (isset($models) && count($models) > 0) {
                     echo $this->render(
                         'c_table',
                         [
@@ -328,7 +328,7 @@ $this->params['breadcrumbs'] = [$this->title];
                             'sort' => $sort
                         ]
                     );
-                } else {
+                } elseif (isset($models) && count($models) === 0) {
                     echo '<div class="text-light text-center fw-bold">No commodities were found.</div>';
                 } ?>
             </div>
