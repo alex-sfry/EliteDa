@@ -84,16 +84,16 @@ class ShipMods extends Model
     {
         switch ($this->sortBy) {
             case 'Updated_at':
-                $sort_attr = 'time_diff';
-                $sort_order = SORT_ASC;
+                $this->sort_attr = 'time_diff';
+                $this->sort_order = SORT_ASC;
                 break;
             case 'Distance':
-                $sort_attr = "distance_ly";
-                $sort_order = SORT_ASC;
+                $this->sort_attr = "distance_ly";
+                $this->sort_order = SORT_ASC;
                 break;
             default:
-                $sort_attr = 'module';
-                $sort_order = SORT_ASC;
+                $this->sort_attr = 'module';
+                $this->sort_order = SORT_ASC;
         }
 
         return new Sort([
@@ -103,7 +103,7 @@ class ShipMods extends Model
                 'module'
             ],
             'defaultOrder' => [
-                $sort_attr => $sort_order
+                $this->sort_attr => $this->sort_order
             ],
         ]);
     }
