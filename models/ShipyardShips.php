@@ -24,6 +24,7 @@ class ShipyardShips extends Model
     public ?string $refSystem = null;
     public ?string $landingPadSize = null;
     public ?string $includeSurface = null;
+    public ?string $sortBy = null;
     public ?string $distanceFromStar = null;
     public ?string $maxDistanceFromRefStar = null;
     public ?string $dataAge = null;
@@ -53,25 +54,12 @@ class ShipyardShips extends Model
             return [[], null, null];
         }
 
-        $pagination = new Pagination([
-            'totalCount' => $total_count,
-            'pageSizeLimit' => [0, 50],
-            'defaultPageSize' => 50,
-        ]);
+        $pagination = $this->getPaginationObj($total_count);
 
         $this->limit = $pagination->pageSize;
         $this->offset = $pagination->offset;
 
-        $sort = new Sort([
-            'attributes' => [
-                'distance_ly',
-                'time_diff'
-            ],
-            'defaultOrder' => [
-                $this->sort_attr => $this->sort_order
-            ],
-        ]);
-
+        $sort = $sort = $this->getSortObj();
         $this->order = $sort->orders;
 
         $query->orderBy($this->order);
@@ -83,6 +71,42 @@ class ShipyardShips extends Model
             $sort,
             $pagination
         ];
+    }
+
+    protected function getPaginationObj(int $total_count): Pagination
+    {
+        return new Pagination([
+            'totalCount' => $total_count,
+            'pageSizeLimit' => [0, 50],
+            'defaultPageSize' => 50,
+        ]);
+    }
+
+    protected function getSortObj(): Sort
+    {
+        switch ($this->sortBy) {
+            case 'Updated_at':
+                $sort_attr = 'time_diff';
+                $sort_order = SORT_ASC;
+                break;
+            case 'Distance':
+                $sort_attr = 'distance_ly';
+                $sort_order = SORT_ASC;
+                break;
+            default:
+                $sort_attr = 'distance_ly';
+                $sort_order = SORT_ASC;
+        }
+
+        return new Sort([
+            'attributes' => [
+                'distance_ly',
+                'time_diff'
+            ],
+            'defaultOrder' => [
+                $sort_attr => $sort_order
+            ],
+        ]);
     }
 
     protected function getQuery(): Query

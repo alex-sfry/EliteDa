@@ -69,25 +69,7 @@ class ShipModulesController extends Controller
                 return $this->render('index', $params);
             }
 
-            switch ($request_data['sortBy']) {
-                case 'Updated_at':
-                    $sort_attr = 'time_diff';
-                    $sort_order = SORT_ASC;
-                    break;
-                case 'Distance':
-                    $sort_attr = "distance_ly";
-                    $sort_order = SORT_ASC;
-                    break;
-                default:
-                    $sort_attr = 'module';
-                    $sort_order = SORT_ASC;
-            }
-
-            $this->mod_model->setAttributes(
-                ArrayHelper::merge($request_data, ['sort_attr' => $sort_attr, 'sort_order' => $sort_order]),
-                false
-            );
-
+            $this->mod_model->setAttributes($request_data, false);
             $this->mod_model->setMods($params['ship_modules_arr']);
 
             [$params['models'], $sort, $pagination] = $this->mod_model->getModules();

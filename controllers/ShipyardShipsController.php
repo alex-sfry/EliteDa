@@ -67,25 +67,7 @@ class ShipyardShipsController extends Controller
                 return $this->render('index', $params);
             }
 
-            switch ($request_data['sortBy']) {
-                case 'Updated_at':
-                    $sort_attr = 'time_diff';
-                    $sort_order = SORT_ASC;
-                    break;
-                case 'Distance':
-                    $sort_attr = 'distance_ly';
-                    $sort_order = SORT_ASC;
-                    break;
-                default:
-                    $sort_attr = 'distance_ly';
-                    $sort_order = SORT_ASC;
-            }
-
-            $this->ships_model->setAttributes(
-                ArrayHelper::merge($request_data, ['sort_attr' => $sort_attr, 'sort_order' => $sort_order]),
-                false
-            );
-
+            $this->ships_model->setAttributes($request_data, false);
             $this->ships_model->setShipsArr($params['ships_arr']);
 
             [$params['models'], $sort, $pagination] = $this->ships_model->getShips();

@@ -73,24 +73,8 @@ class CommoditiesController extends Controller
             $request_data['stock_demand'] = $request_data['buySellSwitch'] === 'buy' ? 'stock' : 'demand';
             $request_data['price_sort_direction'] = $request_data['buySellSwitch'] === 'buy' ? SORT_ASC : SORT_DESC;
 
-            switch ($request_data['sortBy']) {
-                case 'Updated_at':
-                    $sort_attr = 'time_diff';
-                    $sort_order = SORT_ASC;
-                    break;
-                case 'Distance':
-                    $sort_attr = "distance_ly";
-                    $sort_order = SORT_ASC;
-                    break;
-                default:
-                    $sort_attr = $request_data['price_type'];
-                    $sort_order = $request_data['price_sort_direction'];
-            }
-
-            $this->c_model->setAttributes(
-                ArrayHelper::merge($request_data, ['sort_attr' => $sort_attr, 'sort_order' => $sort_order]),
-                false
-            );
+            $this->c_model->setAttributes($request_data, false);
+            $this->c_model->setCommodities($params['commodities_arr']);
 
             [$params['models'], $sort, $pagination] = $this->c_model->getPrices();
 
