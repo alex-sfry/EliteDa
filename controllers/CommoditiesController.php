@@ -20,7 +20,7 @@ class CommoditiesController extends Controller
         $id,
         $module,
         protected \app\models\forms\CommoditiesForm $form_model,
-        protected \app\models\Commdts $c_model,
+        protected \app\models\Commdts $model,
         $config = []
     ) {
         parent::__construct($id, $module, $config);
@@ -71,12 +71,60 @@ class CommoditiesController extends Controller
 
             $request_data['price_type'] = $request_data['buySellSwitch'] === 'buy' ? 'buy_price' : 'sell_price';
             $request_data['stock_demand'] = $request_data['buySellSwitch'] === 'buy' ? 'stock' : 'demand';
-            $request_data['price_sort_direction'] = $request_data['buySellSwitch'] === 'buy' ? SORT_ASC : SORT_DESC;
+            $price_sort_direction = $request_data['buySellSwitch'] === 'buy' ? SORT_ASC : SORT_DESC;
 
-            $this->c_model->setAttributes($request_data, false);
-            $this->c_model->setCommodities($params['commodities_arr']);
+            $this->model->setAttributes($request_data, false);
+            $this->model->setCommodities($params['commodities_arr']);
 
-            [$params['models'], $sort, $pagination] = $this->c_model->getPrices();
+            $query = $this->model->getQuery();
+            $total_count = $query->count();
+
+            /** pagination */
+            $pagination = new Pagination([
+                'totalCount' => $total_count,
+                'pageSizeLimit' => [0, 50],
+                'defaultPageSize' => 50,
+            ]);
+
+            $limit = $pagination->pageSize;
+            $offset = $pagination->offset;
+            /** end of pagination */
+
+            /** sorting */
+            switch ($request_data['sortBy']) {
+                case 'Updated_at':
+                    $sort_attr = 'time_diff';
+                    $sort_order = SORT_ASC;
+                    break;
+                case 'Distance':
+                    $sort_attr = "distance_ly";
+                    $sort_order = SORT_ASC;
+                    break;
+                default:
+                    $sort_attr = $request_data['price_type'];
+                    $sort_order = $price_sort_direction;
+            }
+
+            $sort = new Sort([
+                'attributes' => [
+                    'distance_ly',
+                    'time_diff',
+                    'sell_price',
+                    'buy_price'
+                ],
+                'defaultOrder' => [
+                    $sort_attr => $sort_order
+                ],
+            ]);
+
+            $order = $sort->orders;
+            /** end of sorting */
+
+            $query->orderBy($order);
+            $query->offset($offset);
+            $query->limit($limit);
+
+            $params['models'] = $this->model->modifyModels($query->all());
 
             if (empty($params['models'])) {
                 return $this->render('index', $params);

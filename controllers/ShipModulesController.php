@@ -20,7 +20,7 @@ class ShipModulesController extends Controller
         $id,
         $module,
         protected \app\models\forms\ShipModulesForm $form_model,
-        protected \app\models\ShipMods $mod_model,
+        protected \app\models\ShipMods $model,
         $config = []
     ) {
         parent::__construct($id, $module, $config);
@@ -69,10 +69,57 @@ class ShipModulesController extends Controller
                 return $this->render('index', $params);
             }
 
-            $this->mod_model->setAttributes($request_data, false);
-            $this->mod_model->setMods($params['ship_modules_arr']);
+            $this->model->setAttributes($request_data, false);
+            $this->model->setMods($params['ship_modules_arr']);
 
-            [$params['models'], $sort, $pagination] = $this->mod_model->getModules();
+            $query = $this->model->getQuery();
+            $total_count = $query->count();
+
+            /** pagination */
+            $pagination = new Pagination([
+                'totalCount' => $total_count,
+                'pageSizeLimit' => [0, 50],
+                'defaultPageSize' => 50,
+            ]);
+
+            $limit = $pagination->pageSize;
+            $offset = $pagination->offset;
+            /** end of pagination */
+
+            /** sorting */
+            switch ($request_data['sortBy']) {
+                case 'Updated_at':
+                    $sort_attr = 'time_diff';
+                    $sort_order = SORT_ASC;
+                    break;
+                case 'Distance':
+                    $sort_attr = "distance_ly";
+                    $sort_order = SORT_ASC;
+                    break;
+                default:
+                    $sort_attr = 'module';
+                    $sort_order = SORT_ASC;
+            }
+
+            $sort = new Sort([
+                'attributes' => [
+                    'distance_ly',
+                    'time_diff',
+                    'module'
+                ],
+                'defaultOrder' => [
+                    $sort_attr => $sort_order
+                ],
+            ]);
+
+            $order = $sort->orders;
+            /** end of sorting */
+
+            $query->orderBy($order);
+            $query->offset($offset);
+            $query->limit($limit);
+
+            $params['models'] = $this->model->modifyModels($query->all());
 
             if (empty($params['models'])) {
                 return $this->render('index', $params);

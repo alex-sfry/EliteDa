@@ -11,8 +11,6 @@ use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\base\Model;
 use app\models\ar\Shipyard;
-use yii\data\Pagination;
-use yii\data\Sort;
 use yii\helpers\Url;
 
 use function app\helpers\d;
@@ -24,15 +22,9 @@ class ShipyardShips extends Model
     public ?string $refSystem = null;
     public ?string $landingPadSize = null;
     public ?string $includeSurface = null;
-    public ?string $sortBy = null;
     public ?string $distanceFromStar = null;
     public ?string $maxDistanceFromRefStar = null;
     public ?string $dataAge = null;
-    public ?string $sort_attr = null;
-    public ?int $sort_order = null;
-    protected int $limit = 0;
-    protected array $order = [];
-    protected int $offset = 0;
     protected ?array $ships_arr = null;
 
     /* properties for station details page (Stations controller)  */
@@ -44,72 +36,7 @@ class ShipyardShips extends Model
         $this->ships_arr = $ships_arr;
     }
 
-    public function getShips(): array
-    {
-
-        $query = $this->getQuery();
-        $total_count = $query->count();
-
-        if ($total_count === 0) {
-            return [[], null, null];
-        }
-
-        $pagination = $this->getPaginationObj($total_count);
-
-        $this->limit = $pagination->pageSize;
-        $this->offset = $pagination->offset;
-
-        $sort = $sort = $this->getSortObj();
-        $this->order = $sort->orders;
-
-        $query->orderBy($this->order);
-        $query->offset($this->offset);
-        $query->limit($this->limit);
-
-        return [
-            $this->modifyModels($query->all()),
-            $sort,
-            $pagination
-        ];
-    }
-
-    protected function getPaginationObj(int $total_count): Pagination
-    {
-        return new Pagination([
-            'totalCount' => $total_count,
-            'pageSizeLimit' => [0, 50],
-            'defaultPageSize' => 50,
-        ]);
-    }
-
-    protected function getSortObj(): Sort
-    {
-        switch ($this->sortBy) {
-            case 'Updated_at':
-                $this->sort_attr = 'time_diff';
-                $this->sort_order = SORT_ASC;
-                break;
-            case 'Distance':
-                $this->sort_attr = 'distance_ly';
-                $this->sort_order = SORT_ASC;
-                break;
-            default:
-                $this->sort_attr = 'distance_ly';
-                $this->sort_order = SORT_ASC;
-        }
-
-        return new Sort([
-            'attributes' => [
-                'distance_ly',
-                'time_diff'
-            ],
-            'defaultOrder' => [
-                $this->sort_attr => $this->sort_order
-            ],
-        ]);
-    }
-
-    protected function getQuery(): Query
+    public function getQuery(): Query
     {
         $this->attachBehavior('SystemBehavior', SystemBehavior::class);
         /** @var SystemBehavio|ShipyardShips $this */

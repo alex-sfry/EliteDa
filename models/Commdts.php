@@ -10,11 +10,7 @@ use yii\db\Expression;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\base\Model;
-use yii\data\Pagination;
-use yii\data\Sort;
 use yii\helpers\Url;
-
-use function app\helpers\d;
 
 class Commdts extends Model
 {
@@ -22,7 +18,6 @@ class Commdts extends Model
     public ?string $refSystem = null;
     public ?string $landingPadSize = null;
     public ?string $includeSurface = null;
-    public ?string $sortBy = null;
     public ?string $distanceFromStar = null;
     public ?string $minSupplyDemand = null;
     public ?string $buySellSwitch = null;
@@ -30,12 +25,6 @@ class Commdts extends Model
     public ?string $dataAge = null;
     public ?string $stock_demand = null;
     public ?string $price_type = null;
-    public ?string $price_sort_direction = null;
-    protected ?string $sort_attr = null;
-    protected ?int $sort_order = null;
-    protected int $limit = 0;
-    protected array $order = [];
-    protected int $offset = 0;
     protected ?array $commodities = null;
 
     public function behaviors(): array
@@ -54,74 +43,7 @@ class Commdts extends Model
         $this->commodities = $commodities;
     }
 
-    public function getPrices(): array
-    {
-        $query = $this->getQuery();
-        $total_count = $query->count();
-
-        if ($total_count === 0) {
-            return [[], null, null];
-        }
-
-        $pagination = $this->getPaginationObj($total_count);
-
-        $this->limit = $pagination->pageSize;
-        $this->offset = $pagination->offset;
-
-        $sort = $this->getSortObj();
-
-        $this->order = $sort->orders;
-
-        $query->orderBy($this->order);
-        $query->offset($this->offset);
-        $query->limit($this->limit);
-
-        return [
-            $this->modifyModels($query->all()),
-            $sort,
-            $pagination
-        ];
-    }
-
-    protected function getPaginationObj(int $total_count): Pagination
-    {
-        return new Pagination([
-            'totalCount' => $total_count,
-            'pageSizeLimit' => [0, 50],
-            'defaultPageSize' => 50,
-        ]);
-    }
-
-    protected function getSortObj(): Sort
-    {
-        switch ($this->sortBy) {
-            case 'Updated_at':
-                $this->sort_attr = 'time_diff';
-                $this->sort_order = SORT_ASC;
-                break;
-            case 'Distance':
-                $this->sort_attr = "distance_ly";
-                $this->sort_order = SORT_ASC;
-                break;
-            default:
-                $this->sort_attr = $this->price_type;
-                $this->sort_order = $this->price_sort_direction;
-        }
-
-        return new Sort([
-            'attributes' => [
-                'distance_ly',
-                'time_diff',
-                'sell_price',
-                'buy_price'
-            ],
-            'defaultOrder' => [
-                $this->sort_attr => $this->sort_order
-            ],
-        ]);
-    }
-
-    protected function getQuery(): Query
+    public function getQuery(): Query
     {
         /** @var SystemBehavior|CommoditiesBehavior|Commdts $this */
 
