@@ -1,5 +1,5 @@
-# ELIDA
-tool for PC game 'Elite Dangerous' © FRONTIER DEVELOPMENTS PLC
+# EliteDa
+Tool for PC game 'Elite Dangerous' © FRONTIER DEVELOPMENTS PLC
 <br><br>
 
-https://elida.space/
+https://eliteda.space/

@@ -59,7 +59,7 @@ if (!YII_ENV_DEV) {
         <header id="header" class="header bg-header">
             <nav class="navbar navbar-expand-lg bg-header py-0 position-relative z-3">
                 <div class="container-xxl my-0 mx-auto px-3">
-                    <a class="logo navbar-brand d-block text-center" href="<?= Url::home() ?>">elida</a>
+                    <a class="logo navbar-brand d-block text-center" href="<?= Url::home() ?>">EliteDa</a>
                     <button class="navbar-toggler bg-light-orange" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                             aria-label="Toggle navigation">
