@@ -21,6 +21,7 @@ class BootstrapTable extends Widget
     public string $table_cls = 'c-table';
     public string $cnt_id = 'c-table';
     public string $pagination_id = 'pgr01';
+    public string $pager_class = '';
 
     /**
      * @throws Exception
@@ -142,7 +143,8 @@ class BootstrapTable extends Widget
                 'nextPageCssClass' => 'next-page'
             ]),
             [
-                'class' => 'c-pagination-cnt d-flex justify-content-center align-items-center pb-4'
+                'class' =>
+                    "c-pagination-cnt d-flex justify-content-center align-items-center pb-4 {$this->pager_class}"
             ]
         );
     }
