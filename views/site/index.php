@@ -87,13 +87,13 @@ $this->title = 'ELIDA - Elite Dangerous Assistant';
                     Stations
                     </a>
                 </div>
-                <div class="main-tile gx-0 rounded-3">
+                <!-- <div class="main-tile gx-0 rounded-3">
                     <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                             justify-content-center"
-                    href="<?= Url::to(['rings/index']) ?>">
+                    href="<?php /* echo Url::to(['rings/index']) */ ?>">
                     Rings
                     </a>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
