@@ -3,22 +3,21 @@
 namespace app\controllers;
 
 use app\behaviors\SystemBehavior;
+use app\models\ar\Rings;
 use Yii;
+use yii\data\Pagination;
+use yii\data\Sort;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
+use yii\web\Request;
+use yii\web\Response;
+use yii\web\Session;
+
+use function app\helpers\d;
 
 class RingsController extends Controller
 {
-    public function __construct(
-        $id,
-        $module,
-        protected \app\models\search\RingsSearch $searchModel,
-        $config = []
-    ) {
-        parent::__construct($id, $module, $config);
-    }
-
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -54,6 +53,8 @@ class RingsController extends Controller
                     "ROUND(SQRT(POW((rings.x - $x), 2) + POW((rings.y - $y), 2) + POW((rings.z - $z), 2)), 2)"
                 );
             }
+
+            $params['refSysStation'] = $session->get('mt')['refSysStation'];
         }
 
         if (!isset($distance_expr) || !$distance_expr) {
@@ -62,19 +63,113 @@ class RingsController extends Controller
             );
         }
 
-        $dataProvider = $this->searchModel->search($this->request->queryParams, $distance_expr);
-        $dataProvider->pagination = ['pageSize' => 50];
+        $rings = Rings::find();
+        $rings
+            ->select([
+                'name',
+                'system_name',
+                'distance_to_arrival',
+                "$distance_expr as distance_ly"
+            ])
+            ->where(['not', ['x' => null]])
+            ->andWhere(['type' => 'Metallic'])
+        ;
 
-        $params['queryParams'] = $this->request->queryParams;
+        $total_count = $rings->count();
 
-        $dataProvider->sort->attributes['distance'] = [
-            'asc' => ['distance' => SORT_ASC],
-            'desc' => ['distance' => SORT_DESC],
-        ];
+        /** pagination */
+        $pagination = new Pagination([
+            'totalCount' => $total_count,
+            'pageSizeLimit' => [0, 50],
+            'defaultPageSize' => 50,
+        ]);
 
-        $params['dataProvider'] = $dataProvider;
-        $params['searchModel'] = $this->searchModel;
+        $limit = $pagination->pageSize;
+        $offset = $pagination->offset;
+        /** end of pagination */
+
+        /** sorting */
+        $sort = new Sort([
+            'attributes' => [
+                'distance_ly'
+            ],
+            'defaultOrder' => [
+                'distance_ly' => SORT_ASC
+            ],
+        ]);
+
+        $order = $sort->orders;
+        /** end of sorting */
+
+        $rings->orderBy($order);
+        $rings->offset($offset);
+        $rings->limit($limit);
+
+        $params['models'] = $rings->asArray()->cache(3600)->all();
+        $params['pagination'] = $pagination;
+        $params['sort'] = $sort;
+        $params['queryParams'] = $request->queryParams;
+
+        if ($request->get('page')) {
+            $this->handlePagination($sort, $pagination, $session, $request, $params['models']);
+        }
+
+        if ($request->get('sort')) {
+            $this->handleSort($sort, $pagination, $session, $request, $params['models']);
+        }
 
         return $this->render('index', $params);
+    }
+
+    protected function handlePagination(
+        Sort $sort,
+        Pagination $pagination,
+        Session $session,
+        Request $request,
+        array $models
+    ): void {
+        if ($session->get('c_sort')) {
+            $sort->setAttributeOrders($session->get('c_sort'));
+        }
+
+        $pagination->setPage($request->get('page') - 1);
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_JSON;
+        $response->data = [
+            'limit' => $pagination->pageSize,
+            'links' => $pagination->getLinks(),
+            'page' => $pagination->getPage(),
+            'lastPage' => $pagination->pageCount,
+            'data' => $models,
+            'totalCount' => $pagination->totalCount,
+        ];
+
+        $response->send();
+    }
+
+    protected function handleSort(
+        Sort $sort,
+        Pagination $pagination,
+        Session $session,
+        Request $request,
+        array $models
+    ): void {
+        $session->set('c_sort', $sort->attributeOrders);
+        $pagination->setPage(0);
+        $response = Yii::$app->response;
+        $response->format = Response::FORMAT_JSON;
+        $response->data = [
+            'data' => $models,
+            'attributeOrders' => $sort->attributeOrders,
+            'links' => $pagination->getLinks(),
+            'lastPage' => $pagination->pageCount,
+            'totalCount' => $pagination->totalCount,
+            'sortUrl' => $sort->createUrl(ltrim($request->get('sort'), '-')),
+            'page' => $pagination->getPage(),
+            'limit' => $pagination->pageSize,
+            'totalCount' => $pagination->totalCount
+        ];
+
+        $response->send();
     }
 }
