@@ -124,25 +124,7 @@ class ShipyardShipsController extends Controller
 
             $params['models'] = ArrayHelper::htmlEncode($params['models']);
 
-            $params['ship_sort'] = null;
-            $params['time_sort'] = null;
-            $params['d_ly_sort'] = null;
-
-            switch ($sort->attributeOrders) {
-                case ArrayHelper::keyExists('time_diff', $sort->attributeOrders):
-                    $params['time_sort'] = ($sort->attributeOrders)['time_diff'] === 4 ? 'sorted asc' : 'sorted desc';
-                    break;
-                case ArrayHelper::keyExists('distance_ly', $sort->attributeOrders):
-                    $params['d_ly_sort'] = ($sort->attributeOrders)['distance_ly'] === 4 ? 'sorted asc' : 'sorted desc';
-                    break;
-                default:
-                    $params['distance_ly'] = null;
-            }
-
             $params['sort'] = $sort;
-            $params['sort_updated'] = $sort->createUrl('time_diff');
-            $params['sort_dist_ly'] = $sort->createUrl('distance_ly');
-
             $params['pagination'] = $pagination;
 
             if ($request->get('page')) {
