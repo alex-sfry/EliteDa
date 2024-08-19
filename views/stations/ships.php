@@ -9,7 +9,7 @@ use function app\helpers\ksq;
 
 $this->params['meta_keywords'] =
     'Elite: Dangerous, galaxy information, station ships, station shipyard, ships, shipyard';
-$this->title = ksq($station_name) . ' station shipyard';
+$this->title = $station_name . ' station shipyard';
 $this->params['breadcrumbs'] = [
     [
         'label' => $station_name,

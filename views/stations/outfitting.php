@@ -10,7 +10,7 @@ use function app\helpers\ksq;
 
 $this->params['meta_keywords'] = 'Elite: Dangerous, galaxy information, station outfitting, outfitting, modules';
 
-$this->title = ksq($station_name) . ' station outfitting';
+$this->title = $station_name . ' station outfitting';
 Yii::$app->view->registerCss(
     '.nav-pills .nav-link.active {
         background-color: var(--bs-info);
