@@ -230,10 +230,7 @@ $config = [
             ],
             'app\models\forms\ContactForm' => [
                 'class' => 'app\models\forms\ContactForm',
-            ],
-            'app\models\search\RingsSearch' => [
-                'class' => 'app\models\search\RingsSearch',
-            ],
+            ]
         ],
     ]
 ];
