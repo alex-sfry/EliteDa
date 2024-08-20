@@ -71,7 +71,9 @@ class SystemsController extends Controller
         ];
 
         $dataProvider = $searchModel->search($this->request->queryParams, $maxDistance, $system);
-        $dataProvider->pagination = ['pageSize' => 50];
+        $dataProvider->pagination->defaultPageSize = 50;
+        $dataProvider->pagination->forcePageParam = false;
+        $dataProvider->pagination->pageSize = null;
 
         $dataProvider->sort->attributes['distance'] = [
             'asc' => ['distance' => SORT_ASC],
