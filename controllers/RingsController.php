@@ -63,6 +63,8 @@ class RingsController extends Controller
             'desc' => ['distance' => SORT_DESC],
         ];
 
+        $dataProvider->sort->defaultOrder = ['distance' => SORT_ASC];
+
         $params['dataProvider'] = $dataProvider;
         $params['searchModel'] = $searchModel;
 
