@@ -14,16 +14,6 @@ use yii\web\Session;
 
 class ShipyardShipsController extends Controller
 {
-    public function __construct(
-        $id,
-        $module,
-        protected \app\models\forms\ShipyardShipsForm $form_model,
-        protected \app\models\ShipyardShips $model,
-        $config = []
-    ) {
-        parent::__construct($id, $module, $config);
-    }
-
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -32,8 +22,10 @@ class ShipyardShipsController extends Controller
         );
     }
 
-    public function actionIndex(): string
-    {
+    public function actionIndex(
+        \app\models\forms\ShipyardShipsForm $form_model,
+        \app\models\ShipyardShips $model
+    ): string {
         /** @var ShipyardShipsBehavior|ShipyardShipsController $this */
 
         $session = Yii::$app->session;
@@ -44,7 +36,7 @@ class ShipyardShipsController extends Controller
 
         $params['ships_error'] = '';
         $params['ref_error'] = '';
-        $params['form_model'] = $this->form_model;
+        $params['form_model'] = $form_model;
         $params['ships_arr'] = $this->getShipsList();
 
         if (count($request->get()) > 2) {
@@ -57,20 +49,20 @@ class ShipyardShipsController extends Controller
         if (isset($request_data) || $session->get('ships')) {
             $request->isGet && $session->remove('ships_sort');
 
-            $this->form_model->load($request_data, '');
-            $this->form_model->validate();
+            $form_model->load($request_data, '');
+            $form_model->validate();
 
-            $params['ships_error'] = $this->form_model->validate('cMainSelect') ? '' : 'is-invalid';
-            $params['ref_error'] = $this->form_model->validate('refSystem') ? '' : 'is-invalid';
+            $params['ships_error'] = $form_model->validate('cMainSelect') ? '' : 'is-invalid';
+            $params['ref_error'] = $form_model->validate('refSystem') ? '' : 'is-invalid';
 
-            if ($this->form_model->hasErrors()) {
+            if ($form_model->hasErrors()) {
                 return $this->render('index', $params);
             }
 
-            $this->model->setAttributes($request_data, false);
-            $this->model->setShipsArr($params['ships_arr']);
+            $model->setAttributes($request_data, false);
+            $model->setShipsArr($params['ships_arr']);
 
-            $query = $this->model->getQuery();
+            $query = $model->getQuery();
             $total_count = $query->count();
 
             /** pagination */
@@ -116,7 +108,7 @@ class ShipyardShipsController extends Controller
             $query->offset($offset);
             $query->limit($limit);
 
-            $params['models'] = $this->model->modifyModels($query->all());
+            $params['models'] = $model->modifyModels($query->all());
 
             if (empty($params['models'])) {
                 return $this->render('index', $params);

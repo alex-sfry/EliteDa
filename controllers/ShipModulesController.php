@@ -16,16 +16,6 @@ use function app\helpers\d;
 
 class ShipModulesController extends Controller
 {
-    public function __construct(
-        $id,
-        $module,
-        protected \app\models\forms\ShipModulesForm $form_model,
-        protected \app\models\ShipMods $model,
-        $config = []
-    ) {
-        parent::__construct($id, $module, $config);
-    }
-
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -34,8 +24,10 @@ class ShipModulesController extends Controller
         );
     }
 
-    public function actionIndex(): string
-    {
+    public function actionIndex(
+        \app\models\forms\ShipModulesForm $form_model,
+        \app\models\ShipMods $model
+    ): string {
         /** @var ShipModulesBehavior|ShipModulesController $this */
 
         $session = Yii::$app->session;
@@ -46,7 +38,7 @@ class ShipModulesController extends Controller
         $params = [];
         $params['mod_error'] = '';
         $params['ref_error'] = '';
-        $params['form_model'] = $this->form_model;
+        $params['form_model'] = $form_model;
         $params['ship_modules_arr'] = $this->getShipModules();
 
         if (count($request->get()) > 2) {
@@ -59,20 +51,20 @@ class ShipModulesController extends Controller
         if (isset($request_data) || $session->get('mod')) {
             $request->isGet && $session->remove('mod_sort');
 
-            $this->form_model->load($request_data, '');
-            $this->form_model->validate();
+            $form_model->load($request_data, '');
+            $form_model->validate();
 
-            $params['mod_error'] = empty($this->form_model->getErrors('cMainSelect')) ? '' : 'is-invalid';
-            $params['ref_error'] = empty($this->form_model->getErrors('refSystem')) ? '' : 'is-invalid';
+            $params['mod_error'] = empty($form_model->getErrors('cMainSelect')) ? '' : 'is-invalid';
+            $params['ref_error'] = empty($form_model->getErrors('refSystem')) ? '' : 'is-invalid';
 
-            if ($this->form_model->hasErrors()) {
+            if ($form_model->hasErrors()) {
                 return $this->render('index', $params);
             }
 
-            $this->model->setAttributes($request_data, false);
-            $this->model->setMods($params['ship_modules_arr']);
+            $model->setAttributes($request_data, false);
+            $model->setMods($params['ship_modules_arr']);
 
-            $query = $this->model->getQuery();
+            $query = $model->getQuery();
             $total_count = $query->count();
 
             /** pagination */
@@ -119,7 +111,7 @@ class ShipModulesController extends Controller
             $query->offset($offset);
             $query->limit($limit);
 
-            $params['models'] = $this->model->modifyModels($query->all());
+            $params['models'] = $model->modifyModels($query->all());
 
             if (empty($params['models'])) {
                 return $this->render('index', $params);

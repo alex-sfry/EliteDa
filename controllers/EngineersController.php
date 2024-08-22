@@ -12,18 +12,13 @@ use function app\helpers\d;
 
 class EngineersController extends Controller
 {
-    public function __construct($id, $module, protected \app\models\search\EngineersSearch $searchModel, $config = [])
+    public function actionIndex(\app\models\search\EngineersSearch $searchModel): string
     {
-        parent::__construct($id, $module, $config);
-    }
-
-    public function actionIndex(): string
-    {
-        $dataProvider = $this->searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         if (empty($this->request->queryParams) || !isset($this->request->queryParams['EngineersSearch'])) {
             $params['queryParams']['EngineersSearch'] = array_fill_keys(
-                array_values($this->searchModel->activeAttributes()),
+                array_values($searchModel->activeAttributes()),
                 null
             );
         } else {
@@ -31,7 +26,7 @@ class EngineersController extends Controller
         }
 
         $params['dataProvider'] = $dataProvider;
-        $params['searchModel'] = $this->searchModel;
+        $params['searchModel'] = $searchModel;
 
         return $this->render('index', $params);
     }

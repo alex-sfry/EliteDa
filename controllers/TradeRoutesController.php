@@ -14,11 +14,6 @@ use function app\helpers\d;
 
 class TradeRoutesController extends Controller
 {
-    public function __construct($id, $module, protected \app\models\forms\TradeRoutesForm $form_model, $config = [])
-    {
-        parent::__construct($id, $module, $config);
-    }
-
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -27,7 +22,7 @@ class TradeRoutesController extends Controller
         );
     }
 
-    public function actionIndex(): string
+    public function actionIndex(\app\models\forms\TradeRoutesForm $form_model): string
     {
         /** @var PageCounterBehavior|TradeRoutesController $this */
 
@@ -41,7 +36,7 @@ class TradeRoutesController extends Controller
         $params['cargo_error'] = '';
         $params['profit_error'] = '';
 
-        $params['form_model'] = $this->form_model;
+        $params['form_model'] = $form_model;
 
         if (count($request->get()) > 0) {
             $params['get'] = $request->get();
@@ -51,13 +46,13 @@ class TradeRoutesController extends Controller
         }
 
         if ($request->get() || $session->get('tr')) {
-            $this->form_model->setAttributes($params['get']);
-            $params['ref_error'] =  $this->form_model->validate('refSysStation') ? '' : 'is-invalid';
-            $params['cargo_error'] =  $this->form_model->validate('cargo') ? '' : 'is-invalid';
-            $params['profit_error'] =  $this->form_model->validate('profit') ? '' : 'is-invalid';
+            $form_model->setAttributes($params['get']);
+            $params['ref_error'] =  $form_model->validate('refSysStation') ? '' : 'is-invalid';
+            $params['cargo_error'] =  $form_model->validate('cargo') ? '' : 'is-invalid';
+            $params['profit_error'] =  $form_model->validate('profit') ? '' : 'is-invalid';
 
-            if ($this->form_model->hasErrors()) {
-                $params['errors'] = $this->form_model;
+            if ($form_model->hasErrors()) {
+                $params['errors'] = $form_model;
                 return $this->render('index', $params);
             }
 

@@ -16,16 +16,6 @@ use function app\helpers\d;
 
 class CommoditiesController extends Controller
 {
-    public function __construct(
-        $id,
-        $module,
-        protected \app\models\forms\CommoditiesForm $form_model,
-        protected \app\models\Commdts $model,
-        $config = []
-    ) {
-        parent::__construct($id, $module, $config);
-    }
-
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -34,8 +24,10 @@ class CommoditiesController extends Controller
         );
     }
 
-    public function actionIndex(): string
-    {
+    public function actionIndex(
+        \app\models\forms\CommoditiesForm $form_model,
+        \app\models\Commdts $model,
+    ): string {
         /** @var CommoditiesBehavior|CommoditiesController $this */
 
         $session = Yii::$app->session;
@@ -46,7 +38,7 @@ class CommoditiesController extends Controller
         $params = [];
         $params['c_error'] = '';
         $params['ref_error'] = '';
-        $params['form_model'] = $this->form_model;
+        $params['form_model'] = $form_model;
         $params['commodities_arr'] = $this->getCommodities();
 
         if (count($request->get()) > 2) {
@@ -59,13 +51,13 @@ class CommoditiesController extends Controller
         if (isset($request_data) || $session->get('c')) {
             $request->isGet && $session->remove('c_sort');
 
-            $this->form_model->load($request_data, '');
-            $this->form_model->validate();
+            $form_model->load($request_data, '');
+            $form_model->validate();
 
-            $params['c_error'] = empty($this->form_model->getErrors('commodities_arr')) ? '' : 'is-invalid';
-            $params['ref_error'] = empty($this->form_model->getErrors('refSystem')) ? '' : 'is-invalid';
+            $params['c_error'] = empty($form_model->getErrors('commodities_arr')) ? '' : 'is-invalid';
+            $params['ref_error'] = empty($form_model->getErrors('refSystem')) ? '' : 'is-invalid';
 
-            if ($this->form_model->hasErrors()) {
+            if ($form_model->hasErrors()) {
                 return $this->render('index', $params);
             }
 
@@ -73,10 +65,10 @@ class CommoditiesController extends Controller
             $request_data['stock_demand'] = $request_data['buySellSwitch'] === 'buy' ? 'stock' : 'demand';
             $price_sort_direction = $request_data['buySellSwitch'] === 'buy' ? SORT_ASC : SORT_DESC;
 
-            $this->model->setAttributes($request_data, false);
-            $this->model->setCommodities($params['commodities_arr']);
+            $model->setAttributes($request_data, false);
+            $model->setCommodities($params['commodities_arr']);
 
-            $query = $this->model->getQuery();
+            $query = $model->getQuery();
             $total_count = $query->count();
 
             /** pagination */
@@ -124,7 +116,7 @@ class CommoditiesController extends Controller
             $query->offset($offset);
             $query->limit($limit);
 
-            $params['models'] = $this->model->modifyModels($query->all());
+            $params['models'] = $model->modifyModels($query->all());
 
             if (empty($params['models'])) {
                 return $this->render('index', $params);

@@ -9,15 +9,6 @@ use yii\web\Controller;
 
 class MaterialTradersController extends Controller
 {
-    public function __construct(
-        $id,
-        $module,
-        protected \app\models\search\MaterialTradersSearch $searchModel,
-        $config = []
-    ) {
-        parent::__construct($id, $module, $config);
-    }
-
     public function behaviors(): array
     {
         return ArrayHelper::merge(
@@ -26,7 +17,7 @@ class MaterialTradersController extends Controller
         );
     }
 
-    public function actionIndex(): string
+    public function actionIndex(\app\models\search\MaterialTradersSearch $searchModel): string
     {
         /** @var SystemBehavior|MaterialTradersController $this */
 
@@ -55,7 +46,7 @@ class MaterialTradersController extends Controller
             $distance_expr = $this->getDistanceToSystemExpression('', ['x' => 0, 'y' => 0, 'z' => 0]);
         }
 
-        $dataProvider = $this->searchModel->search($this->request->queryParams, $distance_expr);
+        $dataProvider = $searchModel->search($this->request->queryParams, $distance_expr);
         $dataProvider->pagination = ['pageSize' => 50];
 
         $params['queryParams'] = $this->request->queryParams;
@@ -74,7 +65,7 @@ class MaterialTradersController extends Controller
         ];
 
         $params['dataProvider'] = $dataProvider;
-        $params['searchModel'] = $this->searchModel;
+        $params['searchModel'] = $searchModel;
 
         return $this->render('index', $params);
     }
