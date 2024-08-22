@@ -79,6 +79,8 @@ class RingsSearch extends Rings
             ->andFilterWhere(['like', 'type', $this->type])
         ;
 
+        $query->cache(7200);
+
         return $dataProvider;
     }
 }
