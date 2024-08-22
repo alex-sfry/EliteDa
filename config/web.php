@@ -177,6 +177,7 @@ $config = [
     'params' => $params,
     'container' => [
         'definitions' => [
+            'app\models\search\RingsSearch' => 'app\models\search\RingsSearch',
             'app\models\StationMarket' => 'app\models\StationMarket',
             'app\models\ShipMods' => 'app\models\ShipMods',
             'app\models\ShipyardShips' => 'app\models\ShipyardShips',
