@@ -114,6 +114,7 @@ $dta_options = [
                             'lastPageLabel' => 'last',
                             'prevPageCssClass' => 'prev-page',
                             'nextPageCssClass' => 'next-page',
+                            'maxButtonCount' => 0,
                             'options' => [
                                 'class' => 'd-flex justify-content-center'
                             ]
