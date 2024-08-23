@@ -237,19 +237,16 @@ class StationsController extends Controller
         $services['market'] = Markets::find()
             ->where(['market_id' => $market_id])
             ->cache(3600)
-            ->asArray()
             ->count();
 
         $services['modules'] = ShipModules::find()
             ->where(['market_id' => $market_id])
             ->cache(3600)
-            ->asArray()
             ->count();
 
         $services['ships'] = Shipyard::find()
             ->where(['market_id' => $market_id])
             ->cache(3600)
-            ->asArray()
             ->count();
 
         return $services;
