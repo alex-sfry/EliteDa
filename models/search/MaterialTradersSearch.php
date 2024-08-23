@@ -61,6 +61,8 @@ class MaterialTradersSearch extends MaterialTraders
         // grid filtering conditions
         $query->andFilterWhere(['like', 'material_type', $this->material_type]);
 
+        $query->cache(86400);
+
         return $dataProvider;
     }
 }

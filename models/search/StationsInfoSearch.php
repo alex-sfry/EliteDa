@@ -111,6 +111,8 @@ class StationsInfoSearch extends StationsInfoView
                     ->andFilterWhere(['like', 'type', $this->type]);
         }
 
+        $query->cache(86400);
+
         return $dataProvider;
     }
 }

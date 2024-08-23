@@ -24,6 +24,7 @@ class StationMarket extends Model
 
         $model = Markets::find()
             ->where(['and', "markets.market_id=$id", ['or', 'stock>0', 'demand>0']])
+            ->cache(3600)
             ->asArray()
             ->all();
 

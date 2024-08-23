@@ -141,6 +141,7 @@ class ShipyardShips extends Model
             ->innerJoin(['sprc' => 'ships_price_list'], 'sprc.name = slst.name')
             ->where(['market_id' => $this->market_id])
             ->orderBy('sprc.name')
+            ->cache(3600)
             ->asArray()
             ->all();
 

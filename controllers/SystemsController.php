@@ -106,6 +106,7 @@ class SystemsController extends Controller
         $model = Systems::find()
             ->with(['stations', 'economy', 'security', 'allegiance'])
             ->where(['systems.id' => (int)$id])
+            ->cache(86400)
             ->asArray()
             ->one();
 
@@ -125,6 +126,7 @@ class SystemsController extends Controller
                 ->select('name as system')
                 ->where(['like', 'name', "$sys%", false])
                 ->orderBy('name')
+                ->cache(86400)
                 ->asArray()
                 ->all();
 

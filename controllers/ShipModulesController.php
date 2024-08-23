@@ -65,7 +65,7 @@ class ShipModulesController extends Controller
             $model->setMods($params['ship_modules_arr']);
 
             $query = $model->getQuery();
-            $total_count = $query->count();
+            $total_count = $query->cache(3600)->count();
 
             /** pagination */
             $pagination = new Pagination([
@@ -111,7 +111,7 @@ class ShipModulesController extends Controller
             $query->offset($offset);
             $query->limit($limit);
 
-            $params['models'] = $model->modifyModels($query->all());
+            $params['models'] = $model->modifyModels($query->cache(3600)->all());
 
             if (empty($params['models'])) {
                 return $this->render('index', $params);

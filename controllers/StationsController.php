@@ -118,6 +118,7 @@ class StationsController extends Controller
         $model = Stations::find()
             ->with(['system', 'economyId1', 'economyId2', 'allegiance'])
             ->where(['stations.id' => (int)$id])
+            ->cache(86400)
             ->asArray()
             ->one();
 
@@ -235,16 +236,19 @@ class StationsController extends Controller
         $services = [];
         $services['market'] = Markets::find()
             ->where(['market_id' => $market_id])
+            ->cache(3600)
             ->asArray()
             ->count();
 
         $services['modules'] = ShipModules::find()
             ->where(['market_id' => $market_id])
+            ->cache(3600)
             ->asArray()
             ->count();
 
         $services['ships'] = Shipyard::find()
             ->where(['market_id' => $market_id])
+            ->cache(3600)
             ->asArray()
             ->count();
 
@@ -264,6 +268,7 @@ class StationsController extends Controller
                 ->innerJoin('systems', 'stations.system_id = systems.id')
                 ->where(['like', 'stations.name', "$sys_st%", false])
                 ->orderBy('stations.name')
+                ->cache(86400)
                 ->asArray()
                 ->all();
 

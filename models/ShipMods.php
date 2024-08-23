@@ -157,7 +157,7 @@ class ShipMods extends Model
                 $modules->andWhere(['category' => 'hardpoint']);
         };
 
-        $models = $modules->orderBy('ship_modules.name')->all();
+        $models = $modules->orderBy('ship_modules.name')->cache(3600)->all();
 
         $this->attachBehavior('ShipModulesBehavior', ShipModulesBehavior::class);
 

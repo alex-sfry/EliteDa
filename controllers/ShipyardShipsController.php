@@ -63,7 +63,7 @@ class ShipyardShipsController extends Controller
             $model->setShipsArr($params['ships_arr']);
 
             $query = $model->getQuery();
-            $total_count = $query->count();
+            $total_count = $query->cache(3600)->count();
 
             /** pagination */
             $pagination = new Pagination([
@@ -108,7 +108,7 @@ class ShipyardShipsController extends Controller
             $query->offset($offset);
             $query->limit($limit);
 
-            $params['models'] = $model->modifyModels($query->all());
+            $params['models'] = $model->modifyModels($query->cache(3600)->all());
 
             if (empty($params['models'])) {
                 return $this->render('index', $params);

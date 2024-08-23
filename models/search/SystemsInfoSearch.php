@@ -85,6 +85,8 @@ class SystemsInfoSearch extends SystemsInfoView
             ->andFilterWhere(['like', 'economy', $this->getAttribute('economy')])
             ->andFilterWhere(['like', 'allegiance', $this->getAttribute('allegiance')]);
 
+        $query->cache(86400);
+
         return $dataProvider;
     }
 }

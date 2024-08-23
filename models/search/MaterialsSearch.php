@@ -61,6 +61,8 @@ class MaterialsSearch extends Materials
             ->andFilterWhere(['like', 'grade', "{$this->getAttribute('grade')}%", false])
             ->andFilterWhere(['like', 'type', $this->getAttribute('type')]);
 
+        $query->cache(86400);
+
         return $dataProvider;
     }
 }
