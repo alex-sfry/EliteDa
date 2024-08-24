@@ -1,6 +1,8 @@
 <?php
 
+use app\widgets\alext\BootstrapTable\BootstrapTable;
 use app\widgets\InputDropdown\InputDropdown;
+use yii\bootstrap5\LinkPager;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -15,7 +17,7 @@ use function app\helpers\d;
  */
 
 $this->params['meta_keywords'] = 'Elite: Dangerous, rings, mining, pristine rings';
-$this->title = 'Rings';
+$this->title = 'Pristine Metallic Rings';
 $this->params['breadcrumbs'] = [$this->title];
 
 $dta_options = [
@@ -34,14 +36,15 @@ $dta_options = [
             <div class='row flex-column overflow-x-auto'>
                 <div class='col'>
                     <h1 class="mt-2 text-center sintony-bold"><?= $this->title ?></h1>
-                    <div class="mt-tr-ref-idd ms-auto d-flex justify-content-end">
-                        <?= Html::beginForm(
-                            [Url::to(ArrayHelper::merge(['/rings/index'], $queryParams))],
+                    <div class="mt-tr-ref-idd ms-auto d-flex justify-content-end mb-2">
+                        <?php echo Html::beginForm(
+                            [Url::to(['/rings/index'] /* ArrayHelper::merge(['/rings/index'], $queryParams) */)],
                             'get',
                             ['id' => 'mt-form', 'class' => 'bg-light p-1 rounded-2', 'novalidate' => true]
                         ) ?>
-                        <?= InputDropdown::widget([
+                        <?php echo  InputDropdown::widget([
                             'container' => 'mt-tr-ref-idd',
+                            'selected' => $refSysStation,
                             'search' => 'ref-idd-search',
                             'to_submit' => 'ref-to-submit',
                             'placeholder' => 'Enter system',
@@ -54,72 +57,21 @@ $dta_options = [
                             'btn_position' => 'right'
                         ]); ?>
                         <button class="btn btn-violet btn-sm">submit</button>
-                        <?= Html::endForm() ?>
+                        <?php echo  Html::endForm() ?>
                     </div>
-                    <?= GridView::widget([
-                        'dataProvider' => $dataProvider,
-                        'filterModel' => $searchModel,
-                        'headerRowOptions' => ['class' => 'white-space-nw'],
-                        'rowOptions' => ['class' => 'white-space-nw'],
+
+                    <?php echo BootstrapTable::widget([
+                        'models' => $models,
                         'columns' => [
-                            [
-                                'attribute' => 'name',
-                                'label' => 'Ring name',
-                            ],
-                            [
-                                'attribute' => 'type',
-                                'label' => 'Ring type',
-                                'filter' => [
-                                    'Metal Rich' => 'Metal Rich',
-                                    'Icy' => 'Icy',
-                                    'Rocky' => 'Rocky',
-                                    'Metallic' => 'Metallic',
-                                ],
-                                'filterInputOptions' => [
-                                    'class' => 'form-select form-select-sm',
-                                ],
-                            ],
-                            [
-                                'attribute' => 'reserve',
-                                'label' => 'Reserve',
-                                'value' => function ($model) {
-                                    return str_replace('Resources', '', $model->reserve);
-                                },
-                            ],
-                            [
-                                'attribute' => 'system_name',
-                                'label' => 'System',
-                                'contentOptions' => ['class' => 'min-w-f-content']
-                            ],
-                            [
-                                'attribute' => 'distance_to_arrival',
-                                'label' => 'Distance from star (ls)',
-                                'filter' => $dta_options,
-                                'filterInputOptions' => [
-                                    'class' => 'form-select form-select-sm',
-                                ],
-                            ],
-                            [
-                                'attribute' => 'distance',
-                                'label' => 'Distance (LY)',
-                                'value' => function ($model) {
-                                    return $model
-                                            ->distance . ' (' . Yii::$app->session->get('mt')['refSysStation'] . ')';
-                                }
-                            ],
+                            ['attribute' => 'name', 'label' => 'Name'],
+                            ['attribute' => 'system_name', 'label' => 'System'],
+                            ['attribute' => 'distance_to_arrival', 'label' => 'Dist. from star'],
+                            ['attribute' => 'distance_ly', 'label' => 'Distance (LY)', 'sortable' => true],
                         ],
-                        'pager' => [
-                            'class' => 'yii\bootstrap5\LinkPager',
-                            'firstPageLabel' => 'first',
-                            'lastPageLabel' => 'last',
-                            'prevPageCssClass' => 'prev-page',
-                            'nextPageCssClass' => 'next-page',
-                            'maxButtonCount' => 0,
-                            'options' => [
-                                'class' => 'd-flex justify-content-center'
-                            ]
-                        ],
-                    ]) ?>
+                        'pagination' => $pagination,
+                        'pager_class' => 'mt-3',
+                        'sort' => $sort
+                    ]); ?>
                 </div>
             </div>
         </div>
