@@ -132,7 +132,6 @@ $config = [
                 'trade-routes' => 'trade-routes/index',
                 'materials' => 'materials/index',
                 'material-traders' => 'material-traders/index',
-                'rings' => 'rings/index',
                 'user/login' => 'user/login',
                 'user/logout' => 'user/logout',
                 'user/signup' => 'user/signup',
