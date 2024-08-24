@@ -75,7 +75,7 @@ class RingsController extends Controller
             ->andWhere(['type' => 'Metallic'])
         ;
 
-        $total_count = $rings->count();
+        $total_count = $rings->cache(86400)->count();
 
         /** pagination */
         $pagination = new Pagination([
@@ -105,7 +105,7 @@ class RingsController extends Controller
         $rings->offset($offset);
         $rings->limit($limit);
 
-        $params['models'] = $rings->asArray()->cache(3600)->all();
+        $params['models'] = $rings->asArray()->cache(86400)->all();
         $params['pagination'] = $pagination;
         $params['sort'] = $sort;
         $params['queryParams'] = $request->queryParams;
