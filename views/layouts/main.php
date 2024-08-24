@@ -165,10 +165,6 @@ if (!YII_ENV_DEV) {
                                                     dropdown-item" href="<?= Url::to(['stations/index']) ?>">
                                             stations
                                         </a>
-                                        <a class="menu__link menu__link_nested nav-link text-uppercase text-light
-                                                    dropdown-item" href="<?= Url::to(['rings/index']) ?>">
-                                            rings
-                                        </a>
                                     </li>
                                 </ul>
                             </li>
