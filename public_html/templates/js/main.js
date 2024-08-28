@@ -85,9 +85,9 @@ const isValidated = (elem, elemLabel) => {
 const setInvalid = (elem, elemLabel) => {
   if ($(elem).attr('pattern') === "[0-9]+") {
     if (elem.validationMessage === 'Please match the requested format.') {
-      $("#".concat($(elem).attr('id'), " ~ .invalid-feedback")).text('Only numeric values are allowed');
+      $(`#${$(elem).attr('id')} ~ .invalid-feedback`).text('Only numeric values are allowed');
     } else {
-      $("#".concat($(elem).attr('id'), " ~ .invalid-feedback")).text('Field must not be empty');
+      $(`#${$(elem).attr('id')} ~ .invalid-feedback`).text('Field must not be empty');
     }
   }
   $(elemLabel).addClass('text-danger is-invalid');
