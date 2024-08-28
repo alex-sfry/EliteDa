@@ -176,7 +176,7 @@ if (!YII_ENV_DEV) {
         <div class="container-xxl">
             <?= Breadcrumbs::widget([
                 'itemTemplate' => "<li style='--bs-breadcrumb-divider-color: white;' 
-                                class='breadcrumb-item text-light'><i>{link}</i></li>\n",
+                                class='breadcrumb-item text-light sintony-reg'><i>{link}</i></li>\n",
                 'activeItemTemplate' => "<li style='--bs-breadcrumb-divider-color: white;'
                                             class='breadcrumb-item text-info'><i><b>{link}</b></i></li>\n",
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
