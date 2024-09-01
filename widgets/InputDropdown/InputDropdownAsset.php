@@ -13,7 +13,8 @@ class InputDropdownAsset extends AssetBundle
     public $publishOptions = ['forceCopy' => YII_ENV_DEV ? true : false];
 
     public $depends = [
-        'app\assets\BootstrapAssetMin',
+        'yii\bootstrap5\BootstrapPluginAsset',
+        'yii\bootstrap5\BootstrapAsset',
         'app\assets\AppAsset'
     ];
     public $jsOptions = [

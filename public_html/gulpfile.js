@@ -57,7 +57,7 @@ export const watch = () => {
         .on('change', (path) => console.log(`File ${path} was changed`))
         .on('unlink', (path) => console.log(`File ${path} was removed`))
         .on('add', (path) => console.log(`File ${path} was added`));
-    
+
     gulp.watch('./src/vendorJS/**/*.js', () => vendorJS())
         .on('change', (path) => console.log(`File ${path} was changed`))
         .on('unlink', (path) => console.log(`File ${path} was removed`))
@@ -94,10 +94,14 @@ export const watch = () => {
 };
 
 /* dev mode w/o browserSync */
-export const dev = gulp.series(gulp.parallel(vendorJS, images, webpackBsDev, webpackDev), watch);
+export const dev = gulp.series(gulp.parallel(bsStyles, vendorJS, images, webpackBsDev, webpackDev), watch);
 
 /* dev mode with browserSync */
-export const devSync = gulp.series(enableSync, gulp.parallel(vendorJS, images, webpackBsDev, webpackDev), watch);
+export const devSync = gulp.series(
+    enableSync,
+    gulp.parallel(bsStyles, vendorJS, images, webpackBsDev, webpackDev),
+    watch
+);
 
 /* compile and minify Bootstrap with purgeCCC */
 export const bsProdPurge = gulp.series(
