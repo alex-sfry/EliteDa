@@ -44,8 +44,7 @@ class MaterialTradersSearch extends MaterialTraders
                 '*',
                 "$distance_expr AS distance"
             ])
-            ->with('station')
-            ->innerJoinWith('system');
+            ->innerJoinWith(['station', 'system']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

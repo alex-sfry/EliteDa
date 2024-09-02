@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\behaviors\SystemBehavior;
+use app\models\search\MaterialTradersSearch;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -17,7 +18,7 @@ class MaterialTradersController extends Controller
         );
     }
 
-    public function actionIndex(\app\models\search\MaterialTradersSearch $searchModel): string
+    public function actionIndex(): string
     {
         /** @var SystemBehavior|MaterialTradersController $this */
 
@@ -46,6 +47,7 @@ class MaterialTradersController extends Controller
             $distance_expr = $this->getDistanceToSystemExpression('', ['x' => 0, 'y' => 0, 'z' => 0]);
         }
 
+        $searchModel = new MaterialTradersSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, $distance_expr);
         $dataProvider->pagination = ['pageSize' => 50];
 
