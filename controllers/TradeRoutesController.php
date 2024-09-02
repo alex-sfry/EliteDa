@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\behaviors\PageCounterBehavior;
+use app\models\forms\TradeRoutesForm;
+use app\models\TradeRoutes;
 use Yii;
 use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
@@ -22,7 +24,7 @@ class TradeRoutesController extends Controller
         );
     }
 
-    public function actionIndex(\app\models\forms\TradeRoutesForm $form_model): string
+    public function actionIndex(): string
     {
         /** @var PageCounterBehavior|TradeRoutesController $this */
 
@@ -31,11 +33,12 @@ class TradeRoutesController extends Controller
         // $session->destroy();
         $request = Yii::$app->request;
 
+        $form_model = new TradeRoutesForm();
+
         $params  = [];
         $params['ref_error'] = '';
         $params['cargo_error'] = '';
         $params['profit_error'] = '';
-
         $params['form_model'] = $form_model;
 
         if (count($request->get()) > 0) {
@@ -64,7 +67,8 @@ class TradeRoutesController extends Controller
             )[1]);
 
             $limit = 20;
-            $tr_model = Yii::$container->get('app\models\TradeRoutes', [$params['get']]);
+
+            $tr_model = new TradeRoutes($params['get']);
             $data = $tr_model->getTradeRoutes();
 
             if (gettype($data) === 'string') {

@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\behaviors\CommoditiesBehavior;
+use app\models\Commdts;
+use app\models\forms\CommoditiesForm;
 use Yii;
 use yii\data\Pagination;
 use yii\data\Sort;
@@ -24,16 +26,16 @@ class CommoditiesController extends Controller
         );
     }
 
-    public function actionIndex(
-        \app\models\forms\CommoditiesForm $form_model,
-        \app\models\Commdts $model,
-    ): string {
+    public function actionIndex(): string
+    {
         /** @var CommoditiesBehavior|CommoditiesController $this */
 
         $session = Yii::$app->session;
         $session->open();
         // $session->destroy();
         $request = Yii::$app->request;
+
+        $form_model = new CommoditiesForm();
 
         $params = [];
         $params['c_error'] = '';
@@ -65,6 +67,7 @@ class CommoditiesController extends Controller
             $request_data['stock_demand'] = $request_data['buySellSwitch'] === 'buy' ? 'stock' : 'demand';
             $price_sort_direction = $request_data['buySellSwitch'] === 'buy' ? SORT_ASC : SORT_DESC;
 
+            $model = new Commdts();
             $model->setAttributes($request_data, false);
             $model->setCommodities($params['commodities_arr']);
 

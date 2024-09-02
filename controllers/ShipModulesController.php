@@ -7,6 +7,8 @@ use yii\helpers\ArrayHelper;
 use yii\web\Response;
 use yii\web\Controller;
 use app\behaviors\ShipModulesBehavior;
+use app\models\forms\ShipModulesForm;
+use app\models\ShipMods;
 use yii\data\Pagination;
 use yii\data\Sort;
 use yii\web\Request;
@@ -24,16 +26,16 @@ class ShipModulesController extends Controller
         );
     }
 
-    public function actionIndex(
-        \app\models\forms\ShipModulesForm $form_model,
-        \app\models\ShipMods $model
-    ): string {
+    public function actionIndex(): string
+    {
         /** @var ShipModulesBehavior|ShipModulesController $this */
 
         $session = Yii::$app->session;
         $session->open();
         // $session->destroy();
         $request = Yii::$app->request;
+
+        $form_model = new ShipModulesForm();
 
         $params = [];
         $params['mod_error'] = '';
@@ -61,6 +63,7 @@ class ShipModulesController extends Controller
                 return $this->render('index', $params);
             }
 
+            $model = new ShipMods();
             $model->setAttributes($request_data, false);
             $model->setMods($params['ship_modules_arr']);
 

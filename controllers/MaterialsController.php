@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\search\MaterialsSearch;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 
@@ -9,8 +10,9 @@ use function app\helpers\d;
 
 class MaterialsController extends Controller
 {
-    public function actionIndex(\app\models\search\MaterialsSearch $searchModel): string
+    public function actionIndex(): string
     {
+        $searchModel = new MaterialsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
         $dataProvider->pagination = ['pageSize' => 50];
 

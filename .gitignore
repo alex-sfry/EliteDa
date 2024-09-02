@@ -42,7 +42,7 @@ cgi-bin
 logs
 private
 stats
-elida.code-workspace
+*.code-workspace
 outfitting.csv
 shipyard.csv
 commodity.csv

@@ -175,26 +175,6 @@ $config = [
         ],
     ],
     'params' => $params,
-    'container' => [
-        'definitions' => [
-            'app\models\search\RingsSearch' => 'app\models\search\RingsSearch',
-            'app\models\StationMarket' => 'app\models\StationMarket',
-            'app\models\ShipMods' => 'app\models\ShipMods',
-            'app\models\ShipyardShips' => 'app\models\ShipyardShips',
-            'app\models\search\EngineersSearch' => 'app\models\search\EngineersSearch',
-            'app\models\TradeRoutes' => 'app\models\TradeRoutes',
-            'app\models\forms\TradeRoutesForm' => 'app\models\forms\TradeRoutesForm',
-            'app\models\forms\CommoditiesForm' => 'app\models\forms\CommoditiesForm',
-            'app\models\Commdts' => 'app\models\Commdts',
-            'app\models\forms\ShipModulesForm' => 'app\models\forms\ShipModulesForm',
-            'app\models\forms\ShipyardShipsForm' => 'app\models\forms\ShipyardShipsForm',
-            'app\models\search\MaterialsSearch' => 'app\models\search\MaterialsSearch',
-            'app\models\search\MaterialTradersSearch' => 'app\models\search\MaterialTradersSearch',
-            'app\models\search\StationsInfoSearch' => 'app\models\search\StationsInfoSearch',
-            'app\models\search\SystemsInfoSearch' => 'app\models\search\SystemsInfoSearch',
-            'app\models\forms\ContactForm' => 'app\models\forms\ContactForm'
-        ],
-    ]
 ];
 
 if (YII_ENV_DEV) {

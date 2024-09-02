@@ -7,6 +7,8 @@ use yii\helpers\ArrayHelper;
 use yii\web\Response;
 use yii\web\Controller;
 use app\behaviors\ShipyardShipsBehavior;
+use app\models\forms\ShipyardShipsForm;
+use app\models\ShipyardShips;
 use yii\data\Pagination;
 use yii\data\Sort;
 use yii\web\Request;
@@ -22,10 +24,8 @@ class ShipyardShipsController extends Controller
         );
     }
 
-    public function actionIndex(
-        \app\models\forms\ShipyardShipsForm $form_model,
-        \app\models\ShipyardShips $model
-    ): string {
+    public function actionIndex(): string
+    {
         /** @var ShipyardShipsBehavior|ShipyardShipsController $this */
 
         $session = Yii::$app->session;
@@ -33,6 +33,8 @@ class ShipyardShipsController extends Controller
         // $session->destroy();
         $request = Yii::$app->request;
         $params = [];
+
+        $form_model = new ShipyardShipsForm();
 
         $params['ships_error'] = '';
         $params['ref_error'] = '';
@@ -59,6 +61,7 @@ class ShipyardShipsController extends Controller
                 return $this->render('index', $params);
             }
 
+            $model = new ShipyardShips();
             $model->setAttributes($request_data, false);
             $model->setShipsArr($params['ships_arr']);
 

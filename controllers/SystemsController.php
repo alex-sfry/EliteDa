@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\ar\Systems;
+use app\models\search\SystemsInfoSearch;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -13,7 +14,7 @@ use function app\helpers\d;
 
 class SystemsController extends Controller
 {
-    public function actionIndex(\app\models\search\SystemsInfoSearch $searchModel): string
+    public function actionIndex(): string
     {
         $session = Yii::$app->session;
         $session->open();
@@ -70,6 +71,7 @@ class SystemsController extends Controller
             'max_distance' => $maxDistance
         ];
 
+        $searchModel = new SystemsInfoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, $maxDistance, $system);
         $dataProvider->pagination->defaultPageSize = 50;
         $dataProvider->pagination->forcePageParam = false;

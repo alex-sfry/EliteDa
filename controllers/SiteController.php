@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\forms\ContactForm;
 use Yii;
 use yii\captcha\CaptchaAction;
 use yii\filters\AccessControl;
@@ -66,8 +67,10 @@ class SiteController extends Controller
     /**
      * Displays contact page.
      */
-    public function actionContact(\app\models\forms\ContactForm $model): Response|string
+    public function actionContact(): Response|string
     {
+        $model = new ContactForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
 

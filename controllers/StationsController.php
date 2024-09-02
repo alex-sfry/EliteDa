@@ -11,6 +11,11 @@ use app\models\ar\ShipModules;
 use app\models\ar\Shipyard;
 use app\models\ar\Stations;
 use app\models\ar\Systems;
+use app\models\search\EngineersSearch;
+use app\models\search\StationsInfoSearch;
+use app\models\ShipMods;
+use app\models\ShipyardShips;
+use app\models\StationMarket;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -20,7 +25,7 @@ use function app\helpers\d;
 
 class StationsController extends Controller
 {
-    public function actionIndex(\app\models\search\StationsInfoSearch $searchModel): string
+    public function actionIndex(): string
     {
         $session = Yii::$app->session;
         $session->open();
@@ -77,6 +82,7 @@ class StationsController extends Controller
             'max_distance' => $maxDistance
         ];
 
+        $searchModel = new StationsInfoSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, $maxDistance, $system);
         $dataProvider->pagination->defaultPageSize = 50;
         $dataProvider->pagination->forcePageParam = false;
@@ -106,7 +112,7 @@ class StationsController extends Controller
      * @throws NotFoundHttpException
      * @throws InvalidArgumentException
      */
-    public function actionDetails(int $id, \app\models\search\EngineersSearch $eng_search): string
+    public function actionDetails(int $id): string
     {
         /** @var StationBehavior|StationsController $this */
 
@@ -124,6 +130,8 @@ class StationsController extends Controller
 
         !$model && throw new NotFoundHttpException();
         $services = $this->getStationServices($model['market_id']);
+
+        $eng_search = new EngineersSearch();
         $engineer = $eng_search->getName((int)$model['system_id'], $model['name']);
         $mat_traders = MaterialTraders::findAll(['station_id' => $id]);
         $model['mat_traders'] = $mat_traders;
@@ -142,7 +150,7 @@ class StationsController extends Controller
      * @throws NotFoundHttpException
      * @throws InvalidArgumentException
      */
-    public function actionShips(int $id, \app\models\ShipyardShips $ships): string
+    public function actionShips(int $id): string
     {
         /** @var ShipyardShipsBehavior|StationsController $this */
 
@@ -154,6 +162,7 @@ class StationsController extends Controller
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
 
+        $ships = new ShipyardShips();
         $ships->setShipsArr($this->getShipsList());
         $services = $this->getStationServices($station->market_id);
         $system = Systems::findOne($station->system_id);
@@ -174,7 +183,7 @@ class StationsController extends Controller
      * @throws NotFoundHttpException
      * @throws InvalidArgumentException
      */
-    public function actionShipModules(int $id, \app\models\ShipMods $ship_modules, string $cat): string
+    public function actionShipModules(int $id, string $cat): string
     {
         /** @var ShipModulesBehavior|StationsController $this */
 
@@ -188,6 +197,7 @@ class StationsController extends Controller
         $system = Systems::findOne($station->system_id);
         !$system && throw new NotFoundHttpException();
 
+        $ship_modules = new ShipMods();
         $ship_modules->setMods($this->getShipModules());
         $ship_modules->setAttributes(
             ['market_id' => $station->market_id, 'cat' => $cat, 'sys_name' => $system->name],
@@ -211,7 +221,7 @@ class StationsController extends Controller
      * @throws NotFoundHttpException
      * @throws InvalidArgumentException
      */
-    public function actionMarket(int $id, \app\models\StationMarket $market): string
+    public function actionMarket(int $id): string
     {
         !$id && throw new NotFoundHttpException();
         $id = (int)$id;
@@ -221,6 +231,8 @@ class StationsController extends Controller
         $system = Systems::findOne($station->system_id);
         !$system && throw new NotFoundHttpException();
         $services = $this->getStationServices($station->market_id);
+
+        $market = new StationMarket();
         $model = $market->getMarket($station->market_id, $system->name);
 
         return $this->render('market', [
