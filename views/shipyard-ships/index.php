@@ -255,7 +255,7 @@ $this->params['breadcrumbs'] = [$this->title];
                                                 <div class='col-md-3 pt-4 pb-2'>
                                                     <button
                                                         class='btn btn-violet fw-bold text-light text-uppercase mt-2
-                                                 w-100'
+                                                            w-100'
                                                         type='submit'
                                                         name='c-form-submit'>
                                                         Search

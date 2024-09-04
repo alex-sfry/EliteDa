@@ -58,30 +58,30 @@ foreach ($selected as $key => $value) {
 <div id="<?= $container ?>">
     <label class="fw-bold <?=  isset($error) && $error === 'is-invalid' ?
         'is-invalid text-danger' : '' ?>"
-        for='c-hiddenSelect'>
+        for="<?= $to_submit ?>">
         <?= $label_main ?>
     </label>
     <div class='c-select dropdown-container m-0 bg-transparent position-relative'>
-        <?= Html::dropDownList(
-            $name_main,
-            $selected,
-            $options,
-            [
-                'class' => [
-                    'form-select',
-                    'form-select-sm',
-                    'd-none',
-                    isset($error) && $error === 'is-invalid' ? 'is-invalid' : ''
-                ],
-                'id' => $to_submit,
-                'multiple' => '',
-                'required' => $required ? '' : null
-            ]
-        ) ?>
-        <p class="invalid-feedback position-absolute fw-bold top-100">
-            Field must not be empty
-        </p>
         <div class='dropdown bg-transparent'>
+            <?= Html::dropDownList(
+                $name_main,
+                $selected,
+                $options,
+                [
+                    'class' => [
+                        'form-select',
+                        'form-select-sm',
+                        'd-none',
+                        isset($error) && $error === 'is-invalid' ? 'is-invalid' : ''
+                    ],
+                    'id' => $to_submit,
+                    'multiple' => '',
+                    'required' => $required ? '' : null
+                ]
+            ) ?>
+            <p class="invalid-feedback position-absolute fw-bold top-100">
+                Field must not be empty
+            </p>
             <div class="selected-items h-100 d-flex gap-1 flex-wrap w-100 border rounded-2 mb-1 px-1 bg-transparent
                 sintony-reg <?= isset($error) && $error === 'is-invalid' ?
                 'is-invalid border-2 border-danger' : 'border-dark' ?>">

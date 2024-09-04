@@ -1,20 +1,19 @@
-export const tradeRouteForm = (isValidated, loader, removeLoader) => {
+export const tradeRouteForm = (validate, loader, removeLoader) => {
     const $form = $('#tr-form');
     const $trRoute = $('.tr-route');
     removeLoader($trRoute);
 
     const handleSubmit = (e) => {
-        const cargoSpaceLabel = $('label[for=\'cargo\']').get(0);
         const cargoSpace = $('#cargo').get(0);
-        const profitLabel = $('label[for=\'profit\']').get(0);
         const profit = $('#profit').get(0);
 
         if (!$form.get(0).checkValidity()) {
+            $('#tr-form').addClass('was-validated');
             e.preventDefault();
         } else loader($form, $trRoute);
 
-        isValidated(cargoSpace, cargoSpaceLabel);
-        isValidated(profit, profitLabel);
+        validate(cargoSpace);
+        validate(profit);
     };
 
     $('.btn-copy').on('click', function () {

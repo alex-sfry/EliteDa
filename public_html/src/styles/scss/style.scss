@@ -711,4 +711,17 @@ table {
     .grid-view__ref-sys-divider {
         display: block;
     }
-} 
+}
+
+form.was-validated :invalid {
+    border-width: 2px !important;
+}
+
+form.was-validated :invalid ~ .selected-items {
+    border-width: 2px !important;
+    border-color: $danger !important;
+}
+
+form.was-validated :invalid {
+    border-color: $danger !important;
+}

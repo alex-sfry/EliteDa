@@ -28,6 +28,7 @@ const commoditiesForm = (loader, removeLoader) => {
   removeLoader($table);
   const handleSubmit = e => {
     if (!$form.get(0).checkValidity()) {
+      $form.addClass('was-validated');
       e.preventDefault();
     } else loader($form, $table);
   };
@@ -73,16 +74,9 @@ const cookiesConsent = () => {
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   isValidated: () => (/* binding */ isValidated)
+/* harmony export */   validate: () => (/* binding */ validate)
 /* harmony export */ });
-const isValidated = (elem, elemLabel) => {
-  if (!elem.checkValidity()) {
-    setInvalid(elem, elemLabel);
-  } else {
-    setValid(elem, elemLabel);
-  }
-};
-const setInvalid = (elem, elemLabel) => {
+const validate = elem => {
   if ($(elem).attr('pattern') === "[0-9]+") {
     if (elem.validationMessage === 'Please match the requested format.') {
       $(`#${$(elem).attr('id')} ~ .invalid-feedback`).text('Only numeric values are allowed');
@@ -90,14 +84,6 @@ const setInvalid = (elem, elemLabel) => {
       $(`#${$(elem).attr('id')} ~ .invalid-feedback`).text('Field must not be empty');
     }
   }
-  $(elemLabel).addClass('text-danger is-invalid');
-  $(elem).removeClass('border-dark');
-  $(elem).addClass('is-invalid border-2 border-danger');
-};
-const setValid = (elem, elemLabel) => {
-  $(elemLabel).removeClass('text-danger is-invalid');
-  $(elem).addClass('border-dark');
-  $(elem).removeClass('is-invalid border-2 border-danger');
 };
 
 /***/ }),
@@ -115,6 +101,7 @@ const matTraders = () => {
   const $form = $('#mt-form');
   const handleSubmit = e => {
     if (!$form.get(0).checkValidity()) {
+      $form.addClass('was-validated');
       e.preventDefault();
     }
   };
@@ -138,6 +125,7 @@ const shipModulesForm = (loader, removeLoader) => {
   removeLoader($table);
   const handleSubmit = e => {
     if (!$form.get(0).checkValidity()) {
+      $form.addClass('was-validated');
       e.preventDefault();
     } else loader($form, $table);
   };
@@ -155,17 +143,17 @@ const shipModulesForm = (loader, removeLoader) => {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   shipsForm: () => (/* binding */ shipsForm)
 /* harmony export */ });
-const shipsForm = (isValidated, loader, removeLoader) => {
+const shipsForm = (loader, removeLoader) => {
   const $form = $('#ships-form');
   const $table = $('.ships-table');
-  const shipSelectLabel = $('label[for=\'c-hiddenSelect\']').get(0);
-  const shipSelect = $('#c-hiddenSelect').get(0);
+  // const shipSelectLabel = $('label[for=\'c-hiddenSelect\']').get(0);
+  // const shipSelect = $('#c-hiddenSelect').get(0);
   removeLoader($table);
   const handleSubmit = e => {
     if (!$form.get(0).checkValidity()) {
+      $form.addClass('was-validated');
       e.preventDefault();
     } else loader($form, $table);
-    isValidated(shipSelect, shipSelectLabel);
   };
   $form.on('submit', handleSubmit);
 };
@@ -181,20 +169,19 @@ const shipsForm = (isValidated, loader, removeLoader) => {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   tradeRouteForm: () => (/* binding */ tradeRouteForm)
 /* harmony export */ });
-const tradeRouteForm = (isValidated, loader, removeLoader) => {
+const tradeRouteForm = (validate, loader, removeLoader) => {
   const $form = $('#tr-form');
   const $trRoute = $('.tr-route');
   removeLoader($trRoute);
   const handleSubmit = e => {
-    const cargoSpaceLabel = $('label[for=\'cargo\']').get(0);
     const cargoSpace = $('#cargo').get(0);
-    const profitLabel = $('label[for=\'profit\']').get(0);
     const profit = $('#profit').get(0);
     if (!$form.get(0).checkValidity()) {
+      $('#tr-form').addClass('was-validated');
       e.preventDefault();
     } else loader($form, $trRoute);
-    isValidated(cargoSpace, cargoSpaceLabel);
-    isValidated(profit, profitLabel);
+    validate(cargoSpace);
+    validate(profit);
   };
   $('.btn-copy').on('click', function () {
     navigator.clipboard.writeText($(this).siblings('.table-link-tr').text());
@@ -315,8 +302,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initFooter();
   if ($('#c-form').length) (0,_commodities_js__WEBPACK_IMPORTED_MODULE_2__.commoditiesForm)(loader, removeLoader);
   if ($('#mod-form').length) (0,_shipModules_js__WEBPACK_IMPORTED_MODULE_3__.shipModulesForm)(loader, removeLoader);
-  if ($('#ships-form').length) (0,_ships_js__WEBPACK_IMPORTED_MODULE_4__.shipsForm)(_isValidated_js__WEBPACK_IMPORTED_MODULE_1__.isValidated, loader, removeLoader);
-  if ($('#tr-form').length) (0,_tradeRoutes_js__WEBPACK_IMPORTED_MODULE_5__.tradeRouteForm)(_isValidated_js__WEBPACK_IMPORTED_MODULE_1__.isValidated, loader, removeLoader);
+  if ($('#ships-form').length) (0,_ships_js__WEBPACK_IMPORTED_MODULE_4__.shipsForm)(loader, removeLoader);
+  if ($('#tr-form').length) (0,_tradeRoutes_js__WEBPACK_IMPORTED_MODULE_5__.tradeRouteForm)(_isValidated_js__WEBPACK_IMPORTED_MODULE_1__.validate, loader, removeLoader);
   if ($('#mt-form').length) (0,_matTraders_js__WEBPACK_IMPORTED_MODULE_6__.matTraders)();
   $('#accordionForm .accordion-button').on('click', function () {
     if ($(this).text().trim() === 'Close form') {

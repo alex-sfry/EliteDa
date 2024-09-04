@@ -22,6 +22,10 @@
     letter-spacing: 1px;
 }
 
+form.was-validated .c-dropdown .dropdown input:invalid ~ input {
+    border: 2px solid red !important;
+}
+
 .search-selected {
     letter-spacing: 1px;
     width: fit-content;
@@ -54,3 +58,4 @@
     background-color: var(--bs-cyan) !important;
     color: #000000;
 }
+

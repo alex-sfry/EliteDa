@@ -586,5 +586,17 @@ form-control.is-invalid {
         display: block;
     }
 }
+form.was-validated :invalid {
+    border-width: 2px !important;
+}
+
+form.was-validated :invalid ~ .selected-items {
+    border-width: 2px !important;
+    border-color: #dc3545 !important;
+}
+
+form.was-validated :invalid {
+    border-color: #dc3545 !important;
+}
 
 /*# sourceMappingURL=main.css.map*/

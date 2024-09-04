@@ -96,28 +96,6 @@ class CustomSelect {
         this.setSelectedItemsDivMsg();
     };
 
-    setInvalid(elemHidden, elemVisible, elemLabel) {
-        elemLabel.classList.add('text-danger');
-        elemHidden.classList.add('is-invalid');
-        elemVisible.classList.add('border-2', 'border-danger');
-        elemVisible.classList.remove('border-dark');
-    };
-
-    setValid(elemHidden, elemVisible, elemLabel) {
-        elemLabel.classList.remove('text-danger');
-        elemHidden.classList.remove('is-invalid');
-        elemVisible.classList.remove('border-2', 'border-danger');
-        elemVisible.classList.add('border-dark');
-    };
-
-    isValidated(elem, label) {
-        if (!elem.checkValidity()) {
-            this.setInvalid(this.itemsToSubmitSelect, this.selectedItemsDiv, label);
-        }else {
-            this.setValid(this.itemsToSubmitSelect, this.selectedItemsDiv, label);
-        }
-    }
-
     setEventListeners() {
         const commoditiesSearchField = document.querySelector(`#${this.config.search}`);
         const dropdownList = document.querySelector(`#${this.config.container} .c-list`);
@@ -125,8 +103,6 @@ class CustomSelect {
         commoditiesSearchField.addEventListener('input', (e) => this.handleDropdownInput(e));
         this.selectedItemsDiv.addEventListener('click', (e) => this.handleDeleteSelectedItem(e));
         dropdownList.addEventListener('click', (e) => this.handleDropdownItemClick(e));
-
-        this.form.addEventListener("submit", () => this.isValidated(this.itemsToSubmitSelect, this.label));
     };
 
     getDropdownListItems() {

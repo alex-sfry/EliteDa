@@ -114,6 +114,7 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
+                'rings' => 'rings/index',
                 'contact' => 'site/contact',
                 'engineers' => 'engineers/index',
                 'engineer/<id:\w+>' => 'engineers/details',

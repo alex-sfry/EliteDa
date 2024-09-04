@@ -1,7 +1,7 @@
 import '../styles/scss/style.scss';
 // import '../styles/bootstrapSCSS/bootstrap.scss';
 // import { fetchData } from './fetchData.js';
-import { isValidated } from './isValidated.js';
+import { validate } from './isValidated.js';
 import { commoditiesForm } from './commodities.js';
 import { shipModulesForm } from './shipModules.js';
 import { shipsForm } from './ships.js';
@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initFooter();
     if ($('#c-form').length) commoditiesForm(loader, removeLoader);
     if ($('#mod-form').length) shipModulesForm(loader, removeLoader);
-    if ($('#ships-form').length) shipsForm(isValidated, loader, removeLoader);
-    if ($('#tr-form').length) tradeRouteForm(isValidated, loader, removeLoader);
+    if ($('#ships-form').length) shipsForm(loader, removeLoader);
+    if ($('#tr-form').length) tradeRouteForm(validate, loader, removeLoader);
     if ($('#mt-form').length) matTraders();
 
     $('#accordionForm .accordion-button').on('click', function () {

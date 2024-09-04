@@ -162,32 +162,10 @@ class InputDropdown {
         this.lastSearchValue = this.ddSearch.value;
     };
 
-    setInvalid(elem, elemLabel) {
-        elemLabel.classList.add('text-danger', 'is-invalid');
-        elem.classList.remove('border-dark');
-        elem.classList.add('is-invalid', 'border-2', 'border-danger');
-    };
-
-    setValid(elem, elemLabel) {
-        elemLabel.classList.remove('text-danger', 'is-invalid');
-        elem.classList.add('border-dark');
-        elem.classList.remove('is-invalid', 'border-2', 'border-danger');
-    };
-
-    isValidated(elem, label) {
-        if (!elem.checkValidity()) {
-            this.setInvalid(this.ddSearch, label);
-        }else {
-            this.setValid(this.ddSearch, label);
-        }
-    }
-
     setEventListeners() {
         this.ddToggle.addEventListener('click', () => this.handleDropdownInput());
         this.dropdownList.addEventListener('click', (e) => this.handleDropdownItemClick(e));
         this.resetBtn && this.resetBtn.addEventListener('click', () =>  this.reset());
-
-        this.form && this.form.addEventListener("submit", () => this.isValidated(this.toSubmit, this.label));
     };
 
     reset() {

@@ -149,6 +149,15 @@ if (isset($error) && $error === 'is-invalid') {
         <div
             class="dropdown <?= $btn_position === 'right' ? 'd-flex justify-content-end gap-1' : '' ?>">
             <?= Html::textInput(
+                $name_main,
+                Html::encode($selected),
+                [
+                    'class' => ['d-none'],
+                    'id' => $to_submit,
+                    'required' => $required ? '' : null
+                ]
+            ) ?>
+            <?= Html::textInput(
                 '',
                 null,
                 [
@@ -165,15 +174,6 @@ if (isset($error) && $error === 'is-invalid') {
                     style="<?= $btn_position === 'right' ? 'height: 34px' : '' ?>">
                 <?= $toggle_btn_text ?>
             </button>
-            <?= Html::textInput(
-                $name_main,
-                Html::encode($selected),
-                [
-                    'class' => ['d-none'],
-                    'id' => $to_submit,
-                    'required' => $required ? '' : null
-                ]
-            ) ?>
             <p class="invalid-feedback feedback position-absolute fw-bold mt-0 pt-0
             <?= $btn_position === 'right' ? 'btn-right-error' : '' ?>">
                 Field must not be empty

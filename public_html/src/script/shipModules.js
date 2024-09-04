@@ -5,6 +5,7 @@ export const shipModulesForm = (loader, removeLoader) => {
 
     const handleSubmit = (e) => {
         if (!$form.get(0).checkValidity()) {
+            $form.addClass('was-validated');
             e.preventDefault();
         } else loader($form, $table);
     };
