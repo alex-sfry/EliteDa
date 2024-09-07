@@ -1,7 +1,8 @@
-@import 'fonts';
+@import "fonts";
 @import "vars";
 @import "../../../node_modules/bootstrap/scss/functions.scss";
-@import "../../../node_modules/bootstrap/scss/variables.scss"; 
+@import "../../../node_modules/bootstrap/scss/variables.scss";
+@import "tselect";
 
 h1 {
     color: $gray-200;
@@ -80,17 +81,17 @@ body {
 
 .sort_arrow {
     content: "";
-    padding: $spacer * .5;
+    padding: $spacer * 0.5;
     background-repeat: no-repeat;
 }
 
 .sintony-reg {
-    font-family: 'SintonyRegular', sans-serif;
+    font-family: "SintonyRegular", sans-serif;
     font-weight: 400;
 }
 
 .sintony-bold {
-    font-family: 'SintonyBold', sans-serif;
+    font-family: "SintonyBold", sans-serif;
     font-weight: 700;
 }
 
@@ -98,8 +99,10 @@ body {
     height: 100vh;
 }
 
+/* cookies consent styles */
+
 .cookies-consent-wrapper {
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     font-weight: 400;
     font-size: 0.875rem;
     position: absolute;
@@ -155,7 +158,7 @@ body {
             font-size: 16px;
             font-weight: 500;
             border-radius: 5px;
-            background: #7752FE;
+            background: #7752fe;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -173,10 +176,9 @@ body {
         }
     }
 }
+/* end of cookies consent styles */
 
-/**
-* pagination styles
-*/
+/* pagination styles */
 .prev-page {
     margin-left: 4px;
 }
@@ -187,7 +189,7 @@ body {
 
 .c-pagination-cnt {
     .pagination {
-        li>a {
+        li > a {
             font-size: 0.875rem;
         }
 
@@ -198,7 +200,6 @@ body {
     }
 
     .pagination {
-
         .page-item.first,
         .page-item.last {
             max-width: 38px;
@@ -214,7 +215,6 @@ body {
 @media screen and (min-width: 464px) {
     .c-pagination-cnt {
         .pagination {
-
             .page-item.first,
             .page-item.last {
                 max-width: 100%;
@@ -227,27 +227,26 @@ body {
         }
     }
 }
+/* end of pagination styles */
 
-/**
-* header styles
-*/
+/* header styles */
 .header {
     height: 96px;
     max-height: 96px;
 
     .logo,
     .navbar-brand:hover {
-        font-family: 'EuroCaps', sans-serif;
+        font-family: "EuroCaps", sans-serif;
         font-size: $f-size-logo;
-        color: $custom-orange  !important;
+        color: $custom-orange !important;
     }
 
     .menu {
         &__link {
             transition: color 0.2s linear;
-            
+
             &_nested.active {
-                background-color: $header-color  !important;
+                background-color: $header-color !important;
             }
 
             @extend .sintony-bold;
@@ -258,7 +257,7 @@ body {
         &__link:hover,
         &__link.active {
             // color: $custom-light-orange  !important;
-            color: $custom-orange  !important;
+            color: $custom-orange !important;
         }
     }
 
@@ -268,10 +267,9 @@ body {
         }
     }
 }
+/* end ofheader styles */
 
-/**
-* footer styles
-*/
+/* footer styles */
 .footer {
     height: auto;
 
@@ -295,8 +293,9 @@ body {
         }
     }
 }
-/* ========================================== */
+/* end of footer styles */
 
+/* mobile menu styles */
 .nav-button {
     letter-spacing: 1.1px;
     transition: all 0.2s linear;
@@ -340,13 +339,12 @@ body {
         }
     }
 }
+/* end of mobile menu styles */
 
-/**
-* generic form styles
-*/
+/* generic form styles */
 form {
     &-check-input:focus {
-        @extend .f-ctrl-no-shadow
+        @extend .f-ctrl-no-shadow;
     }
 
     &-check-input:checked {
@@ -373,13 +371,12 @@ form {
     @extend .sintony-bold;
     letter-spacing: 2px;
 
-    .form-select {
+    .form-select:not(.t-sel) {
         border: 1px solid $dark;
-        
     }
 
-    .form-select:focus,
-    .form-select:active {
+    .form-select:focus:not(.t-sel),
+    .form-select:active:not(.t-sel) {
         @extend .f-ctrl-no-shadow;
         box-shadow: 0 0 4px 4px $info;
     }
@@ -408,7 +405,7 @@ form {
         }
 
         label:hover,
-        .btn-check:checked+.btn {
+        .btn-check:checked + .btn {
             @extend .sintony-bold;
             background-color: $info;
         }
@@ -420,7 +417,9 @@ form {
         }
     }
 }
+/* end of generic form styles */
 
+/* result styles */
 .c-loading {
     @extend .w-f-content;
     box-shadow: 0 0 4px 4px $light-bg-subtle;
@@ -438,7 +437,7 @@ form {
     }
 
     h2::after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: -2px;
         left: 0;
@@ -448,17 +447,15 @@ form {
     }
 }
 
-
 table {
     .table-link,
     .table-link-tr {
         @extend .nav-info;
     }
 }
+/* end of result styles */
 
-/**
-* Trade Routes page styles
-*/
+/* Trade Routes page styles */
 .tr-route {
     &-block {
         &-inner {
@@ -503,10 +500,9 @@ table {
         }
     }
 }
+/* end of Trade Routes page styles */
 
-/**
-* moving arrows styles
-*/
+/* moving arrows styles */
 .arrow {
     position: absolute;
 
@@ -583,10 +579,9 @@ table {
         transform: rotate(45deg) translate(20px, 20px);
     }
 }
+/* end of moving arrows styles */
 
-/**
-* gridview
-*/
+/* gridview */
 .grid-view {
     .summary {
         color: $light;
@@ -628,7 +623,10 @@ table {
     .filters .input-group {
         min-width: 100px;
     }
-    
+}
+
+.grid-view__ref-sys-divider {
+    display: none;
 }
 
 .engineers-header {
@@ -637,6 +635,7 @@ table {
         @extend .white-space-nw;
     }
 }
+
 
 .engineers-cnt {
     tbody {
@@ -663,17 +662,19 @@ table {
         }
     }
 }
+/* end  of gridview */
 
+/* details styles */
 .details-cnt {
     h1 ~ p {
         color: $gray-200;
     }
-    
 
-    th, td {
+    th,
+    td {
         border: 0;
     }
-    
+
     tr:first-child th {
         border-top-left-radius: 0.375rem;
     }
@@ -697,14 +698,11 @@ table {
         border-right: 1px solid $dark;
     }
 }
+/* details styles */
 
 .site-contact {
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     font-size: 1rem;
-}
-
-.grid-view__ref-sys-divider {
-    display: none;
 }
 
 @media screen and (min-width: 449px) {
@@ -713,15 +711,9 @@ table {
     }
 }
 
-form.was-validated :invalid {
-    border-width: 2px !important;
-}
-
+/* custom select */
+form.was-validated :invalid,
 form.was-validated :invalid ~ .selected-items {
-    border-width: 2px !important;
     border-color: $danger !important;
 }
-
-form.was-validated :invalid {
-    border-color: $danger !important;
-}
+/* end of custom sleect */
