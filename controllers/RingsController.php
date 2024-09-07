@@ -12,7 +12,7 @@ class RingsController extends \yii\web\Controller
     {
         $session = \Yii::$app->session;
         $request = \Yii::$app->request;
-        // \Yii::$app->session->destroy();
+        \Yii::$app->session->destroy();
         $form_model = new RingsForm();
         $params['form_model'] = $form_model;
         $params['ref_error'] = '';

@@ -122,8 +122,8 @@ const matTraders = () => {
 /* harmony import */ var _tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tSelectSettings.js */ "./src/script/tSelectSettings.js");
 
 const ringsForm = (loader, removeLoader) => {
-  // eslint-disable-next-line no-undef
-  new TomSelect("#refSystem", _tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__.tSelectRingsSettings);
+  // eslint-disable-next-line no-undef, no-unused-vars
+  const tSelect = new TomSelect("#refSystem", _tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__.tSelectRingsSettings);
   const $form = $("#rings-form");
   const $table = $(".rings-table");
   removeLoader($table);
@@ -134,6 +134,9 @@ const ringsForm = (loader, removeLoader) => {
     } else loader($form, $table);
   };
   $form.on("submit", handleSubmit);
+  // fix for TomSelect label bug (id, for)
+  $('.tselect-lbl-1').attr('for', 'refSystem');
+  $('.tselect-lbl-1').removeAttr('id');
 };
 
 /***/ }),

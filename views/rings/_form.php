@@ -25,18 +25,18 @@ $selects = ['type', 'maxDistanceFromRefStar', 'distanceFromStar', 'sortBy'];
         <div class='d-flex flex-column justify-content-between gap-4'>
             <div class='row justify-content-between row-gap-lg-0 row-gap-3'>
                 <div class='min-lett-spacing col-md-6 position-relative'>
-                    <label for="refSystem">Ref. system:</label>
+                    <label class='tselect-lbl-1' for="refSystem">Ref. system:</label>
                     <select
-                        class="t-sel form-select form-select-sm <?= $ref_error ?>"
+                        class="t-sel form-select-sm <?php echo $ref_error ?>"
                         name="refSystem"
                         id="refSystem"
                         placeholder="Type system name..."
                         aria-describedby="inputGroupPrepend3 validationServerRefSystemFeedback"
-                        value="<?= $form_model->refSystem ?>"
+                        value="<?php echo $form_model->refSystem ?>"
                         required>
                         <?php if (!empty($form_model->refSystem)) : ?>
-                            <option selected><?= $form_model->refSystem ?></option>
-                        <?php endif; ?>
+                            <option selected><?php echo $form_model->refSystem ?></option>
+                        <?php  endif; ?>
                     </select>
                     <div
                         class="invalid-feedback position-absolute fw-bold mt-0 pt-0 w-75"

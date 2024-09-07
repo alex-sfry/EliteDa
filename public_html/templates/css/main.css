@@ -48,21 +48,22 @@
     border-radius: 5px;
 }
 
-.was-validated :valid + .ts-wrapper.t-sel {
-    border: 1px solid #212529;
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3E%3C/svg%3E");
+form.was-validated .t-sel:invalid ~ .ts-wrapper.form-select-sm > .ts-control,
+form.was-validated .t-sel:invalid ~ .ts-wrapper.form-select-sm.focus > .ts-control {
+    border: 1px solid #dc3545;
 }
-.was-validated :invalid + .ts-wrapper.t-sel {
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3E%3C/svg%3E");
+form.was-validated .t-sel:valid ~ .ts-wrapper.form-select-sm > .ts-control,
+form.was-validated .t-sel:valid ~ .ts-wrapper.form-select-sm.focus > .ts-control {
+    border: 1px solid #212529;
 }
 
-.ts-wrapper.t-sel.is-invalid {
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3E%3C/svg%3E");
-}
-
-form:not(.was-validated) .t-sel:not(.is-invalid) ~ .ts-wrapper.form-select,
-form:not(.was-validated) .t-sel:not(.is-invalid) ~ .ts-wrapper.form-select.input-active {
+form:not(.was-validated) .t-sel.ts-wrapper.form-select-sm:not(.is-invalid) > .ts-control,
+form:not(.was-validated) .t-sel.ts-wrapper.form-select-sm.focus:not(.is-invalid) > .ts-control {
     border: 1px solid #212529;
+}
+form:not(.was-validated) .t-sel.ts-wrapper.form-select-sm.is-invalid > .ts-control,
+form:not(.was-validated) .t-sel.ts-wrapper.form-select-sm.focus.is-invalid > .ts-control {
+    border: 1px solid #dc3545;
 }
 
 .ts-wrapper:focus-visible {
