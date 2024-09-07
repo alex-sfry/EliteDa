@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @var yii\web\View $this
+ * @var app\models\forms\RingsForm $form_model
+ */
+
 use yii\helpers\Html;
 
 use function app\helpers\e;
@@ -27,15 +32,16 @@ $selects = ['type', 'maxDistanceFromRefStar', 'distanceFromStar', 'sortBy'];
                 <div class='min-lett-spacing col-md-6 position-relative'>
                     <label class='tselect-lbl-1' for="refSystem">Ref. system:</label>
                     <select
-                        class="t-sel form-select-sm <?php echo $ref_error ?>"
+                        class="t-sel form-select-sm 
+                        <?= !empty($form_model->getErrors('refSystem')) ? 'is-invalid' : '' ?>"
                         name="refSystem"
                         id="refSystem"
                         placeholder="Type system name..."
                         aria-describedby="inputGroupPrepend3 validationServerRefSystemFeedback"
-                        value="<?php echo $form_model->refSystem ?>"
+                        value="<?= e($form_model->refSystem) ?>"
                         required>
                         <?php if (!empty($form_model->refSystem)) : ?>
-                            <option selected><?php echo $form_model->refSystem ?></option>
+                            <option selected><?= e($form_model->refSystem) ?></option>
                         <?php  endif; ?>
                     </select>
                     <div
@@ -52,10 +58,10 @@ $selects = ['type', 'maxDistanceFromRefStar', 'distanceFromStar', 'sortBy'];
                             </label>
                             <?= Html::dropDownList(
                                 $elem,
-                                $form_model->$elem,
+                                e($form_model->$elem),
                                 $$elem,
                                 [
-                                    'class' => 'form-select shadow-none border-dark w-100',
+                                    'class' => 'form-select-sm shadow-none border-dark w-100',
                                     'id' => $elem
                                 ]
                             ) ?>

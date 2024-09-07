@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\forms\RingsForm;
+use app\services\RingsService;
 
 use function app\helpers\d;
 
@@ -12,23 +13,25 @@ class RingsController extends \yii\web\Controller
     {
         $session = \Yii::$app->session;
         $request = \Yii::$app->request;
-        \Yii::$app->session->destroy();
+        // $session->destroy();
         $form_model = new RingsForm();
         $params['form_model'] = $form_model;
-        $params['ref_error'] = '';
 
         if (empty($request->get()) && empty($session->get('r'))) {
             return $this->render('index', $params);
         }
-        if (!empty($request->get())) {
-            $session->set('r', $request->get());
-        }
+
+        !empty($request->get()) && $session->set('r', $request->get());
+
         if (!$form_model->load($session->get('r'), '') || !$form_model->validate()) {
-            $params['ref_error'] = !empty($form_model->getErrors('refSystem')) ? 'is-invalid' : '';
+            return $this->render('index', $params);
         }
 
-        d($session->get('r'), false);
-        // d($form_model->getErrors(), false);
+        $service = new RingsService($form_model->attributes);
+        $service->findRings();
+        $params['pagination'] = $service->provider->getPagination();
+        $params['sort'] = $service->provider->getSort();
+        $params['models'] = $service->postprocessData($service->provider->getModels());
 
         return $this->render('index', $params);
     }

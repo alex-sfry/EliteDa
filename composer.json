@@ -21,7 +21,8 @@
         "kartik-v/yii2-helpers": "dev-master",
         "yiisoft/yii2-httpclient": "~2.0.0",
         "imangazaliev/didom": "^2.0",
-        "yiisoft/arrays": "^3.1"
+        "yiisoft/arrays": "^3.1",
+        "yiisoft/strings": "^2.4"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "^2.1",
