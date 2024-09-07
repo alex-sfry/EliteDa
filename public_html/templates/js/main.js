@@ -110,6 +110,34 @@ const matTraders = () => {
 
 /***/ }),
 
+/***/ "./src/script/rings.js":
+/*!*****************************!*\
+  !*** ./src/script/rings.js ***!
+  \*****************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ringsForm: () => (/* binding */ ringsForm)
+/* harmony export */ });
+/* harmony import */ var _tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tSelectSettings.js */ "./src/script/tSelectSettings.js");
+
+const ringsForm = (loader, removeLoader) => {
+  // eslint-disable-next-line no-undef
+  new TomSelect("#refSystem", _tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__.tSelectRingsSettings);
+  const $form = $("#rings-form");
+  const $table = $(".rings-table");
+  removeLoader($table);
+  const handleSubmit = e => {
+    if (!$form.get(0).checkValidity()) {
+      e.preventDefault();
+      $form.addClass("was-validated");
+    } else loader($form, $table);
+  };
+  $form.on("submit", handleSubmit);
+};
+
+/***/ }),
+
 /***/ "./src/script/shipModules.js":
 /*!***********************************!*\
   !*** ./src/script/shipModules.js ***!
@@ -156,6 +184,48 @@ const shipsForm = (loader, removeLoader) => {
     } else loader($form, $table);
   };
   $form.on('submit', handleSubmit);
+};
+
+/***/ }),
+
+/***/ "./src/script/tSelectSettings.js":
+/*!***************************************!*\
+  !*** ./src/script/tSelectSettings.js ***!
+  \***************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   tSelectRingsSettings: () => (/* binding */ tSelectRingsSettings)
+/* harmony export */ });
+const tSelectRingsSettings = {
+  searchField: 'system',
+  valueField: 'system',
+  labelField: 'system',
+  plugins: ['dropdown_input'],
+  sortField: [{
+    field: '$order'
+  }, {
+    field: '$score'
+  }],
+  loadThrottle: 500,
+  hideSelected: true,
+  highlight: false,
+  shouldLoad: query => query.length < 2 ? false : true,
+  load: async function (query, callback) {
+    console.log(query);
+    this.clearOptions();
+    try {
+      const response = await fetch(`/system/get/${query}`);
+      if (response.ok) {
+        callback(await response.json());
+      } else {
+        console.log('fetch error');
+      }
+    } catch (error) {
+      console.log(error.message);
+      callback();
+    }
+  }
 };
 
 /***/ }),
@@ -250,9 +320,10 @@ var __webpack_exports__ = {};
 /* harmony import */ var _tradeRoutes_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./tradeRoutes.js */ "./src/script/tradeRoutes.js");
 /* harmony import */ var _matTraders_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./matTraders.js */ "./src/script/matTraders.js");
 /* harmony import */ var _cookiesConsent_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./cookiesConsent.js */ "./src/script/cookiesConsent.js");
+/* harmony import */ var _rings_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./rings.js */ "./src/script/rings.js");
 
 // import '../styles/bootstrapSCSS/bootstrap.scss';
-// import { fetchData } from './fetchData.js';
+
 
 
 
@@ -305,6 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if ($('#ships-form').length) (0,_ships_js__WEBPACK_IMPORTED_MODULE_4__.shipsForm)(loader, removeLoader);
   if ($('#tr-form').length) (0,_tradeRoutes_js__WEBPACK_IMPORTED_MODULE_5__.tradeRouteForm)(_isValidated_js__WEBPACK_IMPORTED_MODULE_1__.validate, loader, removeLoader);
   if ($('#mt-form').length) (0,_matTraders_js__WEBPACK_IMPORTED_MODULE_6__.matTraders)();
+  if ($('#rings-form').length) (0,_rings_js__WEBPACK_IMPORTED_MODULE_8__.ringsForm)(loader, removeLoader);
   $('#accordionForm .accordion-button').on('click', function () {
     if ($(this).text().trim() === 'Close form') {
       $(this).text('Open form');

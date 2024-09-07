@@ -26,6 +26,54 @@
     font-weight: 400;
     font-display: swap;
 }
+/* TomSelect styles */
+.ts-wrapper.t-sel .ts-control > input::placeholder {
+    font-size: 0.875rem;
+}
+.ts-wrapper.t-sel .ts-control {
+    box-shadow: none;
+    padding: 0 0.75rem;
+}
+.ts-wrapper.t-sel .ts-dropdown .active {
+    background-color: #0d6efd;
+    color: #f8f9fa;
+}
+
+.ts-wrapper.t-sel.plugin-dropdown_input.focus .ts-dropdown .dropdown-input-wrap .dropdown-input {
+    outline: 0;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+    margin: 4px auto;
+    border: none;
+    max-width: 98%;
+    border-radius: 5px;
+}
+
+.was-validated :valid + .ts-wrapper.t-sel {
+    border: 1px solid #212529;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3E%3C/svg%3E");
+}
+.was-validated :invalid + .ts-wrapper.t-sel {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3E%3C/svg%3E");
+}
+
+.ts-wrapper.t-sel.is-invalid {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3E%3C/svg%3E");
+}
+
+form:not(.was-validated) .t-sel:not(.is-invalid) ~ .ts-wrapper.form-select,
+form:not(.was-validated) .t-sel:not(.is-invalid) ~ .ts-wrapper.form-select.input-active {
+    border: 1px solid #212529;
+}
+
+.ts-wrapper:focus-visible {
+    outline: 0;
+}
+
+.ts-wrapper:focus {
+    box-shadow: none;
+}
+
+/* end of TomSelect styles */
 h1 {
     color: #e9ecef;
 }
@@ -102,8 +150,8 @@ table .table-link-tr:hover {
 }
 
 .f-ctrl-no-shadow, .grid-view .filters input:focus,
-.grid-view .filters select:focus, .c-form .form-select:focus,
-.c-form .form-select:active, form-check-input:focus {
+.grid-view .filters select:focus, .c-form .form-select:focus:not(.t-sel),
+.c-form .form-select:active:not(.t-sel), form-check-input:focus {
     box-shadow: none;
     border-color: #dee2e6;
 }
@@ -130,6 +178,7 @@ table .table-link-tr:hover {
     height: 100vh;
 }
 
+/* cookies consent styles */
 .cookies-consent-wrapper {
     font-family: "Inter", sans-serif;
     font-weight: 400;
@@ -179,7 +228,7 @@ table .table-link-tr:hover {
     font-size: 16px;
     font-weight: 500;
     border-radius: 5px;
-    background: #7752FE;
+    background: #7752fe;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -193,9 +242,8 @@ table .table-link-tr:hover {
     color: #fcba7f;
 }
 
-/**
-* pagination styles
-*/
+/* end of cookies consent styles */
+/* pagination styles */
 .prev-page, .c-pagination-cnt .pagination {
     margin-left: 4px;
 }
@@ -232,9 +280,8 @@ table .table-link-tr:hover {
         padding-right: 12px;
     }
 }
-/**
-* header styles
-*/
+/* end of pagination styles */
+/* header styles */
 .header {
     height: 96px;
     max-height: 96px;
@@ -260,9 +307,8 @@ table .table-link-tr:hover {
     background-color: #370665;
 }
 
-/**
-* footer styles
-*/
+/* end ofheader styles */
+/* footer styles */
 .footer {
     height: auto;
 }
@@ -281,7 +327,8 @@ table .table-link-tr:hover {
     }
 }
 
-/* ========================================== */
+/* end of footer styles */
+/* mobile menu styles */
 .nav-button {
     letter-spacing: 1.1px;
     transition: all 0.2s linear;
@@ -321,9 +368,8 @@ table .table-link-tr:hover {
         font-size: 1rem;
     }
 }
-/**
-* generic form styles
-*/
+/* end of mobile menu styles */
+/* generic form styles */
 form-check-input:checked {
     border-color: #0dcaf0;
 }
@@ -341,11 +387,11 @@ form-control.is-invalid {
 .c-form {
     letter-spacing: 2px;
 }
-.c-form .form-select {
+.c-form .form-select:not(.t-sel) {
     border: 1px solid #212529;
 }
-.c-form .form-select:focus,
-.c-form .form-select:active {
+.c-form .form-select:focus:not(.t-sel),
+.c-form .form-select:active:not(.t-sel) {
     box-shadow: 0 0 4px 4px #0dcaf0;
 }
 .c-form select,
@@ -373,6 +419,8 @@ form-control.is-invalid {
     }
 }
 
+/* end of generic form styles */
+/* result styles */
 .c-loading {
     box-shadow: 0 0 4px 4px #fcfcfd;
 }
@@ -396,9 +444,8 @@ form-control.is-invalid {
     background-color: #212529;
 }
 
-/**
-* Trade Routes page styles
-*/
+/* end of result styles */
+/* Trade Routes page styles */
 .tr-route-block-inner {
     background-color: #f8f9fa;
     box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
@@ -432,9 +479,8 @@ form-control.is-invalid {
     background-color: #f8f9fa;
 }
 
-/**
-* moving arrows styles
-*/
+/* end of Trade Routes page styles */
+/* moving arrows styles */
 .arrow {
     position: absolute;
 }
@@ -502,9 +548,8 @@ form-control.is-invalid {
         transform: rotate(45deg) translate(20px, 20px);
     }
 }
-/**
-* gridview
-*/
+/* end of moving arrows styles */
+/* gridview */
 .grid-view .summary {
     color: #f8f9fa;
 }
@@ -532,6 +577,10 @@ form-control.is-invalid {
     min-width: 100px;
 }
 
+.grid-view__ref-sys-divider {
+    display: none;
+}
+
 .engineers-header th:first-child {
     min-width: 120px;
 }
@@ -549,10 +598,13 @@ form-control.is-invalid {
     color: #ffc107;
 }
 
+/* end  of gridview */
+/* details styles */
 .details-cnt h1 ~ p {
     color: #e9ecef;
 }
-.details-cnt th, .details-cnt td {
+.details-cnt th,
+.details-cnt td {
     border: 0;
 }
 .details-cnt tr:first-child th {
@@ -572,13 +624,10 @@ form-control.is-invalid {
     border-right: 1px solid #212529;
 }
 
+/* details styles */
 .site-contact {
     font-family: "Inter", sans-serif;
     font-size: 1rem;
-}
-
-.grid-view__ref-sys-divider {
-    display: none;
 }
 
 @media screen and (min-width: 449px) {
@@ -586,17 +635,12 @@ form-control.is-invalid {
         display: block;
     }
 }
-form.was-validated :invalid {
-    border-width: 2px !important;
-}
-
+/* custom select */
+form.was-validated :invalid,
 form.was-validated :invalid ~ .selected-items {
-    border-width: 2px !important;
     border-color: #dc3545 !important;
 }
 
-form.was-validated :invalid {
-    border-color: #dc3545 !important;
-}
+/* end of custom sleect */
 
 /*# sourceMappingURL=main.css.map*/

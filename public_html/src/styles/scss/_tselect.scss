@@ -1,0 +1,64 @@
+/* TomSelect styles */
+.ts-wrapper.t-sel {
+    .ts-control > input::placeholder {
+        font-size: 0.875rem;
+    }
+
+    .ts-control {
+        box-shadow: none;
+        padding: 0 0.75rem;
+    }
+
+    .ts-dropdown .active {
+        background-color: $primary;
+        color: $light;
+    }
+}
+.ts-wrapper.t-sel.plugin-dropdown_input.focus {
+    .ts-dropdown {
+        .dropdown-input-wrap {
+            .dropdown-input {
+                outline: 0;
+                box-shadow:
+                    rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
+                    rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
+                    rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+                margin: 4px auto;
+                border: none;
+                max-width: 98%;
+                border-radius: 5px;
+            }
+        }
+    }
+}
+
+.was-validated {
+    :valid + .ts-wrapper.t-sel {
+        border: 1px solid $dark;
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E");
+    }
+
+    :invalid + .ts-wrapper.t-sel {
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E");
+    }
+}
+
+.ts-wrapper.t-sel.is-invalid {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+form:not(.was-validated) {
+    .t-sel:not(.is-invalid) ~ .ts-wrapper.form-select,
+    .t-sel:not(.is-invalid) ~ .ts-wrapper.form-select.input-active {
+        border: 1px solid $dark;
+    }
+}
+
+.ts-wrapper:focus-visible {
+    outline: 0;
+}
+
+.ts-wrapper:focus {
+    box-shadow: none;
+}
+/* end of TomSelect styles */

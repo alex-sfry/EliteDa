@@ -1,6 +1,5 @@
 import '../styles/scss/style.scss';
 // import '../styles/bootstrapSCSS/bootstrap.scss';
-// import { fetchData } from './fetchData.js';
 import { validate } from './isValidated.js';
 import { commoditiesForm } from './commodities.js';
 import { shipModulesForm } from './shipModules.js';
@@ -8,6 +7,7 @@ import { shipsForm } from './ships.js';
 import { tradeRouteForm } from './tradeRoutes.js';
 import { matTraders } from './matTraders.js';
 import { cookiesConsent } from './cookiesConsent.js';
+import { ringsForm } from './rings.js';
 // import {getDataFromDom} from './addToDb.js';
 
 cookiesConsent();
@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if ($('#ships-form').length) shipsForm(loader, removeLoader);
     if ($('#tr-form').length) tradeRouteForm(validate, loader, removeLoader);
     if ($('#mt-form').length) matTraders();
+    if ($('#rings-form').length) ringsForm(loader, removeLoader); 
 
     $('#accordionForm .accordion-button').on('click', function () {
         if ($(this).text().trim() === 'Close form') {
@@ -73,11 +74,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if ($('#w0'.length > 0)) {
         const $filterBtns = $('.filters .btn');
 
-        $filterBtns.on('click', function() {
+        $filterBtns.on('click', function () {
             $filterBtns.prev().trigger('change.yiiGridView');
         });
- 
-        $('.filters input').on('change', function() {
+
+        $('.filters input').on('change', function () {
             return false;
         });
     }

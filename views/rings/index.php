@@ -2,11 +2,13 @@
 
 /** @var yii\web\View $this */
 
+use app\assets\TSelectAsset;
 use yii\helpers\Html;
 
 use function app\helpers\d;
 
 $this->title = 'Search for rings';
+TSelectAsset::register($this);
 // d($form_model->attributeLabels());
 ?>
 
@@ -18,7 +20,7 @@ $this->title = 'Search for rings';
                     <h1 class='mt-2 text-center fs-2 sintony-bold'><?= $this->title ?></h1>
 
 <!-- accordion-form -->
-<?= $this->render('accordion-form', ['form_model' => $form_model, 'ref_error' => $ref_error]) ?>
+<?= $this->render('_accordion', ['form_model' => $form_model, 'ref_error' => $ref_error]) ?>
 <!-- end of accordion-form -->
 
                 </div>
