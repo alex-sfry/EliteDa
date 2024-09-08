@@ -44,6 +44,7 @@ class RingsQuery extends \yii\db\ActiveQuery
             ->select(['x', 'y', 'z'])
             ->where(['name' => $form_data['refSystem']])
             ->asArray()
+            ->cache(86400)
             ->one();
 
         extract($coords);
