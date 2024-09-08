@@ -21,15 +21,15 @@ $this->title = 'EliteDa - Elite Dangerous Assistant';
                 <div class="main-tile gx-0 rounded-3">
                     <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                             justify-content-center"
-                    href="<?= Url::to(['commodities/index']) ?>">
+                        href="<?= Url::to(['commodities/index']) ?>">
                         Commodities
                     </a>
                 </div>
                 <div class="main-tile gx-0 rounded-3">
                     <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                             justify-content-center"
-                    href="<?= Url::to(['trade-routes/index']) ?>">
-                    Trade routes
+                        href="<?= Url::to(['trade-routes/index']) ?>">
+                        Trade routes
                     </a>
                 </div>
             </div>
@@ -37,21 +37,21 @@ $this->title = 'EliteDa - Elite Dangerous Assistant';
                 <div class="main-tile gx-0 rounded-3">
                     <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                     justify-content-center"
-                       href="<?= Url::to(['engineers/index']) ?>">
+                        href="<?= Url::to(['engineers/index']) ?>">
                         Engineers
                     </a>
                 </div>
                 <div class="main-tile gx-0 rounded-3">
                     <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                     justify-content-center"
-                       href="<?= Url::to(['material-traders/index']) ?>">
+                        href="<?= Url::to(['material-traders/index']) ?>">
                         Material traders
                     </a>
                 </div>
                 <div class="main-tile gx-0 rounded-3">
                     <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                     justify-content-center"
-                       href="<?= Url::to(['materials/index']) ?>">
+                        href="<?= Url::to(['materials/index']) ?>">
                         Materials
                     </a>
                 </div>
@@ -60,15 +60,15 @@ $this->title = 'EliteDa - Elite Dangerous Assistant';
                 <div class="main-tile gx-0 rounded-3">
                     <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                             justify-content-center"
-                    href="<?= Url::to(['shipyard-ships/index']) ?>">
-                    Ships
+                        href="<?= Url::to(['shipyard-ships/index']) ?>">
+                        Ships
                     </a>
                 </div>
                 <div class="main-tile gx-0 rounded-3">
                     <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                             justify-content-center"
-                    href="<?= Url::to(['ship-modules/index']) ?>">
-                    Ship modules
+                        href="<?= Url::to(['ship-modules/index']) ?>">
+                        Ship modules
                     </a>
                 </div>
             </div>
@@ -76,20 +76,23 @@ $this->title = 'EliteDa - Elite Dangerous Assistant';
                 <div class="main-tile gx-0 rounded-3">
                     <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                             justify-content-center"
-                    href="<?= Url::to(['systems/index']) ?>">
+                        href="<?= Url::to(['systems/index']) ?>">
                         Systems
                     </a>
                 </div>
                 <div class="main-tile gx-0 rounded-3">
                     <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                             justify-content-center"
-                    href="<?= Url::to(['stations/index']) ?>">
-                    Stations
+                        href="<?= Url::to(['stations/index']) ?>">
+                        Stations
                     </a>
+
+                </div>
+                <div class="main-tile gx-0 rounded-3">
                     <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
                             justify-content-center"
-                    href="<?= Url::to(['rings/index']) ?>">
-                    Rings
+                        href="<?= Url::to(['rings/index']) ?>">
+                        Rings
                     </a>
                 </div>
             </div>
