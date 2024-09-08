@@ -22,6 +22,8 @@ use Yii;
  */
 class Rings extends \yii\db\ActiveRecord
 {
+    public ?float $distance = null;
+
     /**
      * {@inheritdoc}
      */
