@@ -25,7 +25,7 @@ class RingsService
         $sortOrders = $this->getSortOrders();
 
         $this->provider = new ActiveDataProvider([
-            'query' => $rings/* ->cache(86400) */,
+            'query' => $rings->cache(86400),
             'sort' => [
                 'attributes' => [
                     'distance_to_arrival',
