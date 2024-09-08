@@ -52,6 +52,7 @@ class RingsQuery extends \yii\db\ActiveQuery
 
         $query = $this
             ->select([
+                'id',
                 'name',
                 'type',
                 'system_name',
