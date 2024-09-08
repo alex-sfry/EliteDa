@@ -86,6 +86,11 @@ $this->title = 'EliteDa - Elite Dangerous Assistant';
                     href="<?= Url::to(['stations/index']) ?>">
                     Stations
                     </a>
+                    <a class="nav-button sintony-bold h-100 btn btn-violet border-0 text-light d-flex flex-column
+                            justify-content-center"
+                    href="<?= Url::to(['rings/index']) ?>">
+                    Rings
+                    </a>
                 </div>
             </div>
         </div>
