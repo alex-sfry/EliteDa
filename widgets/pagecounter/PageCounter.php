@@ -2,7 +2,7 @@
 
 namespace app\widgets\pagecounter;
 
-use app\widgets\alext\pagecounter\PageCounterAsset;
+use app\widgets\pagecounter\PageCounterAsset;
 use Exception;
 use yii\base\Widget;
 use yii\data\Pagination;
@@ -10,7 +10,7 @@ use yii\data\Pagination;
 class PageCounter extends Widget
 {
     public ?Pagination $pagination = null;
-    public string $class;
+    public ?string $cls = '';
 
     /**
      * @throws Exception
@@ -39,8 +39,8 @@ class PageCounter extends Widget
         $last_in_range = $this->pagination->totalCount - ($current_page - 1) * $page_size <= $page_size - 1 ?
         $this->pagination->totalCount : $page_size * $current_page;
         // 'page-counter text-light me-2 fs-7'
-        return "<div class='{$this->class}'>
-                    $first_in_range - $last_in_range / {$this->pagination->totalCount}
+        return "<div class='{$this->cls}'>
+                    items: $first_in_range - $last_in_range / {$this->pagination->totalCount}
                 </div>";
     }
 }

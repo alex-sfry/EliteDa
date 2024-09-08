@@ -14,7 +14,7 @@ TSelectAsset::register($this);
 
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
     <div class='container-xxl'>
-        <div class="row flex-column justify-content-center align-items-center row-gap-5">
+        <div class="row flex-column justify-content-center align-items-center row-gap-4">
             <div class="col-sm-10 col-md-9 col-lg-8 col-xl-7">
                 <div class='d-flex flex-column w-100 gap-3'>
                     <h1 class='mt-2 text-center fs-2 sintony-bold'><?= $this->title ?></h1>
@@ -27,7 +27,7 @@ TSelectAsset::register($this);
             </div>
 
             <!-- result -->
-            <div class="col d-flex flex-column row-gap-2">
+            <div class="col d-flex flex-column">
                 <?php if (isset($models)) : ?>
                     <?= $this->render('_result', [
                         'pagination' => $pagination,

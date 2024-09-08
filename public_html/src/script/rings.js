@@ -2,7 +2,14 @@ import { tSelectRingsSettings } from "./tSelectSettings.js";
 
 export const ringsForm = (loader, removeLoader) => {
     // eslint-disable-next-line no-undef, no-unused-vars
-    const tSelect = new TomSelect("#refSystem", tSelectRingsSettings);
+    const tSelect = new TomSelect("#refSystem", tSelectRingsSettings({
+        searchField: 'system',
+        valueField: 'system',
+        labelField: 'system',
+        plugins: ['dropdown_input'],
+        endpoint: '/system/get/'
+    }));
+
     const $form = $("#rings-form");
     const $table = $(".rings-table");
     removeLoader($table);
@@ -15,6 +22,7 @@ export const ringsForm = (loader, removeLoader) => {
     };
 
     $form.on("submit", handleSubmit);
+
     // fix for TomSelect label bug (id, for)
     $('.tselect-lbl-1').attr('for', 'refSystem');
     $('.tselect-lbl-1').removeAttr('id');

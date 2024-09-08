@@ -6,58 +6,58 @@
  * @var yii\data\Sort $sort
  */
 
+use app\widgets\pagecounter\PageCounter;
 use yii\bootstrap5\LinkPager;
 
 use function app\helpers\d;
 use function app\helpers\e;
 
 $th = [
-    ['label' => 'Name', 'sort_link' => null],
-    ['label' => 'Type', 'sort_link' => null],
-    ['label' => 'Reserve', 'sort_link' => null],
-    ['label' => 'System', 'sort_link' => null],
+    ['label' => 'Name', 'sort_link' => null, 'cls' => 'w-f-content text-nowrap align-content-center'],
+    ['label' => 'Type', 'sort_link' => null, 'cls' => 'w-f-content text-nowrap align-content-center'],
+    ['label' => 'Reserve', 'sort_link' => null, 'cls' => 'w-f-content text-nowrap align-content-center'],
+    ['label' => 'System', 'sort_link' => null, 'cls' => 'w-f-content text-nowrap align-content-center'],
     [
         'label' => 'Dist. to arr(ls)',
         'sort_link' => $sort->link(
             'distance_to_arrival',
-            ['label' => 'Dist. to arr(ls)', 'class' => 'd-block w-100 h-100 p-1']
-        )
+            [
+                'label' => '<span>Dist. to arr(ls)</span>',
+                'class' => 'd-flex w-100 h-100 p-1 justify-content-between align-items-center gap-0 gap-sm-1'
+            ]
+        ),
+        'cls' => 'w-f-content text-nowrap align-content-center sortable'
     ],
     [
         'label' => 'Distance (LY)',
         'sort_link' => $sort->link(
             'distance',
-            ['label' => 'Distance (LY)', 'class' => 'd-flex w-100 h-100 p-1']
-        )
+            [
+                'label' => '<span>Distance (LY)</span>',
+                'class' => 'd-flex w-100 h-100 p-1 justify-content-between align-items-center gap-0 gap-sm-1'
+            ]
+        ),
+        'cls' => 'w-f-content text-nowrap align-content-center sortable'
     ]
 ];
+
+$td_cls = 'w-f-content text-nowrap';
 ?>
 
-<div class="c-result-legend bg-light text-center mt-3 rounded-2 py-1">
-    <h2 class="fs-6 position-relative">Station's type:</h2>
-    <div class="d-flex align-items-center py-1 ps-2 pe-1">
-        <div class="c-result-legend-item d-flex justify-content-start w-100 column-gap-1 pe-1 align-items-center">
-            <div class="c-result-legend-item-color bg-success h-100"></div>
-            - surface
-        </div>
-        <div class="c-result-legend-item d-flex justify-content-start w-100 column-gap-1 align-items-center">
-            <div class="c-result-legend-item-color bg-primary ms-2 h-100"></div>
-            - space
-        </div>
-    </div>
-</div>
-
-<div class="table-responsive">
-    <table class="table table-sm table-striped">
+<div class="table-responsive px-1 link-danger">
+    <table class="c-table table table-sm table-striped fs-7 rounded-2 overflow-hidden border">
         <thead>
-            <tr>
+            <tr class="border-1 border-dark sintony-bold fw-bold text-uppercase">
                 <?php foreach ($th as $item) : ?>
-                    <th scope="col" class="<?= $item['sort_link'] ? 'p-0' : null ?>">
-                        <?php if ($item['sort_link']) : ?>
+                    <th
+                        scope="col"
+                        class="<?= $item['cls'] ?>">
+                        <?php if ($item['sort_link']) { ?>
                             <?= $item['sort_link'] ?>
-                        <?php else : ?>
+                        <?php } else { ?>
                             <?= $item['label'] ?>
-                        <?php endif; ?>
+                        <?php } ?>
+
                     </th>
                 <?php endforeach; ?>
             </tr>
@@ -65,35 +65,27 @@ $th = [
         <tbody>
             <?php foreach ($models as $key => $value) : ?>
                 <tr>
-                    <td><?= e($value['name']) ?></td>
-                    <td><?= e($value['type']) ?></td>
-                    <td><?= e($value['reserve']) ?></td>
-                    <td><?= e($value['system_name']) ?></td>
-                    <td><?= e($value['distance_to_arrival']) ?></td>
-                    <td><?= e($value['distance']) ?></td>
+                    <td class="<?= $td_cls ?>"><?= e($value['name']) ?></td>
+                    <td class="<?= $td_cls ?>"><?= e($value['type']) ?></td>
+                    <td class="<?= $td_cls ?>"><?= e($value['reserve']) ?></td>
+                    <td class="<?= $td_cls ?>"><?= e($value['system_name']) ?></td>
+                    <td class="<?= $td_cls ?>"><?= e($value['distance_to_arrival']) ?></td>
+                    <td class="<?= $td_cls ?>"><?= e($value['distance']) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
-<div class="c-pagination-cnt d-flex justify-content-center align-items-center pb-4">
-    <?= LinkPager::widget([
-        'pagination' => $pagination,
-        'maxButtonCount' => 5,
-        'firstPageLabel' => 'first',
-        'lastPageLabel' => 'last',
-        'prevPageCssClass' => 'prev-page',
-        'nextPageCssClass' => 'next-page'
-    ]) ?>
+<div class="c-pagination-cnt d-flex flex-column align-items-center align-items-center pb-2 gap-1">
+    <div class="">
+        <?= LinkPager::widget([
+            'pagination' => $pagination,
+            'maxButtonCount' => 5,
+            'firstPageLabel' => 'first',
+            'lastPageLabel' => 'last',
+            'prevPageCssClass' => 'prev-page',
+            'nextPageCssClass' => 'next-page'
+        ]) ?>
+    </div>
+    <?= PageCounter::widget(['pagination' => $pagination, 'cls' => 'text-light']) ?>
 </div>
-
-<!-- <div class="bg-light"><?php /* d($models, false); */ ?></div> -->
-<!-- <div class="bg-light"><?php /* echo $pagination->totalCount */ ?></div>
-<div class="bg-light">
-    <a class="btn btn-primary btn-sm" href="<?php /* echo $sort->createUrl('distance') */ ?>">
-        Sort by Distance (LY)
-    </a>
-    <a class="btn btn-primary btn-sm" href="<?php /* echo $sort->createUrl('distance_to_arrival') */ ?>">
-        Sort by Distance (ls)
-    </a>
-</div> -->

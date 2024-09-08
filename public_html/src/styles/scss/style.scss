@@ -453,6 +453,38 @@ table {
         @extend .nav-info;
     }
 }
+
+.c-table {
+    th.sortable {
+        transition: background-color 0.2s linear;
+    }
+
+    th.sortable:hover {
+        background-color: $info !important;
+        color: $light;
+    }
+
+    th.sortable > a > span {
+        position: relative;
+    }
+
+    th.sortable > a span::after {
+        content: '';
+        position: absolute;
+        right: 8px;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        background-color: $light;
+        height: 2px;
+        transition: all 0.2s linear;
+    }
+
+    th.sortable:hover > a span::after {
+        width: 100%;
+        left: 0;
+    }
+}
 /* end of result styles */
 
 /* Trade Routes page styles */

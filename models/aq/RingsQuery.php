@@ -5,6 +5,7 @@ namespace app\models\aq;
 use app\models\ar\Rings;
 use app\models\ar\Systems;
 use yii\db\Expression;
+use Yiisoft\Arrays\ArrayHelper;
 
 use function app\helpers\d;
 
@@ -59,7 +60,7 @@ class RingsQuery extends \yii\db\ActiveQuery
             ])
             ->where(['type' => $form_data['type']]);
         $form_data['distanceFromStar'] !== 'Any' &&
-            $query->andWhere(['<=', 'distance_to_arrival', $form_data['distanceFromStar']]);
+        $query->andWhere(['<=', 'distance_to_arrival', $form_data['distanceFromStar']]);
         $query->andWhere(['<=', $expr, $form_data['maxDistanceFromRefStar']])->asArray();
 
         return $query;
