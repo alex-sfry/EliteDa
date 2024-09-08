@@ -8,8 +8,9 @@ use Yii;
 /**
  * This is the model class for table "rings".
  *
+ * @property int $id
  * @property string $name
- * @property string|null $type
+ * @property string $type
  * @property string|null $system_name
  * @property float|null $x
  * @property float|null $y
@@ -21,8 +22,6 @@ use Yii;
  */
 class Rings extends \yii\db\ActiveRecord
 {
-    public ?float $distance = null;
-
     /**
      * {@inheritdoc}
      */
@@ -37,12 +36,11 @@ class Rings extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'type'], 'required'],
             [['x', 'y', 'z'], 'number'],
             [['distance_to_arrival'], 'integer'],
             [['name', 'system_name', 'body_name'], 'string', 'max' => 255],
             [['type', 'reserve', 'timestamp'], 'string', 'max' => 50],
-            [['name'], 'unique'],
         ];
     }
 
@@ -52,6 +50,7 @@ class Rings extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id' => 'ID',
             'name' => 'Name',
             'type' => 'Type',
             'system_name' => 'System Name',

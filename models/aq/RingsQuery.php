@@ -44,7 +44,7 @@ class RingsQuery extends \yii\db\ActiveQuery
             ->select(['x', 'y', 'z'])
             ->where(['name' => $form_data['refSystem']])
             ->asArray()
-            ->cache(86400)
+            // ->cache(86400)
             ->one();
 
         extract($coords);
@@ -52,6 +52,7 @@ class RingsQuery extends \yii\db\ActiveQuery
 
         $query = $this
             ->select([
+                'id',
                 'name',
                 'type',
                 'system_name',
