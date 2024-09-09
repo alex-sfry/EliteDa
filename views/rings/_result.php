@@ -20,14 +20,14 @@ $th = [
     [
         'label' => 'Dist. to arr(ls)',
         'sort_link' => null,
-        'sort_link' => $sort->link(
+        /* 'sort_link' => $sort->link(
             'distance_to_arrival',
             [
                 'label' => '<span>Dist. to arr(ls)</span>',
                 'class' => 'd-flex w-100 h-100 p-1 justify-content-between align-items-center gap-0 gap-sm-1'
             ]
-        ),
-        'cls' => 'w-f-content text-nowrap align-content-center sortable'
+        ), */
+        'cls' => 'w-f-content text-nowrap align-content-center'
     ],
     [
         'label' => 'Distance (LY)',

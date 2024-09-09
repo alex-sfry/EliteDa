@@ -21,14 +21,14 @@ class RingsService
 
     public function findRings(): void
     {
-        $sortOrders = $this->getSortOrders();
+        // $sortOrders = $this->getSortOrders();
 
         $this->sort = new Sort([
             'attributes' => [
                 'distance',
-                'distance_to_arrival'
+                // 'distance_to_arrival'
             ],
-            'defaultOrder' => $sortOrders
+            'defaultOrder' => ['distance' => SORT_ASC]
         ]);
 
         $rings = Rings::find()
@@ -58,12 +58,12 @@ class RingsService
         return $rings;
     }
 
-    private function getSortOrders(): array
-    {
-        if ($this->form_data['sortBy'] === 'DistanceLs') {
-            return ['distance_to_arrival' => SORT_ASC];
-        } elseif ($this->form_data['sortBy'] === 'DistanceLy') {
-            return ['distance' => SORT_ASC];
-        }
-    }
+    // private function getSortOrders(): array
+    // {
+    //     if ($this->form_data['sortBy'] === 'DistanceLs') {
+    //         return ['distance_to_arrival' => SORT_ASC];
+    //     } elseif ($this->form_data['sortBy'] === 'DistanceLy') {
+    //         return ['distance' => SORT_ASC];
+    //     }
+    // }
 }
