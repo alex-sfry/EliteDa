@@ -14,4 +14,5 @@ class AdminAsset extends AssetBundle
     public $js = ['script.js'];
     public $jsOptions = ['position' => View::POS_END];
     public $depends = ['yii\web\JqueryAsset'];
+    public $publishOptions = ["forceCopy" => YII_DEBUG];
 }

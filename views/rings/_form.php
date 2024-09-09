@@ -10,10 +10,6 @@ use yii\helpers\Html;
 use function app\helpers\e;
 
 $type = ['Icy' => 'Icy', 'Metal Rich' => 'Metal Rich', 'Metallic' => 'Metallic', 'Rocky' => 'Rocky'];
-// $maxDistanceFromRefStar = ['25' => '25 LY', '50' => '50 LY', '100' => '100 LY', '150' => '150 LY'];
-// $distanceFromStar = ['Any' => 'Any', '100' => '100 ls', '500' => '500 ls', '1000' => '1000 ls', '2000' => '2000 ls'];
-// $sortBy = ['DistanceLy' => 'Distance (LY)', 'DistanceLs' => 'Distance (ls)'];
-// $selects = ['type', 'maxDistanceFromRefStar', 'distanceFromStar', 'sortBy'];
 ?>
 
 <?= Html::beginForm(
@@ -28,8 +24,8 @@ $type = ['Icy' => 'Icy', 'Metal Rich' => 'Metal Rich', 'Metallic' => 'Metallic',
 <div class='container-xxl'>
     <div class="row justify-content-center">
         <div class='d-flex flex-column justify-content-between gap-4'>
-            <div class='row justify-content-between row-gap-lg-0 row-gap-3'>
-                <div class='min-lett-spacing col-md-6 position-relative'>
+            <div class='row justify-content-center row-gap-lg-0 row-gap-3'>
+                <div class='min-lett-spacing col position-relative'>
                     <label class='tselect-lbl-1' for="refSystem">Ref. system:</label>
                     <select
                         class="t-sel form-select-sm 
@@ -49,24 +45,6 @@ $type = ['Icy' => 'Icy', 'Metal Rich' => 'Metal Rich', 'Metallic' => 'Metallic',
                         id="validationServerRefSystemFeedback">
                         Field must not be empty
                     </div>
-                </div>
-                <div class="col-md-6 d-flex flex-column row-gap-3">
-                    <?php /* foreach ($selects as $elem) : */ ?>
-                        <div>
-                            <label class='min-lett-spacing fw-bold' for='type'>
-                                <?= $form_model->getAttributeLabel('type') ?>
-                            </label>
-                            <?= Html::dropDownList(
-                                'type',
-                                e($form_model->type),
-                                $type,
-                                [
-                                    'class' => 'form-select-sm shadow-none border-dark w-100',
-                                    'id' => 'type'
-                                ]
-                            ) ?>
-                        </div>
-                    <?php /* endforeach; */ ?>
                 </div>
             </div>
         </div>

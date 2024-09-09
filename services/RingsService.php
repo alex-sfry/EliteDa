@@ -4,7 +4,6 @@ namespace app\services;
 
 use app\models\ar\Rings;
 use yii\data\ArrayDataProvider;
-use yii\data\Sort;
 
 use function app\helpers\d;
 
@@ -12,7 +11,7 @@ class RingsService
 {
     public array $form_data;
     public ArrayDataProvider $provider;
-    public Sort $sort;
+    // public Sort $sort;
 
     public function __construct(array $form_data)
     {
@@ -23,17 +22,16 @@ class RingsService
     {
         // $sortOrders = $this->getSortOrders();
 
-        $this->sort = new Sort([
-            'attributes' => [
-                'distance',
-                // 'distance_to_arrival'
-            ],
-            'defaultOrder' => ['distance' => SORT_ASC]
-        ]);
+        // $this->sort = new Sort([
+        //     'attributes' => [
+        //         'distance',
+        //     ],
+        //     'defaultOrder' => ['distance' => SORT_ASC]
+        // ]);
 
         $rings = Rings::find()
             ->getRingsInRange($this->form_data)
-            ->orderBy($this->sort->orders)
+            ->orderBy('distance')
             // ->offset(100)
             ->limit(100)
             ->asArray()
@@ -49,14 +47,14 @@ class RingsService
         ]);
     }
 
-    public function postprocessData(array $rings): array
-    {
-        foreach ($rings as $key => $value) {
-            $rings[$key]['reserve'] = str_replace('Resources', '', $value['reserve']);
-        }
+    // public function postprocessData(array $rings): array
+    // {
+    //     foreach ($rings as $key => $value) {
+    //         $rings[$key]['reserve'] = str_replace('Resources', '', $value['reserve']);
+    //     }
 
-        return $rings;
-    }
+    //     return $rings;
+    // }
 
     // private function getSortOrders(): array
     // {

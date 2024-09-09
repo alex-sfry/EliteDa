@@ -24,7 +24,7 @@ return [
         ],
         'appendTimestamp' => true,
         // 'linkAssets' => true,
-        // 'forceCopy' => YII_ENV_DEV ? true : false,
+        'forceCopy' => YII_DEBUG,
         'bundles' => [
             'yii\web\JqueryAsset' => [
                 'js' => [YII_ENV_DEV ? 'jquery.js' : 'jquery.min.js']
