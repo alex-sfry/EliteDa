@@ -3,7 +3,9 @@
 namespace app\controllers;
 
 use app\models\ar\Systems;
+use app\models\forms\SystemsForm;
 use app\models\search\SystemsInfoSearch;
+use app\services\SystemsService;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -17,82 +19,25 @@ class SystemsController extends Controller
     public function actionIndex(): string
     {
         $session = Yii::$app->session;
+        $request = \Yii::$app->request;
         $session->open();
         // $session->destroy();
-        $request = Yii::$app->request;
+        $form_model = new SystemsForm();
+        $params['form_model'] = $form_model;
+        !empty($request->get()) && $session->set('sys', $request->get());
+        $get = $session->get('sys');
 
-        if (count($request->get()) > 0) {
-            $get = $request->get();
-
-            if (isset($request->get()['refSysStation']) && isset($request->get()['maxDistance'])) {
-                !$session->get('st') && $session->set('st', $request->get());
-
-                switch ($get['refSysStation']) {
-                    case '':
-                        $get['refSysStation'] = $session->get('st')['refSysStation'] !== '' ?
-                            $session->get('st')['refSysStation'] : 'Sol';
-                        break;
-                    default:
-                        break;
-                }
-
-                switch ($get['maxDistance']) {
-                    case '':
-                        $get['maxDistance'] = $session->get('st')['maxDistance'] !== '' ?
-                            $session->get('st')['maxDistance'] : 50;
-                        break;
-                    default:
-                        break;
-                }
-
-                $session->set('st', $get);
-            }
+        if (!empty($get)) {
+            $form_model->load($get, '');
+            $form_model->validate();
         }
 
-        if (isset($session->get('st')['refSysStation']) || isset($session->get('st')['maxDistance'])) {
-            if ($session->get('st')['refSysStation'] !== '' || $session->get('st')['maxDistance'] !== '') {
-                $system = $session->get('st')['refSysStation'];
-                $maxDistance = (int)$session->get('st')['maxDistance'];
-                $system = !$system ? 'Sol' : $system;
-                $maxDistance = $maxDistance === 0 ? 1 : $maxDistance;
-                $system = $session->get('st')['refSysStation'];
-            }
-        }
-
-        if (!isset($system)) {
-            $system = 'Sol';
-        }
-        if (!isset($maxDistance)) {
-            $maxDistance = 50;
-        }
-
-        $params['form'] = [
-            'system' => $system,
-            'max_distance' => $maxDistance
-        ];
-
-        $searchModel = new SystemsInfoSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams, $maxDistance, $system);
-        $dataProvider->pagination->defaultPageSize = 50;
-        $dataProvider->pagination->forcePageParam = false;
-        $dataProvider->pagination->pageSize = null;
-
-        $dataProvider->sort->attributes['distance'] = [
-            'asc' => ['distance' => SORT_ASC],
-            'desc' => ['distance' => SORT_DESC],
-        ];
-
-        if (empty($this->request->queryParams) || !isset($this->request->queryParams['SystemsInfoSearch'])) {
-            $params['queryParams']['SystemsInfoSearch'] = array_fill_keys(
-                array_values($searchModel->activeAttributes()),
-                null
-            );
-        } else {
-            $params['queryParams'] = $this->request->queryParams;
-        }
-
-        $params['dataProvider'] = $dataProvider;
-        $params['searchModel'] = $searchModel;
+        $service = new SystemsService($form_model->attributes);
+        $queryParams = $request->queryParams;
+        $service->findSystems($queryParams);
+        $params['queryParams'] = $service->queryParams;
+        $params['dataProvider'] = $service->provider;
+        $params['searchModel'] = $service->searchModel;
 
         return $this->render('index', $params);
     }
@@ -116,7 +61,7 @@ class SystemsController extends Controller
 
         return $this->render('details', [
             'model' => ArrayHelper::htmlEncode($model)
-         ]);
+        ]);
     }
 
     public function actionSystem(string $sys): void

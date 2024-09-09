@@ -1,5 +1,6 @@
 <?php
 
+use app\models\forms\SystemsForm;
 use app\widgets\InputDropdown\InputDropdown;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
@@ -10,6 +11,7 @@ use yii\web\View;
 use function app\helpers\d;
 
 /** @var app\models\ar\Systems $model */
+/** @var SystemsForm $form_model */
 /** @var app\models\search\SystemsInfoSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 /** @var View $this */
@@ -83,19 +85,19 @@ $population_options = [
                             <div class="col-6" style='max-width: 160px;'>
                                 <?= Html::label(
                                     'Max. distance (LY):',
-                                    'maxDistance',
+                                    'maxDistanceFromRefStar',
                                     ['class' => 'min-lett-spacing fw-bold']
                                 ); ?>
                                 <div class="search-selected info bg-info px-1 py-1 lh-1 rounded-2">
-                                    <?= $form['max_distance']; ?>
+                                    <?= $form_model->maxDistanceFromRefStar; ?>
                                 </div>
                                 <?= Html::textInput(
-                                    'maxDistance',
-                                    '',
+                                    'maxDistanceFromRefStar',
+                                    $form_model->maxDistanceFromRefStar,
                                     [
-                                        'id' => 'maxDistance',
+                                        'id' => 'maxDistanceFromRefStar',
                                         'class' => 'form-control shadow-none border border-dark rounded-2 p-1',
-                                        'style' => 'min-width: 140px;max-width: 160px;margin-top:0.125rem;'
+                                        'style' => 'min-width: 140px;max-width: 160px;margin-top:0.125rem;',
                                     ]
                                 ); ?>
                             </div>
@@ -104,7 +106,7 @@ $population_options = [
                             <div class="col-6" style='min-width: 240px;max-width: 240px'>
                                 <?= InputDropdown::widget([
                                     'container' => 'mt-tr-ref-idd',
-                                    'selected' => $form['system'],
+                                    'selected' => $form_model->refSystem,
                                     'search' => 'ref-idd-search',
                                     'to_submit' => 'ref-to-submit',
                                     'placeholder' => 'Enter system',
@@ -112,7 +114,7 @@ $population_options = [
                                     'endpoint' => '/system/get/',
                                     'label_main' => 'Ref. system:',
                                     'toggle_btn_text' => 'Search',
-                                    'name_main' => 'refSysStation',
+                                    'name_main' => 'refSystem',
                                     'required' => 'required',
                                     'btn_position' => 'right'
                                 ]); ?>

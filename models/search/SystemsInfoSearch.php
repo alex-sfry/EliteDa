@@ -32,7 +32,6 @@ class SystemsInfoSearch extends SystemsInfoView
         return [
             [['id', 'population'], 'integer'],
             [['system', 'security', 'allegiance', 'economy'], 'string'],
-            // [['distance'], 'number']
         ];
     }
 
@@ -66,7 +65,8 @@ class SystemsInfoSearch extends SystemsInfoView
         $max_distance && $query->where(['<=', $distance_expr, $max_distance]);
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query/* ->limit(50) */,
+            // 'pagination' => false
         ]);
 
         $this->load($params);
