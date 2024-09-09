@@ -10,10 +10,10 @@ use yii\helpers\Html;
 use function app\helpers\e;
 
 $type = ['Icy' => 'Icy', 'Metal Rich' => 'Metal Rich', 'Metallic' => 'Metallic', 'Rocky' => 'Rocky'];
-$maxDistanceFromRefStar = ['25' => '25 LY', '50' => '50 LY', '100' => '100 LY', '150' => '150 LY'];
-$distanceFromStar = ['Any' => 'Any', '100' => '100 ls', '500' => '500 ls', '1000' => '1000 ls', '2000' => '2000 ls'];
-$sortBy = ['DistanceLy' => 'Distance (LY)', 'DistanceLs' => 'Distance (ls)'];
-$selects = ['type', 'maxDistanceFromRefStar', 'distanceFromStar', 'sortBy'];
+// $maxDistanceFromRefStar = ['25' => '25 LY', '50' => '50 LY', '100' => '100 LY', '150' => '150 LY'];
+// $distanceFromStar = ['Any' => 'Any', '100' => '100 ls', '500' => '500 ls', '1000' => '1000 ls', '2000' => '2000 ls'];
+// $sortBy = ['DistanceLy' => 'Distance (LY)', 'DistanceLs' => 'Distance (ls)'];
+// $selects = ['type', 'maxDistanceFromRefStar', 'distanceFromStar', 'sortBy'];
 ?>
 
 <?= Html::beginForm(
@@ -51,22 +51,22 @@ $selects = ['type', 'maxDistanceFromRefStar', 'distanceFromStar', 'sortBy'];
                     </div>
                 </div>
                 <div class="col-md-6 d-flex flex-column row-gap-3">
-                    <?php foreach ($selects as $elem) : ?>
-                        <div class="">
-                            <label class='min-lett-spacing fw-bold' for='<?= $elem ?>'>
-                                <?= $form_model->getAttributeLabel($elem) ?>
+                    <?php /* foreach ($selects as $elem) : */ ?>
+                        <div>
+                            <label class='min-lett-spacing fw-bold' for='type'>
+                                <?= $form_model->getAttributeLabel('type') ?>
                             </label>
                             <?= Html::dropDownList(
-                                $elem,
-                                e($form_model->$elem),
-                                $$elem,
+                                'type',
+                                e($form_model->type),
+                                $type,
                                 [
                                     'class' => 'form-select-sm shadow-none border-dark w-100',
-                                    'id' => $elem
+                                    'id' => 'type'
                                 ]
                             ) ?>
                         </div>
-                    <?php endforeach; ?>
+                    <?php /* endforeach; */ ?>
                 </div>
             </div>
         </div>

@@ -28,10 +28,10 @@ TSelectAsset::register($this);
 
             <!-- result -->
             <div class="col d-flex flex-column">
-                <?php if (isset($models)) : ?>
+                <?php if (isset($models) && !empty($models)) : ?>
                     <?= $this->render('_result', [
                         'pagination' => $pagination,
-                        'sort' => $sort,
+                        // 'sort' => $sort,
                         'models' => $models
                     ]) ?>
                 <?php endif; ?>

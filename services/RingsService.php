@@ -3,14 +3,14 @@
 namespace app\services;
 
 use app\models\ar\Rings;
-use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 
 use function app\helpers\d;
 
 class RingsService
 {
     public array $form_data;
-    public ActiveDataProvider $provider;
+    public ArrayDataProvider $provider;
 
     public function __construct(array $form_data)
     {
@@ -20,21 +20,18 @@ class RingsService
     public function findRings(): void
     {
         $rings = Rings::find()
-            ->getRingsInRange($this->form_data);
+            ->getRingsInRange($this->form_data)
+            ->orderBy('distance')
+            // ->offset(100)
+            ->limit(100)
+            ->asArray()
+            ->cache(86400)
+            ->all();
 
-        $sortOrders = $this->getSortOrders();
-
-        $this->provider = new ActiveDataProvider([
-            'query' => $rings->cache(86400),
-            'sort' => [
-                'attributes' => [
-                    'distance_to_arrival',
-                    'distance',
-                ],
-                'defaultOrder' => $sortOrders
-            ],
+        $this->provider = new ArrayDataProvider([
+            'allModels' => $rings,
             'pagination' => [
-                'pageSize' => 25,
+                'pageSize' => 100,
                 'pageSizeParam' => false
             ],
         ]);
@@ -47,14 +44,5 @@ class RingsService
         }
 
         return $rings;
-    }
-
-    private function getSortOrders(): array
-    {
-        if ($this->form_data['sortBy'] === 'DistanceLs') {
-            return ['distance_to_arrival' => SORT_ASC];
-        } elseif ($this->form_data['sortBy'] === 'DistanceLy') {
-            return ['distance' => SORT_ASC];
-        }
     }
 }

@@ -19,6 +19,7 @@ use Yii;
  * @property string|null $body_name
  * @property string|null $reserve
  * @property string|null $timestamp
+ * @property float|null $distance
  */
 class Rings extends \yii\db\ActiveRecord
 {
@@ -39,7 +40,7 @@ class Rings extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'type'], 'required'],
-            [['x', 'y', 'z'], 'number'],
+            [['x', 'y', 'z', 'distance'], 'number'],
             [['distance_to_arrival'], 'integer'],
             [['name', 'system_name', 'body_name'], 'string', 'max' => 255],
             [['type', 'reserve', 'timestamp'], 'string', 'max' => 50],
@@ -60,6 +61,7 @@ class Rings extends \yii\db\ActiveRecord
             'y' => 'Y',
             'z' => 'Z',
             'distance_to_arrival' => 'Distance To Arrival',
+            'distance' => 'Distance',
             'body_name' => 'Body Name',
             'reserve' => 'Reserve',
             'timestamp' => 'Timestamp',
