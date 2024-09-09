@@ -8,7 +8,7 @@ import { tradeRouteForm } from './tradeRoutes.js';
 import { matTraders } from './matTraders.js';
 import { cookiesConsent } from './cookiesConsent.js';
 import { ringsForm } from './rings.js';
-// import { getSortIcon } from "./sortIcons.js";
+import { getSortIcon } from "./sortIcons.js";
 // import {getDataFromDom} from './addToDb.js';
 
 cookiesConsent();
@@ -72,12 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // $('table th.sortable > a').each(function() {
-    //     const $elem = $(this);
-    //     $elem.hasClass('asc') && $elem.append(getSortIcon('asc'));
-    //     $elem.hasClass('desc') && $elem.append(getSortIcon('desc'));
-    //     !$elem.hasClass('asc') && !$elem.hasClass('desc') && $elem.append(getSortIcon('hourGlass'));
-    // });
+    $('table th.sortable > a').each(function() {
+        const $elem = $(this);
+        $elem.hasClass('asc') && $elem.append(getSortIcon('asc'));
+        $elem.hasClass('desc') && $elem.append(getSortIcon('desc'));
+        !$elem.hasClass('asc') && !$elem.hasClass('desc') && $elem.append(getSortIcon('hourGlass'));
+    });
 
     if ($('#w0'.length > 0)) {
         const $filterBtns = $('.filters .btn');

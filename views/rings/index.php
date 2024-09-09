@@ -31,7 +31,7 @@ TSelectAsset::register($this);
                 <?php if (isset($models) && !empty($models)) : ?>
                     <?= $this->render('_result', [
                         'pagination' => $pagination,
-                        // 'sort' => $sort,
+                        'sort' => $sort,
                         'models' => $models
                     ]) ?>
                 <?php endif; ?>

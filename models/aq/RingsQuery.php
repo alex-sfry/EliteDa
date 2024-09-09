@@ -63,9 +63,9 @@ class RingsQuery extends \yii\db\ActiveQuery
             ])
             ->where(['not', ['x' => null]])
             ->andWhere(['type' => $form_data['type']]);
-        // $form_data['distanceFromStar'] !== 'Any' &&
-        // $query->andWhere(['<=', 'distance_to_arrival', $form_data['distanceFromStar']]);
-        /* $query->andWhere(['<=', $expr, $form_data['maxDistanceFromRefStar']]) */
+        $form_data['distanceFromStar'] !== 'Any' &&
+        $query->andWhere(['<=', 'distance_to_arrival', $form_data['distanceFromStar']]);
+        // $query->andWhere(['<=', $expr, $form_data['maxDistanceFromRefStar']]);
 
         return $query;
     }

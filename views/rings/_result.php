@@ -13,30 +13,31 @@ use function app\helpers\d;
 use function app\helpers\e;
 
 $th = [
-    ['label' => 'Name', /* 'sort_link' => null, */ 'cls' => 'w-f-content text-nowrap align-content-center'],
-    ['label' => 'Type', /* 'sort_link' => null, */ 'cls' => 'w-f-content text-nowrap align-content-center'],
-    ['label' => 'Reserve', /* 'sort_link' => null, */ 'cls' => 'w-f-content text-nowrap align-content-center'],
-    ['label' => 'System', /* 'sort_link' => null, */ 'cls' => 'w-f-content text-nowrap align-content-center'],
+    ['label' => 'Name', 'sort_link' => null, 'cls' => 'w-f-content text-nowrap align-content-center'],
+    ['label' => 'Type', 'sort_link' => null, 'cls' => 'w-f-content text-nowrap align-content-center'],
+    ['label' => 'Reserve', 'sort_link' => null, 'cls' => 'w-f-content text-nowrap align-content-center'],
+    ['label' => 'System', 'sort_link' => null, 'cls' => 'w-f-content text-nowrap align-content-center'],
     [
         'label' => 'Dist. to arr(ls)',
-        /* 'sort_link' => $sort->link(
+        'sort_link' => null,
+        'sort_link' => $sort->link(
             'distance_to_arrival',
             [
                 'label' => '<span>Dist. to arr(ls)</span>',
                 'class' => 'd-flex w-100 h-100 p-1 justify-content-between align-items-center gap-0 gap-sm-1'
             ]
-        ), */
+        ),
         'cls' => 'w-f-content text-nowrap align-content-center sortable'
     ],
     [
         'label' => 'Distance (LY)',
-        /* 'sort_link' => $sort->link(
+        'sort_link' => $sort->link(
             'distance',
             [
                 'label' => '<span>Distance (LY)</span>',
                 'class' => 'd-flex w-100 h-100 p-1 justify-content-between align-items-center gap-0 gap-sm-1'
             ]
-        ), */
+        ),
         'cls' => 'w-f-content text-nowrap align-content-center sortable'
     ]
 ];
@@ -52,12 +53,11 @@ $td_cls = 'w-f-content text-nowrap';
                     <th
                         scope="col"
                         class="<?= $item['cls'] ?>">
-                        <?= $item['label'] ?>
-                        <?php /* if ($item['sort_link']) { */ ?>
-                            <?php /* echo $item['sort_link'] */ ?>
-                        <?php /* } else { */ ?>
-                            <?php /* echo $item['label'] */ ?>
-                        <?php /* } */ ?>
+                        <?php if ($item['sort_link']) { ?>
+                            <?php echo $item['sort_link'] ?>
+                        <?php } else { ?>
+                            <?php echo $item['label'] ?>
+                        <?php } ?>
 
                     </th>
                 <?php endforeach; ?>

@@ -445,6 +445,32 @@ form-control.is-invalid {
     background-color: #212529;
 }
 
+.c-table th.sortable {
+    transition: background-color 0.2s linear;
+}
+.c-table th.sortable:hover {
+    background-color: #0d6efd !important;
+    color: #f8f9fa;
+}
+.c-table th.sortable > a > span {
+    position: relative;
+}
+.c-table th.sortable > a span::after {
+    content: "";
+    position: absolute;
+    right: 8px;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    background-color: #f8f9fa;
+    height: 2px;
+    transition: all 0.2s linear;
+}
+.c-table th.sortable:hover > a span::after {
+    width: 100%;
+    left: 0;
+}
+
 /* end of result styles */
 /* Trade Routes page styles */
 .tr-route-block-inner {
