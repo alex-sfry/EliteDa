@@ -53,7 +53,6 @@ class RingsQuery extends \yii\db\ActiveQuery
 
         $query = $this
             ->select([
-                'id',
                 'name',
                 'system_name',
                 'distance_to_arrival',
