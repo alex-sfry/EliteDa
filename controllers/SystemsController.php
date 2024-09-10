@@ -3,14 +3,14 @@
 namespace app\controllers;
 
 use app\models\ar\Systems;
+use app\models\forms\SystemNameForm;
 use app\models\forms\SystemsForm;
-use app\models\search\SystemsInfoSearch;
 use app\services\SystemsService;
 use Yii;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use Yiisoft\Arrays\ArrayHelper;
 
 use function app\helpers\d;
 
@@ -19,25 +19,24 @@ class SystemsController extends Controller
     public function actionIndex(): string
     {
         $session = Yii::$app->session;
-        $request = \Yii::$app->request;
+        $request = $this->request;
         $session->open();
         // $session->destroy();
-        $form_model = new SystemsForm();
-        $params['form_model'] = $form_model;
-        !empty($request->get()) && $session->set('sys', $request->get());
-        $get = $session->get('sys');
 
-        if (!empty($get)) {
-            $form_model->load($get, '');
-            $form_model->validate();
+        $sys_name_form = new SystemNameForm();
+        $params['sys_name_form'] = $sys_name_form;
+
+        if (!$sys_name_form->load($request->get(), '') || !$sys_name_form->validate()) {
+            $params['status'] = $sys_name_form->getErrors();
+            return $this->render('index', $params);
         }
 
-        $service = new SystemsService($form_model->attributes);
-        $queryParams = $request->queryParams;
-        $service->findSystems($queryParams);
-        $params['queryParams'] = $service->queryParams;
-        $params['dataProvider'] = $service->provider;
-        $params['searchModel'] = $service->searchModel;
+        $service = new SystemsService($sys_name_form->attributes);
+        $models = $service->findSystem()->all();
+
+        if (!empty([$models])) {
+            $params['systems'] = array_chunk($service->findSystem()->all(), 10);
+        }
 
         return $this->render('index', $params);
     }

@@ -102,6 +102,7 @@ return [
         'enablePrettyUrl' => true,
         'showScriptName' => false,
         'enableStrictParsing' => true,
+        'suffix' => '/',
         'rules' => [
             'rings' => 'rings/index',
             'contact' => 'site/contact',

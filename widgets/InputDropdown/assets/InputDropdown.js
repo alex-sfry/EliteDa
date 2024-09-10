@@ -33,7 +33,7 @@ class InputDropdown {
         try {
             let data = null;
             const res = await fetch(
-                `${endpoint}${searchValue.trim()}`, {
+                `${endpoint}${searchValue.trim()}/`, {
                     method: 'GET',
                     mode: 'cors', // this cannot be 'no-cors'
                     headers: {

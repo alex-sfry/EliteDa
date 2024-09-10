@@ -65,8 +65,7 @@ class SystemsInfoSearch extends SystemsInfoView
         $max_distance && $query->where(['<=', $distance_expr, $max_distance]);
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query/* ->limit(50) */,
-            // 'pagination' => false
+            'query' => $query,
         ]);
 
         $this->load($params);

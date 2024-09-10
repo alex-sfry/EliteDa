@@ -1,218 +1,185 @@
 <?php
 
 use app\models\forms\SystemsForm;
-use app\widgets\InputDropdown\InputDropdown;
-use yii\grid\GridView;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
+use yii\bootstrap5\Html;
 use yii\helpers\Url;
 use yii\web\View;
 
 use function app\helpers\d;
+use function app\helpers\e;
 
 /** @var app\models\ar\Systems $model */
 /** @var SystemsForm $form_model */
-/** @var app\models\search\SystemsInfoSearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
 /** @var View $this */
 
 $this->params['meta_keywords'] = 'Elite: Dangerous, galaxy information, systems';
-$this->title = 'Search for systems';
+$this->title = 'Systems';
 $this->params['breadcrumbs'] = [$this->title];
 
-$allegiance_options = [
-    'Alliance' => 'Alliance',
-    'Empire' => 'Empire',
-    'Federation' => 'Federation',
-    'Independent' => 'Independent',
-    'None' => 'None',
-    'Pirate' => 'Pirate',
-    'unknown' => 'unknown'
-];
+// $allegiance_options = [
+//     'Alliance' => 'Alliance',
+//     'Empire' => 'Empire',
+//     'Federation' => 'Federation',
+//     'Independent' => 'Independent',
+//     'None' => 'None',
+//     'Pirate' => 'Pirate',
+//     'unknown' => 'unknown'
+// ];
 
-$economy_options = [
-    'Agriculture' => 'Agriculture',
-    'Colony' => 'Colony',
-    'Damaged' => 'Damaged',
-    'Extraction' => 'Extraction',
-    'High Tech' => 'High Tech',
-    'Industrial' => 'Industrial',
-    'Military' => 'Military',
-    'None' => 'None',
-    'Prison' => 'Prison',
-    'Private Enterprise' => 'Private Enterprise',
-    'Refinery' => 'Refinery',
-    'Repair' => 'Repair',
-    'Rescue' => 'Rescue',
-    'Service' => 'Service',
-    'Terraforming' => 'Terraforming',
-    'Tourism' => 'Tourism',
-    'Engineering' => 'Engineering',
-    'unknown' => 'unknown'
-];
+// $economy_options = [
+//     'Agriculture' => 'Agriculture',
+//     'Colony' => 'Colony',
+//     'Damaged' => 'Damaged',
+//     'Extraction' => 'Extraction',
+//     'High Tech' => 'High Tech',
+//     'Industrial' => 'Industrial',
+//     'Military' => 'Military',
+//     'None' => 'None',
+//     'Prison' => 'Prison',
+//     'Private Enterprise' => 'Private Enterprise',
+//     'Refinery' => 'Refinery',
+//     'Repair' => 'Repair',
+//     'Rescue' => 'Rescue',
+//     'Service' => 'Service',
+//     'Terraforming' => 'Terraforming',
+//     'Tourism' => 'Tourism',
+//     'Engineering' => 'Engineering',
+//     'unknown' => 'unknown'
+// ];
 
-$security_options = [
-    'Anarchy' => 'Anarchy',
-    'Lawless' => 'Lawless',
-    'Low' => 'Low',
-    'Medium' => 'Anarchy',
-    'High' => 'High',
-    'unknown' => 'unknown',
-];
+// $security_options = [
+//     'Anarchy' => 'Anarchy',
+//     'Lawless' => 'Lawless',
+//     'Low' => 'Low',
+//     'Medium' => 'Anarchy',
+//     'High' => 'High',
+//     'unknown' => 'unknown',
+// ];
 
-$population_options = [
-    '10000000' => '>= 10Mil',
-    '100000000' => '>= 100Mil',
-    '1000000000' => '>= 1Bil',
-    '10000000000' => '>= 10Bil',
-    '20000000000' => '>= 20Bil',
-];
+// $population_options = [
+//     '10000000' => '>= 10Mil',
+//     '100000000' => '>= 100Mil',
+//     '1000000000' => '>= 1Bil',
+//     '10000000000' => '>= 10Bil',
+//     '20000000000' => '>= 20Bil',
+// ];
+
+$error = $sys_name_form->getErrors();
+$search_name_cls = !empty($error) ? 'is-invalid' : null;
 ?>
 
-<main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg fs-7">
-    <div class='d-flex flex-column h-100'>
-        <div class='container-xxl px-3'>
-            <div class='row flex-column overflow-x-auto'>
-                <div class='col'>
-                    <h1 class="mt-2 text-center sintony-bold"><?= Html::encode($this->title) ?></h1>
-                    <div class="mt-tr-ref-idd d-flex justify-content-end gap-2 flex-column flex-sm-row">
+<main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
+    <div class='container-xxl px-2'>
+        <div class='row'>
+            <div class='col d-flex flex-column row-gap-3 mb-3 px-4'>
+                <h1 class="mt-2 text-center sintony-bold"><?= $this->title ?></h1>
+
+                <!-- 'search by name' form -->
+                <div class="row justify-content-center">
+                    <div class="col-sm-8">
                         <?= Html::beginForm(
-                            [Url::to(ArrayHelper::merge(['/systems/index'], $queryParams))],
+                            '/systems/',
                             'get',
-                            ['id' => 'mt-form', 'class' => 'bg-light p-1 rounded-2', 'novalidate' => true]
+                            [
+                                'id' => 'sys-name-form',
+                                'novalidate' => true,
+                                'class' => [
+                                    'fs-7',
+                                    'bg-light',
+                                    'rounded-2',
+                                    'w-100',
+                                    'px-1',
+                                    'py-1'
+                                ],
+                            ]
                         ) ?>
-                        <div class="row gx-2">
-                            <div class="col-6" style='max-width: 160px;'>
-                                <?= Html::label(
-                                    'Max. distance (LY):',
-                                    'maxDistanceFromRefStar',
-                                    ['class' => 'min-lett-spacing fw-bold']
-                                ); ?>
-                                <div class="search-selected info bg-info px-1 py-1 lh-1 rounded-2">
-                                    <?= $form_model->maxDistanceFromRefStar; ?>
-                                </div>
-                                <?= Html::textInput(
-                                    'maxDistanceFromRefStar',
-                                    $form_model->maxDistanceFromRefStar,
-                                    [
-                                        'id' => 'maxDistanceFromRefStar',
-                                        'class' => 'form-control shadow-none border border-dark rounded-2 p-1',
-                                        'style' => 'min-width: 140px;max-width: 160px;margin-top:0.125rem;',
+                        <?= Html::label(
+                            'Search by name:',
+                            'sysName',
+                            ['class' => ['text-nowrap', 'fs-6', 'fw-bold', 'align-content-center']]
+                        ) ?>
+                        <div class="d-flex gap-3">
+                            <div class="w-75">
+                                <?= Html::input('text', 'sysName', $sys_name_form->sysName, [
+                                    'id' => 'sysName',
+                                    'name' => 'sysName',
+                                    'required' => true,
+                                    'class' => [
+                                        'form-control',
+                                        'form-control-sm',
+                                        'rounded-1',
+                                        $search_name_cls !== 'is-invalid' ? 'border-dark-subtle' : null,
+                                        'border-2',
+                                        $search_name_cls
                                     ]
-                                ); ?>
+                                ]) ?>
+                                <div class="invalid-feedback fw-bold">
+                                    <?= $error['sysName'][0] ?? null ?>
+                                </div>
                             </div>
-                            <div class="grid-view__ref-sys-divider bg-dark p-0 opacity-50"
-                                style="width:2px;max-height:100%"></div>
-                            <div class="col-6" style='min-width: 240px;max-width: 240px'>
-                                <?= InputDropdown::widget([
-                                    'container' => 'mt-tr-ref-idd',
-                                    'selected' => $form_model->refSystem,
-                                    'search' => 'ref-idd-search',
-                                    'to_submit' => 'ref-to-submit',
-                                    'placeholder' => 'Enter system',
-                                    'ajax' => true,
-                                    'endpoint' => '/system/get/',
-                                    'label_main' => 'Ref. system:',
-                                    'toggle_btn_text' => 'Search',
-                                    'name_main' => 'refSystem',
-                                    'required' => 'required',
-                                    'btn_position' => 'right'
-                                ]); ?>
+                            <?= Html::button('search', [
+                                'type' => 'submit',
+                                'name' => 'sysNameBtn',
+                                'class' => ['btn', 'btn-primary', 'btn-sm', 'text-uppercase', 'lett-spacing-2', 'w-25', 'align-self-start']
+                            ]) ?>
+                        </div>
+                        <?= Html::endForm(); ?>
+                    </div>
+                </div>
+                <!-- 'search by name' form -->
+
+                <!-- accordion -->
+                <div class="accordion accordion-flush border-dark-subtle bg-light mx-0" id="accordionForm">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne"
+                                aria-expanded="true"
+                                aria-controls="flush-collapseOne">
+                                Accordion Item #1
+                            </button>
+                        </h2>
+                        <div
+                            id="flush-collapseOne"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#accordionForm">
+                            <div class="accordion-body">
+                                This is the first item's accordion body.
                             </div>
                         </div>
-                        <button class="btn btn-violet btn-sm mt-2 lett-spacing-2">submit</button>
-                        <?php echo Html::endForm() ?>
                     </div>
-                    <?= GridView::widget([
-                        'dataProvider' => $dataProvider,
-                        'filterModel' => $searchModel,
-                        'headerRowOptions' => [
-                            'class' => 'text-nowrap align-middle'
-                        ],
-                        'columns' => [
-                            [
-                                'attribute' => 'system',
-                                'value' => function ($model) {
-                                    $id = (int)$model->id;
-                                    return Html::a(
-                                        Html::encode($model->system),
-                                        Url::toRoute(["system/$id"]),
-                                        ['class' => [
-                                            'text-decoration-underline',
-                                            'link-underline-primary',
-                                            'table-link'
-                                            ]
-                                        ]
-                                    );
-                                },
-                                'format' => 'raw',
-                                'filter' => "
-                                    <div class='input-group input-group-sm'>
-                                        <input 
-                                            type='text' 
-                                            class='form-control form-control-sm' 
-                                            id='systemsinfosearch-system'
-                                            name='SystemsInfoSearch[system]'
-                                            value='{$queryParams['SystemsInfoSearch']['system']}'>
-                                        <button class='btn btn-secondary text-light'>
-                                            <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' 
-                                                fill='currentColor' class='bi bi-funnel' viewBox='0 0 16 16'>
-                                                <path d='M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 
-                                                    1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 
-                                                    14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5zm1 .5v1.308l4.372 
-                                                    4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 
-                                                    3.308V2z'/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                ",
-                            ],
-                            [
-                                'attribute' => 'distance',
-                            ],
-                            [
-                                'attribute' => 'population',
-                                'filter' => $population_options,
-                                'filterInputOptions' => [
-                                    'class' => 'form-select form-select-sm',
-                                ],
-                                'format' => 'integer'
-                            ],
-                            [
-                                'attribute' => 'security',
-                                'filter' => $security_options,
-                                'filterInputOptions' => [
-                                    'class' => 'form-select form-select-sm',
-                                ]
-                            ],
-                            [
-                                'attribute' => 'economy',
-                                'filter' => $economy_options,
-                                'filterInputOptions' => [
-                                    'class' => 'form-select form-select-sm',
-                                ]
-                            ],
-                            [
-                                'attribute' => 'allegiance',
-                                'filter' => $allegiance_options,
-                                'filterInputOptions' => [
-                                    'class' => 'form-select form-select-sm',
-                                ]
-                            ],
-                        ],
-                        'pager' => [
-                            'class' => 'yii\bootstrap5\LinkPager',
-                            'firstPageLabel' => 'first',
-                            'lastPageLabel' => 'last',
-                            'prevPageCssClass' => 'prev-page',
-                            'nextPageCssClass' => 'next-page',
-                            'maxButtonCount' => 0,
-                            'options' => [
-                                'class' => 'd-flex justify-content-center'
-                            ]
-                        ],
-                    ]) ?>
                 </div>
+                <!-- end accordion -->
+
+                <!-- nothing found -->
+                <?php if (isset($systems) && empty($systems)) { ?>
+                    <div class="rounded-1 bg-light text-center mx-auto px-3 py-2">
+                        <p class="my-1 text-danger fw-bold text-uppercase lett-spacing-2">found nothing</p>
+                    </div>
+                <?php } ?>
+                <!-- end of nothing found -->
+
+                <!-- result for 'search by name' -->
+                <?php if (!empty($systems)) { ?>
+                    <div class="row justify-content-center row-gap-1">
+                        <?php foreach ($systems as $key => $group) { ?>
+                            <div style class="col-3">
+                                <ul class="list-group list-group-flush">
+                                    <?php foreach ($group as $k => $system) { ?>
+                                        <li class="list-group-item bg-light">
+                                            <?= e($system['name']); ?>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+                        <?php } ?>
+                    </div>
+                <?php } ?>
+                <!-- end of result for 'search by name' -->
+
             </div>
         </div>
     </div>
