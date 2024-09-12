@@ -2,6 +2,7 @@
 
 namespace app\models\ar;
 
+use app\models\aq\SystemsQuery;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -143,5 +144,14 @@ class Systems extends ActiveRecord
     public function getStations(): ActiveQuery
     {
         return $this->hasMany(Stations::class, ['system_id' => 'id']);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return SystemsQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new SystemsQuery(get_called_class());
     }
 }

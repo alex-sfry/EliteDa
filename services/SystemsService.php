@@ -3,60 +3,64 @@
 namespace app\services;
 
 use app\models\ar\Systems;
-use app\models\search\SystemsInfoSearch;
 use yii\data\ArrayDataProvider;
 use yii\db\ActiveQuery;
+use yii\db\Expression;
+use Yiisoft\Arrays\ArrayHelper;
 
 use function app\helpers\d;
 
 class SystemsService
 {
-    public ?array $form_data = null;
+    public ?array $form = null;
     public ?ArrayDataProvider $provider = null;
-    public array $queryParams = [];
 
-    public function __construct(array $form_data)
+    public function __construct(array $form = null)
     {
-        $this->form_data = $form_data;
+        $this->form = $form;
     }
 
-    public function findSystem(): ActiveQuery
+    public function findSystemsByName(): ActiveQuery
+    {
+        return Systems::find()->byName($this->form['sysName']);
+    }
+
+    public function findSystems(): ActiveQuery
+    {
+        $expr = $this->distanceExpr($this->form['refSystem']);
+        $query = Systems::find()
+            ->alias('sys')
+            ->select([
+                'sys.*',
+                'faction_name',
+                'economy_name',
+                'security_level',
+                "$expr as distance"
+            ])
+            ->genericJoin()
+            ->filter(array_slice($this->form, 1, null, true));
+
+        return $query;
+    }
+
+    public function systemDetails(int $id): ActiveQuery
+    {
+        return Systems::find()->details((int)$id);
+    }
+
+    public function distanceExpr(string $name): Expression
+    {
+        extract($this->getCoords($name));
+
+        return new Expression("ROUND(SQRT(POW((x - $x), 2) + POW((y - $y), 2) + POW((z - $z), 2)), 2)");
+    }
+
+    public function getCoords(string $name): array
     {
         return Systems::find()
-            ->select(['id', 'name'])
-            ->where(['like', 'name', "{$this->form_data['sysName']}%", false])
-            ->asArray();
-    }
-
-    public function findSystems(array $queryParams): void
-    {
-        // $this->searchModel = new SystemsInfoSearch();
-        // $this->provider = $this->searchModel->search(
-        //     $queryParams,
-        //     $this->form_data['maxDistanceFromRefStar'],
-        //     $this->form_data['refSystem']
-        // );
-        // $this->provider->pagination->pageSizeLimit = [1, 100];
-        // $this->provider->pagination->defaultPageSize = 25;
-        // $this->provider->pagination->forcePageParam = false;
-        // $this->provider->pagination->pageSize = null;
-
-        // $this->provider->sort->attributes['distance'] = [
-        //     'asc' => ['distance' => SORT_ASC],
-        //     'desc' => ['distance' => SORT_DESC],
-        // ];
-
-        // $this->provider->sort->defaultOrder = [
-        //     'distance' => SORT_ASC
-        // ];
-
-        // if (empty($queryParams) || !isset($queryParams['SystemsInfoSearch'])) {
-        //     $this->queryParams['SystemsInfoSearch'] = array_fill_keys(
-        //         array_values($this->searchModel->activeAttributes()),
-        //         null
-        //     );
-        // } else {
-        //     $this->queryParams = $queryParams;
-        // }
+            ->coords($name)
+            ->asArray()
+            ->cache(86400)
+            ->one();
     }
 }

@@ -2,7 +2,7 @@
     "name": "webpack-eddn",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "main.js",
     "type": "module",
     "scripts": {
         "start": "set NODE_ENV=development&&webpack",

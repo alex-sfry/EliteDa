@@ -3,8 +3,8 @@
 namespace app\controllers;
 
 use app\models\ar\Systems;
-use app\models\forms\SystemNameForm;
-use app\models\forms\SystemsForm;
+use app\models\forms\SystemsAdvancedForm;
+use app\models\forms\SystemsNameForm;
 use app\services\SystemsService;
 use Yii;
 use yii\web\Controller;
@@ -22,22 +22,36 @@ class SystemsController extends Controller
         $request = $this->request;
         $session->open();
         // $session->destroy();
+        $by_name_form = new SystemsNameForm();
+        $params['by_name_form'] = $by_name_form;
+        $adv_form = new SystemsAdvancedForm();
+        $params['adv_form'] = $adv_form;
+        $params['c'] = 0;
 
-        $sys_name_form = new SystemNameForm();
-        $params['sys_name_form'] = $sys_name_form;
+        if (array_key_exists('sysNameBtn', $request->get())) {
+            $session->set('sys_name', $request->get());
 
-        if (!$sys_name_form->load($request->get(), '') || !$sys_name_form->validate()) {
-            $params['status'] = $sys_name_form->getErrors();
-            return $this->render('index', $params);
+            if ($by_name_form->load($session->get('sys_name'), '') && $by_name_form->validate()) {
+                $service = new SystemsService($by_name_form->attributes);
+                $models = $service->findSystemsByName()->limit(100)->asArray()/* ->cache(86400) */->all();
+            }
         }
 
-        $service = new SystemsService($sys_name_form->attributes);
-        $models = $service->findSystem()->all();
+        if (array_key_exists('advFormBtn', $request->get())) {
+            $session->set('adv_form', $request->get());
 
-        if (!empty([$models])) {
-            $params['systems'] = array_chunk($service->findSystem()->all(), 10);
+            if ($adv_form->load($session->get('adv_form'), '') && $adv_form->validate()) {
+                $service = new SystemsService($adv_form->attributes);
+                $models = $service->findSystems()->orderBy('distance')->limit(50)->asArray()/* ->cache(86400) */->all();
+            }
         }
 
+        $params['by_name_form_values'] = $session->get('sys_name') ?? $by_name_form->attributes;
+        $params['adv_form_values'] = $session->get('adv_form') ?? $adv_form->attributes;
+
+        if (isset($models) && !empty([$models])) {
+            $params['models'] = array_chunk($models, 10);
+        }
         return $this->render('index', $params);
     }
 
@@ -46,12 +60,10 @@ class SystemsController extends Controller
      */
     public function actionDetails(int $id): string
     {
-        $id = (int)$id;
         !$id && throw new NotFoundHttpException();
+        $service = new SystemsService();
 
-        $model = Systems::find()
-            ->with(['stations', 'economy', 'security', 'allegiance'])
-            ->where(['systems.id' => (int)$id])
+        $model = $service->systemDetails($id)
             ->cache(86400)
             ->asArray()
             ->one();
@@ -78,7 +90,7 @@ class SystemsController extends Controller
 
             $response = Yii::$app->response;
             $response->format = Response::FORMAT_JSON;
-            $response->data = ArrayHelper::htmlEncode($data);
+            $response->data = $data;
 
             $response->send();
         }

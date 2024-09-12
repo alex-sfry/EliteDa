@@ -2,7 +2,7 @@
 
 namespace app\models\forms;
 
-class SystemNameForm extends \yii\base\Model
+class SystemsNameForm extends \yii\base\Model
 {
     public $sysName;
 
@@ -16,6 +16,6 @@ class SystemNameForm extends \yii\base\Model
 
     public function attributeLabels()
     {
-        return ['sysName' => 'Field',];
+        return ['sysName' => 'Name',];
     }
 }

@@ -3,5 +3,9 @@
         "include": [
             "jquery"
         ]
-    }
+    },
+    "compilerOptions": {
+    "module": "umd",
+    "allowSyntheticDefaultImports": true
+  }
 }

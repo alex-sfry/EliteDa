@@ -4,6 +4,8 @@
 @import "../../../node_modules/bootstrap/scss/variables.scss";
 @import "tselect";
 
+:root{--bs-border-color: var(--bs-dark-border-subtle)}
+
 h1 {
     color: $gray-200;
 }
@@ -371,16 +373,6 @@ form {
     @extend .sintony-bold;
     letter-spacing: 2px;
 
-    .form-select:not(.t-sel) {
-        border: 1px solid $dark;
-    }
-
-    .form-select:focus:not(.t-sel),
-    .form-select:active:not(.t-sel) {
-        @extend .f-ctrl-no-shadow;
-        box-shadow: 0 0 4px 4px $info;
-    }
-
     select,
     option {
         @extend .sintony-reg;
@@ -422,7 +414,7 @@ form {
 /* result styles */
 .c-loading {
     @extend .w-f-content;
-    box-shadow: 0 0 4px 4px $light-bg-subtle;
+    box-shadow: 0 0 8px 8px $light-bg-subtle;
 }
 
 .c-result-legend {

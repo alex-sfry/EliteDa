@@ -10,10 +10,9 @@ export const tSelectRingsSettings = (config) => {
         highlight: false,
         shouldLoad: query => query.length < 2 ? false : true,
         load: async function (query, callback) {
-            console.log(query);
             this.clearOptions();
             try {
-                const response = await fetch(`${config.endpoint}${query}`);
+                const response = await fetch(`${config.endpoint}${query}/`);
                 if (response.ok) {
                     callback(await response.json());
                 } else {

@@ -74,7 +74,30 @@ form:not(.was-validated) .t-sel.ts-wrapper.form-select-sm.focus.is-invalid > .ts
     box-shadow: none;
 }
 
+#adv-sys-form #validationServerRefSystemFeedback {
+    margin-top: -1rem !important;
+}
+
+.ts-wrapper.is-invalid.single,
+.was-validated .invalid.single,
+.was-validated :invalid + .ts-wrapper.single {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3E%3C/svg%3E");
+}
+
+.ts-wrapper.is-valid,
+.was-validated .valid,
+.was-validated :valid + .ts-wrapper,
+.ts-wrapper.is-valid.single,
+.was-validated .valid.single,
+.was-validated :valid + .ts-wrapper.single {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3E%3C/svg%3E");
+}
+
 /* end of TomSelect styles */
+:root {
+    --bs-border-color: var(--bs-dark-border-subtle);
+}
+
 h1 {
     color: #e9ecef;
 }
@@ -151,8 +174,7 @@ table .table-link-tr:hover {
 }
 
 .f-ctrl-no-shadow, .grid-view .filters input:focus,
-.grid-view .filters select:focus, .c-form .form-select:focus:not(.t-sel),
-.c-form .form-select:active:not(.t-sel), form-check-input:focus {
+.grid-view .filters select:focus, form-check-input:focus {
     box-shadow: none;
     border-color: #dee2e6;
 }
@@ -388,13 +410,6 @@ form-control.is-invalid {
 .c-form {
     letter-spacing: 2px;
 }
-.c-form .form-select:not(.t-sel) {
-    border: 1px solid #212529;
-}
-.c-form .form-select:focus:not(.t-sel),
-.c-form .form-select:active:not(.t-sel) {
-    box-shadow: 0 0 4px 4px #0dcaf0;
-}
 .c-form select,
 .c-form option {
     letter-spacing: 2px;
@@ -423,7 +438,7 @@ form-control.is-invalid {
 /* end of generic form styles */
 /* result styles */
 .c-loading {
-    box-shadow: 0 0 4px 4px #fcfcfd;
+    box-shadow: 0 0 8px 8px #fcfcfd;
 }
 
 .c-result-legend {

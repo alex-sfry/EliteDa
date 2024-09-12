@@ -13,30 +13,6 @@
 
 /***/ }),
 
-/***/ "./src/script/commodities.js":
-/*!***********************************!*\
-  !*** ./src/script/commodities.js ***!
-  \***********************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   commoditiesForm: () => (/* binding */ commoditiesForm)
-/* harmony export */ });
-const commoditiesForm = (loader, removeLoader) => {
-  const $form = $('#c-form');
-  const $table = $('.c-table');
-  removeLoader($table);
-  const handleSubmit = e => {
-    if (!$form.get(0).checkValidity()) {
-      $form.addClass('was-validated');
-      e.preventDefault();
-    } else loader($form, $table);
-  };
-  $form.on('submit', handleSubmit);
-};
-
-/***/ }),
-
 /***/ "./src/script/cookiesConsent.js":
 /*!**************************************!*\
   !*** ./src/script/cookiesConsent.js ***!
@@ -110,94 +86,6 @@ const matTraders = () => {
 
 /***/ }),
 
-/***/ "./src/script/rings.js":
-/*!*****************************!*\
-  !*** ./src/script/rings.js ***!
-  \*****************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ringsForm: () => (/* binding */ ringsForm)
-/* harmony export */ });
-/* harmony import */ var _tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tSelectSettings.js */ "./src/script/tSelectSettings.js");
-
-const ringsForm = (loader, removeLoader) => {
-  // eslint-disable-next-line no-undef, no-unused-vars
-  const tSelect = new TomSelect("#refSystem", (0,_tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__.tSelectRingsSettings)({
-    searchField: 'system',
-    valueField: 'system',
-    labelField: 'system',
-    plugins: ['dropdown_input'],
-    endpoint: '/system/get/'
-  }));
-  const $form = $("#rings-form");
-  const $table = $(".rings-table");
-  removeLoader($table);
-  const handleSubmit = e => {
-    if (!$form.get(0).checkValidity()) {
-      e.preventDefault();
-      $form.addClass("was-validated");
-    } else loader($form, $table);
-  };
-  $form.on("submit", handleSubmit);
-
-  // fix for TomSelect label bug (id, for)
-  $('.tselect-lbl-1').attr('for', 'refSystem');
-  $('.tselect-lbl-1').removeAttr('id');
-};
-
-/***/ }),
-
-/***/ "./src/script/shipModules.js":
-/*!***********************************!*\
-  !*** ./src/script/shipModules.js ***!
-  \***********************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   shipModulesForm: () => (/* binding */ shipModulesForm)
-/* harmony export */ });
-const shipModulesForm = (loader, removeLoader) => {
-  const $form = $('#mod-form');
-  const $table = $('.mod-table');
-  removeLoader($table);
-  const handleSubmit = e => {
-    if (!$form.get(0).checkValidity()) {
-      $form.addClass('was-validated');
-      e.preventDefault();
-    } else loader($form, $table);
-  };
-  $form.on('submit', handleSubmit);
-};
-
-/***/ }),
-
-/***/ "./src/script/ships.js":
-/*!*****************************!*\
-  !*** ./src/script/ships.js ***!
-  \*****************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   shipsForm: () => (/* binding */ shipsForm)
-/* harmony export */ });
-const shipsForm = (loader, removeLoader) => {
-  const $form = $('#ships-form');
-  const $table = $('.ships-table');
-  // const shipSelectLabel = $('label[for=\'c-hiddenSelect\']').get(0);
-  // const shipSelect = $('#c-hiddenSelect').get(0);
-  removeLoader($table);
-  const handleSubmit = e => {
-    if (!$form.get(0).checkValidity()) {
-      $form.addClass('was-validated');
-      e.preventDefault();
-    } else loader($form, $table);
-  };
-  $form.on('submit', handleSubmit);
-};
-
-/***/ }),
-
 /***/ "./src/script/sortIcons.js":
 /*!*********************************!*\
   !*** ./src/script/sortIcons.js ***!
@@ -237,6 +125,34 @@ const getSortIcon = icon => {
 
 /***/ }),
 
+/***/ "./src/script/tSelect.js":
+/*!*******************************!*\
+  !*** ./src/script/tSelect.js ***!
+  \*******************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   initTSelect: () => (/* binding */ initTSelect)
+/* harmony export */ });
+/* harmony import */ var _tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tSelectSettings.js */ "./src/script/tSelectSettings.js");
+
+const initTSelect = elem => {
+  // eslint-disable-next-line no-undef, no-unused-vars
+  const tSelect = new TomSelect(elem, (0,_tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__.tSelectRingsSettings)({
+    searchField: 'system',
+    valueField: 'system',
+    labelField: 'system',
+    plugins: ['dropdown_input'],
+    endpoint: '/system/get/'
+  }));
+
+  // fix for TomSelect label bug (id, for)
+  $('.tselect-lbl-1').attr('for', 'refSystem');
+  $('.tselect-lbl-1').removeAttr('id');
+};
+
+/***/ }),
+
 /***/ "./src/script/tSelectSettings.js":
 /*!***************************************!*\
   !*** ./src/script/tSelectSettings.js ***!
@@ -262,10 +178,9 @@ const tSelectRingsSettings = config => {
     highlight: false,
     shouldLoad: query => query.length < 2 ? false : true,
     load: async function (query, callback) {
-      console.log(query);
       this.clearOptions();
       try {
-        const response = await fetch(`${config.endpoint}${query}`);
+        const response = await fetch(`${config.endpoint}${query}/`);
         if (response.ok) {
           callback(await response.json());
         } else {
@@ -365,14 +280,11 @@ var __webpack_exports__ = {};
   \****************************/
 /* harmony import */ var _styles_scss_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/scss/style.scss */ "./src/styles/scss/style.scss");
 /* harmony import */ var _isValidated_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./isValidated.js */ "./src/script/isValidated.js");
-/* harmony import */ var _commodities_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./commodities.js */ "./src/script/commodities.js");
-/* harmony import */ var _shipModules_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./shipModules.js */ "./src/script/shipModules.js");
-/* harmony import */ var _ships_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ships.js */ "./src/script/ships.js");
-/* harmony import */ var _tradeRoutes_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./tradeRoutes.js */ "./src/script/tradeRoutes.js");
-/* harmony import */ var _matTraders_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./matTraders.js */ "./src/script/matTraders.js");
-/* harmony import */ var _cookiesConsent_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./cookiesConsent.js */ "./src/script/cookiesConsent.js");
-/* harmony import */ var _rings_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./rings.js */ "./src/script/rings.js");
-/* harmony import */ var _sortIcons_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./sortIcons.js */ "./src/script/sortIcons.js");
+/* harmony import */ var _tradeRoutes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tradeRoutes.js */ "./src/script/tradeRoutes.js");
+/* harmony import */ var _matTraders_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./matTraders.js */ "./src/script/matTraders.js");
+/* harmony import */ var _cookiesConsent_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cookiesConsent.js */ "./src/script/cookiesConsent.js");
+/* harmony import */ var _tSelect_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./tSelect.js */ "./src/script/tSelect.js");
+/* harmony import */ var _sortIcons_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./sortIcons.js */ "./src/script/sortIcons.js");
 
 // import '../styles/bootstrapSCSS/bootstrap.scss';
 
@@ -381,12 +293,7 @@ var __webpack_exports__ = {};
 
 
 
-
-
-
-// import {getDataFromDom} from './addToDb.js';
-
-(0,_cookiesConsent_js__WEBPACK_IMPORTED_MODULE_7__.cookiesConsent)();
+(0,_cookiesConsent_js__WEBPACK_IMPORTED_MODULE_4__.cookiesConsent)();
 const initHeader = () => {
   $('.menu__link').each(function () {
     if ($(this).attr('href') === window.location.pathname) {
@@ -408,7 +315,7 @@ const initFooter = () => {
   });
 };
 const loader = ($insertElem, $hideElem) => {
-  $insertElem.after("<div class='c-loading my-0 mx-auto text-light bg-info rounded-2 px-3 py-1 fw-bold'>" + "Loading . . .</div>");
+  $insertElem.after("<div class='row justify-content-center'>" + "<div class='c-loading my-0 mx-auto text-light bg-info rounded-2 px-3 py-1 fw-bold'>" + "Loading . . ." + "</div>" + "</div>");
   if ($hideElem.length) {
     $hideElem.addClass('d-none');
     $('.c-pagination-cnt').addClass('d-none');
@@ -421,15 +328,29 @@ const removeLoader = $elem => {
     $loadingPlaceholder.length && $loadingPlaceholder.remove();
   }
 };
+const handleSubmit = function (e) {
+  if ($('#tr-form').length) return;
+  if (!this.checkValidity()) {
+    e.preventDefault();
+    $(this).addClass("was-validated");
+  } else loader($('.accordion').last(), $('table.c-table'));
+};
+$('form').on("submit", handleSubmit);
 document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initFooter();
-  if ($('#c-form').length) (0,_commodities_js__WEBPACK_IMPORTED_MODULE_2__.commoditiesForm)(loader, removeLoader);
-  if ($('#mod-form').length) (0,_shipModules_js__WEBPACK_IMPORTED_MODULE_3__.shipModulesForm)(loader, removeLoader);
-  if ($('#ships-form').length) (0,_ships_js__WEBPACK_IMPORTED_MODULE_4__.shipsForm)(loader, removeLoader);
-  if ($('#tr-form').length) (0,_tradeRoutes_js__WEBPACK_IMPORTED_MODULE_5__.tradeRouteForm)(_isValidated_js__WEBPACK_IMPORTED_MODULE_1__.validate, loader, removeLoader);
-  if ($('#mt-form').length) (0,_matTraders_js__WEBPACK_IMPORTED_MODULE_6__.matTraders)();
-  if ($('#rings-form').length) (0,_rings_js__WEBPACK_IMPORTED_MODULE_8__.ringsForm)(loader, removeLoader);
+  if ($('#c-form').length) removeLoader($('table'));
+  if ($('#mod-form').length) removeLoader($('table'));
+  if ($('#ships-form').length) removeLoader($('table'));
+  if ($('#tr-form').length) (0,_tradeRoutes_js__WEBPACK_IMPORTED_MODULE_2__.tradeRouteForm)(_isValidated_js__WEBPACK_IMPORTED_MODULE_1__.validate, loader, removeLoader);
+  if ($('#mt-form').length) (0,_matTraders_js__WEBPACK_IMPORTED_MODULE_3__.matTraders)();
+  if ($('.get-form').length) removeLoader($('table'));
+  if ($('.t-sel').length) (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_5__.initTSelect)('#refSystem');
+  if ($('#rings-form').length) {
+    removeLoader($('table'));
+  }
+
+  // accordion - switch title 
   $('#accordionForm .accordion-button').on('click', function () {
     if ($(this).text().trim() === 'Close form') {
       $(this).text('Open form');
@@ -437,12 +358,16 @@ document.addEventListener('DOMContentLoaded', () => {
       $(this).text('Close form');
     }
   });
+
+  // sorting table
   $('table th.sortable > a').each(function () {
     const $elem = $(this);
-    $elem.hasClass('asc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_9__.getSortIcon)('asc'));
-    $elem.hasClass('desc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_9__.getSortIcon)('desc'));
-    !$elem.hasClass('asc') && !$elem.hasClass('desc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_9__.getSortIcon)('hourGlass'));
+    $elem.hasClass('asc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_6__.getSortIcon)('asc'));
+    $elem.hasClass('desc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_6__.getSortIcon)('desc'));
+    !$elem.hasClass('asc') && !$elem.hasClass('desc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_6__.getSortIcon)('hourGlass'));
   });
+
+  // gridview
   if ($('#w0'.length > 0)) {
     const $filterBtns = $('.filters .btn');
     $filterBtns.on('click', function () {

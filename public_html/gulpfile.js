@@ -72,6 +72,11 @@ export const watch = () => {
         .on('change', (path) => console.log(`File ${path} was changed`))
         .on('unlink', (path) => console.log(`File ${path} was removed`))
         .on('add', (path) => console.log(`File ${path} was added`));
+    
+    gulp.watch('./src/styles/bootstrapSCSS/*.scss', () => bsStyles())
+        .on('change', (path) => console.log(`File ${path} was changed`))
+        .on('unlink', (path) => console.log(`File ${path} was removed`))
+        .on('add', (path) => console.log(`File ${path} was added`));
 
     gulp.watch([
         '../widgets/**/*.js',

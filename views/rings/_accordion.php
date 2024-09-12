@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @var yii\web\View $this
+ */
+
 use function app\helpers\d;
 
 $type = ['Icy' => 'Icy', 'Metal Rich' => 'Metal Rich', 'Metallic' => 'Metallic', 'Rocky' => 'Rocky'];
