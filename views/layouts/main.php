@@ -45,7 +45,7 @@ if (!YII_ENV_DEV) {
 <body class="d-flex flex-column" style="height:100vh">
     <?php $this->beginBody() ?>
     <div class="cookies-consent-wrapper hide">
-        <img src="#" alt="">
+        <!-- <img src="#" alt=""> -->
         <div class="content">
             <header>Cookies Consent</header>
             <p>This website use cookies to ensure you get the best experience on our website.</p>
