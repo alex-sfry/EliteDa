@@ -17,7 +17,7 @@ $this->params['meta_keywords'] = 'Elite: Dangerous, galaxy information, system i
 $this->title = $model['name'];
 $this->params['breadcrumbs'] = [
     [
-        'label' => 'Search for systems',
+        'label' => 'Systems',
         'url' => Url::toRoute([
             "systems/index"
         ]),
