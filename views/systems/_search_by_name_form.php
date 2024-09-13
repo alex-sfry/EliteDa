@@ -6,6 +6,7 @@
  */
 use yii\helpers\Html;
 
+use function app\helpers\d;
 use function app\helpers\e;
 
 $search_name_cls = !empty($errors) ? 'is-invalid' : null;

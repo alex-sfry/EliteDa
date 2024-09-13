@@ -1,5 +1,8 @@
 import { tSelectRingsSettings } from "./tSelectSettings.js";
 
+/**
+ * @param {string} elem 
+ */
 export const initTSelect = (elem) => {
     // eslint-disable-next-line no-undef, no-unused-vars
     const tSelect = new TomSelect(elem, tSelectRingsSettings({

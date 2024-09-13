@@ -49,7 +49,7 @@ class SystemsQuery extends \yii\db\ActiveQuery
 
     public function byName(string $name): ActiveQuery
     {
-        return $this->generic()->andWhere(['like', 'name', "$name%", false]);
+        return $this->genericJoin()->andWhere(['like', 'name', "$name%", false]);
     }
 
     public function details(int $id): ActiveQuery
@@ -59,10 +59,10 @@ class SystemsQuery extends \yii\db\ActiveQuery
 
     public function filter(array $conditions): ActiveQuery
     {
-        return $this->andFilterWhere(['>=', 'population', $conditions['population']])
-            ->andFilterWhere(['faction_name' => $conditions['allegiance']])
-            ->andFilterWhere(['economy_name' => $conditions['economy']])
-            ->andFilterWhere(['security_level' => $conditions['security']]);
+        return $this->andFilterCompare('population', ">={$conditions['population']}")
+            ->andFilterCompare('faction_name', $conditions['allegiance'])
+            ->andFilterCompare('economy_name', $conditions['economy'])
+            ->andFilterCompare('security_level', $conditions['security']);
     }
 
     public function coords(string $name): ActiveQuery

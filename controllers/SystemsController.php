@@ -33,7 +33,7 @@ class SystemsController extends Controller
 
             if ($by_name_form->load($session->get('sys_name'), '') && $by_name_form->validate()) {
                 $service = new SystemsService($by_name_form->attributes);
-                $models = $service->findSystemsByName()->limit(100)->asArray()/* ->cache(86400) */->all();
+                $models = $service->findSystemsByName()->limit(100)->asArray()->cache(86400)->all();
             }
         }
 
@@ -42,7 +42,7 @@ class SystemsController extends Controller
 
             if ($adv_form->load($session->get('adv_form'), '') && $adv_form->validate()) {
                 $service = new SystemsService($adv_form->attributes);
-                $models = $service->findSystems()->orderBy('distance')->limit(50)->asArray()/* ->cache(86400) */->all();
+                $models = $service->findSystems()->orderBy('distance')->limit(100)->asArray()->cache(86400)->all();
             }
         }
 
@@ -50,8 +50,9 @@ class SystemsController extends Controller
         $params['adv_form_values'] = $session->get('adv_form') ?? $adv_form->attributes;
 
         if (isset($models) && !empty([$models])) {
-            $params['models'] = array_chunk($models, 10);
+            $params['models'] = $models;
         }
+
         return $this->render('index', $params);
     }
 
@@ -61,9 +62,9 @@ class SystemsController extends Controller
     public function actionDetails(int $id): string
     {
         !$id && throw new NotFoundHttpException();
-        $service = new SystemsService();
 
-        $model = $service->systemDetails($id)
+        $model = Systems::find()
+            ->details((int)$id)
             ->cache(86400)
             ->asArray()
             ->one();

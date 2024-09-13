@@ -4,7 +4,9 @@
 @import "../../../node_modules/bootstrap/scss/variables.scss";
 @import "tselect";
 
-:root{--bs-border-color: var(--bs-dark-border-subtle)}
+:root {
+    --bs-border-color: var(--bs-dark-border-subtle);
+}
 
 h1 {
     color: $gray-200;
@@ -461,7 +463,7 @@ table {
     }
 
     th.sortable > a span::after {
-        content: '';
+        content: "";
         position: absolute;
         right: 8px;
         bottom: 0;
@@ -660,7 +662,6 @@ table {
     }
 }
 
-
 .engineers-cnt {
     tbody {
         tr td:last-child {
@@ -741,3 +742,66 @@ form.was-validated :invalid ~ .selected-items {
     border-color: $danger !important;
 }
 /* end of custom select */
+
+/* sortable table library */
+table.sortable {
+    thead {
+        th:not(.no-sort) {
+            cursor: pointer;
+        }
+
+        th:not(.no-sort):hover {
+            color: $primary !important;
+        }
+
+        th:not(.no-sort) span::after {
+            content: "";
+            padding: calc(1rem * 0.5) 1rem;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="%23f8f9fa" class="bi bi-caret-up" viewBox="0 0 16 16"><path d="M3.204 11h9.592L8 5.519zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659"  /></svg>');
+            visibility: hidden;
+        }
+
+        th:not(.no-sort) span {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        th:not(.no-sort)[aria-sort="ascending"] span {
+            align-items: flex-start;
+        }
+
+        th:not(.no-sort)[aria-sort="descending"] span {
+            align-items: flex-end;
+        }
+
+        th:not(.no-sort)[aria-sort="ascending"] span::after {
+            content: "";
+            padding: calc(1rem * 0.5) 1rem;
+            background-image: url("../../images/sort-up.svg");
+            background-repeat: no-repeat;
+            background-position: bottom;
+            visibility: visible;
+            // background-color: ;
+            color: $light !important;
+        }
+
+        th:not(.no-sort)[aria-sort="descending"] span::after {
+            content: "";
+            padding: calc(1rem * 0.5) 1rem;
+            background-image: url("../../images/sort-down.svg");
+            background-repeat: no-repeat;
+            background-position: top;
+            visibility: visible;
+        }
+
+        th:not(.no-sort) span::after {
+            content: "";
+            // padding: calc(1rem * .5) 1rem;
+            background-image: url("../../images/arrows-vertical.svg");
+            background-repeat: no-repeat;
+            background-position: top;
+            visibility: visible;
+        }
+    }
+}
+/* end of sortable table library */

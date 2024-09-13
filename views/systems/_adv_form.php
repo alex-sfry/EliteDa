@@ -7,7 +7,6 @@
  */
 
 use yii\helpers\Html;
-use Yiisoft\Arrays\ArrayHelper;
 
 use function app\helpers\d;
 use function app\helpers\e;

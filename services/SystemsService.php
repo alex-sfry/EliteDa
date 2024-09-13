@@ -22,12 +22,21 @@ class SystemsService
 
     public function findSystemsByName(): ActiveQuery
     {
-        return Systems::find()->byName($this->form['sysName']);
+        return Systems::find()
+            ->alias('sys')
+            ->select([
+                'sys.*',
+                'faction_name',
+                'economy_name',
+                'security_level'
+            ])
+            ->byName($this->form['sysName']);
     }
 
     public function findSystems(): ActiveQuery
     {
         $expr = $this->distanceExpr($this->form['refSystem']);
+
         $query = Systems::find()
             ->alias('sys')
             ->select([
@@ -41,11 +50,6 @@ class SystemsService
             ->filter(array_slice($this->form, 1, null, true));
 
         return $query;
-    }
-
-    public function systemDetails(int $id): ActiveQuery
-    {
-        return Systems::find()->details((int)$id);
     }
 
     public function distanceExpr(string $name): Expression

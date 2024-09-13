@@ -33,13 +33,19 @@ const initFooter = () => {
 };
 
 const loader = ($insertElem, $hideElem) => {
-    $insertElem.after(
-        "<div class='row justify-content-center'>" +
-        "<div class='c-loading my-0 mx-auto text-light bg-info rounded-2 px-3 py-1 fw-bold'>" +
-        "Loading . . ." +
-        "</div>" +
-        "</div>"
-    );
+    const $loaderCnt = $('.loader-cnt');
+    const loaderHtml = "<div class='c-loading my-0 mx-auto text-light bg-info rounded-2 px-3 py-1 fw-bold'>" +
+    "Loading . . ." +
+    "</div>";
+
+    if ($loaderCnt.length) {
+        $loaderCnt.after(loaderHtml);
+        $loaderCnt.removeClass('d-none');
+    } else {
+        $insertElem.after(loaderHtml);
+    }
+
+    $('p.result-info').length && $('p.result-info').addClass('d-none');
 
     if ($hideElem.length) {
         $hideElem.addClass('d-none');
@@ -77,9 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if ($('.get-form').length) removeLoader($('table'));
     if ($('.t-sel').length) initTSelect('#refSystem');
-    if ($('#rings-form').length) {
-        removeLoader($('table'));
-    }
+    if ($('#rings-form').length) removeLoader($('table'));
 
     // accordion - switch title 
     $('#accordionForm .accordion-button').on('click', function () {

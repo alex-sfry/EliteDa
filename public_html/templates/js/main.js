@@ -27,7 +27,7 @@ const cookiesConsent = () => {
   const acceptBtn = cookieBox.querySelector("button");
   acceptBtn.addEventListener('click', () => {
     //setting cookie for 1 month, after one month it'll be expired automatically
-    document.cookie = "CookieBy=ELIDA; max-age=" + 60 * 60 * 24 * 30;
+    document.cookie = "CookieBy=ELIDA; path=/; max-age=" + 60 * 60 * 24 * 30;
     if (document.cookie) {
       //if cookie is set
       cookieBox.classList.add("hide"); //hide cookie box
@@ -136,6 +136,10 @@ const getSortIcon = icon => {
 /* harmony export */ });
 /* harmony import */ var _tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tSelectSettings.js */ "./src/script/tSelectSettings.js");
 
+
+/**
+ * @param {string} elem 
+ */
 const initTSelect = elem => {
   // eslint-disable-next-line no-undef, no-unused-vars
   const tSelect = new TomSelect(elem, (0,_tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__.tSelectRingsSettings)({
@@ -315,7 +319,15 @@ const initFooter = () => {
   });
 };
 const loader = ($insertElem, $hideElem) => {
-  $insertElem.after("<div class='row justify-content-center'>" + "<div class='c-loading my-0 mx-auto text-light bg-info rounded-2 px-3 py-1 fw-bold'>" + "Loading . . ." + "</div>" + "</div>");
+  const $loaderCnt = $('.loader-cnt');
+  const loaderHtml = "<div class='c-loading my-0 mx-auto text-light bg-info rounded-2 px-3 py-1 fw-bold'>" + "Loading . . ." + "</div>";
+  if ($loaderCnt.length) {
+    $loaderCnt.after(loaderHtml);
+    $loaderCnt.removeClass('d-none');
+  } else {
+    $insertElem.after(loaderHtml);
+  }
+  $('p.result-info').length && $('p.result-info').addClass('d-none');
   if ($hideElem.length) {
     $hideElem.addClass('d-none');
     $('.c-pagination-cnt').addClass('d-none');
@@ -346,9 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if ($('#mt-form').length) (0,_matTraders_js__WEBPACK_IMPORTED_MODULE_3__.matTraders)();
   if ($('.get-form').length) removeLoader($('table'));
   if ($('.t-sel').length) (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_5__.initTSelect)('#refSystem');
-  if ($('#rings-form').length) {
-    removeLoader($('table'));
-  }
+  if ($('#rings-form').length) removeLoader($('table'));
 
   // accordion - switch title 
   $('#accordionForm .accordion-button').on('click', function () {

@@ -684,5 +684,54 @@ form.was-validated :invalid ~ .selected-items {
 }
 
 /* end of custom select */
+/* sortable table library */
+table.sortable thead th:not(.no-sort) {
+    cursor: pointer;
+}
+table.sortable thead th:not(.no-sort):hover {
+    color: #0d6efd !important;
+}
+table.sortable thead th:not(.no-sort) span::after {
+    content: "";
+    padding: 0.5rem 1rem;
+    background-image: url("data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" fill=\"%23f8f9fa\" class=\"bi bi-caret-up\" viewBox=\"0 0 16 16\"><path d=\"M3.204 11h9.592L8 5.519zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659\"  /></svg>");
+    visibility: hidden;
+}
+table.sortable thead th:not(.no-sort) span {
+    display: flex;
+    justify-content: space-between;
+}
+table.sortable thead th:not(.no-sort)[aria-sort=ascending] span {
+    align-items: flex-start;
+}
+table.sortable thead th:not(.no-sort)[aria-sort=descending] span {
+    align-items: flex-end;
+}
+table.sortable thead th:not(.no-sort)[aria-sort=ascending] span::after {
+    content: "";
+    padding: 0.5rem 1rem;
+    background-image: url(../images/sort-up.svg);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    visibility: visible;
+    color: #f8f9fa !important;
+}
+table.sortable thead th:not(.no-sort)[aria-sort=descending] span::after {
+    content: "";
+    padding: 0.5rem 1rem;
+    background-image: url(../images/sort-down.svg);
+    background-repeat: no-repeat;
+    background-position: top;
+    visibility: visible;
+}
+table.sortable thead th:not(.no-sort) span::after {
+    content: "";
+    background-image: url(../images/arrows-vertical.svg);
+    background-repeat: no-repeat;
+    background-position: top;
+    visibility: visible;
+}
+
+/* end of sortable table library */
 
 /*# sourceMappingURL=main.css.map*/

@@ -8,20 +8,16 @@ use yii\web\View;
 use function app\helpers\d;
 use function app\helpers\e;
 
-/** @var app\models\ar\Systems $model */
+/** @var View $this */
+/** @var array $models */
 /** @var SystemsNameForm $by_name_form */
 /** @var SystemsAdvancedForm $adv_form */
-/** @var View $this */
 
 TSelectAsset::register($this);
 $this->params['meta_keywords'] = 'Elite: Dangerous, galaxy information, systems';
 $this->title = 'Systems';
 $this->params['breadcrumbs'] = [$this->title];
-$formatter = \Yii::$app->formatter;
-$formatter->decimalSeparator = ' ';
 // d($models);
-$c++;
-echo $c;
 ?>
 
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
@@ -47,39 +43,22 @@ echo $c;
                         ]) ?>
                         <!-- end accordion -->
 
-                        <!-- nothing found -->
-                        <?php if (isset($models) && empty($models)) { ?>
-                            <div class="rounded-1 bg-light text-center mx-auto px-3 py-2">
-                                <p class="my-1 text-danger fw-bold text-uppercase lett-spacing-2">found nothing</p>
-                            </div>
-                        <?php } ?>
-                        <!-- end of nothing found -->
-
                     </div>
                 </div>
 
-                <!-- result for 'search by name' -->
+                <!-- loader container -->
+                <div class='loader-cnt row justify-content-center d-none'></div>
+                <!-- end of loader container -->
+
+                <!-- result -->
                 <?php if (!empty($models)) { ?>
-                    <div class="row justify-content-center row-gap-1">
-                        <?php foreach ($models as $key => $group) { ?>
-                            <div style class="col-3">
-                                <ul class="list-group list-group-flush">
-                                    <?php foreach ($group as $k => $system) { ?>
-                                        <li class="list-group-item bg-light">
-                                            <?= e($system['name']) . '<br>' ?>
-                                            <?= $formatter->asInteger(e($system['population'])) . '<br>' ?>
-                                            <?= e($system['allegiance']['faction_name']) . '<br>' ?>
-                                            <?= e($system['economy']['economy_name']) . '<br>' ?>
-                                            <?= e($system['security']['security_level']) . '<br>' ?>
-                                            <?= isset($system['distance']) ? e($system['distance']) : null ?>
-                                        </li>
-                                    <?php } ?>
-                                </ul>
-                            </div>
-                        <?php } ?>
+                    <?= $this->render('_search_result', ['models' => $models]); ?>
+                <?php } elseif (isset($models) && empty($models)) { ?>
+                    <div class="rounded-1 bg-light text-center mx-auto px-3 py-2">
+                        <p class="my-1 text-danger fw-bold text-uppercase lett-spacing-2">found nothing</p>
                     </div>
                 <?php } ?>
-                <!-- end of result for 'search by name' -->
+                <!-- end of result -->
 
             </div>
         </div>
