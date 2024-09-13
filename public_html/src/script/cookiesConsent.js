@@ -4,7 +4,7 @@ export const cookiesConsent = () => {
     
     acceptBtn.addEventListener('click', () => {
         //setting cookie for 1 month, after one month it'll be expired automatically
-        document.cookie = "CookieBy=ELIDA; max-age=" + 60 * 60 * 24 * 30;
+        document.cookie = "CookieBy=ELIDA; path=/; max-age=" + 60 * 60 * 24 * 30;
         if (document.cookie) {
             //if cookie is set
             cookieBox.classList.add("hide"); //hide cookie box
