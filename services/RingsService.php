@@ -20,15 +20,6 @@ class RingsService
 
     public function findRings(): void
     {
-        // $sortOrders = $this->getSortOrders();
-
-        // $this->sort = new Sort([
-        //     'attributes' => [
-        //         'distance',
-        //     ],
-        //     'defaultOrder' => ['distance' => SORT_ASC]
-        // ]);
-
         $rings = Rings::find()
             ->getRingsInRange($this->form_data)
             ->orderBy('distance')
@@ -46,22 +37,4 @@ class RingsService
             ],
         ]);
     }
-
-    // public function postprocessData(array $rings): array
-    // {
-    //     foreach ($rings as $key => $value) {
-    //         $rings[$key]['reserve'] = str_replace('Resources', '', $value['reserve']);
-    //     }
-
-    //     return $rings;
-    // }
-
-    // private function getSortOrders(): array
-    // {
-    //     if ($this->form_data['sortBy'] === 'DistanceLs') {
-    //         return ['distance_to_arrival' => SORT_ASC];
-    //     } elseif ($this->form_data['sortBy'] === 'DistanceLy') {
-    //         return ['distance' => SORT_ASC];
-    //     }
-    // }
 }

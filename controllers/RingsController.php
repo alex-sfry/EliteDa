@@ -30,7 +30,6 @@ class RingsController extends \yii\web\Controller
         $service = new RingsService($form_model->attributes);
         $service->findRings();
         $params['pagination'] = $service->provider->getPagination();
-        // $params['sort'] = $service->sort;
         $params['models'] = $service->provider->getModels();
 
         return $this->render('index', $params);
