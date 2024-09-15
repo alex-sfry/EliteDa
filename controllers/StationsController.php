@@ -40,7 +40,7 @@ class StationsController extends Controller
 
             if ($by_name_form->load($session->get('st_name'), '') && $by_name_form->validate()) {
                 $service = new StationsService($by_name_form->attributes);
-                $models = $service->findStationsByName()->limit(100)->asArray()/* ->cache(86400) */->all();
+                $models = $service->findStationsByName()->limit(100)->asArray()->cache(86400)->all();
             }
         }
 
@@ -50,7 +50,7 @@ class StationsController extends Controller
 
             if ($adv_form->load($session->get('st_adv_form'), '') && $adv_form->validate()) {
                 $service = new StationsService($adv_form->attributes);
-                $models = $service->findStations()->orderBy('distance')->limit(100)->asArray()/* ->cache(86400) */->all();
+                $models = $service->findStations()->orderBy('distance')->limit(100)->asArray()->cache(86400)->all();
             }
         }
 
