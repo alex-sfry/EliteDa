@@ -9,7 +9,7 @@ use function app\helpers\ksq;
 $this->title = $model['name'];
 $this->params['breadcrumbs'] = [
     [
-        'label' => 'Search for stations',
+        'label' => 'Stations',
         'url' => Url::toRoute([
             "stations/index"
         ]),
