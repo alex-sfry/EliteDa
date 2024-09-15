@@ -29,6 +29,7 @@ class AppAsset extends AssetBundle
     ];
     public $jsOptions = [
         // 'defer' => '',
+        'type' => 'module',
         'position' => View::POS_END
     ];
     public $depends = [

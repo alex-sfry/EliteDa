@@ -36,6 +36,13 @@ body {
     overflow-x: hidden;
 }
 
+.t-tip {
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 2px;
+    cursor: default;
+}
+
 .btn-copy-active {
     background-color: $gray-600;
     border-color: $gray-600;

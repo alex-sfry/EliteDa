@@ -5916,15 +5916,13 @@ var __webpack_exports__ = {};
 /* harmony import */ var _cookiesConsent_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cookiesConsent.js */ "./src/script/cookiesConsent.js");
 /* harmony import */ var _tSelect_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./tSelect.js */ "./src/script/tSelect.js");
 /* harmony import */ var _sortIcons_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./sortIcons.js */ "./src/script/sortIcons.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_base_component_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/base-component.js */ "./node_modules/bootstrap/js/dist/base-component.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_button_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/button.js */ "./node_modules/bootstrap/js/dist/button.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_collapse_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/collapse.js */ "./node_modules/bootstrap/js/dist/collapse.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_dropdown_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/dropdown.js */ "./node_modules/bootstrap/js/dist/dropdown.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_popover_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/popover.js */ "./node_modules/bootstrap/js/dist/popover.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_tooltip_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/tooltip.js */ "./node_modules/bootstrap/js/dist/tooltip.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_button_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/button.js */ "./node_modules/bootstrap/js/dist/button.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_collapse_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/collapse.js */ "./node_modules/bootstrap/js/dist/collapse.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_dropdown_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/dropdown.js */ "./node_modules/bootstrap/js/dist/dropdown.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_popover_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/popover.js */ "./node_modules/bootstrap/js/dist/popover.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_tooltip_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/tooltip.js */ "./node_modules/bootstrap/js/dist/tooltip.js");
 
 // import '../styles/bootstrapSCSS/bootstrap.scss';
-
 
 
 
@@ -6031,7 +6029,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
   // eslint-disable-next-line no-unused-vars
-  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new _node_modules_bootstrap_js_dist_tooltip_js__WEBPACK_IMPORTED_MODULE_12__(tooltipTriggerEl));
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new _node_modules_bootstrap_js_dist_tooltip_js__WEBPACK_IMPORTED_MODULE_11__(tooltipTriggerEl));
 
   // if ($('.add-to-db').length) getDataFromDom(fetchData);
 });

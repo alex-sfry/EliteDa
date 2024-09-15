@@ -127,6 +127,14 @@ body {
     overflow-x: hidden;
 }
 
+.t-tip {
+    -webkit-text-decoration: underline;
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 2px;
+    cursor: default;
+}
+
 .btn-copy-active {
     background-color: #6c757d;
     border-color: #6c757d;

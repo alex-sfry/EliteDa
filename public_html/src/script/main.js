@@ -6,7 +6,6 @@ import { matTraders } from './matTraders.js';
 import { cookiesConsent } from './cookiesConsent.js';
 import { initTSelect } from './tSelect.js';
 import { getSortIcon } from "./sortIcons.js";
-import '../../node_modules/bootstrap/js/dist/base-component.js';
 import '../../node_modules/bootstrap/js/dist/button.js';
 import '../../node_modules/bootstrap/js/dist/collapse.js';
 import '../../node_modules/bootstrap/js/dist/dropdown.js';
