@@ -18,7 +18,7 @@ class StationMarket extends Model
         );
     }
 
-    public function getMarket(int $id, string $sys_name): array
+    public function findMarket(int $id, string $sys_name): array
     {
         /** @var CommoditiesBehavior|StationMarket $this */
 

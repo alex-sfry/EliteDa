@@ -5,17 +5,16 @@ namespace app\controllers;
 use app\behaviors\ShipModulesBehavior;
 use app\behaviors\ShipyardShipsBehavior;
 use app\behaviors\StationBehavior;
-use app\models\ar\Markets;
 use app\models\ar\MaterialTraders;
-use app\models\ar\ShipModules;
-use app\models\ar\Shipyard;
 use app\models\ar\Stations;
 use app\models\ar\Systems;
+use app\models\forms\StationsAdvancedForm;
+use app\models\forms\StationsNameForm;
 use app\models\search\EngineersSearch;
-use app\models\search\StationsInfoSearch;
 use app\models\ShipMods;
 use app\models\ShipyardShips;
 use app\models\StationMarket;
+use app\services\StationsService;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -28,89 +27,45 @@ class StationsController extends Controller
     public function actionIndex(): string
     {
         $session = Yii::$app->session;
+        $request = $this->request;
         $session->open();
         // $session->destroy();
-        $request = Yii::$app->request;
+        $by_name_form = new StationsNameForm();
+        $params['by_name_form'] = $by_name_form;
+        $adv_form = new StationsAdvancedForm();
+        $params['adv_form'] = $adv_form;
+        // d($request->get());
+        if (array_key_exists('stNameBtn', $request->get())) {
+            $session->set('st_name', $request->get());
 
-        if (count($request->get()) > 0) {
-            $get = $request->get();
-
-            if (isset($request->get()['refSysStation']) && isset($request->get()['maxDistance'])) {
-                !$session->get('st') && $session->set('st', $request->get());
-
-                switch ($get['refSysStation']) {
-                    case '':
-                        $get['refSysStation'] = $session->get('st')['refSysStation'] !== '' ?
-                            $session->get('st')['refSysStation'] : 'Sol';
-                        break;
-                    default:
-                        break;
-                }
-
-                switch ($get['maxDistance']) {
-                    case '':
-                        $get['maxDistance'] = $session->get('st')['maxDistance'] !== '' ?
-                            $session->get('st')['maxDistance'] : 50;
-                        break;
-                    default:
-                        break;
-                }
-
-                $session->set('st', $get);
+            if ($by_name_form->load($session->get('st_name'), '') && $by_name_form->validate()) {
+                $service = new StationsService($by_name_form->attributes);
+                $models = $service->findStationsByName()->limit(100)->asArray()/* ->cache(86400) */->all();
             }
         }
 
-        if (isset($session->get('st')['refSysStation']) || isset($session->get('st')['maxDistance'])) {
-            if ($session->get('st')['refSysStation'] !== '' || $session->get('st')['maxDistance'] !== '') {
-                $system = $session->get('st')['refSysStation'];
-                $maxDistance = (int)$session->get('st')['maxDistance'];
-                $system = !$system ? 'Sol' : $system;
-                $maxDistance = $maxDistance === 0 ? 1 : $maxDistance;
-                $system = $session->get('st')['refSysStation'];
+        if (array_key_exists('advFormBtn', $request->get())) {
+            $session->set('st_adv_form', $request->get());
+            $adv_form->load($session->get('st_adv_form'), '');
+
+            if ($adv_form->load($session->get('st_adv_form'), '') && $adv_form->validate()) {
+                $service = new StationsService($adv_form->attributes);
+                $models = $service->findStations()->orderBy('distance')->limit(100)->asArray()/* ->cache(86400) */->all();
             }
         }
 
-        if (!isset($system)) {
-            $system = 'Sol';
+        $params['by_name_form_values'] = $session->get('st_name') ?? $by_name_form->attributes;
+        $params['adv_form_values'] = $session->get('st_adv_form') ?? $adv_form->attributes;
+
+        if (isset($models) && !empty([$models])) {
+            $params['models'] = $models;
         }
-        if (!isset($maxDistance)) {
-            $maxDistance = 50;
-        }
-
-        $params['form'] = [
-            'system' => $system,
-            'max_distance' => $maxDistance
-        ];
-
-        $searchModel = new StationsInfoSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams, $maxDistance, $system);
-        $dataProvider->pagination->defaultPageSize = 50;
-        $dataProvider->pagination->forcePageParam = false;
-        $dataProvider->pagination->pageSize = null;
-
-        $dataProvider->sort->attributes['distance'] = [
-            'asc' => ['distance' => SORT_ASC],
-            'desc' => ['distance' => SORT_DESC],
-        ];
-
-        if (empty($this->request->queryParams) || !isset($this->request->queryParams['StationsInfoSearch'])) {
-            $params['queryParams']['StationsInfoSearch'] = array_fill_keys(
-                array_values($searchModel->activeAttributes()),
-                null
-            );
-        } else {
-            $params['queryParams'] = $this->request->queryParams;
-        }
-
-        $params['dataProvider'] = $dataProvider;
-        $params['searchModel'] = $searchModel;
 
         return $this->render('index', $params);
     }
 
     /**
      * @throws NotFoundHttpException
-     * @throws InvalidArgumentException
      */
     public function actionDetails(int $id): string
     {
@@ -129,7 +84,8 @@ class StationsController extends Controller
             ->one();
 
         !$model && throw new NotFoundHttpException();
-        $services = $this->getStationServices($model['market_id']);
+        $service = new StationsService();
+        $services = $service->getStationServices($model['market_id']);
 
         $eng_search = new EngineersSearch();
         $engineer = $eng_search->getName((int)$model['system_id'], $model['name']);
@@ -143,12 +99,11 @@ class StationsController extends Controller
             'id' => $id,
             'eng_name' => $engineer['name'],
             'eng_id' => (int)$engineer['id'],
-         ]);
+        ]);
     }
 
     /**
      * @throws NotFoundHttpException
-     * @throws InvalidArgumentException
      */
     public function actionShips(int $id): string
     {
@@ -158,13 +113,13 @@ class StationsController extends Controller
         $id = (int)$id;
 
         $this->attachBehavior('ShipyardShipsBehavior', ShipyardShipsBehavior::class);
-
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
 
         $ships = new ShipyardShips();
         $ships->setShipsArr($this->getShipsList());
-        $services = $this->getStationServices($station->market_id);
+        $service = new StationsService();
+        $services = $service->getStationServices($station->market_id);
         $system = Systems::findOne($station->system_id);
         !$system && throw new NotFoundHttpException();
 
@@ -176,12 +131,11 @@ class StationsController extends Controller
             'station_name' => $station->name,
             'id' => $id,
             'services' => $services
-         ]);
+        ]);
     }
 
     /**
      * @throws NotFoundHttpException
-     * @throws InvalidArgumentException
      */
     public function actionShipModules(int $id, string $cat): string
     {
@@ -191,7 +145,6 @@ class StationsController extends Controller
         $id = (int)$id;
 
         $this->attachBehavior('ShipModulesBehavior', ShipModulesBehavior::class);
-
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
         $system = Systems::findOne($station->system_id);
@@ -204,7 +157,8 @@ class StationsController extends Controller
             false
         );
         $qty_by_cat = $ship_modules->getQtyByCat();
-        $services = $this->getStationServices($station->market_id);
+        $service = new StationsService();
+        $services = $service->getStationServices($station->market_id);
         $model = $ship_modules->getStationModules();
 
         return $this->render('outfitting', [
@@ -214,12 +168,11 @@ class StationsController extends Controller
             'id' => $id,
             'qty_by_cat' => $qty_by_cat,
             'services' => $services
-         ]);
+        ]);
     }
 
     /**
      * @throws NotFoundHttpException
-     * @throws InvalidArgumentException
      */
     public function actionMarket(int $id): string
     {
@@ -230,38 +183,18 @@ class StationsController extends Controller
         !$station && throw new NotFoundHttpException();
         $system = Systems::findOne($station->system_id);
         !$system && throw new NotFoundHttpException();
-        $services = $this->getStationServices($station->market_id);
+        $service = new StationsService();
+        $services = $service->getStationServices($station->market_id);
 
         $market = new StationMarket();
-        $model = $market->getMarket($station->market_id, $system->name);
+        $model = $market->findMarket($station->market_id, $system->name);
 
         return $this->render('market', [
             'model' => $model,
             'station_name' => $station->name,
             'id' => $id,
             'services' => $services,
-         ]);
-    }
-
-    protected function getStationServices(int $market_id): array
-    {
-        $services = [];
-        $services['market'] = Markets::find()
-            ->where(['market_id' => $market_id])
-            ->cache(3600)
-            ->count();
-
-        $services['modules'] = ShipModules::find()
-            ->where(['market_id' => $market_id])
-            ->cache(3600)
-            ->count();
-
-        $services['ships'] = Shipyard::find()
-            ->where(['market_id' => $market_id])
-            ->cache(3600)
-            ->count();
-
-        return $services;
+        ]);
     }
 
     /**
@@ -272,13 +205,10 @@ class StationsController extends Controller
         if (!$sys_st) {
             throw new NotFoundHttpException();
         } else {
-            $data = Stations::find()
-                ->select('systems.name as system, stations.name as station')
-                ->innerJoin('systems', 'stations.system_id = systems.id')
-                ->where(['like', 'stations.name', "$sys_st%", false])
+            $data = (new StationsService())->systemStation($sys_st)
+                ->select(['systems.name as system', 'stations.name as station'])
                 ->orderBy('stations.name')
                 ->cache(86400)
-                ->asArray()
                 ->all();
 
             $response = Yii::$app->response;

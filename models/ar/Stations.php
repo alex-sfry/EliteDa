@@ -2,6 +2,7 @@
 
 namespace app\models\ar;
 
+use app\models\aq\StationsQuery;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -28,6 +29,9 @@ use yii\db\ActiveQuery;
  */
 class Stations extends \yii\db\ActiveRecord
 {
+    public ?string $pad = null;
+    public ?bool $surface = null;
+
     /**
      * {@inheritdoc}
      */
@@ -142,5 +146,14 @@ class Stations extends \yii\db\ActiveRecord
     public function getSystem(): ActiveQuery
     {
         return $this->hasOne(Systems::class, ['id' => 'system_id']);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return StationsQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new StationsQuery(get_called_class());
     }
 }

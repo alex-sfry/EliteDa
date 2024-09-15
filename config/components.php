@@ -26,20 +26,14 @@ return [
         // 'linkAssets' => true,
         'forceCopy' => YII_DEBUG,
         'bundles' => [
-            'yii\web\JqueryAsset' => [
-                'js' => [YII_ENV_DEV ? 'jquery.js' : 'jquery.min.js']
-            ],
+            'yii\web\JqueryAsset' => ['js' => [YII_ENV_DEV ? 'jquery.js' : 'jquery.min.js']],
             'yii\bootstrap5\BootstrapAsset' => [
                 'sourcePath' => '@webroot/templates',
-                'css' => [
-                    YII_ENV_DEV ? 'css/bootstrap.css' : 'css/bootstrap.min.css',
-                ],
+                'css' => [YII_ENV_DEV ? 'css/bootstrap.css' : 'css/bootstrap.min.css',],
             ],
             'yii\bootstrap5\BootstrapPluginAsset' => [
                 'sourcePath' => '@webroot/templates',
-                'js' => [
-                    YII_ENV_DEV ? 'js/bootstrap.js' : 'js/bootstrap.min.js',
-                ]
+                'js' => [/* YII_ENV_DEV ? 'js/bootstrap.js' : 'js/bootstrap.min.js', */]
             ],
             'yii\web\YiiAsset' => [
                 'sourcePath' => YII_ENV_DEV ? '@yii/assets' : '@app/assetsMin',
