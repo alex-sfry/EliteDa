@@ -6,6 +6,12 @@ import { matTraders } from './matTraders.js';
 import { cookiesConsent } from './cookiesConsent.js';
 import { initTSelect } from './tSelect.js';
 import { getSortIcon } from "./sortIcons.js";
+import '../../node_modules/bootstrap/js/dist/base-component.js';
+import '../../node_modules/bootstrap/js/dist/button.js';
+import '../../node_modules/bootstrap/js/dist/collapse.js';
+import '../../node_modules/bootstrap/js/dist/dropdown.js';
+import '../../node_modules/bootstrap/js/dist/popover.js';
+import Tooltip from '../../node_modules/bootstrap/js/dist/tooltip.js';
 
 cookiesConsent();
 
@@ -62,10 +68,16 @@ const removeLoader = ($elem) => {
 };
 
 const handleSubmit = function (e) {
-    if ($('#tr-form').length) return;
-
     if (!this.checkValidity()) {
         e.preventDefault();
+
+        $(this).find('input').each(function () {
+            this.validity.tooShort &&
+                $(this).siblings('.invalid-feedback').text('Name should contain at least 2 characters.');
+            this.validity.required &&
+                $(this).siblings('.invalid-feedback').text('Field must not be empty.');
+        });
+
         $(this).addClass("was-validated");
     } else loader($('.accordion').last(), $('table.c-table'));
 };
@@ -75,15 +87,16 @@ $('form').on("submit", handleSubmit);
 document.addEventListener('DOMContentLoaded', () => {
     initHeader();
     initFooter();
+    if ($('#tr-form').length) tradeRouteForm(validate, loader, removeLoader);
+    if ($('#mt-form').length) matTraders();
+    if ($('.t-sel').length) initTSelect('#refSystem');
+
     if ($('#c-form').length) removeLoader($('table'));
     if ($('#mod-form').length) removeLoader($('table'));
     if ($('#ships-form').length) removeLoader($('table'));
-    if ($('#tr-form').length) tradeRouteForm(validate, loader, removeLoader);
-    if ($('#mt-form').length) matTraders();
+    if ($('#rings-form').length) removeLoader($('table'));
 
     if ($('.get-form').length) removeLoader($('table'));
-    if ($('.t-sel').length) initTSelect('#refSystem');
-    if ($('#rings-form').length) removeLoader($('table'));
 
     // accordion - switch title 
     $('#accordionForm .accordion-button').on('click', function () {
@@ -114,6 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return false;
         });
     }
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    // eslint-disable-next-line no-unused-vars
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new Tooltip(tooltipTriggerEl));
 
     // if ($('.add-to-db').length) getDataFromDom(fetchData);
 });

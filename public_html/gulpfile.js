@@ -5,9 +5,9 @@ import { scriptsYii2, widgetsScripts } from './gulpfileSripts.js';
 export { scriptsYii2, widgetsScripts } from './gulpfileSripts.js';
 import { bsStyles, bsStylesMin, purgeCSS, widgetsStyles } from './gulpfileStyles.js';
 export { bsStyles, bsStylesMin, purgeCSS, widgetsStyles } from './gulpfileStyles.js';
-import { webpackBsDev } from './gulpfileWebpack.js';
+// import { webpackBsDev } from './gulpfileWebpack.js';
 export { webpackBsDev } from './gulpfileWebpack.js';
-import { webpackBsProd } from './gulpfileWebpack.js';
+// import { webpackBsProd } from './gulpfileWebpack.js';
 export { webpackBsProd } from './gulpfileWebpack.js';
 import { vendorJS } from './gulpfileSripts.js';
 export { vendorJS } from './gulpfileSripts.js';
@@ -99,23 +99,25 @@ export const watch = () => {
 };
 
 /* dev mode w/o browserSync */
-export const dev = gulp.series(gulp.parallel(bsStyles, vendorJS, images, webpackBsDev, webpackDev), watch);
+export const dev = gulp.series(gulp.parallel(bsStyles, vendorJS, images, /* webpackBsDev, */ webpackDev), watch);
 
 /* dev mode with browserSync */
 export const devSync = gulp.series(
     enableSync,
-    gulp.parallel(bsStyles, vendorJS, images, webpackBsDev, webpackDev),
+    gulp.parallel(bsStyles, vendorJS, images, /* webpackBsDev, */ webpackDev),
     watch
 );
 
 /* compile and minify Bootstrap with purgeCCC */
 export const bsProdPurge = gulp.series(
-    gulp.parallel(webpackBsDev, webpackDev), gulp.parallel(bsStyles, webpackBsProd), purgeCSS, bsStylesMin
+    // gulp.parallel(webpackBsDev, webpackDev), gulp.parallel(bsStyles, webpackBsProd), purgeCSS, bsStylesMin
+    webpackDev, bsStyles, purgeCSS, bsStylesMin
 );
 
 /* compile and minify Bootstrap w/o purgeCCC */
 export const bsProd = gulp.series(
-    gulp.parallel(webpackBsDev, webpackDev), gulp.parallel(bsStyles, webpackBsProd), bsStylesMin
+    // gulp.parallel(webpackBsDev, webpackDev), gulp.parallel(bsStyles, webpackBsProd), bsStylesMin
+    webpackDev, bsStyles, bsStylesMin
 );
 
 export const widgets = gulp.parallel(widgetsStyles, widgetsScripts);
