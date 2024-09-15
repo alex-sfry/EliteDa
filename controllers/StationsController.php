@@ -77,8 +77,8 @@ class StationsController extends Controller
         $this->attachBehavior('StationBehavior', StationBehavior::class);
 
         $model = Stations::find()
-            ->with(['system', 'economyId1', 'economyId2', 'allegiance'])
-            ->where(['stations.id' => (int)$id])
+            ->select(['stations.*', "IF(type!='Outpost','L','M') as pad"])
+            ->details($id)
             ->cache(86400)
             ->asArray()
             ->one();
@@ -94,7 +94,6 @@ class StationsController extends Controller
 
         return $this->render('details', [
             'model' => $model,
-            'pad_size' => $this->getLandingPadSizes()[$model['type']],
             'services' => $services,
             'id' => $id,
             'eng_name' => $engineer['name'],

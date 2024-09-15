@@ -16,6 +16,8 @@ $this->params['breadcrumbs'] = [
     ],
     $this->title
 ];
+
+$tooltip = 'Not all Odyssey Settlements have L pad';
 ?>
 
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
@@ -41,14 +43,24 @@ $this->params['breadcrumbs'] = [
                                 )
                             ],
                             ['label' => 'Station type', 'value' => Html::encode($model['type'])],
-                            ['label' => 'Landing pad size', 'value' => Html::encode($pad_size)],
+                            [
+                                'label' => 'Landing pad size',
+                                'format' => 'raw',
+                                'value' => function ($model) use ($tooltip) {
+                                    if ($model['type'] === 'Odyssey Settlement') {
+                                        return "<span class='t-tip' data-bs-toggle='tooltip' data-bs-title='$tooltip'>" . Html::encode($model['pad']) . "</span>";
+                                    } else {
+                                        return $model['pad'];
+                                    }
+                                }
+                            ],
                             ['label' => 'Distance to arrival', 'value' => Html::encode($model['distance_to_arrival'])],
                             ['label' => 'Government', 'value' => Html::encode($model['government'])],
                             ['label' => 'Allegiance', 'value' => Html::encode($model['allegiance']['faction_name'])],
                             ['label' => 'Economy (main)', 'value' =>
-                                Html::encode($model['economyId1']['economy_name'])],
+                            Html::encode($model['economyId1']['economy_name'])],
                             ['label' => 'Economy (secondary)', 'value' =>
-                                Html::encode($model['economyId2']['economy_name'])],
+                            Html::encode($model['economyId2']['economy_name'])],
                             [
                                 'visible' => $eng_name ? true : false,
                                 'captionOptions' => ['class' => 'text-primary'],

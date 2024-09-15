@@ -38,16 +38,16 @@ class SystemsController extends Controller
         }
 
         if (array_key_exists('advFormBtn', $request->get())) {
-            $session->set('adv_form', $request->get());
+            $session->set('sys_adv_form', $request->get());
 
-            if ($adv_form->load($session->get('adv_form'), '') && $adv_form->validate()) {
+            if ($adv_form->load($session->get('sys_adv_form'), '') && $adv_form->validate()) {
                 $service = new SystemsService($adv_form->attributes);
                 $models = $service->findSystems()->orderBy('distance')->limit(100)->asArray()->cache(86400)->all();
             }
         }
 
         $params['by_name_form_values'] = $session->get('sys_name') ?? $by_name_form->attributes;
-        $params['adv_form_values'] = $session->get('adv_form') ?? $adv_form->attributes;
+        $params['adv_form_values'] = $session->get('sys_adv_form') ?? $adv_form->attributes;
 
         if (isset($models) && !empty([$models])) {
             $params['models'] = $models;

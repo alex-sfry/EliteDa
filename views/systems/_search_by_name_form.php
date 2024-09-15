@@ -40,6 +40,7 @@ $search_name_cls = !empty($errors) ? 'is-invalid' : null;
                 'id' => 'sysName',
                 'name' => 'sysName',
                 'required' => true,
+                'minlength' => 2,
                 'class' => [
                     'form-control',
                     'form-control-sm',

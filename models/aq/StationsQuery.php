@@ -55,7 +55,7 @@ class StationsQuery extends \yii\db\ActiveQuery
 
     public function details(int $id): ActiveQuery
     {
-        return $this->generic()->with('system')->andWhere(['systems.id' => $id]);
+        return $this->generic()->with('economyId2', 'system')->andWhere(['stations.id' => $id]);
     }
 
     public function filter(array $conditions): ActiveQuery
