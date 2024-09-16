@@ -13,7 +13,7 @@ use Yiisoft\Arrays\ArrayHelper;
 
 use function app\helpers\d;
 
-class ShipyarShipsService
+class ShipyardShipsService
 {
     use ShipyardShipsTrait;
     use StationConditionsTrait;

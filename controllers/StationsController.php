@@ -14,7 +14,7 @@ use app\models\search\EngineersSearch;
 use app\models\ShipMods;
 use app\models\ShipyardShips;
 use app\models\StationMarket;
-use app\services\ShipyarShipsService;
+use app\services\ShipyardShipsService;
 use app\services\StationsService;
 use Yii;
 use yii\web\Controller;
@@ -129,7 +129,7 @@ class StationsController extends Controller
 
 
 
-        $ships_service = new ShipyarShipsService();
+        $ships_service = new ShipyardShipsService();
         $model = $ships_service->findStationShips($station->market_id, $system->name);
 
         return $this->render('ships', [

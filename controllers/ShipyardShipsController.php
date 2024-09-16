@@ -5,7 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use app\models\forms\ShipyardShipsForm;
-use app\services\ShipyarShipsService;
+use app\services\ShipyardShipsService;
 
 use function app\helpers\d;
 
@@ -19,7 +19,7 @@ class ShipyardShipsController extends Controller
         // $session->destroy();
         $form = new ShipyardShipsForm();
         $params['form'] = $form;
-        $service = new ShipyarShipsService();
+        $service = new ShipyardShipsService();
         $params['ship_names'] = $service->ships_list;
 
         if (array_key_exists('formBtn', $request->get())) {
