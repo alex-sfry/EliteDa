@@ -52,14 +52,18 @@ class SystemsService
         return $query;
     }
 
-    public function distanceExpr(string $name): Expression
+    public function distanceExpr(string $name): Expression|bool
     {
+        if (!is_array($this->getCoords($name))) {
+            return false;
+        }
+
         extract($this->getCoords($name));
 
         return new Expression("ROUND(SQRT(POW((x - $x), 2) + POW((y - $y), 2) + POW((z - $z), 2)), 2)");
     }
 
-    public function getCoords(string $name): array
+    public function getCoords(string $name): array|null
     {
         return Systems::find()
             ->coords($name)

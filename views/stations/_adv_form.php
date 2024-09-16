@@ -95,7 +95,7 @@ $search_name_cls = !empty($errors) ? 'is-invalid' : null;
     ['/stations/'],
     'get',
     [
-        'id' => 'adv-sys-form',
+        'id' => 'adv-st-form',
         'novalidate' => true,
         'class' => [
             'get-form',

@@ -19,7 +19,6 @@ class StationsService
     use StationConditionsTrait;
 
     public ?array $form = null;
-    private string $padSM = 'Outpost';
 
     public function __construct(array $form = null)
     {

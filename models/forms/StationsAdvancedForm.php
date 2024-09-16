@@ -71,13 +71,13 @@ class StationsAdvancedForm extends \yii\base\Model
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'refSystem' => 'Ref. system',
             'pad' => 'Min pad size',
             'inclSurface' => 'Include surface',
-            'dta' => 'Dist. to arriaval',
+            'dta' => 'Dist. to arrival',
             'allegiance' => 'Allegiance',
             'economy' => 'Economy',
             'government' => 'Government',

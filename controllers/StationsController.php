@@ -34,7 +34,7 @@ class StationsController extends Controller
         $params['by_name_form'] = $by_name_form;
         $adv_form = new StationsAdvancedForm();
         $params['adv_form'] = $adv_form;
-        // d($request->get());
+
         if (array_key_exists('stNameBtn', $request->get())) {
             $session->set('st_name', $request->get());
 

@@ -1,19 +1,19 @@
 <div class="mx-auto w-100">
-    <div class="accordion accordion-flush border-dark-subtle bg-light rounded-2" id="accordionForm">
-        <div class="accordion-item w-100 rounded-2">
-            <h2 class="accordion-header" id="flush-headingOne">
+    <div class="accordion" id="accordionForm">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
                 <button
-                    class="accordion-button collapsed rounded-2 fw-bold"
+                    class="accordion-button collapsed fw-bold"
                     type="button"
                     data-bs-toggle="collapse"
-                    data-bs-target="#flush-collapseOne"
+                    data-bs-target="#collapseOne"
                     aria-expanded="true"
-                    aria-controls="flush-collapseOne">
+                    aria-controls="collapseOne">
                     Advanced search
                 </button>
             </h2>
             <div
-                id="flush-collapseOne"
+                id="collapseOne"
                 class="accordion-collapse collapse"
                 data-bs-parent="#accordionForm">
                 <div class="accordion-body">

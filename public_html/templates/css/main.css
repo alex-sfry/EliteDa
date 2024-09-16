@@ -74,7 +74,9 @@ form:not(.was-validated) .t-sel.ts-wrapper.form-select-sm.focus.is-invalid > .ts
     box-shadow: none;
 }
 
-#adv-sys-form #validationServerRefSystemFeedback {
+#adv-sys-form #validationServerRefSystemFeedback,
+#adv-st-form #validationServerRefSystemFeedback,
+#adv-ship-form #validationServerRefSystemFeedback {
     margin-top: -1rem !important;
 }
 
