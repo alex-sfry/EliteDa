@@ -18,14 +18,6 @@ use function app\helpers\d;
 
 class ShipyardShipsController extends Controller
 {
-    // public function behaviors(): array
-    // {
-    //     return ArrayHelper::merge(
-    //         parent::behaviors(),
-    //         [ShipyardShipsBehavior::class]
-    //     );
-    // }
-
     public function actionIndex(): string
     {
         $session = Yii::$app->session;
@@ -36,7 +28,6 @@ class ShipyardShipsController extends Controller
         $params['form'] = $form;
         $service = new ShipyarShipsService();
         $params['ship_names'] = $service->ships_list;
-        // d($params['ship_names']);
 
         if (array_key_exists('formBtn', $request->get())) {
             $session->set('ship_form', $request->get());
@@ -46,7 +37,6 @@ class ShipyardShipsController extends Controller
                 $service->form = $form->attributes;
                 $models = $service->findShips()->orderBy('distance')->limit(100)->asArray()->cache(600)->all();
             }
-            d($form->getErrors(), false);
         }
 
         $params['form_values'] = $session->get('ship_form') ?? $form->attributes;
