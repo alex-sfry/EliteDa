@@ -5,7 +5,6 @@
     }
 
     .ts-control {
-        box-shadow: none;
         padding: 0 0.75rem;
     }
 
@@ -58,16 +57,6 @@ form:not(.was-validated) {
 
 .ts-wrapper:focus-visible {
     outline: 0;
-}
-
-.ts-wrapper:focus {
-    box-shadow: none;
-}
-
-#adv-sys-form #validationServerRefSystemFeedback,
-#adv-st-form #validationServerRefSystemFeedback,
-#adv-ship-form #validationServerRefSystemFeedback {
-    margin-top: -1rem !important;
 }
 
 .ts-wrapper.is-invalid.single,

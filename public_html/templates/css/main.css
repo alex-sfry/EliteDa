@@ -31,7 +31,6 @@
     font-size: 0.875rem;
 }
 .ts-wrapper.t-sel .ts-control {
-    box-shadow: none;
     padding: 0 0.75rem;
 }
 .ts-wrapper.t-sel .ts-dropdown .active {
@@ -68,16 +67,6 @@ form:not(.was-validated) .t-sel.ts-wrapper.form-select-sm.focus.is-invalid > .ts
 
 .ts-wrapper:focus-visible {
     outline: 0;
-}
-
-.ts-wrapper:focus {
-    box-shadow: none;
-}
-
-#adv-sys-form #validationServerRefSystemFeedback,
-#adv-st-form #validationServerRefSystemFeedback,
-#adv-ship-form #validationServerRefSystemFeedback {
-    margin-top: -1rem !important;
 }
 
 .ts-wrapper.is-invalid.single,
@@ -209,6 +198,10 @@ table .table-link-tr:hover {
 
 .body-wrapper {
     height: 100vh;
+}
+
+.invalid-feedback {
+    margin-top: -1rem !important;
 }
 
 /* cookies consent styles */
