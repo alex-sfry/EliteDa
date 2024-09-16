@@ -200,7 +200,10 @@ table .table-link-tr:hover {
     height: 100vh;
 }
 
-.invalid-feedback {
+.c-form select ~ .invalid-feedback,
+.c-form .t-sel ~ .invalid-feedback,
+.c-form select:invalid ~ .invalid-feedback,
+.c-form .t-sel:invalid ~ .invalid-feedback {
     margin-top: -1rem !important;
 }
 
