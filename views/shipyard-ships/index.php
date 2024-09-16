@@ -12,18 +12,6 @@ use yii\helpers\Html;
 use function app\helpers\d;
 use function app\helpers\e;
 
-$pad_sizes = ['L' => 'L', 'M' => 'M', 'S' => 'S'];
-$incl_surface = ['No' => 'No', 'Yes' => 'Yes(w/o Odyssey)', 'Odyssey' => 'Yes(w/ Odyssey)'];
-$max_dist_from_ref = ['Any' => 'Any', '25' => '25 LY', '50' => '50 LY', '100' => '100 LY', '150' => '150 LY'];
-$max_dist_from_star = [
-    'Any' => 'Any',
-    '100' => '100 ls',
-    '500' => '500 ls',
-    '1000' => '1000 ls',
-    '2000' => '2000 ls',
-];
-$max_age_of_data = ['Any' => 'Any', '1' => '1 hour', '4' => '4 hours', '10' => '10 hours', '24' => '1 day'];
-
 TSelectAsset::register($this);
 $this->params['meta_keywords'] = 'Elite: Dangerous, shipyard, ships';
 $this->title = 'Ships';
