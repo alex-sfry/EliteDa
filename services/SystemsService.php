@@ -3,6 +3,11 @@
 namespace app\services;
 
 use app\models\ar\Systems;
+use PHPUnit\Util\InvalidDataSetException;
+use WpOrg\Requests\Exception\InvalidArgument;
+use yii\base\InvalidCallException;
+use yii\base\InvalidConfigException;
+use yii\base\InvalidValueException;
 use yii\data\ArrayDataProvider;
 use yii\db\ActiveQuery;
 use yii\db\Expression;
@@ -54,11 +59,12 @@ class SystemsService
 
     public function distanceExpr(string $name): Expression|bool
     {
-        if (!is_array($this->getCoords($name))) {
-            return false;
+        $coords = $this->getCoords($name);
+        if (is_array($coords) && !empty($coords)) {
+            extract($this->getCoords($name));
+        } else {
+            throw new InvalidValueException();
         }
-
-        extract($this->getCoords($name));
 
         return new Expression("ROUND(SQRT(POW((x - $x), 2) + POW((y - $y), 2) + POW((z - $z), 2)), 2)");
     }

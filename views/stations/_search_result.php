@@ -12,9 +12,6 @@ use yii\helpers\Url;
 use function app\helpers\d;
 use function app\helpers\e;
 
-$formatter = \Yii::$app->formatter;
-$formatter->decimalSeparator = ' ';
-
 $th = [
     'name' => ['sortable' => true, 'sort_dir' => ''],
     'pad' => ['sortable' => true, 'sort_dir' => ''],

@@ -1,290 +1,72 @@
 <?php
 
-use app\models\forms\ShipyardShipsForm;
+/** @var View $this */
+/** @var array $models */
+/** @var array $form_values */
+/** @var ShipyardShipsForm $form */
+
+use app\assets\TSelectAsset;
 use app\widgets\InputDropdown\InputDropdown;
 use yii\helpers\Html;
 
 use function app\helpers\d;
+use function app\helpers\e;
 
-/**
- * @var string $ref_error
- * @var string $ships_error
- * @var string $result
- * @var array $pad_sizes
- * @var array $incl_surface
- * @var array $sort_options
- * @var array $max_dist_from_ref
- * @var array $max_dist_from_star
- * @var array $max_age_of_data
- * @var ShipyardShipsForm $form_model
- */
-
-$select_options = [
-    'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
-    'sort_options' => ['Distance' => 'Distance (LY)', 'Updated_at' => 'Updated at (time)'],
-    'max_dist_from_ref' => ['Any' => 'Any', '25' => '25 LY', '50' => '50 LY', '100' => '100 LY', '250' => '250 LY'],
-    'max_dist_from_star' => [
-        'Any' => 'Any',
-        '100' => '100 ls',
-        '500' => '500 ls',
-        '1000' => '1000 ls',
-        '2000' => '2000 ls',
-    ],
-    'max_age_of_data' => ['Any' => 'Any', '1' => '1 hour', '4' => '4 hours', '10' => '10 hours', '24' => '1 day'],
+$pad_sizes = ['L' => 'L', 'M' => 'M', 'S' => 'S'];
+$incl_surface = ['No' => 'No', 'Yes' => 'Yes(w/o Odyssey)', 'Odyssey' => 'Yes(w/ Odyssey)'];
+$max_dist_from_ref = ['Any' => 'Any', '25' => '25 LY', '50' => '50 LY', '100' => '100 LY', '150' => '150 LY'];
+$max_dist_from_star = [
+    'Any' => 'Any',
+    '100' => '100 ls',
+    '500' => '500 ls',
+    '1000' => '1000 ls',
+    '2000' => '2000 ls',
 ];
-extract($select_options);
+$max_age_of_data = ['Any' => 'Any', '1' => '1 hour', '4' => '4 hours', '10' => '10 hours', '24' => '1 day'];
 
+TSelectAsset::register($this);
 $this->params['meta_keywords'] = 'Elite: Dangerous, shipyard, ships';
 $this->title = 'Ships';
 $this->params['breadcrumbs'] = [$this->title];
-// isset($get) && d($get);
 ?>
+
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
-    <div class='d-flex flex-column h-100'>
-        <div class='container-xxl px-3 d-flex'>
-            <div class='d-flex flex-column w-100 gap-3'>
-                <h1 class='mt-2 text-center fs-2 sintony-bold'><?= $this->title ?></h1>
-                <div class="accordion" id="accordionForm">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button
-                                class="accordion-button fw-bold 
-                                    <?= isset($models) && count($models) > 0 ? 'collapsed' : '' ?>"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne"
-                                aria-expanded="<?= !isset($models) || !count($models) > 0 ? 'true' : 'false' ?>"
-                                aria-controls="collapseOne">
-                                <?= !isset($models) || !count($models) > 0 ? 'Close form' : 'Open form' ?>
-                            </button>
-                        </h2>
-                        <div
-                            id="collapseOne"
-                            class="accordion-collapse collapse 
-                                <?= !isset($models) || !count($models) > 0 ? 'show' : '' ?>"
-                            data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <?= Html::beginForm(['/shipyard-ships/index'], 'get', [
-                                    'id' => 'ships-form',
-                                    'novalidate' => true,
-                                    'class' => 'c-form fs-7 bg-light py-2 px-2 rounded-2 w-100 d-flex 
-                                    flex-column needs-validation',
-                                ]) ?>
-                                <div class='container-xxl'>
-                                    <div class='d-flex flex-column justify-content-between gap-4'>
-                                        <div class='row row-gap-3 justify-content-between'>
-                                            <!--form column 1-->
-                                            <div class='min-lett-spacing col-lg-4 row-gap-3'>
-                                                <label class="fw-bold 
-                                                    <?= isset($ships_error) && $ships_error === 'is-invalid' ?
-                                                    'is-invalid text-danger' : '' ?>"
-                                                    for='c-hiddenSelect'>
-                                                    Ships:
-                                                </label>
-                                                <select 
-                                                    class="form-select"
-                                                    name="cMainSelect[]"
-                                                    id="c-hiddenSelect"
-                                                    required>
-                                                    <option value="" class="d-none" selected>
-                                                        Select ship
-                                                    </option>
-                                                    <?php foreach ($ships_arr as $item) : ?>
-                                                        <option
-                                                            value="<?= $item ?>"
-                                                            <?= isset($form_model->cMainSelect[0]) &&
-                                                                $item === $form_model->cMainSelect[0] ?
-                                                                    "selected" : null ?>>
-                                                            <?= $item ?>
-                                                        </option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <p class="invalid-feedback fw-bold top-100">
-                                                    Field must not be empty
-                                                </p>
-                                            </div>
-                                            <!--form column 2-->
-                                            <div class="col-lg-4 d-flex row-gap-3 flex-column">
-                                                <div>
-                                                    <?= InputDropdown::widget([
-                                                        'container' => 'c-ref-idd',
-                                                        'error' => $ref_error,
-                                                        'selected' => HTML::decode($form_model->refSystem),
-                                                        'search' => 'ref-idd-search',
-                                                        'to_submit' => 'ref-to-submit',
-                                                        'placeholder' => 'Enter system name here',
-                                                        'ajax' => true,
-                                                        'endpoint' => '/system/get/',
-                                                        'label_main' => 'Ref. system:',
-                                                        'toggle_btn_text' => 'Get system list',
-                                                        'name_main' => 'refSystem',
-                                                        'required' => 'required'
-                                                    ]); ?>
-                                                </div>
-                                                <div style="<?= $form_model->refSystem ?
-                                                                'margin-top: 10px' : 'margin-top: 33px' ?>">
-                                                    <label class='min-lett-spacing fw-bold' for='landingPadSize'>
-                                                        Min. landing pad size:
-                                                    </label>
-                                                    <?= Html::dropDownList(
-                                                        'landingPadSize',
-                                                        $form_model->landingPadSize,
-                                                        $pad_sizes,
-                                                        [
-                                                            'class' => [
-                                                                'form-select',
-                                                                'form-select-sm',
-                                                                'shadow-none',
-                                                                'border-dark',
-                                                                'fw-normal'
-                                                            ],
-                                                            'id' => 'landingPadSize'
-                                                        ]
-                                                    ) ?>
-                                                </div>
-                                                <div>
-                                                    <label class='min-lett-spacing fw-bold' for='includeSurface'>
-                                                        Include surface:
-                                                    </label>
-                                                    <?= Html::dropDownList(
-                                                        'includeSurface',
-                                                        $form_model->includeSurface,
-                                                        $incl_surface,
-                                                        [
-                                                            'class' => [
-                                                                'form-select',
-                                                                'form-select-sm',
-                                                                'shadow-none',
-                                                                'border-dark',
-                                                                'fw-normal'
-                                                            ],
-                                                            'id' => 'includeSurface'
-                                                        ]
-                                                    ) ?>
-                                                </div>
-                                            </div>
-                                            <!--form column 3-->
-                                            <div class="col-lg-4 d-flex row-gap-3 flex-column">
-                                                <div>
-                                                    <label
-                                                        class='min-lett-spacing fw-bold'
-                                                        for='maxDistanceFromRefStar'>
-                                                        Max. distance from ref. system:
-                                                    </label>
-                                                    <?= Html::dropDownList(
-                                                        'maxDistanceFromRefStar',
-                                                        $form_model->maxDistanceFromRefStar ?: '50',
-                                                        $max_dist_from_ref,
-                                                        [
-                                                            'class' => [
-                                                                'form-select',
-                                                                'form-select-sm',
-                                                                'shadow-none',
-                                                                'border-dark',
-                                                                'fw-normal'
-                                                            ],
-                                                            'id' => 'maxDistanceFromRefStar'
-                                                        ]
-                                                    ) ?>
-                                                </div>
-                                                <div>
-                                                    <label class='min-lett-spacing fw-bold' for='distanceFromStar'>
-                                                        Max. distance from the star:
-                                                    </label>
-                                                    <?= Html::dropDownList(
-                                                        'distanceFromStar',
-                                                        $form_model->distanceFromStar ?: '500',
-                                                        $max_dist_from_star,
-                                                        [
-                                                            'class' => [
-                                                                'form-select',
-                                                                'form-select-sm',
-                                                                'shadow-none',
-                                                                'border-dark',
-                                                                'fw-normal'
-                                                            ],
-                                                            'id' => 'distanceFromStar'
-                                                        ]
-                                                    ) ?>
-                                                </div>
-                                                <div>
-                                                    <label class='min-lett-spacing fw-bold' for='dataAge'>
-                                                        Max. age of data:
-                                                    </label>
-                                                    <?= Html::dropDownList(
-                                                        'dataAge',
-                                                        $form_model->dataAge ?: 'Any',
-                                                        $max_age_of_data,
-                                                        [
-                                                            'class' => [
-                                                                'form-select',
-                                                                'form-select-sm',
-                                                                'shadow-none',
-                                                                'border-dark',
-                                                                'fw-normal'
-                                                            ],
-                                                            'id' => 'dataAge'
-                                                        ]
-                                                    ) ?>
-                                                </div>
-                                                <div>
-                                                    <label class='min-lett-spacing fw-bold' for='sortBy'>
-                                                        Sort by:
-                                                    </label>
-                                                    <?= Html::dropDownList(
-                                                        'sortBy',
-                                                        $form_model->sortBy,
-                                                        $sort_options,
-                                                        [
-                                                            'class' => [
-                                                                'form-select',
-                                                                'form-select-sm',
-                                                                'shadow-none',
-                                                                'border-dark',
-                                                                'fw-normal'
-                                                            ],
-                                                            'id' => 'sortBy'
-                                                        ]
-                                                    ) ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <!--submit block-->
-                                            <div class='row justify-content-center text-center'>
-                                                <div class='col-md-3 pt-4 pb-2'>
-                                                    <button
-                                                        class='btn btn-violet fw-bold text-light text-uppercase mt-2
-                                                            w-100'
-                                                        type='submit'
-                                                        name='c-form-submit'>
-                                                        Search
-                                                    </button>
-                                                </div>
-                                                <span class="fst-italic text-danger fs-7">
-                                                    Note: carriers are not included
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?= Html::endForm() ?>
-                            </div>
-                        </div>
+    <div class='container-xxl px-2'>
+        <div class='row'>
+            <div class='col d-flex flex-column row-gap-3 mb-3 px-4'>
+                <h1 class="mt-2 text-center sintony-bold"><?= $this->title ?></h1>
+                <div class='row justify-content-center'>
+                    <div class="col-sm-9 col-lg-6 d-flex flex-column row-gap-3">
+
+                        <!-- accordion -->
+                        <?= $this->render('_accordion', [
+                            'form' => $form,
+                            'form_values' => $form_values,
+                            'ship_names' => $ship_names,
+                            'errors' => $form->getErrors()
+                        ]) ?>
+                        <!-- end accordion -->
+
                     </div>
                 </div>
-                <?php if (isset($models) && count($models) > 0) {
-                    echo $this->render(
-                        'ships_table',
-                        [
-                            'models' => $models,
-                            'pagination' => $pagination,
-                            'sort' => $sort
-                        ]
-                    );
-                } elseif (isset($models) && count($models) === 0) {
-                    echo '<div class="text-light text-center fw-bold">No ships were found.</div>';
-                } ?>
+
+                <!-- loader container -->
+                <div class='loader-cnt row justify-content-center d-none'></div>
+                <!-- end of loader container -->
+
+                <!-- result -->
+                <?php if (!empty($models)) { ?>
+                    <?= $this->render(
+                        '_search_result',
+                        ['models' => $models, 'name' => $ship_names[$form_values['cMainSelect']]]
+                    ); ?>
+                <?php } elseif (isset($models) && empty($models)) { ?>
+                    <div class="rounded-1 bg-light text-center mx-auto px-3 py-2">
+                        <p class="my-1 text-danger fw-bold text-uppercase lett-spacing-2">found nothing</p>
+                    </div>
+                <?php } ?>
+                <!-- end of result -->
+
             </div>
         </div>
     </div>

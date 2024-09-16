@@ -14,6 +14,7 @@ use app\models\search\EngineersSearch;
 use app\models\ShipMods;
 use app\models\ShipyardShips;
 use app\models\StationMarket;
+use app\services\ShipyarShipsService;
 use app\services\StationsService;
 use Yii;
 use yii\web\Controller;
@@ -115,15 +116,21 @@ class StationsController extends Controller
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
 
-        $ships = new ShipyardShips();
-        $ships->setShipsArr($this->getShipsList());
         $service = new StationsService();
         $services = $service->getStationServices($station->market_id);
         $system = Systems::findOne($station->system_id);
         !$system && throw new NotFoundHttpException();
 
+
+
+        $ships = new ShipyardShips();
+        $ships->setShipsArr($this->getShipsList());
         $ships->setAttributes(['market_id' => $station->market_id, 'sys_name' => $system->name], false);
-        $model = $ships->getStationShips();
+
+
+
+        $ships_service = new ShipyarShipsService();
+        $model = $ships_service->findStationShips($station->market_id, $system->name);
 
         return $this->render('ships', [
             'models' => $model,

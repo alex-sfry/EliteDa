@@ -1,14 +1,13 @@
 <?php
 
-namespace app\behaviors;
+namespace app\traits;
 
-use yii\base\Behavior;
 use Yii;
 use yii\helpers\Json;
 
-class ShipyardShipsBehavior extends Behavior
+trait ShipyardShipsTrait
 {
-    protected array $shipsReqArr = [
+    private array $shipsReqArr = [
         'cMainSelect' => '',
         'refSystem' => 'Sol',
         'includeSurface' => 'No',

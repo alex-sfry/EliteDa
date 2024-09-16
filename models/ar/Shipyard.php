@@ -2,6 +2,7 @@
 
 namespace app\models\ar;
 
+use app\models\aq\ShipyardQuery;
 use Yii;
 
 /**
@@ -61,8 +62,17 @@ class Shipyard extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMarket()
+    public function getStation()
     {
         return $this->hasOne(Stations::class, ['market_id' => 'market_id'])/* ->inverseOf('shipyards') */;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return ShipyardQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new ShipyardQuery(get_called_class());
     }
 }
