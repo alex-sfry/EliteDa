@@ -1,23 +1,19 @@
 <?php
 
-namespace app\behaviors;
+namespace app\traits;
 
-use yii\base\Behavior;
 use Yii;
 use yii\helpers\Json;
 
-class ShipModulesBehavior extends Behavior
+trait ShipModulesTrait
 {
-    protected array $shipModulesReqArr = [
+    private array $shipModulesReqArr = [
         'cMainSelect' => [],
         'refSystem' => 'Sol',
         'landingPadSize' => 'L',
         'includeSurface' => 'No',
-        'maxDistanceFromRefStar' => '50',
-        'distanceFromStar' => '500',
-        'dataAge' => 'Any',
-        'sortBy' => 'Distance',
-        'c-form-submit' => ''
+        'distanceFromStar' => 'Any',
+        'formBtn' => ''
     ];
 
     public function getShipModules(): array

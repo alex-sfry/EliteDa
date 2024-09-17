@@ -60,18 +60,29 @@ form:not(.was-validated) {
 }
 
 .ts-wrapper.is-invalid.single,
+.ts-wrapper.is-invalid:not(.single),
 .was-validated .invalid.single,
-.was-validated :invalid+.ts-wrapper.single {
+.was-validated .invalid:not(.single),
+.was-validated :invalid+.ts-wrapper.single,
+.was-validated :invalid+.ts-wrapper:not(.single) {
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E");
 }
 
 .ts-wrapper.is-valid,
+.ts-wrapper.is-valid:not(.single),
 .was-validated .valid,
+.was-validated .valid:not(.single),
 .was-validated :valid+.ts-wrapper,
 .ts-wrapper.is-valid.single,
 .was-validated .valid.single,
-.was-validated :valid+.ts-wrapper.single {
+.was-validated :valid+.ts-wrapper.single,
+.was-validated :valid+.ts-wrapper:not(.single) {
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+.ts-wrapper.is-invalid:not(.single) {
+    background-size: 12px;
+    background-position: calc(100% - 14px);
 }
 
 /* end of TomSelect styles */

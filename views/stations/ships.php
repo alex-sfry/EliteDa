@@ -1,8 +1,6 @@
 <?php
 
 use app\widgets\TableJs\TableJs;
-use yii\helpers\Html;
-use yii\helpers\Url;
 
 use function app\helpers\d;
 use function app\helpers\ksq;
@@ -28,44 +26,21 @@ $this->params['breadcrumbs'] = [
                 </h1>
                 <div class="text-light row flex-column flex-md-row fs-7 justify-content-md-center row-gap-2">
                     <div class="max-w-f-content mx-auto mx-md-0">
-                        <div class="d-flex flex-row flex-md-column gap-2 justify-content-md-center align-content-center 
-                                    justify-content-lg-start">
-                            <div class="small-tile text-light gx-0 rounded-3">
-                                <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                        justify-content-center"
-                                    href="<?= Url::to(["station/$id"]) ?>">
-                                        station info
-                                    </a>
-                            </div>
-                            <div class="small-tile text-light gx-0 rounded-3">
-                                <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                        justify-content-center <?= !$services['market'] ? 'disabled' : null ?>"
-                                    href="<?= $services['market'] ?
-                                        Url::toRoute(["station/market/$id"]) : Url::to() ?>">
-                                        market
-                                    </a>
-                            </div>
-                            <div class="small-tile text-light gx-0 rounded-3">
-                                <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                        justify-content-center <?= !$services['modules'] ? 'disabled' : null ?>"
-                                    href="<?= $services['modules'] ?
-                                        Url::toRoute(["station/ship-modules-hardpoint/$id"]) :
-                                        Url::to() ?>">
-                                        outfitting
-                                    </a>
-                            </div>
-                            <div class="small-tile text-light gx-0 rounded-3">
-                                <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                            justify-content-center active"
-                                    href="<?= Url::toRoute(["station/ships/$id"]) ?>">
-                                        ships
-                                    </a>
-                            </div>
+                        <div class="d-flex flex-row flex-md-column gap-2 justify-content-md-center align-content-center justify-content-lg-start mt-2">
+
+                            <!-- services side bar -->
+                            <?= $this->render('_services', [
+                                'id' => $id,
+                                'services' => $services,
+                                'active' => 'ships'
+                            ]) ?>
+                            <!-- services side bar -->
+
                         </div>
                     </div>
                     <div class="bg-light rounded-2 px-2 bg-transparent text-center mx-auto mx-md-0
                                 col col-sm-11 col-md-9 col-lg-8 col-xl-6">
-                        <?php  echo TableJs::widget([
+                        <?php echo TableJs::widget([
                             'container' => 'w-table',
                             'model' => $models,
                             'default_sorting' => 'asc',
@@ -90,7 +65,8 @@ $this->params['breadcrumbs'] = [
                                     'label' => 'Updated',
                                     'sort' => false
                                 ],
-                            ]]); ?>
+                            ]
+                        ]); ?>
                     </div>
                 </div>
             </div>

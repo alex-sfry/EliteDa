@@ -88,8 +88,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initFooter();
     if ($('#tr-form').length) tradeRouteForm(validate, loader, removeLoader);
     if ($('#mt-form').length) matTraders();
-    if ($('.t-sel').length) initTSelect('#refSystem');
-
+    if ($('.t-sel').length) {
+        $('#refSystem').length && initTSelect('#refSystem');
+        $('#cMainSelect').length && initTSelect('#cMainSelect', false);
+    }
     if ($('#c-form').length) removeLoader($('table'));
     if ($('#mod-form').length) removeLoader($('table'));
     if ($('#ships-form').length) removeLoader($('table'));

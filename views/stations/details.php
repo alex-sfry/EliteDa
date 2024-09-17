@@ -109,7 +109,7 @@ $tooltip = 'Not all Odyssey Settlements have L pad';
                             [
                                 'label' => 'Outfitting',
                                 'format' => 'raw',
-                                'value' => $services['modules'] ?
+                                'value' => $services['outfitting'] ?
                                     Html::a(
                                         'Modules',
                                         Url::toRoute([

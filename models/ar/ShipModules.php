@@ -2,6 +2,7 @@
 
 namespace app\models\ar;
 
+use app\models\aq\ShipModulesQuery;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -64,5 +65,14 @@ class ShipModules extends \yii\db\ActiveRecord
     public function getStation(): ActiveQuery
     {
         return $this->hasOne(Stations::class, ['market_id' => 'market_id'])/* ->inverseOf('shipModules') */;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return ShipModulesQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new ShipModulesQuery(get_called_class());
     }
 }

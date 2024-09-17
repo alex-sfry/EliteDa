@@ -2,18 +2,14 @@
 
 namespace app\controllers;
 
-use app\behaviors\ShipModulesBehavior;
-use app\behaviors\ShipyardShipsBehavior;
-use app\behaviors\StationBehavior;
 use app\models\ar\MaterialTraders;
 use app\models\ar\Stations;
 use app\models\ar\Systems;
 use app\models\forms\StationsAdvancedForm;
 use app\models\forms\StationsNameForm;
 use app\models\search\EngineersSearch;
-use app\models\ShipMods;
-use app\models\ShipyardShips;
 use app\models\StationMarket;
+use app\services\ShipModulesService;
 use app\services\ShipyardShipsService;
 use app\services\StationsService;
 use Yii;
@@ -70,12 +66,8 @@ class StationsController extends Controller
      */
     public function actionDetails(int $id): string
     {
-        /** @var StationBehavior|StationsController $this */
-
         $id = (int)$id;
         !$id && throw new NotFoundHttpException();
-
-        $this->attachBehavior('StationBehavior', StationBehavior::class);
 
         $model = Stations::find()
             ->select(['stations.*', "IF(type!='Outpost','L','M') as pad"])
@@ -107,12 +99,9 @@ class StationsController extends Controller
      */
     public function actionShips(int $id): string
     {
-        /** @var ShipyardShipsBehavior|StationsController $this */
-
         !$id && throw new NotFoundHttpException();
         $id = (int)$id;
 
-        $this->attachBehavior('ShipyardShipsBehavior', ShipyardShipsBehavior::class);
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
 
@@ -120,15 +109,6 @@ class StationsController extends Controller
         $services = $service->getStationServices($station->market_id);
         $system = Systems::findOne($station->system_id);
         !$system && throw new NotFoundHttpException();
-
-
-
-        $ships = new ShipyardShips();
-        $ships->setShipsArr($this->getShipsList());
-        $ships->setAttributes(['market_id' => $station->market_id, 'sys_name' => $system->name], false);
-
-
-
         $ships_service = new ShipyardShipsService();
         $model = $ships_service->findStationShips($station->market_id, $system->name);
 
@@ -145,27 +125,20 @@ class StationsController extends Controller
      */
     public function actionShipModules(int $id, string $cat): string
     {
-        /** @var ShipModulesBehavior|StationsController $this */
-
         !$id && throw new NotFoundHttpException();
         $id = (int)$id;
 
-        $this->attachBehavior('ShipModulesBehavior', ShipModulesBehavior::class);
         $station = Stations::findOne($id);
         !$station && throw new NotFoundHttpException();
         $system = Systems::findOne($station->system_id);
         !$system && throw new NotFoundHttpException();
 
-        $ship_modules = new ShipMods();
-        $ship_modules->setMods($this->getShipModules());
-        $ship_modules->setAttributes(
-            ['market_id' => $station->market_id, 'cat' => $cat, 'sys_name' => $system->name],
-            false
-        );
-        $qty_by_cat = $ship_modules->getQtyByCat();
         $service = new StationsService();
         $services = $service->getStationServices($station->market_id);
-        $model = $ship_modules->getStationModules();
+
+        $mod_service = new ShipModulesService();
+        $qty_by_cat = $mod_service->qtyByCat($station->market_id);
+        $model = $mod_service->stationModules($station->market_id, $cat, $system->name);
 
         return $this->render('outfitting', [
             'models' => $model,

@@ -70,18 +70,29 @@ form:not(.was-validated) .t-sel.ts-wrapper.form-select-sm.focus.is-invalid > .ts
 }
 
 .ts-wrapper.is-invalid.single,
+.ts-wrapper.is-invalid:not(.single),
 .was-validated .invalid.single,
-.was-validated :invalid + .ts-wrapper.single {
+.was-validated .invalid:not(.single),
+.was-validated :invalid + .ts-wrapper.single,
+.was-validated :invalid + .ts-wrapper:not(.single) {
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3E%3C/svg%3E");
 }
 
 .ts-wrapper.is-valid,
+.ts-wrapper.is-valid:not(.single),
 .was-validated .valid,
+.was-validated .valid:not(.single),
 .was-validated :valid + .ts-wrapper,
 .ts-wrapper.is-valid.single,
 .was-validated .valid.single,
-.was-validated :valid + .ts-wrapper.single {
+.was-validated :valid + .ts-wrapper.single,
+.was-validated :valid + .ts-wrapper:not(.single) {
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3E%3Cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3E%3C/svg%3E");
+}
+
+.ts-wrapper.is-invalid:not(.single) {
+    background-size: 12px;
+    background-position: calc(100% - 14px);
 }
 
 /* end of TomSelect styles */
@@ -147,7 +158,7 @@ table .table-link-tr {
 table .table-link-tr:hover {
     background-color: #0dcaf0 !important;
     text-decoration-color: #212529 !important;
-    color: #000000 !important;
+    color: #f8f9fa !important;
 }
 
 .white-space-nw, .details-cnt th, .engineers-cnt tbody .engineers-cnt tbody tr td:nth-child(2),

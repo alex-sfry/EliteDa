@@ -4,14 +4,11 @@ namespace app\models\forms;
 
 class ShipModulesForm extends \yii\base\Model
 {
+    public array $cMainSelect = [];
     public string $refSystem = '';
     public string $landingPadSize = '';
     public string $includeSurface = '';
-    public string $sortBy = '';
-    public string $maxDistanceFromRefStar = '';
     public string $distanceFromStar = '';
-    public string $dataAge = '';
-    public array $cMainSelect = [];
 
     public function rules(): array
     {
@@ -19,11 +16,22 @@ class ShipModulesForm extends \yii\base\Model
             [['refSystem'], 'required'],
             [['cMainSelect'], 'each', 'rule' => ['required', 'skipOnEmpty' => false]],
             [['landingPadSize'], 'in', 'range' => ['L', 'M', 'S']],
-            [['includeSurface'], 'in', 'range' => ['Yes', 'No']],
-            [['sortBy'], 'in', 'range' => ['Updated_at', 'Distance', 'Module']],
-            [['maxDistanceFromRefStar'], 'in', 'range' => ['Any', '25', '50', '100', '250']],
+            [['includeSurface'], 'in', 'range' => ['No', 'Yes']],
             [['distanceFromStar'], 'in', 'range' => ['Any', '100', '500', '1000', '2000']],
-            [['dataAge'], 'in', 'range' => ['Any', '1', '4', '10', '24']],
+            [['distanceFromStar'], 'filter', 'filter' => function ($value) {
+                return $value === 'Any' ? '' : $value;
+            }],
+        ];
+    }
+
+    public function attributeLabels(): array
+    {
+        return [
+            'cMainSelect' => 'Module',
+            'refSystem' => 'Ref. system',
+            'landingPadSize' => 'Min. landing pad size',
+            'includeSurface' => 'Include surface',
+            'distanceFromStar' => 'Dist. to arrival',
         ];
     }
 }

@@ -2,11 +2,6 @@
     cursor: pointer;
 }
 
-.w-table thead th:not(.no-sort):hover {
-    background-color: var(--bs-info) !important;
-    color: var(--bs-light) !important;
-}
-
 .sortable thead th:not(.no-sort) span::after {
     content: "";
     padding: calc(1rem * .5) 1rem;

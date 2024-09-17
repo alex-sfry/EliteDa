@@ -5751,19 +5751,36 @@ const getSortIcon = icon => {
 /**
  * @param {string} elem 
  */
-const initTSelect = elem => {
-  // eslint-disable-next-line no-undef, no-unused-vars
-  const tSelect = new TomSelect(elem, (0,_tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__.tSelectRingsSettings)({
-    searchField: 'system',
-    valueField: 'system',
-    labelField: 'system',
-    plugins: ['dropdown_input'],
-    endpoint: '/system/get/'
-  }));
+const initTSelect = function (elem) {
+  let ajax = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  if (ajax) {
+    // eslint-disable-next-line no-undef, no-unused-vars
+    const tSelect = new TomSelect(elem, (0,_tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__.tSelectAjaxSettings)({
+      searchField: 'system',
+      valueField: 'system',
+      labelField: 'system',
+      plugins: ['dropdown_input'],
+      endpoint: '/system/get/'
+    }));
+  } else {
+    // eslint-disable-next-line no-undef, no-unused-vars
+    const tSelectNoAjax = new TomSelect(elem, {
+      plugins: ['dropdown_input', 'remove_button'],
+      sortField: [{
+        field: '$order'
+      }, {
+        field: '$score'
+      }],
+      maxOptions: null,
+      maxItems: 5
+    });
+  }
 
   // fix for TomSelect label bug (id, for)
   $('.tselect-lbl-1').attr('for', 'refSystem');
   $('.tselect-lbl-1').removeAttr('id');
+  $('.tselect-lbl-2').attr('for', 'cMainSelect');
+  $('.tselect-lbl-2').removeAttr('id');
 };
 
 /***/ }),
@@ -5776,9 +5793,9 @@ const initTSelect = elem => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   tSelectRingsSettings: () => (/* binding */ tSelectRingsSettings)
+/* harmony export */   tSelectAjaxSettings: () => (/* binding */ tSelectAjaxSettings)
 /* harmony export */ });
-const tSelectRingsSettings = config => {
+const tSelectAjaxSettings = config => {
   return {
     searchField: config.searchField,
     valueField: config.valueField,
@@ -5993,7 +6010,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initFooter();
   if ($('#tr-form').length) (0,_tradeRoutes_js__WEBPACK_IMPORTED_MODULE_2__.tradeRouteForm)(_isValidated_js__WEBPACK_IMPORTED_MODULE_1__.validate, loader, removeLoader);
   if ($('#mt-form').length) (0,_matTraders_js__WEBPACK_IMPORTED_MODULE_3__.matTraders)();
-  if ($('.t-sel').length) (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_5__.initTSelect)('#refSystem');
+  if ($('.t-sel').length) {
+    $('#refSystem').length && (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_5__.initTSelect)('#refSystem');
+    $('#cMainSelect').length && (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_5__.initTSelect)('#cMainSelect', false);
+  }
   if ($('#c-form').length) removeLoader($('table'));
   if ($('#mod-form').length) removeLoader($('table'));
   if ($('#ships-form').length) removeLoader($('table'));

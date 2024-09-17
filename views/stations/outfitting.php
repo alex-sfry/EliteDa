@@ -1,7 +1,6 @@
 <?php
 
 use app\widgets\TableJs\TableJs;
-use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
 
@@ -24,6 +23,14 @@ $this->params['breadcrumbs'] = [
     ],
     $this->title
 ];
+
+$categories = [
+    ['label' => 'Hardpoint', 'cat' => 'hardpoint'],
+    ['label' => 'Optional internal', 'cat' => 'internal'],
+    ['label' => 'Utility', 'cat' => 'utility'],
+    ['label' => 'Core internal', 'cat' => 'core'],
+    ['label' => 'Armour', 'cat' => 'armour'],
+];
 ?>
 
 <main class="flex-grow-1 bg-main-background d-flex flex-column justify-content-between sintony-reg">
@@ -35,119 +42,42 @@ $this->params['breadcrumbs'] = [
                 </h1>
                 <div class="text-light row flex-column flex-md-row fs-7 justify-content-lg-center">
                     <div class="max-w-f-content mx-auto mx-md-0">
-                        <div class="d-flex flex-row flex-md-column gap-2 justify-content-md-center align-content-center 
-                                    justify-content-lg-start mt-2">
-                            <div class="small-tile text-light gx-0 rounded-3">
-                                <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                        justify-content-center sintony-bold"
-                                    href="<?= Url::to(["station/$id"]) ?>">
-                                        station info
-                                    </a>
-                            </div>
-                            <div class="small-tile text-light gx-0 rounded-3">
-                                <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                        justify-content-center  sintony-bold 
-                                        <?= !$services['market'] ? 'disabled' : null ?>"
-                                    href="<?= $services['market'] ?
-                                        Url::toRoute(["station/market/$id"]) : Url::to() ?>">
-                                        market
-                                    </a>
-                            </div>
-                            <div class="small-tile text-light gx-0 rounded-3">
-                                <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                        justify-content-center active sintony-bold"
-                                    href="<?= Url::toRoute(["station/ship-modules-hardpoint/$id"]) ?>">
-                                        outfitting
-                                    </a>
-                            </div>
-                            <div class="small-tile text-light gx-0 rounded-3">
-                                <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                            justify-content-center  sintony-bold 
-                                            <?= !$services['ships'] ? 'disabled' : null ?>"
-                                    href="<?= $services['market'] ?
-                                        Url::toRoute(["station/ships/$id"]) : Url::to() ?>">
-                                        ships
-                                    </a>
-                            </div>
+                        <div class="d-flex flex-row flex-md-column gap-2 justify-content-md-center align-content-center justify-content-lg-start mt-2">
+
+                            <!-- services side bar -->
+                            <?= $this->render('_services', [
+                                'id' => $id,
+                                'services' => $services,
+                                'active' => 'outfitting'
+                            ]) ?>
+                            <!-- services side bar -->
+
                         </div>
                     </div>
                     <div class="col col-md-10 col-lg-9 col-xl-7">
-                        <div class="bg-light my-0 rounded-2 px-2 bg-transparent row" 
+                        <div class="bg-light my-0 rounded-2 px-2 bg-transparent row"
                             style="max-width:fit-content;">
                             <ul class="nav nav-pills px-1 py-1 my-2 justify-content-start justify-content-lg-evenly 
                                     bg-light rounded-2 col-12">
-                                <li class="nav-item">
-                                    <a class="nav-link px-2 <?= $cat === 'hardpoint' ? 'active' : null ?>"
-                                        aria-current="<?= $cat === 'hardpoint' ? 'page' : null ?>" 
-                                        href="<?= Url::to([
-                                            'stations/ship-modules',
-                                            'id' => $id,
-                                            'cat' => 'hardpoint']) ?>">
-                                        Hardpoint
-                                        <span class="top-0 start-75 badge rounded-pill bg-primary">
-                                            <?= $qty_by_cat['hardpoint'] ?>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link <?= $cat === 'internal' ? 'active' : null ?>" 
-                                        aria-current="<?= $cat === 'internal' ? 'page' : null ?>" 
-                                        href="<?= Url::to([
-                                            'stations/ship-modules',
-                                            'id' => $id,
-                                            'cat' => 'internal'
-                                            ]) ?>">
-                                        Optional internal
-                                        <span class="top-0 start-75 badge rounded-pill bg-primary">
-                                            <?= $qty_by_cat['internal'] ?>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link <?= $cat === 'utility' ? 'active' : null ?>"
-                                        aria-current="<?= $cat === 'utility' ? 'page' : null ?>"
-                                        href="<?= Url::to([
-                                            'stations/ship-modules',
-                                            'id' => $id,
-                                            'cat' => 'utility'
-                                            ]) ?>">
-                                        Utility
-                                        <span class="top-0 start-75 badge rounded-pill bg-primary">
-                                            <?= $qty_by_cat['utility'] ?>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link <?= $cat === 'core' ? 'active' : null ?>"
-                                        aria-current="<?= $cat === 'core' ? 'page' : null ?>" 
-                                        href="<?= Url::to([
-                                            'stations/ship-modules',
-                                            'id' => $id,
-                                            'cat' => 'core'
-                                            ]) ?>">
-                                        Core internal
-                                        <span class="top-0 start-75 badge rounded-pill bg-primary">
-                                            <?= $qty_by_cat['core'] ?>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link <?= $cat === 'armour' ? 'active' : null ?>"
-                                        aria-current="<?= $cat === 'armour' ? 'page' : null ?>"
-                                        href="<?= Url::to([
-                                            'stations/ship-modules',
-                                            'id' => $id,
-                                            'cat' => 'armour'
-                                            ]) ?>">
-                                        Armour
-                                        <span class="top-0 start-75 badge rounded-pill bg-primary">
-                                            <?= $qty_by_cat['armour'] ?>
-                                        </span>
-                                    </a>
-                                </li>
+                                <?php foreach ($categories as $key => $value) { ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link px-2 fw-bold <?= $cat === $value['cat'] ? 'active' : null ?>"
+                                            aria-current="<?= $cat === $value['cat'] ? 'page' : null ?>"
+                                            href="<?= Url::to([
+                                                        'stations/ship-modules',
+                                                        'id' => $id,
+                                                        'cat' => $value['cat']
+                                                    ]) ?>">
+                                            <?= $value['label'] ?>
+                                            <span class="top-0 start-75 badge rounded-pill bg-primary">
+                                                <?= $qty_by_cat[$value['cat']] ?>
+                                            </span>
+                                        </a>
+                                    </li>
+                                <?php } ?>
                             </ul>
                             <div class="col px-0">
-                                <?php  echo TableJs::widget([
+                                <?php echo TableJs::widget([
                                     'container' => 'w-table',
                                     'model' => $models,
                                     'default_sorting' => 'asc',
@@ -171,7 +101,8 @@ $this->params['breadcrumbs'] = [
                                             'label' => 'Updated',
                                             'sort' => false
                                         ],
-                                    ]]); ?>
+                                    ]
+                                ]); ?>
                             </div>
                         </div>
                     </div>

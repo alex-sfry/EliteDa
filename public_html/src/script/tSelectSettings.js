@@ -1,4 +1,4 @@
-export const tSelectRingsSettings = (config) => {
+export const tSelectAjaxSettings = (config) => {
     return {
         searchField: config.searchField,
         valueField: config.valueField,

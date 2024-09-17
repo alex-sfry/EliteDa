@@ -1,7 +1,8 @@
 <?php
 
+/** @var yii\web\View $this */
+
 use app\widgets\TableJs\TableJs;
-use yii\helpers\Html;
 use yii\helpers\Url;
 
 use function app\helpers\d;
@@ -25,44 +26,15 @@ $this->params['breadcrumbs'] = [
                 <h1 class='mt-3 text-center fs-2 sintony-bold'>
                     <?= $this->title ?>
                 </h1>
-                <div class="d-flex flex-column gap-2 justify-content-center 
-                            justify-content-md-start mt-2">
+                <div class="d-flex flex-column gap-2 justify-content-center justify-content-md-start mt-2">
                     <div class="d-flex gap-2 justify-content-center">
-                        <div class="small-tile text-light gx-0 rounded-3 fs-7">
-                            <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex 
-                                    flex-column justify-content-center sintony-bold"
-                                href="<?= Url::to(["station/$id"]) ?>">
-                                    station info
-                                </a>
-                        </div>
-                        <div class="small-tile text-light gx-0 rounded-3 fs-7">
-                            <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                    justify-content-center active sintony-bold"
-                                href="<?= Url::toRoute(["station/market/$id"]) ?>">
-                                    market
-                                </a>
-                        </div>
-                        <div class="small-tile text-light gx-0 rounded-3 fs-7">
-                            <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                    justify-content-center  sintony-bold 
-                                    <?= !$services['modules'] ? 'disabled' : null ?>"
-                                href="<?= $services['modules'] ?
-                                    Url::toRoute(["station/ship-modules-hardpoint/$id"]) :
-                                    Url::to() ?>">
-                                    outfitting
-                                </a>
-                        </div>
-                        <div class="small-tile text-light gx-0 rounded-3 fs-7">
-                            <a class="nav-button h-100 btn btn-violet border-0 text-light d-flex flex-column
-                                    justify-content-center  sintony-bold
-                                    <?= !$services['ships'] ? 'disabled' : null ?>"
-                                href="<?= $services['market'] ?
-                                    Url::toRoute(["station/ships/$id"]) : Url::to() ?>">
-                                    ships
-                                </a>
-                        </div>
+
+                        <!-- services side bar -->
+                        <?= $this->render('_services', ['id' => $id, 'services' => $services, 'active' => 'market']) ?>
+                        <!-- services side bar -->
+
                     </div>
-                    
+
                     <?= TableJs::widget([
                         'container' => 'w-table',
                         'model' => $model,
@@ -118,7 +90,8 @@ $this->params['breadcrumbs'] = [
                                 'attribute' => 'timestamp',
                                 'label' => 'updated',
                             ],
-                        ]]); ?>
+                        ]
+                    ]); ?>
                 </div>
             </div>
         </div>

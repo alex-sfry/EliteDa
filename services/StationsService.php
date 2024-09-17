@@ -77,7 +77,7 @@ class StationsService
             ->cache(3600)
             ->count();
 
-        $services['modules'] = ShipModules::find()
+        $services['outfitting'] = ShipModules::find()
             ->where(['market_id' => $market_id])
             ->cache(3600)
             ->count();

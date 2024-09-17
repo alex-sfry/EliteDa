@@ -584,6 +584,9 @@ summary {
   }
 }
 @media (min-width: 768px) {
+  .col-md {
+    flex: 1 0 0%;
+  }
   .col-md-3 {
     flex: 0 0 auto;
     width: 25%;
@@ -591,6 +594,10 @@ summary {
   .col-md-4 {
     flex: 0 0 auto;
     width: 33.33333333%;
+  }
+  .col-md-5 {
+    flex: 0 0 auto;
+    width: 41.66666667%;
   }
   .col-md-6 {
     flex: 0 0 auto;
@@ -2273,6 +2280,10 @@ textarea.form-control-sm {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.opacity-0 {
+  opacity: 0 !important;
 }
 
 .opacity-25 {
