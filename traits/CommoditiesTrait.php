@@ -7,17 +7,16 @@ use yii\helpers\Json;
 trait CommoditiesTrait
 {
     private array $commoditiesReqArr = [
-        'commodities' => [],
+        'cMainSelect' => [],
         'refSystem' => 'Sol',
         'landingPadSize' => 'S',
         'includeSurface' => 'Yes',
         'sortBy' => 'Price',
-        'maxDistanceFromRefStar' => '50',
         'distanceFromStar' => '500',
         'minSupplyDemand' => '1000',
         'dataAge' => 'Any',
-        'buySellSwitch' => 'buy',
-        'c-form-submit' => ''
+        'buySellSwitch' => 'buy_price',
+        'formBtn' => ''
     ];
 
     public function getCommodities(): array
@@ -32,7 +31,7 @@ trait CommoditiesTrait
     {
         $this->commoditiesReqArr['buySellSwitch'] = $params['price_type'];
         $this->commoditiesReqArr['refSystem'] = $params['system'];
-        $this->commoditiesReqArr['commodities_arr'] = $params['commodity'];
+        $this->commoditiesReqArr['cMainSelect'] = $params['commodity'];
 
         return $this->commoditiesReqArr;
     }

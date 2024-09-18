@@ -2,21 +2,15 @@
 
 namespace app\models;
 
-use app\behaviors\CommoditiesBehavior;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\base\Model;
 use app\models\ar\Markets;
+use app\traits\CommoditiesTrait;
 
 class StationMarket extends Model
 {
-    public function behaviors(): array
-    {
-        return ArrayHelper::merge(
-            parent::behaviors(),
-            [CommoditiesBehavior::class]
-        );
-    }
+    use CommoditiesTrait;
 
     public function findMarket(int $id, string $sys_name): array
     {
@@ -37,9 +31,9 @@ class StationMarket extends Model
             $model[$key]['req_url'] = ArrayHelper::merge(
                 ['commodities/index'],
                 $this->getCommoditiesReqArr([
-                    'commodity' => [$model[$key]['name']],
+                    'commodity' => [$value['name']],
                     'system' => $sys_name,
-                    'price_type' => $value['stock'] > $value['demand'] ? 'sell' : 'buy'
+                    'price_type' => $value['stock'] > $value['demand'] ? 'sell_price' : 'buy_price'
                 ])
             );
         }
