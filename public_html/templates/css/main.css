@@ -724,7 +724,8 @@ table.sortable thead th:not(.no-sort)[aria-sort=ascending] span {
 table.sortable thead th:not(.no-sort)[aria-sort=descending] span {
     align-items: flex-end;
 }
-table.sortable thead th:not(.no-sort)[aria-sort=ascending] span::after {
+table.sortable thead th:not(.no-sort)[aria-sort=ascending] span::after,
+table.sortable thead th:not(.no-sort)[aria-sort=descending].timestamp span::after {
     content: "";
     padding: 0.5rem 1rem;
     background-image: url(../images/sort-up.svg);
@@ -733,7 +734,8 @@ table.sortable thead th:not(.no-sort)[aria-sort=ascending] span::after {
     visibility: visible;
     color: #f8f9fa !important;
 }
-table.sortable thead th:not(.no-sort)[aria-sort=descending] span::after {
+table.sortable thead th:not(.no-sort)[aria-sort=descending] span::after,
+table.sortable thead th:not(.no-sort)[aria-sort=ascending].timestamp span::after {
     content: "";
     padding: 0.5rem 1rem;
     background-image: url(../images/sort-down.svg);

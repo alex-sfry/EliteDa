@@ -82,7 +82,7 @@ SortableAsset::register($this);
                 <?php foreach ($th as $key => $value) { ?>
                     <th
                         scope="col"
-                        class="<?= $th_cls ?>"
+                        class="<?= $th_cls ?> <?= $key === 'updated' ? 'timestamp' : null ?>"
                         aria-sort="<?= $value['sortable'] ? $value['sort_dir'] : null ?>">
                         <span><?= $key ?></span>
                     </th>

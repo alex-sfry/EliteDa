@@ -788,25 +788,30 @@ table.sortable {
             align-items: flex-end;
         }
 
-        th:not(.no-sort)[aria-sort="ascending"] span::after {
-            content: "";
-            padding: calc(1rem * 0.5) 1rem;
-            background-image: url("../../images/sort-up.svg");
-            background-repeat: no-repeat;
-            background-position: bottom;
-            visibility: visible;
-            // background-color: ;
-            color: $light !important;
-        }
+        th:not(.no-sort)[aria-sort="ascending"],
+        th:not(.no-sort)[aria-sort="descending"].timestamp {
+            span::after {
+                content: "";
+                padding: calc(1rem * 0.5) 1rem;
+                background-image: url("../../images/sort-up.svg");
+                background-repeat: no-repeat;
+                background-position: bottom;
+                visibility: visible;
+                color: $light !important;
+            }
+        } 
 
-        th:not(.no-sort)[aria-sort="descending"] span::after {
-            content: "";
-            padding: calc(1rem * 0.5) 1rem;
-            background-image: url("../../images/sort-down.svg");
-            background-repeat: no-repeat;
-            background-position: top;
-            visibility: visible;
-        }
+        th:not(.no-sort)[aria-sort="descending"],
+        th:not(.no-sort)[aria-sort="ascending"].timestamp {
+            span::after {
+                content: "";
+                padding: calc(1rem * 0.5) 1rem;
+                background-image: url("../../images/sort-down.svg");
+                background-repeat: no-repeat;
+                background-position: top;
+                visibility: visible;
+            }
+        } 
 
         th:not(.no-sort) span::after {
             content: "";
