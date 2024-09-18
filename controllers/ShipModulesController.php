@@ -24,8 +24,9 @@ class ShipModulesController extends Controller
 
         if (array_key_exists('formBtn', $request->get())) {
             $session->set('mod_form', $request->get());
-            $form->load($session->get('mod_form'), '');
+        }
 
+        if (!empty($session->get('mod_form'))) {
             if ($form->load($session->get('mod_form'), '') && $form->validate()) {
                 $service->form = $form->attributes;
                 $models = $service->findModules()->orderBy('distance')->limit(100)->asArray()->cache(600)->all();

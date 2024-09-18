@@ -24,11 +24,11 @@ class CommoditiesController extends Controller
 
         if (array_key_exists('formBtn', $request->get())) {
             $session->set('c_form', $request->get());
-            $form->load($session->get('c_form'), '');
+        }
 
+        if (!empty($session->get('c_form'))) {
             if ($form->load($session->get('c_form'), '') && $form->validate()) {
                 $service->form = $form->attributes;
-                d(\Yii::$app->db->enableQueryCache, false);
                 $models = $service->findCommodPrices()->limit(100)->asArray()->cache(600)->all();
             }
         }
