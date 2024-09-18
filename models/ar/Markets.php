@@ -2,6 +2,7 @@
 
 namespace app\models\ar;
 
+use app\models\aq\MarketsQuery;
 use Yii;
 use yii\db\ActiveQuery;
 
@@ -22,6 +23,8 @@ use yii\db\ActiveQuery;
  */
 class Markets extends \yii\db\ActiveRecord
 {
+    public ?float $distance = null;
+
     /**
      * {@inheritdoc}
      */
@@ -71,5 +74,14 @@ class Markets extends \yii\db\ActiveRecord
     public function getStation(): ActiveQuery
     {
         return $this->hasOne(Stations::class, ['market_id' => 'market_id'])/* ->inverseOf('markets') */;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return MarketsQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new MarketsQuery(get_called_class());
     }
 }

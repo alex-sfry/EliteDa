@@ -5995,6 +5995,7 @@ const removeLoader = $elem => {
   }
 };
 const handleSubmit = function (e) {
+  if ($('#tr-form').length) return;
   if (!this.checkValidity()) {
     e.preventDefault();
     $(this).find('input').each(function () {
