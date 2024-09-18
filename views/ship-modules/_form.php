@@ -62,7 +62,7 @@ $search_mod_cls = isset($errors['cMainSelect']) ? 'is-invalid' : null;
                     class="t-sel form-select form-select-sm mb-3 <?= $search_mod_cls ?>"
                     name="cMainSelect[]"
                     id="cMainSelect"
-                    placeholder="Select ships..."
+                    placeholder="Select modules..."
                     aria-describedby="inputGroupPrepend3 validationServerCMainSelectFeedback"
                     multiple
                     required>
