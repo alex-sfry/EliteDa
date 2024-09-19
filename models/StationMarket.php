@@ -14,8 +14,6 @@ class StationMarket extends Model
 
     public function findMarket(int $id, string $sys_name): array
     {
-        /** @var CommoditiesBehavior|StationMarket $this */
-
         $model = Markets::find()
             ->where(['and', "markets.market_id=$id", ['or', 'stock>0', 'demand>0']])
             ->cache(3600)

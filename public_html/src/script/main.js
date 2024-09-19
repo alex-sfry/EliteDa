@@ -2,7 +2,6 @@ import '../styles/scss/style.scss';
 // import '../styles/bootstrapSCSS/bootstrap.scss';
 import { validate } from './isValidated.js';
 import { tradeRouteForm } from './tradeRoutes.js';
-import { matTraders } from './matTraders.js';
 import { cookiesConsent } from './cookiesConsent.js';
 import { initTSelect } from './tSelect.js';
 import { getSortIcon } from "./sortIcons.js";
@@ -89,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeader();
     initFooter();
     if ($('#tr-form').length) tradeRouteForm(validate, loader, removeLoader);
-    if ($('#mt-form').length) matTraders();
     if ($('.t-sel').length) {
         $('#refSystem').length && initTSelect('#refSystem');
         $('#cMainSelect').length && initTSelect('#cMainSelect', false);

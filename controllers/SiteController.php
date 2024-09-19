@@ -12,32 +12,6 @@ use yii\web\Response;
 
 class SiteController extends Controller
 {
-    // /**
-    //  * {@inheritdoc}
-    //  */
-    // public function behaviors(): array
-    // {
-    //     return [
-    //         'access' => [
-    //            'class' => AccessControl::class,
-    //            'only' => ['logout'],
-    //            'rules' => [
-    //                [
-    //                    'actions' => ['logout'],
-    //                    'allow' => true,
-    //                    'roles' => ['@'],
-    //                ],
-    //            ],
-    //         ],
-    //         'verbs' => [
-    //            'class' => VerbFilter::class,
-    //            'actions' => [
-    //                'logout' => ['post'],
-    //            ],
-    //         ],
-    //     ];
-    // }
-
     /**
      * {@inheritdoc}
      */
@@ -50,7 +24,6 @@ class SiteController extends Controller
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
-                // 'imageLibrary' => 'gd'
                 // 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];

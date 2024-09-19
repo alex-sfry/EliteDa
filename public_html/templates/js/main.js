@@ -5672,29 +5672,6 @@ const validate = elem => {
 
 /***/ }),
 
-/***/ "./src/script/matTraders.js":
-/*!**********************************!*\
-  !*** ./src/script/matTraders.js ***!
-  \**********************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   matTraders: () => (/* binding */ matTraders)
-/* harmony export */ });
-const matTraders = () => {
-  const $form = $('#mt-form');
-  const handleSubmit = e => {
-    if (!$form.get(0).checkValidity()) {
-      $form.addClass('was-validated');
-      e.preventDefault();
-    }
-  };
-  $form.on('submit', handleSubmit);
-};
-
-/***/ }),
-
 /***/ "./src/script/sortIcons.js":
 /*!*********************************!*\
   !*** ./src/script/sortIcons.js ***!
@@ -5929,15 +5906,14 @@ var __webpack_exports__ = {};
 /* harmony import */ var _styles_scss_style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../styles/scss/style.scss */ "./src/styles/scss/style.scss");
 /* harmony import */ var _isValidated_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./isValidated.js */ "./src/script/isValidated.js");
 /* harmony import */ var _tradeRoutes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tradeRoutes.js */ "./src/script/tradeRoutes.js");
-/* harmony import */ var _matTraders_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./matTraders.js */ "./src/script/matTraders.js");
-/* harmony import */ var _cookiesConsent_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./cookiesConsent.js */ "./src/script/cookiesConsent.js");
-/* harmony import */ var _tSelect_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./tSelect.js */ "./src/script/tSelect.js");
-/* harmony import */ var _sortIcons_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./sortIcons.js */ "./src/script/sortIcons.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_button_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/button.js */ "./node_modules/bootstrap/js/dist/button.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_collapse_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/collapse.js */ "./node_modules/bootstrap/js/dist/collapse.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_dropdown_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/dropdown.js */ "./node_modules/bootstrap/js/dist/dropdown.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_popover_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/popover.js */ "./node_modules/bootstrap/js/dist/popover.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_tooltip_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/tooltip.js */ "./node_modules/bootstrap/js/dist/tooltip.js");
+/* harmony import */ var _cookiesConsent_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./cookiesConsent.js */ "./src/script/cookiesConsent.js");
+/* harmony import */ var _tSelect_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./tSelect.js */ "./src/script/tSelect.js");
+/* harmony import */ var _sortIcons_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./sortIcons.js */ "./src/script/sortIcons.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_button_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/button.js */ "./node_modules/bootstrap/js/dist/button.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_collapse_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/collapse.js */ "./node_modules/bootstrap/js/dist/collapse.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_dropdown_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/dropdown.js */ "./node_modules/bootstrap/js/dist/dropdown.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_popover_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/popover.js */ "./node_modules/bootstrap/js/dist/popover.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_tooltip_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/tooltip.js */ "./node_modules/bootstrap/js/dist/tooltip.js");
 
 // import '../styles/bootstrapSCSS/bootstrap.scss';
 
@@ -5950,8 +5926,7 @@ var __webpack_exports__ = {};
 
 
 
-
-(0,_cookiesConsent_js__WEBPACK_IMPORTED_MODULE_4__.cookiesConsent)();
+(0,_cookiesConsent_js__WEBPACK_IMPORTED_MODULE_3__.cookiesConsent)();
 const initHeader = () => {
   $('.menu__link').each(function () {
     if ($(this).attr('href') === window.location.pathname) {
@@ -6010,10 +5985,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initFooter();
   if ($('#tr-form').length) (0,_tradeRoutes_js__WEBPACK_IMPORTED_MODULE_2__.tradeRouteForm)(_isValidated_js__WEBPACK_IMPORTED_MODULE_1__.validate, loader, removeLoader);
-  if ($('#mt-form').length) (0,_matTraders_js__WEBPACK_IMPORTED_MODULE_3__.matTraders)();
   if ($('.t-sel').length) {
-    $('#refSystem').length && (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_5__.initTSelect)('#refSystem');
-    $('#cMainSelect').length && (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_5__.initTSelect)('#cMainSelect', false);
+    $('#refSystem').length && (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_4__.initTSelect)('#refSystem');
+    $('#cMainSelect').length && (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_4__.initTSelect)('#cMainSelect', false);
   }
   if ($('#c-form').length) removeLoader($('table'));
   if ($('#mod-form').length) removeLoader($('table'));
@@ -6033,9 +6007,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // sorting table
   $('table th.sortable > a').each(function () {
     const $elem = $(this);
-    $elem.hasClass('asc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_6__.getSortIcon)('asc'));
-    $elem.hasClass('desc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_6__.getSortIcon)('desc'));
-    !$elem.hasClass('asc') && !$elem.hasClass('desc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_6__.getSortIcon)('hourGlass'));
+    $elem.hasClass('asc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_5__.getSortIcon)('asc'));
+    $elem.hasClass('desc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_5__.getSortIcon)('desc'));
+    !$elem.hasClass('asc') && !$elem.hasClass('desc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_5__.getSortIcon)('hourGlass'));
   });
 
   // gridview
@@ -6050,7 +6024,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
   // eslint-disable-next-line no-unused-vars
-  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new _node_modules_bootstrap_js_dist_tooltip_js__WEBPACK_IMPORTED_MODULE_11__(tooltipTriggerEl));
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new _node_modules_bootstrap_js_dist_tooltip_js__WEBPACK_IMPORTED_MODULE_10__(tooltipTriggerEl));
 
   // if ($('.add-to-db').length) getDataFromDom(fetchData);
 });

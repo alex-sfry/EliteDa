@@ -16,18 +16,8 @@ use function app\helpers\d;
 
 class TradeRoutesController extends Controller
 {
-    public function behaviors(): array
-    {
-        return ArrayHelper::merge(
-            parent::behaviors(),
-            [PageCounterBehavior::class]
-        );
-    }
-
     public function actionIndex(): string
     {
-        /** @var PageCounterBehavior|TradeRoutesController $this */
-
         $session = Yii::$app->session;
         $session->open();
         // $session->destroy();
