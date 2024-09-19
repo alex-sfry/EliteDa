@@ -99,22 +99,20 @@ export const watch = () => {
 };
 
 /* dev mode w/o browserSync */
-export const dev = gulp.series(gulp.parallel(bsStyles, vendorJS, images, /* webpackBsDev,  */webpackDev), watch);
+export const dev = gulp.series(gulp.parallel(bsStyles, vendorJS, images, webpackDev), watch);
 
 /* dev mode with browserSync */
 export const devSync = gulp.series(
     enableSync,
-    gulp.parallel(bsStyles, vendorJS, images, /* webpackBsDev,  */webpackDev),
+    gulp.parallel(bsStyles, vendorJS, images, webpackDev),
     watch
 );
 
 /* compile and minify Bootstrap with purgeCCC */
 export const bsProdPurge = gulp.series(webpackDev, bsStyles, purgeCSS, bsStylesMin);
-// gulp.parallel(webpackBsDev, webpackDev), gulp.parallel(bsStyles, webpackBsProd), purgeCSS, bsStylesMin
 
 /* compile and minify Bootstrap w/o purgeCCC */
 export const bsProd = gulp.series(webpackDev, bsStyles, bsStylesMin);
-// gulp.parallel(webpackBsDev, webpackDev), gulp.parallel(bsStyles, webpackBsProd), bsStylesMin
 
 export const widgets = gulp.parallel(widgetsStyles, widgetsScripts);
 

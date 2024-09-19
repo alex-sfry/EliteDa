@@ -2,7 +2,6 @@
 
 namespace app\controllers;
 
-use app\behaviors\PageCounterBehavior;
 use app\models\forms\TradeRoutesForm;
 use app\models\TradeRoutes;
 use Yii;
