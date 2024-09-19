@@ -5672,46 +5672,6 @@ const validate = elem => {
 
 /***/ }),
 
-/***/ "./src/script/sortIcons.js":
-/*!*********************************!*\
-  !*** ./src/script/sortIcons.js ***!
-  \*********************************/
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getSortIcon: () => (/* binding */ getSortIcon)
-/* harmony export */ });
-const getSortIcon = icon => {
-  const sortAsc = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi        bi-sort-up" viewBox="0 0 16 16">
-    <path d="M3.5 12.5a.5.5 0 0 1-1 0V3.707L1.354 4.854a.5.5 0 1 1-.708-.708l2-1.999.007-.007a.5.5 0 0 1 .7.006l2 2a.5.5 0 1 1-.707.708L3.5 3.707zm3.5-9a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z"/>
-    </svg>
-    `;
-  const sortDesc = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-down" viewBox="0 0 16 16">
-    <path d="M3.5 2.5a.5.5 0 0 0-1 0v8.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L3.5 11.293zm3.5 1a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5M7.5 6a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1z"/>
-    </svg>
-    `;
-  const hourGlass = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hourglass" viewBox="0 0 16 16">
-    <path d="M2 1.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1-.5-.5m2.5.5v1a3.5 3.5 0 0 0 1.989 3.158c.533.256 1.011.791 1.011 1.491v.702c0 .7-.478 1.235-1.011 1.491A3.5 3.5 0 0 0 4.5 13v1h7v-1a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351v-.702c0-.7.478-1.235 1.011-1.491A3.5 3.5 0 0 0 11.5 3V2z"/>
-    </svg>
-    `;
-  switch (icon) {
-    case 'asc':
-      return sortAsc;
-    case 'desc':
-      return sortDesc;
-    case 'hourGlass':
-      return hourGlass;
-    default:
-      return hourGlass;
-  }
-};
-
-/***/ }),
-
 /***/ "./src/script/tSelect.js":
 /*!*******************************!*\
   !*** ./src/script/tSelect.js ***!
@@ -5908,15 +5868,13 @@ var __webpack_exports__ = {};
 /* harmony import */ var _tradeRoutes_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./tradeRoutes.js */ "./src/script/tradeRoutes.js");
 /* harmony import */ var _cookiesConsent_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./cookiesConsent.js */ "./src/script/cookiesConsent.js");
 /* harmony import */ var _tSelect_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./tSelect.js */ "./src/script/tSelect.js");
-/* harmony import */ var _sortIcons_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./sortIcons.js */ "./src/script/sortIcons.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_button_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/button.js */ "./node_modules/bootstrap/js/dist/button.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_collapse_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/collapse.js */ "./node_modules/bootstrap/js/dist/collapse.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_dropdown_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/dropdown.js */ "./node_modules/bootstrap/js/dist/dropdown.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_popover_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/popover.js */ "./node_modules/bootstrap/js/dist/popover.js");
-/* harmony import */ var _node_modules_bootstrap_js_dist_tooltip_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/tooltip.js */ "./node_modules/bootstrap/js/dist/tooltip.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_button_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/button.js */ "./node_modules/bootstrap/js/dist/button.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_collapse_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/collapse.js */ "./node_modules/bootstrap/js/dist/collapse.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_dropdown_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/dropdown.js */ "./node_modules/bootstrap/js/dist/dropdown.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_popover_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/popover.js */ "./node_modules/bootstrap/js/dist/popover.js");
+/* harmony import */ var _node_modules_bootstrap_js_dist_tooltip_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../node_modules/bootstrap/js/dist/tooltip.js */ "./node_modules/bootstrap/js/dist/tooltip.js");
 
 // import '../styles/bootstrapSCSS/bootstrap.scss';
-
 
 
 
@@ -6004,14 +5962,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // sorting table
-  $('table th.sortable > a').each(function () {
-    const $elem = $(this);
-    $elem.hasClass('asc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_5__.getSortIcon)('asc'));
-    $elem.hasClass('desc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_5__.getSortIcon)('desc'));
-    !$elem.hasClass('asc') && !$elem.hasClass('desc') && $elem.append((0,_sortIcons_js__WEBPACK_IMPORTED_MODULE_5__.getSortIcon)('hourGlass'));
-  });
-
   // gridview
   if ($('#w0'.length > 0)) {
     const $filterBtns = $('.filters .btn');
@@ -6024,7 +5974,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
   // eslint-disable-next-line no-unused-vars
-  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new _node_modules_bootstrap_js_dist_tooltip_js__WEBPACK_IMPORTED_MODULE_10__(tooltipTriggerEl));
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new _node_modules_bootstrap_js_dist_tooltip_js__WEBPACK_IMPORTED_MODULE_9__(tooltipTriggerEl));
 
   // if ($('.add-to-db').length) getDataFromDom(fetchData);
 });

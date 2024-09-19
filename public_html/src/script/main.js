@@ -4,7 +4,6 @@ import { validate } from './isValidated.js';
 import { tradeRouteForm } from './tradeRoutes.js';
 import { cookiesConsent } from './cookiesConsent.js';
 import { initTSelect } from './tSelect.js';
-import { getSortIcon } from "./sortIcons.js";
 import '../../node_modules/bootstrap/js/dist/button.js';
 import '../../node_modules/bootstrap/js/dist/collapse.js';
 import '../../node_modules/bootstrap/js/dist/dropdown.js';
@@ -106,14 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if ($(this).text().trim() === 'Open form') {
             $(this).text('Close form');
         }
-    });
-
-    // sorting table
-    $('table th.sortable > a').each(function () {
-        const $elem = $(this);
-        $elem.hasClass('asc') && $elem.append(getSortIcon('asc'));
-        $elem.hasClass('desc') && $elem.append(getSortIcon('desc'));
-        !$elem.hasClass('asc') && !$elem.hasClass('desc') && $elem.append(getSortIcon('hourGlass'));
     });
 
     // gridview
