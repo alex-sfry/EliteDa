@@ -1,9 +1,13 @@
 import { tSelectAjaxSettings } from "./tSelectSettings.js";
 
-/**
- * @param {string} elem 
+export /**
+ * Description placeholder
+ *
+ * @param {string} elem
+ * @param {boolean} [ajax=true]
+ * @param {string} endpoint
  */
-export const initTSelect = (elem, ajax = true) => {
+const initTSelect = (elem, ajax = false, endpoint) => {
     if (ajax) {
         // eslint-disable-next-line no-undef, no-unused-vars
         const tSelect = new TomSelect(elem, tSelectAjaxSettings({
@@ -11,9 +15,16 @@ export const initTSelect = (elem, ajax = true) => {
             valueField: 'system',
             labelField: 'system',
             plugins: ['dropdown_input'],
-            endpoint: '/system/get/'
+            endpoint: endpoint 
         }));
-    } else {
+    } else if (elem === '#adv-ship-form #cMainSelect') {
+        // eslint-disable-next-line no-undef, no-unused-vars
+        const tSelectNoAjax = new TomSelect(elem, {
+            plugins: ['dropdown_input'],
+            sortField: [{ field: '$order' }, { field: '$score' }],
+            maxOptions: null,
+        });
+    }else {
         // eslint-disable-next-line no-undef, no-unused-vars
         const tSelectNoAjax = new TomSelect(elem, {
             plugins: ['dropdown_input', 'remove_button'],

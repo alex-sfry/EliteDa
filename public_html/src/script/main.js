@@ -83,20 +83,16 @@ const handleSubmit = function (e) {
 
 $('form').on("submit", handleSubmit);
 
+
 document.addEventListener('DOMContentLoaded', () => {
     initHeader();
     initFooter();
+    removeLoader($('table'));
     if ($('#tr-form').length) tradeRouteForm(validate, loader, removeLoader);
     if ($('.t-sel').length) {
-        $('#refSystem').length && initTSelect('#refSystem');
-        $('#cMainSelect').length && initTSelect('#cMainSelect', false);
+        $('#refSystem').length && initTSelect('#refSystem', true, '/system/get/');
+        $('#cMainSelect').length && initTSelect('#adv-ship-form #cMainSelect');
     }
-    if ($('#c-form').length) removeLoader($('table'));
-    if ($('#mod-form').length) removeLoader($('table'));
-    if ($('#ships-form').length) removeLoader($('table'));
-    if ($('#rings-form').length) removeLoader($('table'));
-
-    if ($('.get-form').length) removeLoader($('table'));
 
     // accordion - switch title 
     $('#accordionForm .accordion-button').on('click', function () {

@@ -5684,12 +5684,9 @@ const validate = elem => {
 /* harmony export */ });
 /* harmony import */ var _tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tSelectSettings.js */ "./src/script/tSelectSettings.js");
 
-
-/**
- * @param {string} elem 
- */
 const initTSelect = function (elem) {
-  let ajax = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  let ajax = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  let endpoint = arguments.length > 2 ? arguments[2] : undefined;
   if (ajax) {
     // eslint-disable-next-line no-undef, no-unused-vars
     const tSelect = new TomSelect(elem, (0,_tSelectSettings_js__WEBPACK_IMPORTED_MODULE_0__.tSelectAjaxSettings)({
@@ -5697,8 +5694,19 @@ const initTSelect = function (elem) {
       valueField: 'system',
       labelField: 'system',
       plugins: ['dropdown_input'],
-      endpoint: '/system/get/'
+      endpoint: endpoint
     }));
+  } else if (elem === '#adv-ship-form #cMainSelect') {
+    // eslint-disable-next-line no-undef, no-unused-vars
+    const tSelectNoAjax = new TomSelect(elem, {
+      plugins: ['dropdown_input'],
+      sortField: [{
+        field: '$order'
+      }, {
+        field: '$score'
+      }],
+      maxOptions: null
+    });
   } else {
     // eslint-disable-next-line no-undef, no-unused-vars
     const tSelectNoAjax = new TomSelect(elem, {
@@ -5942,16 +5950,12 @@ $('form').on("submit", handleSubmit);
 document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initFooter();
+  removeLoader($('table'));
   if ($('#tr-form').length) (0,_tradeRoutes_js__WEBPACK_IMPORTED_MODULE_2__.tradeRouteForm)(_isValidated_js__WEBPACK_IMPORTED_MODULE_1__.validate, loader, removeLoader);
   if ($('.t-sel').length) {
-    $('#refSystem').length && (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_4__.initTSelect)('#refSystem');
-    $('#cMainSelect').length && (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_4__.initTSelect)('#cMainSelect', false);
+    $('#refSystem').length && (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_4__.initTSelect)('#refSystem', true, '/system/get/');
+    $('#cMainSelect').length && (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_4__.initTSelect)('#adv-ship-form #cMainSelect');
   }
-  if ($('#c-form').length) removeLoader($('table'));
-  if ($('#mod-form').length) removeLoader($('table'));
-  if ($('#ships-form').length) removeLoader($('table'));
-  if ($('#rings-form').length) removeLoader($('table'));
-  if ($('.get-form').length) removeLoader($('table'));
 
   // accordion - switch title 
   $('#accordionForm .accordion-button').on('click', function () {

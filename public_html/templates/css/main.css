@@ -95,6 +95,10 @@ form:not(.was-validated) .t-sel.ts-wrapper.form-select-sm.focus.is-invalid > .ts
     background-position: calc(100% - 14px);
 }
 
+#adv-ship-form #cMainSelect ~ .ts-wrapper .ts-control {
+    padding: 0.375rem 0.75rem;
+}
+
 /* end of TomSelect styles */
 :root {
     --bs-border-color: var(--bs-dark-border-subtle);
