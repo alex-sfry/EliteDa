@@ -1,5 +1,6 @@
 <?php
 
+use app\assets\TSelectAsset;
 use app\models\forms\CommoditiesForm;
 use app\widgets\InputDropdown\InputDropdown;
 use yii\helpers\Html;
@@ -19,9 +20,10 @@ use function app\helpers\d;
  * @var string $result
  * @var CommoditiesForm $form_model
  */
-
+// d($form_model);
 $select_options = [
-    'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'], 'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
+    'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'],
+    'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
     'sort_options' => ['Profit' => 'Profit', 'Updated_at' => 'Updated at (time)', 'Distance' => 'Distance (LY)'],
     'max_dist_from_ref' => ['25' => '25 LY', '50' => '50 LY', '75' => '75 LY'],
     'max_dist_from_star' => [
@@ -43,6 +45,8 @@ $select_options = [
     'max_age_of_data' => ['Any' => 'Any', '1' => '1 hour', '4' => '4 hours', '10' => '10 hours', '24' => '1 day'],
 ];
 extract($select_options);
+$classes_radio = ['idd-switch', 'form-check-input', 'me-3', 'ms-1', 'shadow-none'];
+TSelectAsset::register($this);
 
 $this->params['meta_keywords'] = 'Elite: Dangerous, market data, trade routes, commodities, trading';
 $this->title = 'Trade routes';
@@ -101,24 +105,59 @@ $this->params['breadcrumbs'] = [$this->title];
                                                             'name_main' => 'refSysStation',
                                                             'required' => 'required'
                                                         ]); ?>
-                                                        <?= InputDropdown::widget([
-                                                            'container' => 'tr-target-idd',
-                                                            'selected' => HTML::decode($form_model->targetSysStation),
-                                                            'search' => 'target-idd-search',
-                                                            'to_submit' => 'target-to-submit',
-                                                            'placeholder' => 'Enter station or system name here',
-                                                            'ajax' => true,
-                                                            'label_main' => '(optional) target',
-                                                            'toggle_btn_text' => 'Get station / system list',
-                                                            'name_main' => 'targetSysStation',
-                                                            'radio_switch' => true,
-                                                            'label_switch1' => 'system',
-                                                            'label_switch2' => 'station',
-                                                            'name_radio' => 'targetSysStationName',
-                                                            'selected_radio' => $form_model->targetSysStationName,
-                                                            'endpoint1' => '/system/get/',
-                                                            'endpoint2' => '/system-station/',
-                                                        ]); ?>
+                                                        <div>
+                                                            <label for="targetSysStation">(optional) target:</label>
+                                                            <div class="d-flex gap-2 mb-1">
+                                                                <label
+                                                                    class="min-lett-spacing d-flex"
+                                                                    for="target_system">
+                                                                    system
+                                                                    <?= HTML::radio(
+                                                                        'targetSysStationName',
+                                                                        $form_model->targetSysStationName === 'system' ?
+                                                                            true : false,
+                                                                        [
+                                                                            'class' => $classes_radio,
+                                                                            'id' => "target_system",
+                                                                            'value' => 'system',
+                                                                        ]
+                                                                    ); ?>
+                                                                </label>
+
+                                                                <label
+                                                                    class="min-lett-spacing d-flex"
+                                                                    for="target_station">
+                                                                    station
+                                                                    <?= HTML::radio(
+                                                                        'targetSysStationName',
+                                                                        $form_model->targetSysStationName ===
+                                                                        'station' ? true : false,
+                                                                        [
+                                                                            'class' => $classes_radio,
+                                                                            'id' => "target_station",
+                                                                            'value' => 'station',
+                                                                        ]
+                                                                    ); ?>
+                                                                </label>
+                                                            </div>
+                                                            <div class="d-flex flex-column">
+                                                                <select
+                                                                    class="t-sel form-select form-select-sm mb-3"
+                                                                    name="targetSysStation"
+                                                                    id="targetSysStation"
+                                                                    aria-describedby="inputGroupPrepend3 validationServerTargetSysStationFeedback"
+                                                                    value="<?= $form_model->targetSysStation ?>">
+                                                                    <?php
+                                                                    if (!empty($form_model->targetSysStation)) : ?>
+                                                                        <option selected>
+                                                                            <?= $form_model->targetSysStation ?>
+                                                                        </option>
+                                                                    <?php endif; ?>
+
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
                                                         <div class="mt-2 mb-3">
                                                             <?= HTML::checkbox(
                                                                 'roundTrip',
@@ -139,7 +178,7 @@ $this->params['breadcrumbs'] = [$this->title];
                                                         <div>
                                                             <label class="min-lett-spacing fw-bold
                                                                 <?= $cargo_error === 'is-invalid' ?
-                                                                'text-danger is-invalid' : null ?>" for='cargo'
+                                                                    'text-danger is-invalid' : null ?>" for='cargo'
                                                                 for="cargo">
                                                                 Cargo capacity (t):
                                                             </label>
@@ -181,8 +220,8 @@ $this->params['breadcrumbs'] = [$this->title];
                                                         <div>
                                                             <label class="min-lett-spacing fw-bold
                                                     <?= $profit_error === 'is-invalid' ?
-                                                                'text-danger is-invalid' : null ?>"
-                                                                   for='profit'>
+                                                        'text-danger is-invalid' : null ?>"
+                                                                for='profit'>
                                                                 Min. profit per trip (Cr):
                                                             </label>
                                                             <?php
@@ -369,13 +408,13 @@ $this->params['breadcrumbs'] = [$this->title];
                                     <!--submit button block-->
                                     <div class='row justify-content-center text-center'>
                                         <div class='col-md-3 pt-4 pb-2'>
-                                            <button class='btn btn-violet fw-bold text-light text-uppercase mt-2 w-100'
-                                                    type='submit' name='tr-form-submit'>
+                                            <button class='btn btn-sm btn-primary fw-bold text-light text-uppercase mt-2 w-100'
+                                                type='submit' name='tr-form-submit'>
                                                 Search
                                             </button>
                                         </div>
                                         <span class="fst-italic text-danger fs-7">
-                                                    Note: carriers are not included
+                                            Note: carriers are not included
                                         </span>
                                     </div>
                                 </div>
@@ -392,7 +431,7 @@ $this->params['breadcrumbs'] = [$this->title];
             </span>
         </div>
     </div>
-    
+
     <?php if (isset($models)) {
         echo $this->render(
             'tr_result',
@@ -405,4 +444,3 @@ $this->params['breadcrumbs'] = [$this->title];
         );
     } ?>
 </main>
-
