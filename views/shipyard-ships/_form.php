@@ -3,6 +3,7 @@
 /** @var yii\web\View $this */
 /** @var array $errors */
 /** @var array $form_values */
+/** @var array $ship_names */
 /** @var ShipyardShipsForm $form */
 
 use yii\helpers\Html;
@@ -63,7 +64,9 @@ $search_ship_cls = isset($errors['cMainSelect']) ? 'is-invalid' : null;
                     required>
                     <option value=''></option>
                     <?php if (!empty($form_values['cMainSelect'])) : ?>
-                        <option selected><?= $ship_names[$form_values['cMainSelect']] ?></option>
+                        <option selected value='<?= $form_values['cMainSelect'] ?>'>
+                            <?= $ship_names[$form_values['cMainSelect']] ?>
+                        </option>
                     <?php endif; ?>
                     <?php foreach ($ship_names as $key => $value) { ?>
                         <?php if ($key !== $form_values['cMainSelect']) { ?>

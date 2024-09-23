@@ -19,9 +19,8 @@ class ShipyardShipsController extends Controller
         // $session->destroy();
         $form = new ShipyardShipsForm();
         $params['form'] = $form;
-        $service = new ShipyardShipsService();
+        $service = new ShipyardShipsService($form->attributes);
         $params['ship_names'] = $service->ships_list;
-        // array_unshift($params['ship_names'], '');
 
         if (array_key_exists('formBtn', $request->get())) {
             $session->set('ship_form', $request->get());
