@@ -107,7 +107,7 @@ SortableAsset::register($this);
                     <?php if (isset($value['distance'])) { ?>
                         <td class='$td_cls'><?= e($value['distance']) ?></td>
                     <?php } ?>
-                    <td class="<?= $td_cls ?> data-sort="<?= e($value['timestamp']) ?>">
+                    <td class="<?= $td_cls ?>" data-sort="<?= e($value['timestamp']) ?>">
                         <?= $formatter->asRelativeTime(e($value['timestamp'])) ?>
                     </td>
                 </tr>
