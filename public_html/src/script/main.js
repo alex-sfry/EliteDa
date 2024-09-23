@@ -91,7 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if ($('#tr-form').length) tradeRouteForm(validate, loader, removeLoader);
     if ($('.t-sel').length) {
         $('#refSystem').length && initTSelect('#refSystem', true, '/system/get/');
-        $('#cMainSelect').length && initTSelect('#adv-ship-form #cMainSelect');
+        $('#ships-cMainSelect').length && initTSelect('#ships-cMainSelect');
+        $('#cMainSelect').length && initTSelect('#cMainSelect');
+        
     }
 
     // accordion - switch title 

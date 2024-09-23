@@ -52,17 +52,26 @@ $search_ship_cls = isset($errors['cMainSelect']) ? 'is-invalid' : null;
         <!-- form column 1 -->
         <div class='col-6 col-sm w-100'>
             <div class="d-flex flex-column">
-                <label for="cMainSelect"><?= $labels['cMainSelect'] ?>:</label>
-                <?= Html::dropDownList(
-                    'cMainSelect',
-                    $form->cMainSelect,
-                    $ship_names,
-                    [
-                        'class' => ['form-select', 'form-select-sm', 'mb-3', $search_ship_cls],
-                        'id' => 'cMainSelect',
-                        'required' => true
-                    ]
-                ) ?>
+                <label class="tselect-lbl-3" for="ships-cMainSelect"><?= $labels['cMainSelect'] ?>:</label>
+                <select
+                    class="t-sel form-select form-select-sm mb-3 <?= $search_ship_cls ?>"
+                    name="cMainSelect"
+                    id="ships-cMainSelect"
+                    placeholder="Select ships..."
+                    aria-describedby="inputGroupPrepend3 validationServerCMainSelectFeedback"
+                    value="<?= e($form_values['cMainSelect']) ?>"
+                    required>
+                    <option value=''></option>
+                    <?php if (!empty($form_values['cMainSelect'])) : ?>
+                        <option selected><?= $ship_names[$form_values['cMainSelect']] ?></option>
+                    <?php endif; ?>
+                    <?php foreach ($ship_names as $key => $value) { ?>
+                        <?php if ($key !== $form_values['cMainSelect']) { ?>
+                            <option value='<?= $key ?>'><?= $value ?></option>
+                        <?php } ?>
+                    <?php } ?>
+
+                </select>
                 <div
                     class="invalid-feedback fw-bold mt-0 pt-0"
                     id="validationServerCMainSelectFeedback">

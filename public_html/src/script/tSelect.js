@@ -17,14 +17,14 @@ const initTSelect = (elem, ajax = false, endpoint) => {
             plugins: ['dropdown_input'],
             endpoint: endpoint 
         }));
-    } else if (elem === '#adv-ship-form #cMainSelect') {
+    } else if (elem === '#ships-cMainSelect') {
         // eslint-disable-next-line no-undef, no-unused-vars
         const tSelectNoAjax = new TomSelect(elem, {
             plugins: ['dropdown_input'],
             sortField: [{ field: '$order' }, { field: '$score' }],
             maxOptions: null,
         });
-    }else {
+    } else {
         // eslint-disable-next-line no-undef, no-unused-vars
         const tSelectNoAjax = new TomSelect(elem, {
             plugins: ['dropdown_input', 'remove_button'],
@@ -39,4 +39,6 @@ const initTSelect = (elem, ajax = false, endpoint) => {
     $('.tselect-lbl-1').removeAttr('id');
     $('.tselect-lbl-2').attr('for', 'cMainSelect');
     $('.tselect-lbl-2').removeAttr('id');
+    $('.tselect-lbl-3').attr('for', 'ships-cMainSelect');
+    $('.tselect-lbl-3').removeAttr('id');
 };

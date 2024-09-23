@@ -16,11 +16,12 @@ export const tradeRouteForm = (validate, loader, removeLoader) => {
         validate(profit);
     };
 
+    $('#targetSysStation').attr('value') === '' && $('#targetSysStation').removeAttr('value');
+
     const endpoints = {
         system: '/system/get/',
         station: '/system-station/'
     };
-    console.log($('#targetSysStation').attr('value'))
     // eslint-disable-next-line no-undef, no-unused-vars
     const tSelect = new TomSelect('#targetSysStation', {
         searchField: 'system',

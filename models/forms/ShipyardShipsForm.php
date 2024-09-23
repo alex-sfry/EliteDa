@@ -4,7 +4,7 @@ namespace app\models\forms;
 
 class ShipyardShipsForm extends \yii\base\Model
 {
-    public string $cMainSelect = '';
+    public ?string $cMainSelect = '';
     public string $refSystem = '';
     public string $includeSurface = 'No';
     public string $distanceFromStar = '';

@@ -5696,7 +5696,7 @@ const initTSelect = function (elem) {
       plugins: ['dropdown_input'],
       endpoint: endpoint
     }));
-  } else if (elem === '#adv-ship-form #cMainSelect') {
+  } else if (elem === '#ships-cMainSelect') {
     // eslint-disable-next-line no-undef, no-unused-vars
     const tSelectNoAjax = new TomSelect(elem, {
       plugins: ['dropdown_input'],
@@ -5726,6 +5726,8 @@ const initTSelect = function (elem) {
   $('.tselect-lbl-1').removeAttr('id');
   $('.tselect-lbl-2').attr('for', 'cMainSelect');
   $('.tselect-lbl-2').removeAttr('id');
+  $('.tselect-lbl-3').attr('for', 'ships-cMainSelect');
+  $('.tselect-lbl-3').removeAttr('id');
 };
 
 /***/ }),
@@ -5798,11 +5800,11 @@ const tradeRouteForm = (validate, loader, removeLoader) => {
     validate(cargoSpace);
     validate(profit);
   };
+  $('#targetSysStation').attr('value') === '' && $('#targetSysStation').removeAttr('value');
   const endpoints = {
     system: '/system/get/',
     station: '/system-station/'
   };
-  console.log($('#targetSysStation').attr('value'));
   // eslint-disable-next-line no-undef, no-unused-vars
   const tSelect = new TomSelect('#targetSysStation', {
     searchField: 'system',
@@ -5999,7 +6001,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if ($('#tr-form').length) (0,_tradeRoutes_js__WEBPACK_IMPORTED_MODULE_2__.tradeRouteForm)(_isValidated_js__WEBPACK_IMPORTED_MODULE_1__.validate, loader, removeLoader);
   if ($('.t-sel').length) {
     $('#refSystem').length && (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_4__.initTSelect)('#refSystem', true, '/system/get/');
-    $('#cMainSelect').length && (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_4__.initTSelect)('#adv-ship-form #cMainSelect');
+    $('#ships-cMainSelect').length && (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_4__.initTSelect)('#ships-cMainSelect');
+    $('#cMainSelect').length && (0,_tSelect_js__WEBPACK_IMPORTED_MODULE_4__.initTSelect)('#cMainSelect');
   }
 
   // accordion - switch title 

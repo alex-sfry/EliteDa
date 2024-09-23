@@ -21,6 +21,7 @@ use function app\helpers\d;
  * @var CommoditiesForm $form_model
  */
 // d($form_model);
+$target = $form_model->targetSysStation;
 $select_options = [
     'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'],
     'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
@@ -114,7 +115,7 @@ $this->params['breadcrumbs'] = [$this->title];
                                                                     system
                                                                     <?= HTML::radio(
                                                                         'targetSysStationName',
-                                                                        $form_model->targetSysStationName === 'system' ?
+                                                                        $form_model->targetSysStationName === 'system' || empty($form_model->targetSysStationName) ?
                                                                             true : false,
                                                                         [
                                                                             'class' => $classes_radio,
@@ -146,7 +147,7 @@ $this->params['breadcrumbs'] = [$this->title];
                                                                     name="targetSysStation"
                                                                     id="targetSysStation"
                                                                     aria-describedby="inputGroupPrepend3 validationServerTargetSysStationFeedback"
-                                                                    value="<?= $form_model->targetSysStation ?>">
+                                                                    value="<?= $target === '' ? null : $target ?>">
                                                                     <?php
                                                                     if (!empty($form_model->targetSysStation)) : ?>
                                                                         <option selected>
