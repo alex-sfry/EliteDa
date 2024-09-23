@@ -120,7 +120,7 @@ return [
             'material-traders' => 'material-traders/index',
             'user/login' => 'user/login',
             'user/logout' => 'user/logout',
-            'user/signup' => 'user/signup',
+            // 'user/signup' => 'user/signup',
             // admin dashboard
             'admin-dashboard/allegiance/view' => 'allegiance/view',
             'admin-dashboard/allegiance/update' => 'allegiance/update',
