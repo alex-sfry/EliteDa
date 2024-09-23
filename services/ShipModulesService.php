@@ -45,12 +45,9 @@ class ShipModulesService
             ->cache(86400)
             ->one();
 
-        // d($this->form['cMainSelect']);
-
         return ShipModules::find()
             ->select([
                 'ship_modules.*',
-                new Expression("{$price->price} as price"),
                 "IF(type!='Outpost','L','M') as pad",
                 "IF(type IN ('Planetary Outpost', 'Planetary Port', 'Odyssey Settlement'),TRUE,FALSE) as surface",
                 "$distance_expr as distance",

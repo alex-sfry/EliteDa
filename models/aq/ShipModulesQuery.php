@@ -95,7 +95,7 @@ class ShipModulesQuery extends \yii\db\ActiveQuery
     {
         return $this
             ->innerJoin(['mlst' => 'ship_modules_list'], 'mlst.symbol = ship_modules.name')
-            ->innerJoin(['mprc' => 'modules_price_list'], 'mprc.symbol = ship_modules.name')
+            ->leftJoin(['mprc' => 'modules_price_list'], 'mprc.symbol = ship_modules.name')
             ->andWhere(['market_id' => $market_id])
             ->filterStationModules($cat);
     }
