@@ -75,7 +75,7 @@ class ShipModulesService
             ])
             ->stationModules($market_id, $cat);
 
-        $models = $modules->orderBy('ship_modules.name')->asArray()->cache(600)->all();
+        $models = $modules->orderBy('ship_modules.name')->asArray()->cache(60)->all();
         foreach ($models as $key => $value) {
             $models[$key]['req_url'] = ArrayHelper::merge(
                 ['ship-modules/index'],
@@ -109,11 +109,11 @@ class ShipModulesService
     public function qtyByCat(int $market_id): array
     {
         return [
-            'armour' => ShipModules::find()->armour($market_id)->cache(600)->count(),
-            'hardpoint' => ShipModules::find()->hardpoint($market_id)->cache(600)->count(),
-            'core' => ShipModules::find()->core($market_id)->cache(600)->count(),
-            'internal' => ShipModules::find()->internal($market_id)->cache(600)->count(),
-            'utility' => ShipModules::find()->utility($market_id)->cache(600)->count(),
+            'armour' => ShipModules::find()->armour($market_id)->cache(60)->count(),
+            'hardpoint' => ShipModules::find()->hardpoint($market_id)->cache(60)->count(),
+            'core' => ShipModules::find()->core($market_id)->cache(60)->count(),
+            'internal' => ShipModules::find()->internal($market_id)->cache(60)->count(),
+            'utility' => ShipModules::find()->utility($market_id)->cache(60)->count(),
         ];
     }
 }

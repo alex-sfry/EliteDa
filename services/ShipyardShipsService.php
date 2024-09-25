@@ -65,7 +65,7 @@ class ShipyardShipsService
     {
         $ships = Shipyard::find()
             ->stationShips($market_id)
-            ->cache(600)
+            ->cache(60)
             ->asArray()
             ->all();
 
