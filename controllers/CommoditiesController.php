@@ -29,7 +29,7 @@ class CommoditiesController extends Controller
         if (!empty($session->get('c_form'))) {
             if ($form->load($session->get('c_form'), '') && $form->validate()) {
                 $service->form = $form->attributes;
-                $models = $service->findCommodPrices()->limit(100)->asArray()->cache(600)->all();
+                $models = $service->findCommodPrices()->limit(100)->asArray()->cache(60)->all();
             }
         }
 

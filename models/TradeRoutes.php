@@ -216,7 +216,7 @@ class TradeRoutes extends Model
             $query->andWhere(['systems.name' => $this->target_sys]);
         }
 
-        $target_markets = $query->cache(3600)->all();
+        $target_markets = $query->cache(60)->all();
         ArrayHelper::multisort($target_markets, ['profit'], [SORT_DESC]);
         $dir_routes = $this->removeDuplicates($target_markets, 'commodity');
 
@@ -267,7 +267,7 @@ class TradeRoutes extends Model
                 ->andWhere('mr.buy_price > 0')
                 ->andWhere(['>=', 'mr.stock', $this->min_supply_demand])
                 ->andWhere(['>', 'mr.stock', 1])
-                ->cache(3600)
+                ->cache(60)
                 ->all();
 
         ArrayHelper::multisort($round_markets, ['profit_round'], [SORT_DESC]);
