@@ -14,7 +14,7 @@ use function app\helpers\e;
 
 $pad_sizes = ['L' => 'L', 'M' => 'M', 'S' => 'S'];
 $incl_surface = ['No' => 'No', 'Yes' => 'Yes(w/o Odyssey)', 'Odyssey' => 'Yes(w/ Odyssey)'];
-$sort_options = ['Price' => 'Price', 'Updated_at' => 'Updated at (time)', 'Distance' => 'Distance (LY)'];
+$sort_options = ['Price' => 'Price', 'UpdatedAt' => 'Updated at (time)', 'Distance' => 'Distance (LY)'];
 // $max_dist_from_ref = ['Any' => 'Any', '25' => '25 LY', '50' => '50 LY', '100' => '100 LY', '250' => '250 LY'];
 $max_dist_from_star = [
     'Any' => 'Any',

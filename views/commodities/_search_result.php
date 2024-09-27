@@ -43,7 +43,7 @@ switch ($sort_by) {
         $th['updated']['sort_dir'] = 'ascending';
         break;
     default:
-        $th['distance (LY)']['sort_dir'] = 'ascending';
+        $th['distance(LY)']['sort_dir'] = 'ascending';
         break;
 }
 
@@ -129,7 +129,7 @@ SortableAsset::register($this);
                     </td>
                     <td class='<?= $td_cls ?>'><?= e($value['distance']) ?></td>
                     <td class="<?= $td_cls ?>" data-sort="<?= e($value['timestamp']) ?>">
-                        <?= $formatter->asRelativeTime(e($value['timestamp'])) ?>
+                        <?= /* $formatter->asRelativeTime(e($value['timestamp'])) */ e($value['timestamp']) ?>
                     </td>
                 </tr>
             <?php } ?>

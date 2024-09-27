@@ -36,7 +36,7 @@ class CommoditiesService
         }
 
         $column_map = ['buy_price' => 'stock', 'sell_price' => 'demand'];
-        $sort_map = ['UpdatedAt' => 'timestamp','Distance' => 'distance'];
+        $sort_map = ['UpdatedAt' => 'timestamp DESC','Distance' => 'distance'];
 
         $this->price_type = $this->form['buySellSwitch'];
         $this->stock_demand = $column_map[$this->form['buySellSwitch']];
