@@ -61,7 +61,7 @@ class CommoditiesService
                 "$distance_expr as distance"
             ])
             ->prices($this->form, $this->stock_demand, $date_sub_expr)
-            ->andWhere(['<=', $distance_expr, 50])
+            ->andWhere(['<=', $distance_expr, 150])
             ->orderBy($this->order);
     }
 }

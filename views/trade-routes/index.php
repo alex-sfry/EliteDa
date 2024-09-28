@@ -22,30 +22,21 @@ use function app\helpers\d;
  */
 // d($form_model);
 $target = $form_model->targetSysStation;
-$select_options = [
-    'pad_sizes' =>  ['L' => 'L', 'M' => 'M', 'S' => 'S'],
-    'incl_surface' => ['No' => 'No', 'Yes' => 'Yes'],
-    'sort_options' => ['Profit' => 'Profit', 'Updated_at' => 'Updated at (time)', 'Distance' => 'Distance (LY)'],
-    'max_dist_from_ref' => ['25' => '25 LY', '50' => '50 LY', '75' => '75 LY'],
-    'max_dist_from_star' => [
-        'Any' => 'Any',
-        '100' => '100 ls',
-        '500' => '500 ls',
-        '1000' => '1000 ls',
-        '2000' => '2000 ls',
-    ],
-    'min_supply_demand' => [
-        'Any' => 'Any',
-        '100' => '100',
-        '500' => '500',
-        '1000' => '1000',
-        '2000' => '2000',
-        '5000' => '5000',
-        '10000' => '10000'
-    ],
-    'max_age_of_data' => ['Any' => 'Any', '1' => '1 hour', '4' => '4 hours', '10' => '10 hours', '24' => '1 day'],
+$pad_sizes =  ['L' => 'L', 'M' => 'M', 'S' => 'S'];
+$incl_surface = ['No' => 'No', 'Yes' => 'Yes'];
+$sort_options = ['Profit' => 'Profit', 'Updated_at' => 'Updated at (time)', 'Distance' => 'Distance (LY)'];
+$max_dist_from_ref = ['25' => '25 LY', '50' => '50 LY', '75' => '75 LY', '100' => '100 LY', '150' => '150 LY'];
+$max_dist_from_star = ['Any' => 'Any', '100' => '100 ls', '500' => '500 ls', '1000' => '1000 ls', '2000' => '2000 ls'];
+$min_supply_demand = [
+    'Any' => 'Any',
+    '100' => '100',
+    '500' => '500',
+    '1000' => '1000',
+    '2000' => '2000',
+    '5000' => '5000',
+    '10000' => '10000'
 ];
-extract($select_options);
+$max_age_of_data = ['Any' => 'Any', '1' => '1 hour', '4' => '4 hours', '10' => '10 hours', '24' => '1 day'];
 $classes_radio = ['idd-switch', 'form-check-input', 'me-3', 'ms-1', 'shadow-none'];
 TSelectAsset::register($this);
 
@@ -132,7 +123,7 @@ $this->params['breadcrumbs'] = [$this->title];
                                                                     <?= HTML::radio(
                                                                         'targetSysStationName',
                                                                         $form_model->targetSysStationName ===
-                                                                        'station' ? true : false,
+                                                                            'station' ? true : false,
                                                                         [
                                                                             'class' => $classes_radio,
                                                                             'id' => "target_station",
