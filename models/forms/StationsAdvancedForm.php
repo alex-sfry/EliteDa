@@ -5,6 +5,7 @@ namespace app\models\forms;
 class StationsAdvancedForm extends \yii\base\Model
 {
     public string $refSystem = '';
+    public string $population = '';
     public string $pad = 'L';
     public string $inclSurface = 'No';
     public string $dta = '';
@@ -17,6 +18,14 @@ class StationsAdvancedForm extends \yii\base\Model
         return [
             ['refSystem', 'required'],
             [['refSystem'], 'string', 'length' => [2]],
+            [['population'], 'in', 'range' => [
+                'Any',
+                '10000000',
+                '100000000',
+                '1000000000',
+                '10000000000',
+                '20000000000'
+            ]],
             [['pad'], 'in', 'range' => ['L', 'M', 'S']],
             [['inclSurface'], 'in', 'range' => ['No', 'Yes', 'Odyssey']],
             [['dta'], 'in', 'range' => ['Any', '500', '1000', '2000', '5000']],
@@ -65,7 +74,7 @@ class StationsAdvancedForm extends \yii\base\Model
                 'Tourism',
                 'Engineering',
             ]],
-            [['dta', 'allegiance', 'economy', 'government'], 'filter', 'filter' => function ($value) {
+            [['population', 'dta', 'allegiance', 'economy', 'government'], 'filter', 'filter' => function ($value) {
                 return $value === 'Any' ? '' : $value;
             }],
         ];
@@ -75,6 +84,7 @@ class StationsAdvancedForm extends \yii\base\Model
     {
         return [
             'refSystem' => 'Ref. system',
+            'population' => 'System population',
             'pad' => 'Min pad size',
             'inclSurface' => 'Include surface',
             'dta' => 'Dist. to arrival',

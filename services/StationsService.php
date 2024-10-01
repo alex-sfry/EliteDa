@@ -41,10 +41,6 @@ class StationsService
     {
         $expr = (new SystemsService())->distanceExpr($this->form['refSystem']);
 
-        $expr2 = new Expression(
-            'CASE WHEN type=Outpost THEN M ELSE L'
-        );
-
         $query = Stations::find()
             ->select([
                 'stations.*',
@@ -54,7 +50,8 @@ class StationsService
                 'economy_name',
                 "$expr as distance",
                 'systems.name as system',
-                'systems.id as system_id'
+                'systems.id as system_id',
+                'population'
             ])
             ->genericJoin()
             ->innerJoinWith('system')

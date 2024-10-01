@@ -21,6 +21,7 @@ $th = [
     'government' => ['sortable' => true, 'sort_dir' => ''],
     'allegiance' => ['sortable' => true, 'sort_dir' => ''],
     'system' => ['sortable' => true, 'sort_dir' => ''],
+    'population' => ['sortable' => true, 'sort_dir' => '']
 ];
 $msg = 'first 100(max) stations sorted by name:';
 
@@ -35,6 +36,8 @@ $th_cls = 'w-f-content text-nowrap bg-secondary-subtle';
 $td_cls = 'w-f-content text-nowrap';
 $td_surface_cls = ['text-primary', 'text-success'];
 $tooltip = 'Not all Odyssey Settlements have L pad';
+$formatter = \Yii::$app->formatter;
+$formatter->thousandSeparator = ' ';
 SortableAsset::register($this);
 // d($models);
 ?>
@@ -105,8 +108,13 @@ SortableAsset::register($this);
                             ---
                         <?php } ?>
                     </td>
+                    <?php if (isset($value['population'])) { ?>
+                        <td class="<?= $td_cls ?>" data-sort="<?= e($value['population']) ?>">
+                            <?= $formatter->asInteger(e($value['population'])) ?>
+                        </td>
+                    <?php } ?>
                     <?php if (isset($value['distance'])) { ?>
-                        <td class='$td_cls'><?= e($value['distance']) ?></td>
+                        <td class="<?= $td_cls ?>"><?= e($value['distance']) ?></td>
                     <?php } ?>
                 </tr>
             <?php } ?>

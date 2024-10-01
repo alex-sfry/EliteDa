@@ -75,9 +75,19 @@ $gov_options = [
     'Engineer' => 'Engineer',
 ];
 
+$population_options = [
+    'Any' => 'Any',
+    '10000000' => '>= 10Mil',
+    '100000000' => '>= 100Mil',
+    '1000000000' => '>= 1Bil',
+    '10000000000' => '>= 10Bil',
+    '20000000000' => '>= 20Bil',
+];
+
 $col1 = [
     'pad' => $pad_options,
     'inclSurface' => $incl_surface,
+    'population' => $population_options
 ];
 
 $col2 = [

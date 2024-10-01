@@ -65,6 +65,7 @@ class StationsQuery extends \yii\db\ActiveQuery
             ->andFilterCompare('faction_name', $conditions['allegiance'])
             ->andFilterCompare('economy_name', $conditions['economy'])
             ->andFilterCompare('type', $this->padCondition($conditions['pad']))
+            ->andFilterCompare('population', ">={$conditions['population']}")
             ->andFilterWhere($this->surfaceCondition($conditions['inclSurface']));
     }
 }
