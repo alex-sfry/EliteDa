@@ -31,7 +31,7 @@ $msg = 'first 100(max) stations sorted by name:';
 if (isset($models[0]['distance'])) {
     $th['distance (ly)'] = ['sortable' => true, 'sort_dir' => 'ascending'];
     $msg = 'first 100(max) stations sorted by distance from ref. system:';
-    $msg_population = "System population: >= {$formatter->asInteger($population)}";
+    $msg_population = "System population: >= ";
 } else {
     $th['name']['sort_dir'] = 'ascending';
 }
@@ -64,7 +64,9 @@ SortableAsset::register($this);
     </p>
     <?php if (isset($msg_population) && $population !== 'Any') { ?>
         <div class="result-info mb-2">
-            <span class="text-dark bg-light p-1 rounded-2"><?= $msg_population ?></span>
+            <span class="text-dark bg-light p-1 rounded-2">
+                <?= $msg_population . $formatter->asInteger($population) ?>
+            </span>
         </div>
     <?php } ?>
 
