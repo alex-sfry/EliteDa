@@ -3,6 +3,7 @@
 /**
  * @var yii\web\View $this
  * @var array $models
+ * @var string $population
  */
 
 use app\assets\SortableAsset;
@@ -12,6 +13,9 @@ use yii\helpers\Url;
 use function app\helpers\d;
 use function app\helpers\e;
 
+$formatter = \Yii::$app->formatter;
+$formatter->thousandSeparator = ' ';
+
 $th = [
     'name' => ['sortable' => true, 'sort_dir' => ''],
     'pad' => ['sortable' => true, 'sort_dir' => ''],
@@ -20,14 +24,14 @@ $th = [
     'economy' => ['sortable' => true, 'sort_dir' => ''],
     'government' => ['sortable' => true, 'sort_dir' => ''],
     'allegiance' => ['sortable' => true, 'sort_dir' => ''],
-    'system' => ['sortable' => true, 'sort_dir' => ''],
-    'population' => ['sortable' => true, 'sort_dir' => '']
+    'system' => ['sortable' => true, 'sort_dir' => '']
 ];
 $msg = 'first 100(max) stations sorted by name:';
 
 if (isset($models[0]['distance'])) {
     $th['distance (ly)'] = ['sortable' => true, 'sort_dir' => 'ascending'];
     $msg = 'first 100(max) stations sorted by distance from ref. system:';
+    $msg_population = "System population: >= {$formatter->asInteger($population)}";
 } else {
     $th['name']['sort_dir'] = 'ascending';
 }
@@ -36,8 +40,7 @@ $th_cls = 'w-f-content text-nowrap bg-secondary-subtle';
 $td_cls = 'w-f-content text-nowrap';
 $td_surface_cls = ['text-primary', 'text-success'];
 $tooltip = 'Not all Odyssey Settlements have L pad';
-$formatter = \Yii::$app->formatter;
-$formatter->thousandSeparator = ' ';
+
 SortableAsset::register($this);
 // d($models);
 ?>
@@ -59,6 +62,12 @@ SortableAsset::register($this);
     <p class="result-info text-light text-center">
         <?= $msg ?>
     </p>
+    <?php if (isset($msg_population) && $population !== 'Any') { ?>
+        <div class="result-info mb-2">
+            <span class="text-dark bg-light p-1 rounded-2"><?= $msg_population ?></span>
+        </div>
+    <?php } ?>
+
     <table class="c-table sortable asc table table-sm table-striped fs-7 rounded-2 overflow-hidden border">
         <thead>
             <tr class="border-1 border-dark sintony-bold fw-bold text-uppercase">
@@ -108,12 +117,6 @@ SortableAsset::register($this);
                             ---
                         <?php } ?>
                     </td>
-                    <?php if (isset($value['population']) || isset($value['system']['population'])) {
-                        $population = $value['population'] ?? $value['system']['population']; ?>
-                        <td class="<?= $td_cls ?>" data-sort="<?= e($population) ?>">
-                            <?= $formatter->asInteger(e($population)) ?>
-                        </td>
-                    <?php } ?>
                     <?php if (isset($value['distance'])) { ?>
                         <td class="<?= $td_cls ?>"><?= e($value['distance']) ?></td>
                     <?php } ?>

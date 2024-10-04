@@ -10,7 +10,7 @@ use function app\helpers\e;
 /** @var array $models */
 /** @var array $by_name_form_values */
 /** @var array $adv_form_values */
-/** @var StationsAdvancedForm $by_name_form */
+/** @var StationsAdvancedForm $adv_form */
 /** @var StationsNameForm $by_name_form */
 
 TSelectAsset::register($this);
@@ -52,7 +52,10 @@ $this->params['breadcrumbs'] = [$this->title];
 
                 <!-- result -->
                 <?php if (!empty($models)) { ?>
-                    <?= $this->render('_search_result', ['models' => $models]); ?>
+                    <?= $this->render(
+                        '_search_result',
+                        ['models' => $models, 'population' => $adv_form_values['population']]
+                    ); ?>
                 <?php } elseif (isset($models) && empty($models)) { ?>
                     <div class="rounded-1 bg-light text-center mx-auto px-3 py-2">
                         <p class="my-1 text-danger fw-bold text-uppercase lett-spacing-2">found nothing</p>
