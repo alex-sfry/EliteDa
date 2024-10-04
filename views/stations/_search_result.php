@@ -108,9 +108,10 @@ SortableAsset::register($this);
                             ---
                         <?php } ?>
                     </td>
-                    <?php if (isset($value['population'])) { ?>
-                        <td class="<?= $td_cls ?>" data-sort="<?= e($value['population']) ?>">
-                            <?= $formatter->asInteger(e($value['population'])) ?>
+                    <?php if (isset($value['population']) || isset($value['system']['population'])) {
+                        $population = $value['population'] ?? $value['system']['population']; ?>
+                        <td class="<?= $td_cls ?>" data-sort="<?= e($population) ?>">
+                            <?= $formatter->asInteger(e($population)) ?>
                         </td>
                     <?php } ?>
                     <?php if (isset($value['distance'])) { ?>
