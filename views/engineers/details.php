@@ -30,7 +30,7 @@ $this->params['breadcrumbs'] = [
                     <?= isset($model) ? DetailView::widget([
                         'model' => $model,
                         'attributes' => [
-                            ['label' => 'Station', 'value' => $model['station']],
+                            ['label' => 'Station', 'value' => $model['station'], 'format' => 'raw'],
                             ['label' => 'System', 'value' => $model['system']],
                             [
                                 'label' => "Upgrades ({$model['target']})",
@@ -40,13 +40,14 @@ $this->params['breadcrumbs'] = [
                                 'captionOptions' => ['class' => 'text-primary'],
                                 'contentOptions' => ['class' => 'text-primary sintony-bold']
                             ],
-                            ['label' => 'Discovery', 'value' => $model['discovery']],
+                            ['label' => 'Discovery', 'value' => $model['discovery'], 'format' => 'raw'],
                             ['label' => 'How to get invite', 'value' => $model['get_invite']],
                             ['label' => 'Unlock', 'value' => $model['unlock']],
                             [
                                 'label' => 'How to gain reputation',
                                 'value' => isset($model['gain_rep']) ? $model['gain_rep'] : '',
-                                'visible' => isset($model['gain_rep'])
+                                'visible' => isset($model['gain_rep']),
+                                'format' => 'raw'
                             ]
                         ],
                         'options' => ['class' => 'table table-striped detail-view']
