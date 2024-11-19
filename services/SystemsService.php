@@ -74,7 +74,7 @@ class SystemsService
         return Systems::find()
             ->coords($name)
             ->asArray()
-            ->cache(86400)
+            /* ->cache(86400) */
             ->one();
     }
 }

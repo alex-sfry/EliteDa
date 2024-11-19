@@ -131,7 +131,7 @@ class TradeRoutes extends Model
             ])
             ->innerJoin(['sys' => 'systems'], 'sys.id = st.system_id')
             ->where(['sys.name' => $this->sys_name, 'st.name' => $this->st_name])
-            ->cache(86400)
+            /* ->cache(86400) */
             ->one();
     }
 
@@ -158,7 +158,7 @@ class TradeRoutes extends Model
             ->select(['id'])
             ->from(['systems'])
             ->where(['<=', $this->distance_expr, $this->max_distance])
-            ->cache(86400)
+            /* ->cache(86400) */
             ->all();
     }
 
@@ -267,7 +267,7 @@ class TradeRoutes extends Model
                 ->andWhere('mr.buy_price > 0')
                 ->andWhere(['>=', 'mr.stock', $this->min_supply_demand])
                 ->andWhere(['>', 'mr.stock', 1])
-                ->cache(60)
+                /* ->cache(60) */
                 ->all();
 
         ArrayHelper::multisort($round_markets, ['profit_round'], [SORT_DESC]);

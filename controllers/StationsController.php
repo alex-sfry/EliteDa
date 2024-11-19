@@ -37,7 +37,7 @@ class StationsController extends Controller
 
             if ($by_name_form->load($session->get('st_name'), '') && $by_name_form->validate()) {
                 $service = new StationsService($by_name_form->attributes);
-                $models = $service->findStationsByName()->limit(100)->asArray()->cache(86400)->all();
+                $models = $service->findStationsByName()->limit(100)->asArray()/* ->cache(86400) */->all();
             }
         }
 
@@ -47,7 +47,8 @@ class StationsController extends Controller
 
             if ($adv_form->load($session->get('st_adv_form'), '') && $adv_form->validate()) {
                 $service = new StationsService($adv_form->attributes);
-                $models = $service->findStations()->orderBy('distance')->limit(100)->asArray()->cache(86400)->all();
+                $models = $service->findStations()->orderBy('distance')->limit(100)->asArray()/* ->cache(86400) */
+                    ->all();
             }
         }
 
@@ -72,7 +73,7 @@ class StationsController extends Controller
         $model = Stations::find()
             ->select(['stations.*', "IF(type!='Outpost','L','M') as pad"])
             ->details($id)
-            ->cache(86400)
+            /* ->cache(86400) */
             ->asArray()
             ->one();
 
@@ -187,7 +188,7 @@ class StationsController extends Controller
             $data = (new StationsService())->systemStation($sys_st)
                 ->select(['systems.name as system', 'stations.name as station'])
                 ->orderBy('stations.name')
-                ->cache(86400)
+                /* ->cache(86400) */
                 ->all();
 
             $response = Yii::$app->response;

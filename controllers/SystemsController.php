@@ -33,7 +33,7 @@ class SystemsController extends Controller
 
             if ($by_name_form->load($session->get('sys_name'), '') && $by_name_form->validate()) {
                 $service = new SystemsService($by_name_form->attributes);
-                $models = $service->findSystemsByName()->limit(100)->asArray()->cache(86400)->all();
+                $models = $service->findSystemsByName()->limit(100)->asArray()/* ->cache(86400) */->all();
             }
         }
 
@@ -42,7 +42,8 @@ class SystemsController extends Controller
 
             if ($adv_form->load($session->get('sys_adv_form'), '') && $adv_form->validate()) {
                 $service = new SystemsService($adv_form->attributes);
-                $models = $service->findSystems()->orderBy('distance')->limit(100)->asArray()->cache(86400)->all();
+                $models = $service->findSystems()->orderBy('distance')->limit(100)->asArray()/* ->cache(86400) */
+                    ->all();
             }
         }
 
@@ -65,7 +66,7 @@ class SystemsController extends Controller
 
         $model = Systems::find()
             ->details((int)$id)
-            ->cache(86400)
+            /* ->cache(86400) */
             ->asArray()
             ->one();
 
@@ -85,7 +86,7 @@ class SystemsController extends Controller
                 ->select('name as system')
                 ->where(['like', 'name', "$sys%", false])
                 ->orderBy('name')
-                ->cache(86400)
+                /* ->cache(86400) */
                 ->asArray()
                 ->all();
 

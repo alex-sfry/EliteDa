@@ -71,17 +71,17 @@ class StationsService
         $services = [];
         $services['market'] = Markets::find()
             ->where(['market_id' => $market_id])
-            ->cache(3600)
+            /* ->cache(3600) */
             ->count();
 
         $services['outfitting'] = ShipModules::find()
             ->where(['market_id' => $market_id])
-            ->cache(3600)
+            /* ->cache(3600) */
             ->count();
 
         $services['ships'] = Shipyard::find()
             ->where(['market_id' => $market_id])
-            ->cache(3600)
+            /* ->cache(3600) */
             ->count();
 
         return $services;

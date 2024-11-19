@@ -26,7 +26,7 @@ class RingsService
             // ->offset(100)
             ->limit(100)
             ->asArray()
-            ->cache(86400)
+            /* ->cache(86400) */
             ->all();
 
         $this->provider = new ArrayDataProvider([
