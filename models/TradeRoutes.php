@@ -216,7 +216,7 @@ class TradeRoutes extends Model
             $query->andWhere(['systems.name' => $this->target_sys]);
         }
 
-        $target_markets = $query->cache(60)->all();
+        $target_markets = $query/* ->cache(60) */->all();
         ArrayHelper::multisort($target_markets, ['profit'], [SORT_DESC]);
         $dir_routes = $this->removeDuplicates($target_markets, 'commodity');
 

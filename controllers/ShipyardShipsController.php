@@ -29,7 +29,7 @@ class ShipyardShipsController extends Controller
         if (!empty($session->get('ship_form'))) {
             if ($form->load($session->get('ship_form'), '') && $form->validate()) {
                 $service->form = $form->attributes;
-                $models = $service->findShips()->orderBy('distance')->limit(100)->asArray()->cache(60)->all();
+                $models = $service->findShips()->orderBy('distance')->limit(100)->asArray()/* ->cache(60) */->all();
             }
         }
 

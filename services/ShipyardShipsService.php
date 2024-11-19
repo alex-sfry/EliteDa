@@ -42,7 +42,7 @@ class ShipyardShipsService
         $price = ShipsPriceList::find()
             ->select('price')
             ->where(['name' => "{$this->ships_list[$this->form['cMainSelect']]}"])
-            ->cache(86400)
+            /* ->cache(86400) */
             ->one();
 
         return Shipyard::find()
@@ -65,7 +65,7 @@ class ShipyardShipsService
     {
         $ships = Shipyard::find()
             ->stationShips($market_id)
-            ->cache(60)
+            /* ->cache(60) */
             ->asArray()
             ->all();
 
