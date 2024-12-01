@@ -8,7 +8,6 @@ use app\traits\ShipModulesTrait;
 use app\traits\StationConditionsTrait;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveQuery;
-use yii\db\Expression;
 use Yiisoft\Arrays\ArrayHelper;
 
 use function app\helpers\d;
@@ -75,7 +74,7 @@ class ShipModulesService
             ])
             ->stationModules($market_id, $cat);
 
-        $models = $modules->orderBy('ship_modules.name')->asArray()/* ->cache(60 */)->all();
+        $models = $modules->orderBy('ship_modules.name')->asArray()/* ->cache(60)*/->all();
         foreach ($models as $key => $value) {
             $models[$key]['req_url'] = ArrayHelper::merge(
                 ['ship-modules/index'],
