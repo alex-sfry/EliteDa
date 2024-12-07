@@ -60,6 +60,17 @@ export const purgeCSS = () => {
                 '../vendor/yiisoft/yii2/widgets/**/*.js',
                 '../vendor/yiisoft/yii2/widgets/**/*.php',
             ],
+            safelist: [
+                'page-item',
+                'page-link',
+                'prev-page',
+                'last-page',
+                'pagination',
+                'first',
+                'last',
+                'disabled',
+                'active'
+            ],
             sourceMap: true
         }))
         .pipe(gulp.dest('./templates/css/'));
