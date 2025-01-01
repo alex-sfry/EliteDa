@@ -1,9 +1,6 @@
 <?php
 
 return [
-    // 'errorHandler' => [
-    //     'maxSourceLines' => 20,
-    // ],
     'formatter' => [
         'dateFormat' => 'dd.MM.yyyy',
         'decimalSeparator' => '.',
